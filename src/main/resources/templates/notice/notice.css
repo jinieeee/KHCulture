@@ -1,0 +1,210 @@
+/* =================================================== header =========================== */
+#header .headerArea {
+    width: 1000px;
+    margin: 0 auto;
+    padding: 36px 90px 0;
+    height: 95px;
+    position: relative;
+    /*background-color: antiquewhite;*/
+}
+.headerArea{
+    display: flex;
+}
+ul, li{
+    display: flex;
+    list-style: none;
+    margin-left: 100px;
+    margin-top: 20px;
+}
+#header{
+    margin-bottom: 100px;
+}
+
+.button{
+    background-color: #F0B95E;
+    border: 1px solid rgb(223, 115, 15);
+    border-radius: 0;
+    color: white;
+    
+}
+/* =================================================== noticeList =========================== */
+.notice_search {
+    display: flex;
+    width: 890px;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    padding: 20px 10px;
+    background-color: #F0B95E;
+    border-bottom: 2px solid black;
+}
+form#notice_form {
+    margin: auto;
+}
+
+#notice_choice{
+    width: 160px;
+    height: 30px;
+}
+#notice_searchText{
+    width: 400px;
+    height: 30px;
+}
+#notice_button{
+    width: 60px;
+    height: 30px;
+}
+
+.notice_list > .notice_select{
+    width: 890px;
+    text-align: center;
+    margin: 0 auto;
+    /*background-color: antiquewhite;*/
+    display: flex;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #F0B95E;
+    height: 40px;
+}
+.notice_select > span{
+    padding: 8px 10px;
+
+    margin-top: 8px;
+    margin-left: 20px;
+}
+#notice_comment{
+    text-align: left;
+    width: 500px;
+    /*background-color: aquamarine;*/
+}
+.notice_paging{
+    text-align: center;
+    width: 800px;
+    margin: 0 auto;
+    margin-top: 10px;
+    background-color: antiquewhite;
+}
+/* =================================================== noticeDetatil =========================== */
+.notice_detail_title{
+    width: 1200px; /* 이 폭을 줄이면 세부폭은 알아서 따라옴 */
+    margin: 0 auto;
+    margin-bottom: 10px;
+    padding: 20px 10px;
+    background-color: #F0B95E;
+    display: flex;
+}
+#notice_category2{
+    width: 100px;
+    padding: 8px 10px;
+    border-right: 3px solid black;
+   /* background-color: aquamarine;*/
+    
+}
+#notice_comment2{
+    width: 1000px;
+    padding: 8px 10px;
+    border-right: 3px solid black;
+   /* background-color: aquamarine;*/
+    
+}
+#notice_date2{
+    width: 150px;
+    padding: 8px 10px;
+   /* background-color: aquamarine;*/
+}
+
+.notice_detail_comment{
+    width: 1200px; /* 이 폭을 줄이면 세부폭은 알아서 따라옴 */
+    margin: 0 auto;
+    margin-bottom: 10px;
+   /* background-color: antiquewhite;*/
+    text-align: center; /*이미지 가운데 정렬*/
+    font-size: 10px;
+}
+
+.notice_detail_button{
+    width: 1200px; /* 이 폭을 줄이면 세부폭은 알아서 따라옴 */
+    margin: 0 auto;
+    margin-bottom: 10px;
+    /*background-color: cadetblue;*/
+}
+#notice_button{
+    width: 90px;
+    height: 30px;
+}
+
+.notice_detail_reply{
+    width: 1000px; /* 이 폭을 줄이면 세부폭은 알아서 따라옴 */
+    margin: 0 auto;
+    margin-bottom: 10px;
+    /*background-color: cadetblue;*/
+}
+.notice_reply_select{
+    display: flex;
+    padding: 8px 10px;
+    border-bottom: 1px solid #F0B95E;
+}
+#reply_name{ 
+    border-right: 2px solid black;
+    padding: 8px 20px;
+}
+#reply_comment2{
+    width: 700px;
+    border-right: 2px solid black;
+    padding: 8px 10px;
+    background-color: antiquewhite;
+}
+#reply_date{
+    padding: 8px 10px;
+    margin-right: 15px;
+}
+
+.notice_detail_reply_insert{
+    display: flex;
+    justify-content: space-evenly;
+    padding: 8px 10px;
+
+}
+#notice_reply_insert{
+    width: 770px;
+    border: 1px solid orangered;
+    margin-right: 15px;
+}    
+/* =================================================== boardInsert =========================== */
+.notice_insert_boundary{
+    width: 1000px; /* 이 폭을 줄이면 세부폭은 알아서 따라옴 */
+    margin: 0 auto;
+    margin-bottom: 10px;
+    background-color: antiquewhite;
+}
+#Lname , #Ltitle ,#Limage ,#Lcomment{
+    padding: 8px 10px;
+    border-bottom: 1px solid black;
+}
+#Lname2 , #Ltitle2 ,#Limage2 ,#Lcomment2{
+    padding: 10px;
+}
+#notice_insert{
+    width: 800px;
+}
+#notice_insert2{
+    width: 99%;
+}
+/* =================================================== boardUpdate =========================== */
+.notice_update_boundary{
+    width: 1000px; /* 이 폭을 줄이면 세부폭은 알아서 따라옴 */
+    margin: 0 auto;
+    margin-bottom: 10px;
+    background-color: antiquewhite;
+}
+#Lname , #Ltitle ,#Limage ,#Lcomment{
+    padding: 8px 10px;
+    border-bottom: 1px solid black;
+}
+#Lname2 , #Ltitle2 ,#Limage2 ,#Lcomment2{
+    padding: 10px;
+}
+#notice_update{
+    width: 800px;
+}
+#notice_update2{
+    width: 99%;
+}
