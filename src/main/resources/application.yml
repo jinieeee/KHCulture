@@ -1,0 +1,15 @@
+# server port config
+# first-project 에서는 server.port:8800으로 썼으나 여기에서는 이러한 방식으로 쓰는 이유는
+# server의 하위에 정의할 수 있는 내용이 많아 추가적으로 작성할때 더욱 간결하게 코드를 작성하기 위해
+server:  port: 8005
+  
+# oracle driver config
+# DB연결정보
+spring:  datasource:    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@localhost:1521:xe
+    username: khculture
+    password:  khculture
+
+# mybatis config
+mybatis:
+ mapper-locations: mappers/**/*.xml
