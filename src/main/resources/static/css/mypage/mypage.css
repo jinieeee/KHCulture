@@ -1,0 +1,148 @@
+/* =================================================== header =========================== */
+#header .headerArea {
+    width: 1000px;
+    margin: 0 auto;
+    padding: 36px 90px 0;
+    height: 95px;
+    position: relative;
+    /*background-color: antiquewhite;*/
+}
+.headerArea{
+    display: flex;
+}
+ul, li{
+    display: flex;
+    list-style: none;
+    margin-left: 100px;
+    margin-top: 20px;
+}
+#header{
+    margin-bottom: 100px;
+}
+/* =================================================== mypageMain =========================== */
+.my_category_boundery{
+    width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    background-color: antiquewhite;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+.my_category_boundery > #a{
+    /*background-color: violet;*/
+    padding: 10px 70px 10px 50px;
+}
+.my_detail_button{
+    width: 1200px;
+    margin: 0 auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.button{
+    background-color: #F0B95E;
+    border: 1px solid rgb(223, 115, 15);
+    border-radius: 0;
+    color: white;
+    
+}
+.my_infoTable{
+    border-collapse: collapse;
+}
+#tr{
+    border: 0.5px solid black;
+}
+#tr > th+td{
+    border: 0.5px solid black;
+}
+
+.my_infoTable tr> th{
+    width: 200px;
+    background-color: lightgrey;
+}
+.my_infoTable tr> td{
+    text-align: center;
+    width: 400px;
+    height: 50px;
+    background-color: white;
+}
+.my_history{
+    display: grid;
+    grid-template-columns: 300px 300px 300px;
+    grid-auto-rows: 300px 300px 300px;
+    gap: 20px;
+    text-align: center;
+    justify-content: center;
+}
+#my_history1{
+    border: 1px solid salmon;
+    overflow: hidden;
+    align-items: center;
+    justify-content: center;
+}
+#my_history1 > img{
+    width: 200px;
+    height: 200px;
+}
+.my_paging{
+    text-align: center;
+    width: 800px;
+    margin: 0 auto;
+    margin-top: 10px;
+    background-color: antiquewhite;
+}
+/* =================================================== myRiewList =========================== */
+.myRiew_search {
+    display: flex;
+    width: 890px;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    padding: 20px 10px;
+    background-color: #F0B95E;
+    border-bottom: 2px solid black;
+}
+form#myRiew_form {
+    margin: auto;
+}
+
+#myRiew_choice{
+    width: 160px;
+    height: 30px;
+}
+#myRiew_searchText{
+    width: 400px;
+    height: 30px;
+}
+#myRiew_button{
+    width: 60px;
+    height: 30px;
+}
+
+.myRiew_list > .myRiew_select{
+    width: 890px;
+    text-align: center;
+    margin: 0 auto;
+    /*background-color: antiquewhite;*/
+    display: flex;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #F0B95E;
+    height: 40px;
+}
+.myRiew_select > span{
+    padding: 8px 10px;
+
+    margin-top: 8px;
+    margin-left: 20px;
+}
+#myRiew_comment{
+    text-align: left;
+    width: 500px;
+    /*background-color: aquamarine;*/
+}
+.myRiew_paging{
+    text-align: center;
+    width: 800px;
+    margin: 0 auto;
+    margin-top: 10px;
+    background-color: antiquewhite;
+}

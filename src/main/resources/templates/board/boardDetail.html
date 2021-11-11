@@ -2,9 +2,63 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>noticeDetail</title>
+<title>boardDetail</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link href="../../static/css/mypage/board.css" rel="stylesheet">
 </head>
+<header id="inputHeader"></header>
 <body>
-ㄴㄴ
+    
+    <div class="board_detail_title">
+        <div id="board_category2">비누공방</div>
+        <div id="board_comment2">비누향기가 너무 좋았던 수업이었어요~ </div>
+        <div id="board_date2">2021-11-10</div>
+    </div>
+    <div class="board_detail_boundary">
+        <div>
+            <span><img src="../../static/images/mypage/star.png" id="board_star"></span>
+            <span><img src="../../static/images/mypage/star.png" id="board_star"></span>
+            <span><img src="../../static/images/mypage/star.png" id="board_star"></span>
+            <span><img src="../../static/images/mypage/star.png" id="board_star"></span>
+            <span><img src="../../static/images/mypage/star.png" id="board_star"></span>
+        </div>
+        <div id="board_detail_comment">후기 내용 적는 곳 </div>
+        <div>
+            <div>조회수</div>
+            <div><img src="../../static/images/mypage/heart2.png" id="board_heart"></div>
+        </div>
+    </div>
+    <!-- 관리자에게만 수정하기 버튼이 활성화됨 -->
+    <div align="right" class="board_detail_button">
+        <input type="button"  id="board_button"  value="수정하기" class="button"> 
+    </div>
+
+    <div class="board_detail_reply">
+        <div class="board_reply_select">
+            <div id="reply_name">양*하</div> 
+            <div id="reply_comment2">언제나 좋은 강의 개설해주셔서 감사합니다. ^__^</div> 
+            <div id="reply_date">2021-11-15</div>
+            <!-- 본인이 쓴 댓글에만 활성화됨-->
+            <input type="button" value="수정" class="button">
+        </div>
+        <div class="board_reply_select">
+            <div id="reply_name">양*하</div> 
+            <div id="reply_comment2">언제나 좋은 강의 개설해주셔서 감사합니다. ^__^</div> 
+            <div id="reply_date">2021-11-15</div>
+            <!-- 본인이 쓴 댓글에만 활성화됨-->
+            <input type="button" value="수정" class="button">
+        </div>
+        <div class="board_detail_reply_insert">
+            <input type="text" id="board_reply_insert">
+            <input type="button" value="댓글작성" class="button"> 
+        </div>
+    </div>
+    <footer id="inputFooter"></footer>
+    <script>
+        $(document).ready(function(){
+            $("#inputHeader").load("../common/header.html");
+            $("#inputFooter").load("../common/footer.html");
+        });
+    </script>
 </body>
 </html>

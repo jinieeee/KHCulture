@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>mypageMain</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link href="../../static/css/mypage/memberModify.css" rel="stylesheet">
+
+</head>
+<header id="inputHeader"></header>
+<body>
+    <h1 align="center" style="font-size: 60px;">정보수정</h1>
+    <div class="Modify_boundery">
+        <table class="ModifyTable">
+            <tr>
+                <th>아이디</th>
+                <td><input type="text" value="KHgg"> </td>
+            </tr>
+            <tr>
+                <th>비밀번호</th>
+                <td><input type="text">
+                    <input type="button" value="수정하기">
+                </td>
+            </tr>
+            <tr>
+                <th>비밀번호 확인</th>
+                <td><input type="password" maxlength="15" name="userPwd2" required>
+                    <label for="pwdResult"></label></td>
+            </tr>
+            <tr>
+                <th>이름</th>
+                <td><input type="text" maxlength="5" name="userName" placeholder="양정하" required></td>
+            </tr>
+            <tr>
+                <th>전화번호</th>
+                <td><input type="text" maxlength="11" name="phone" placeholder="전화번호를 입력해주세요 Ex)000-0000-0000" required>
+                    <button onclick="sendAuth()" id="sendAuth" type="button" disabled="disabled" class="sendAuth">인증코드 전송</button></td>
+            </tr>
+            
+            <tr>
+                <th>우편번호</th>
+                <td><input type="text" name="address" class="postcodify_postcode5" readonly>
+                    <button id="postcodify_search_button" type="button">우편번호 검색</button></td>
+            </tr>
+            <tr>
+                <th>도로명주소</th>
+                <td><input type="text" name="address" class="postcodify_address" readonly></td>
+            </tr>
+            <tr>
+                <th>상세주소</th>
+                <td><input type="text" name="address" class="postcodify_details"></td>
+            </tr>
+            <tr>
+                <th>비밀번호 힌트</th>
+                <td>
+                    <select aria-placeholder="비밀번호 힌트에 대한 질문을 선택하세요">
+                        <!-- 옵션은 DB에서 가져오기 -->
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th>비밀번호 힌트 답</th>
+                <td><input type="text" maxlength="15" name="pwd_answer" placeholder="비밀번호 힌트에 대한 답을 입력하세요(2자 이상)">
+                    <input type="button" value="수정하기">
+                </td>
+            </tr>
+            <tr>
+                <th rowspan="2">약관동의</th>
+                <td>
+                    <span>
+                        <input type="checkbox" id="alljoin" name="alljoin">
+                        <label for="alljoin">전체동의</label>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <ul class="chkList">
+                        <li>
+                            <span class="chkbox1">
+                                <input type="checkbox" id="chkjoin1" name="chkjoin1" required>
+                                <label for="chkjoin1">(필수) 서비스 이용약관 동의</label>
+                            </span>
+                        </li>
+                        <li>
+                            <span>
+                                <input type="checkbox" id="chkjoin2" name="chkjoin2" required>
+                                <label for="chkjoin2">(필수) 개인정보 수집 및 이용동의</label>
+                            </span>
+                        </li>
+                        <li>
+                            <span>
+                                <input type="checkbox" id="chkjoin3" name="chkjoin3">
+                                <label for="chkjoin3">(선택) 광고성 정보 수신</label>
+                            </span>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="Modify_button">
+        <span><input type="button" value="취소" class="button1"></span>
+        <span><input type="button" value="수정" class="button2"></span>
+        <span><input type="button" value="탈퇴" class="button3"></span>
+    
+
+    </div>
+        
+
+<footer id="inputFooter"></footer>
+<script>
+    $(document).ready(function(){
+        $("#inputHeader").load("../common/header.html");
+        $("#inputFooter").load("../common/footer.html");
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+/* =================================================== memberModify =========================== */
+.Modify_boundery{
+    width: 600px; /* 이 폭을 줄이면 세부폭은 알아서 따라옴 */
+    margin: 0 auto;
+    margin-bottom: 10px;
+    padding: 20px 10px 20px;
+    display: flex;
+    /*background-color: bisque;*/
+}
+.ModifyTable{
+    width: 600px; 
+    margin: 0 auto;
+    border-collapse: collapse;
+    border: solid 1px #AEAEAE
+}
+.ModifyTable tr, 
+.ModifyTable th,
+.ModifyTable td{
+    border: 1px solid black;
+}
+.ModifyTable th{
+    background-color: lightgray;
+}
+.Modify_button{
+    width: 700px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-around;
+    
+}
+
+.Modify_button [type=button] {
+    border-style: none;
+    width: 200px;
+    height: 50px;
+}
+
+.button1{
+    font-size: 20px;
+    color: white;
+    background-color: #6A6A6A;
+}
+.button2{
+    font-size: 20px;
+    color: #fff;
+    background-color: #F0B95E;
+}
+.button3{
+    font-size: 20px;
+    color: white;
+    background-color:crimson;
+}

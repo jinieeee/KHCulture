@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>myRiew</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link href="../../static/css/mypage/mypage.css" rel="stylesheet">
+</head>
+<header id="inputHeader"></header>
+<body>
+    <h1 align="center">내가 쓴 수강후기</h1>
+
+    <div class="myRiew_search">
+
+        <form id="myRiew_form">
+            <span class="myRiew_choice">
+            <select id="myRiew_choice">
+                <option value="myRiew">공지사항</option>
+                <option value="myRiew">알립니다</option>
+            </select>
+            </span>
+            <span>
+                <input type="text" name="myRiew_search_comment" id="myRiew_searchText">
+            </span>
+            <input type="button" value="검색" id="myRiew_button" class="button">
+            <!-- 관리자에게만 활성화 -->
+            <input type="button" value="작성하기" id="myRiew_regist" class="button">
+        </form>
+        
+    </div>
+
+    <div class="myRiew_list">
+        <div class="myRiew_select">
+            <span id="myRiew_no">65</span> 
+            <span id="myRiew_category">공지사항</span>
+            <span id="myRiewe_comment">내용내용내용내용내용내용내용내용내용내용내용내용</span>
+            <span id="myRiew_create">2021-11-08</span>
+        </div>
+        
+    
+    <div class="my_paging">페이징처리 구간</div>
+    <footer id="inputFooter"></footer>
+    <script>
+        $(document).ready(function(){
+            $("#inputHeader").load("../common/header.html");
+            $("#inputFooter").load("../common/footer.html");
+        });
+    </script>
+</body>
+</html>

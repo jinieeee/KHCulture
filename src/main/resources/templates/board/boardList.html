@@ -2,9 +2,53 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>noticeList</title>
+<title>boardList</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link href="../../static/css/mypage/board.css" rel="stylesheet">
 </head>
+<header id="inputHeader"></header>
 <body>
-ㄴㄴ
+    
+    <h1 align="center">수강후기</h1>
+    <div class="board_ranking">
+        <div id="board_ranking_1">
+            <img src="../../static/images/mypage/043.png" >
+        </div>
+        <div id="board_ranking_1">
+            <img src="../../static/images/mypage/039.png" >
+        </div>
+        <div id="board_ranking_1">
+            <img src="../../static/images/mypage/037.png" >
+        </div>
+    </div>
+    <div class="board_list">
+        <div class="board_select">
+            <span id="board_no">65</span> 
+            <span id="board_comment">
+                <div>2021-11-08</div>
+                <div>향기가득 비누공방</div>
+                <div>비누향기가 너무 좋았던 수업이었습니다~ </div>
+            </span>
+            <span>
+                <img src="../../static/images/mypage/star.png" id="board_star">
+                <img src="../../static/images/mypage/star.png" id="board_star">
+                <img src="../../static/images/mypage/star.png" id="board_star">
+                <img src="../../static/images/mypage/star.png" id="board_star">
+                <img src="../../static/images/mypage/star2.png" id="board_star">
+                
+            </span>
+        </div>
+
+
+
+        <div class="board_paging">페이징처리 구간</div>
+    </div>
+    <footer id="inputFooter"></footer>
+    <script>
+        $(document).ready(function(){
+            $("#inputHeader").load("../common/header.html");
+            $("#inputFooter").load("../common/footer.html");
+        });
+    </script>
 </body>
 </html>

@@ -3,21 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <title>noticeInsert</title>
-<link href="notice.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link href="../../static/css/mypage/notice.css" rel="stylesheet">
 </head>
+<header id="inputHeader"></header>
 <body>
-    <div id="header">
-        <div class="headerArea">
-            <h1 class="logo">KH문화센터</h1>
-            <ul>
-                <li>수강신청</li>
-                <li>커뮤니티</li>
-                <li>마이페이지</li>
-                <li>양정하 님</li>
-            </ul>
-    
-        </div>
-    </div>
+   
     <h1 align="center">등록하기</h1>
     <div class="notice_insert_boundary">
         <form>
@@ -41,10 +32,14 @@
                 <span><input type="button" value="등록하기" class="button"></span>
                 <input type="button" value="취소하기" class="button">
             </div>
-            
-
         </form>
-
     </div>
+    <footer id="inputFooter"></footer>
+    <script>
+        $(document).ready(function(){
+            $("#inputHeader").load("../common/header.html");
+            $("#inputFooter").load("../common/footer.html");
+        });
+    </script>
 </body>
 </html>

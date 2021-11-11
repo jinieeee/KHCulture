@@ -2,9 +2,51 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>noticeInsert</title>
+<title>boardInsert</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link href="../../static/css/mypage/board.css" rel="stylesheet">
 </head>
+<header id="inputHeader"></header>
 <body>
-ㅇㅇ
+    
+    <h1 align="center">등록하기</h1>
+    <div class="board_insert_boundary">
+        <form>
+            <div id="Lname"> 
+                <span id="Lname2">강좌명 : </span>
+                <input type="text" name="Lname" id="board_insert3">
+
+                <span><img src="../../static/images/mypage/star.png" id="board_star"></span>
+                <span><img src="../../static/images/mypage/star.png" id="board_star"></span>
+                <span><img src="../../static/images/mypage/star.png" id="board_star"></span>
+                <span><img src="../../static/images/mypage/star.png" id="board_star"></span>
+                <span><img src="../../static/images/mypage/star.png" id="board_star"></span>
+            </div>
+            
+            <div id="Ltitle">
+                <span id="Ltitle2">제목 : </span>
+                <input type="text" name="Ltitle" id="board_insert">
+            </div>
+            <div id="Limage">
+                <span id="Limage2">이미지첨부 : </span>
+                <input type="file" name="Limage" id="board_insert">
+            </div>
+            <div id="Lcomment">
+                <div id="Lcomment2">내용 : </div>
+                <input type="text" name="Lcomment" id="board_insert2">
+            </div>
+            <div align="center" style="margin-top: 20px;margin-bottom: 20px;padding-bottom: 20px;">
+                <span><input type="button" value="등록하기" class="button"></span>
+                <input type="button" value="취소하기" class="button" style="background-color: darkolivegreen;">
+            </div>
+        </form>
+    </div>
+    <footer id="inputFooter"></footer>
+    <script>
+        $(document).ready(function(){
+            $("#inputHeader").load("../common/header.html");
+            $("#inputFooter").load("../common/footer.html");
+        });
+    </script>
 </body>
 </html>

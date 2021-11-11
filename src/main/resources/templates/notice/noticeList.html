@@ -4,74 +4,67 @@
 <meta charset="UTF-8">
 <title>noticeList</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link href="notice.css" rel="stylesheet">
-
+<link href="../../static/css/mypage/notice.css" rel="stylesheet">
 </style>
 </head>
+<header id="inputHeader"></header>
 <body>
-<div id="header">
-    <div class="headerArea">
-        <h1 class="logo">KH문화센터</h1>
-        <ul>
-            <li>수강신청</li>
-            <li>커뮤니티</li>
-            <li>마이페이지</li>
-            <li>양정하 님</li>
-        </ul>
-
-    </div>
-</div>
-<h1 align="center">공지사항</h1>
-
-<div class="notice_search">
-
-    <form id="notice_form">
-        <span class="notice_choice">
-        <select id="notice_choice">
-            <option value="notice">공지사항</option>
-            <option value="notice">알립니다</option>
-        </select>
-        </span>
-        <span>
-            <input type="text" name="notice_search_comment" id="notice_searchText">
-        </span>
-        <input type="button" value="검색" id="notice_button" class="button">
-        <!-- 관리자에게만 활성화 -->
-        <input type="button" value="작성하기" id="notice_regist" class="button">
-    </form>
     
-</div>
+    <h1 align="center">공지사항</h1>
 
-<div class="notice_list">
-    <div class="notice_select">
-        <span id="notice_no">65</span> 
-        <span id="notice_category">공지사항</span>
-        <span id="notice_comment">내용내용내용내용내용내용내용내용내용내용내용내용</span>
-        <span id="notice_create">2021-11-08</span>
-    </div>
-    <div class="notice_select">
-        <span id="notice_no">65</span> 
-        <span id="notice_category">공지사항</span>
-        <span id="notice_comment">내용내용내용내용내용내용내용내용내용내용내용내용</span>
-        <span id="notice_create">2021-11-08</span>
-    </div>
-    <div class="notice_select">
-        <span id="notice_no">65</span> 
-        <span id="notice_category">공지사항</span>
-        <span id="notice_comment">내용내용내용내용내용내용내용내용내용내용내용내용</span>
-        <span id="notice_create">2021-11-08</span>
-    </div>
-    <div class="notice_select">
-        <span id="notice_no">65</span> 
-        <span id="notice_category">공지사항</span>
-        <span id="notice_comment">내용내용내용내용내용내용내용내용내용내용내용내용</span>
-        <span id="notice_create">2021-11-08</span>
+    <div class="notice_search">
+
+        <form id="notice_form">
+            <span class="notice_choice">
+            <select id="notice_choice">
+                <option value="notice">공지사항</option>
+                <option value="notice">알립니다</option>
+            </select>
+            </span>
+            <span>
+                <input type="text" name="notice_search_comment" id="notice_searchText">
+            </span>
+            <input type="button" value="검색" id="notice_button" class="button">
+            <!-- 관리자에게만 활성화 -->
+            <input type="button" value="작성하기" id="notice_regist" class="button">
+        </form>
+        
     </div>
 
-    <div class="notice_paging">페이징처리 구간</div>
+    <div class="notice_list">
+        <div class="notice_select">
+            <span id="notice_no">65</span> 
+            <span id="notice_category">공지사항</span>
+            <span id="notice_comment">내용내용내용내용내용내용내용내용내용내용내용내용</span>
+            <span id="notice_create">2021-11-08</span>
+        </div>
+        <div class="notice_select">
+            <span id="notice_no">65</span> 
+            <span id="notice_category">공지사항</span>
+            <span id="notice_comment">내용내용내용내용내용내용내용내용내용내용내용내용</span>
+            <span id="notice_create">2021-11-08</span>
+        </div>
+        <div class="notice_select">
+            <span id="notice_no">65</span> 
+            <span id="notice_category">공지사항</span>
+            <span id="notice_comment">내용내용내용내용내용내용내용내용내용내용내용내용</span>
+            <span id="notice_create">2021-11-08</span>
+        </div>
+        <div class="notice_select">
+            <span id="notice_no">65</span> 
+            <span id="notice_category">공지사항</span>
+            <span id="notice_comment">내용내용내용내용내용내용내용내용내용내용내용내용</span>
+            <span id="notice_create">2021-11-08</span>
+        </div>
 
-    
-    
-</div>
+        <div class="notice_paging">페이징처리 구간</div>
+    </div>
+    <footer id="inputFooter"></footer>
+    <script>
+        $(document).ready(function(){
+            $("#inputHeader").load("../common/header.html");
+            $("#inputFooter").load("../common/footer.html");
+        });
+    </script>
 </body>
 </html>
