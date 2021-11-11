@@ -3,8 +3,122 @@
 <head>
 <meta charset="UTF-8">
 <title>mypageMain</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link href="../../static/css/mypage/mypage.css" rel="stylesheet">
 </head>
+<header id="inputHeader"></header>
 <body>
+   
+    <h1 align="center">양정하 님</h1>
+    <div class="my_category_boundery">
+        <div id="a" align="center">
+            <a href=""><img src="../../static/images/mypage/Bag.png" ></a>
+            <h3>장바구니</h3>
+            <h3 >수량</h3>
+        </div>
+        <div id="a" align="center">
+            <a href=""><img src="../../static/images/mypage/Paper.png" ></a>
+            <h3>구매내역</h3>
+            <h3>수량</h3>
+        </div>
+        <div id="a" align="center">
+            <a href="../mypage/myRiew.html"><img src="../../static/images/mypage/Chat2.png" ></a>
+            <h3>수강후기</h3>
+            <h3>수량</h3>
+        </div>
+        <div id="a" align="center">
+            <a href="../mypage/myhistory.html"><img src="../../static/images/mypage/star3.png" ></a>
+            <h3>수강내역</h3>
+            <h3>수량</h3>
+        </div>
+    </div>
+    <div align="right" class="my_detail_button">
+        <input type="button"  id="my_button"  value="수정하기" class="button" onclick="modify()"> 
+    </div>
 
+    <div align="center">
+        <div style="width: 1200px; margin: 0 auto;">
+            <h2 style="display: flex;">회원정보</h2>
+        </div>
+        <form class="my_infoForm" action="" method="" >
+            <table class="my_infoTable">
+                <tr id="tr">
+                    <th>성명</th>
+                    <td>양정하</td>
+                    <th>생년월일</th>
+                    <td>1995.02.02</td>
+                </tr>
+                <tr id="tr">
+                    <th>휴대전화</th>
+                    <td>010-1234-4567</td>
+                    <th>E-mail</th>
+                    <td>KH789@kh.or.gr</td>
+                </tr>
+                <tr id="tr">
+                    <th>주소</th>
+                    <td colspan="3">ㅇㅇㅇㅇ</td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+    <h1 align="center">최근 수강내역</h1>
+    <form action="" method="" >
+        <div class="my_history">
+            <div id="my_history1">
+                <img src="../../static/images/mypage/043.png">
+                <div>dd</div>
+                <div>dd</div>
+                <div>dd</div>
+            </div>
+            
+            <div id="my_history1">
+                <img src="../../static/images/mypage/043.png">
+                <div>dd</div>
+                <div>dd</div>
+                <div>dd</div>
+                <div>dd</div>
+            </div>
+            
+            <div id="my_history1">
+                <img src="../../static/images/mypage/043.png">
+                <div>dd</div>
+            </div>
+            
+            <div id="my_history1">
+                <img src="../../static/images/mypage/043.png">
+                <div>dd</div>
+                <div>dd</div>
+            </div>
+            
+            <div id="my_history1">
+                <img src="../../static/images/mypage/star.png">
+                <div>dd</div>
+            </div>
+            <div id="my_history1">
+                <img src="../../static/images/mypage/043.png">
+                <div>dd</div>
+                <div>dd</div>
+                <div>dd</div>
+            </div>
+          
+        </div>
+    </form>
+
+    <div class="my_paging">페이징처리 구간</div>
+
+    <footer id="inputFooter"></footer>
+    <script>
+        $(document).ready(function(){
+            $("#inputHeader").load("../common/header.html");
+            $("#inputFooter").load("../common/footer.html");
+        });
+    </script>
+    <script>
+        function modify(){
+            location.href ="../mypage/memberModify.html";
+        }
+    </script>
+    
 </body>
 </html>
