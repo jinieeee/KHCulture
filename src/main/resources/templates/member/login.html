@@ -59,6 +59,7 @@
         justify-content: center;
     }
     div.find>a {
+        text-decoration: none;
         font-size: 18px;
         padding: 0;
     }
@@ -94,19 +95,19 @@
         <form class="loginForm" action="" method="post">
             <table class="loginTable">
                 <tr>
-                    <th><img src="../../static/images/User_circle.png"></th>
+                    <th><img src="/static/images/member/User_circle.png"></th>
                     <td><input type="text" name="userId" placeholder="아이디를 입력해주세요"></td>
                 </tr>
                 <tr>
-                    <th><img src="../../static/images/Lock_fill.png"></th>
+                    <th><img src="/static/images/member/Lock_fill.png"></th>
                     <td><input type="password" name="userPwd" placeholder="비밀번호를 입력해주세요"></td>
                 </tr>
             </table>
             <button type="submit" name="loginBtn">로그인</button>
         </form>
         <div class="find">
-            <a>아이디 찾기</a>
-            <a>비밀번호 찾기</a>
+            <a href="/templates/member/findId.html" onclick="window.open(this.href, '아이디찾기', 'width=600, height=600px, resizable=no'); return false;">아이디 찾기</a>
+            <a href="/templates/member/findPwd.html" onclick="window.open(this.href, '비밀번호찾기', 'width=600, height=600px, resizable=no'); return false;">비밀번호 찾기</a>
         </div>
         <table class="joinInfo">
             <tr>
