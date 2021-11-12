@@ -1,9 +1,11 @@
-package com.kh.khculture;
+package com.kh.khculture.configuration;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
+@ComponentScan(basePackages="com.kh.khculture")
 public class BootKhcultureFinalprojectApplication {
 
 	public static void main(String[] args) {

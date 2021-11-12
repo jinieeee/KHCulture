@@ -1,15 +1,25 @@
 # server port config
 # first-project 에서는 server.port:8800으로 썼으나 여기에서는 이러한 방식으로 쓰는 이유는
 # server의 하위에 정의할 수 있는 내용이 많아 추가적으로 작성할때 더욱 간결하게 코드를 작성하기 위해
-server:  port: 8005
+server:  port: 8006
   
 # oracle driver config
 # DB연결정보
 spring:  datasource:    driver-class-name: oracle.jdbc.OracleDriver
-    url: jdbc:oracle:thin:@localhost:1521:xe
-    username: khculture
-    password:  khculture
+    url: jdbc:oracle:thin:@KHCulture_high?TNS_ADMIN=C:\\STS4\\KHculture_final\\Oracle_Wallet
+    username: admin
+    password:  KHCulture2021
+    hikari:
+      connection-test-query: select sysdate from dual
 
 # mybatis config
 mybatis:
  mapper-locations: mappers/**/*.xml
+ 
+# logging level (root level - 전역 설정)
+logging:
+  level:
+    root: info
+
+# logging level (package level - 지역 설정)
+    '[com.kh.khculture.book]': trace
