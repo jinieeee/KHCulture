@@ -85,7 +85,7 @@
     }
 </style>
 </head>
-<header id="inputHeader"></header>
+<header th:include="fragments/header.html"></header>
 <body>
 <article id="joinForm">
     <div>
@@ -196,12 +196,7 @@
 </div>
 </div>
 </article>
-<footer id="inputFooter"></footer>
-<script>
-    $(document).ready(function(){
-        $("#inputHeader").load("../common/header.html");  
-        $("#inputFooter").load("../common/footer.html");
-    });
-	</script>
+<footer th:include="fragments/footer.html"></footer>
+
 </body>
 </html>

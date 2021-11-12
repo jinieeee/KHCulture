@@ -1,91 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8">
 <title>login</title>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<style>
-    :root {
-        --main-color : #F0B95E;
-        --active-btn-color : #F0B95E;
-        --inactive-btn-color : #6A6A6A;
-        --btn-font-color : white;
-        --main-border-color : lightgray;
-        --main-font-color : #4E4E4E;
-    }
-    #loginForm {
-        display: flex;
-        justify-content: center;
-        margin-top: 150px;
-    }
-    #loginForm h1 {  
-        font-size: 48px;
-    }
-    #loginForm div {
-        margin-bottom: 20px;
-    }
-    #loginForm button {
-        height: 50px;
-        border: none;
-        border-radius: 0;
-        background-color: var(--active-btn-color);
-        color: var(--btn-font-color);
-        font-size: 18px;
-
-    }
-    .loginForm button {
-        width: 625px;
-        margin-bottom: 20px;
-    }
-    .joinInfo button {
-        width: 150px;
-    }
-    .loginTable {
-        border-collapse: collapse;
-        margin-bottom: 70px;
-    }
-    .loginTable input {
-        line-height: 40px;
-        width: 540px;
-        border: none;
-        font-size: 20px;
-        padding-left: 10px;
-    }
-    .loginTable tr{
-        border-bottom: 1px solid var(--main-border-color);
-    }
-    div.find {
-        display: flex;
-        justify-content: center;
-    }
-    div.find>a {
-        text-decoration: none;
-        font-size: 18px;
-        padding: 0;
-    }
-    div.find>a::after {
-        content: "|";
-        margin: 0 25px;
-    }
-    div.find>a:last-child::after {
-        content: "";
-    }
-    table.joinInfo {
-        width: 625px;
-        height: 150px;
-        background-color: #efefef;
-
-    }
-    table.joinInfo td {
-        padding: 20px;
-    }
-    table.joinInfo p {
-        margin: 5px;
-        font-size: 17px;
-    }
-</style>
+<link rel="stylesheet" type="text/css" href="/css/member/login.css">
 </head>
-<header id="inputHeader"></header>
+<header th:include="fragments/header.html"></header>
 <body>
 <article id="loginForm">
     <div>    
@@ -95,19 +15,19 @@
         <form class="loginForm" action="" method="post">
             <table class="loginTable">
                 <tr>
-                    <th><img src="/static/images/member/User_circle.png"></th>
+                    <th><img src="/images/member/User_circle.png"></th>
                     <td><input type="text" name="userId" placeholder="아이디를 입력해주세요"></td>
                 </tr>
                 <tr>
-                    <th><img src="/static/images/member/Lock_fill.png"></th>
+                    <th><img src="/images/member/Lock_fill.png"></th>
                     <td><input type="password" name="userPwd" placeholder="비밀번호를 입력해주세요"></td>
                 </tr>
             </table>
             <button type="submit" name="loginBtn">로그인</button>
         </form>
         <div class="find">
-            <a href="/templates/member/findId.html" onclick="window.open(this.href, '아이디찾기', 'width=600, height=600px, resizable=no'); return false;">아이디 찾기</a>
-            <a href="/templates/member/findPwd.html" onclick="window.open(this.href, '비밀번호찾기', 'width=600, height=600px, resizable=no'); return false;">비밀번호 찾기</a>
+            <a href="member/findId.html" onclick="window.open(this.href, '아이디찾기', 'width=600, height=600px, resizable=no'); return false;">아이디 찾기</a>
+            <a href="member/findPwd.html" onclick="window.open(this.href, '비밀번호찾기', 'width=600, height=600px, resizable=no'); return false;">비밀번호 찾기</a>
         </div>
         <table class="joinInfo">
             <tr>
@@ -122,12 +42,7 @@
         </table>
     </div>
 </article>
-<footer id="inputFooter"></footer>
-<script>
-    $(document).ready(function(){
-        $("#inputHeader").load("header.html");
-        $("#inputFooter").load("/templates/common/footer.html");
-    });
-</script>
+<footer th:include="fragments/footer.html"></footer>
+
 </body>
 </html>
