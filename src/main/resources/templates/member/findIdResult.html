@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>아이디 찾기 결과</title>
+<style>
+    :root {
+        --main-color : #F0B95E;
+        --active-btn-color : #F0B95E;
+        --inactive-btn-color : #6A6A6A;
+        --btn-font-color : white;
+        --main-border-color : #EFEFEF;
+        --main-font-color : #4E4E4E;
+    }
+    #titleArea {
+        margin-top: 60px;
+    }
+    #resultArea>p {
+        margin: 20px 0;
+    }
+    #titleArea::after {
+        content: "";
+        display: block;
+        width: 100%;
+        height: 1px;
+        background-color: var(--main-font-color);
+        margin: 40px 0;
+    }
+    #resultArea,
+    #emailAuth>div,
+    #emailAuth>table {
+        width: 500px;
+        margin: auto;
+    }
+    #idResult {
+        width: 100%;
+        height: 30px;
+        background-color: var(--main-border-color);
+        border: none;
+        text-align: center;
+    }
+    form#emailAuth::before {
+        content: "";
+        display: block;
+        width: 100%;
+        height: 0.5px;
+        background-color: var(--main-font-color);
+        margin-bottom: 20px;
+    }
+    #emailAuthTbl td {
+        align-items: center;
+        height: 45px;
+    }
+    #btnArea {
+        display: flex;
+        justify-content: center;
+    }
+    #emailAuthTbl input[type=button] {
+        width: 180px;
+        height: 40px;
+        border: none;
+        border-radius: 0;
+        font-size: 18px;
+        color: white;
+        background-color: var(--inactive-btn-color);
+    }
+    div#emailResult,
+    #fullIdResult {
+        width: 300px;
+        height: 36px;
+        background-color: var(--main-border-color);
+        text-align: center;
+    }
+    #fullIdResult {
+        margin-top: 30px;
+    }
+    #emailAuthTbl input[type=text] {
+        width: 292px;
+        height: 30px;
+        padding: none;
+        text-align: center;
+    }
+    #btnArea>button {
+        width: 200px;
+        height: 50px;
+        border: none;
+        border-radius: 0;
+        font-size: 20px;
+        color: white;
+        margin-top: 30px;
+        background-color: var(--inactive-btn-color);
+    }
+</style>
+</head>
+<body>
+    <div id="titleArea">
+        <h1>아이디 찾기 결과</h1>
+    </div>
+    <div id="resultArea">
+        <p><span id="name"></span> 님의 아이디입니다.</p>
+        <div id="idResult"></div>
+        <br><br>
+        <p style="padding: none;">이메일 전체 확인</p>
+    </div>
+    <form id="emailAuth">
+        <div>
+            아이디 전체 확인을 위해 추가 이메일 인증이 필요합니다.<br>
+            등록된 이메일로 인증번호를 전송합니다.
+        </div>
+        <table id="emailAuthTbl">
+            <tr>
+                <td><div id="emailResult"></div></td>
+                <td><input type="button" value="인증코드 전송"></td>
+            </tr>
+            <tr>
+                <td><input type="text" placeholder="인증코드 입력"></div></td>
+                <td><input type="button" value="인증하기"></td>              
+            </tr>
+            <tr>
+                <td><div id="fullIdResult"></div></td>
+                <td></td>
+            </tr>
+        </table>
+    </form>
+    <div id="btnArea">
+        <button type="button" id="closeBtn">닫기</button>
+    </div>
+</body>
+</html>
