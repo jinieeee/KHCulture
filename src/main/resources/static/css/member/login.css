@@ -1,0 +1,78 @@
+:root {
+    --main-color : #F0B95E;
+    --active-btn-color : #F0B95E;
+    --inactive-btn-color : #6A6A6A;
+    --btn-font-color : white;
+    --main-border-color : lightgray;
+    --main-font-color : #4E4E4E;
+}
+#loginForm {
+    display: flex;
+    justify-content: center;
+    margin-top: 150px;
+}
+#loginForm h1 {  
+    font-size: 48px;
+}
+#loginForm div {
+    margin-bottom: 20px;
+}
+#loginForm button {
+    height: 50px;
+    border: none;
+    border-radius: 0;
+    background-color: var(--active-btn-color);
+    color: var(--btn-font-color);
+    font-size: 18px;
+
+}
+.loginForm button {
+    width: 625px;
+    margin-bottom: 20px;
+}
+.joinInfo button {
+    width: 150px;
+}
+.loginTable {
+    border-collapse: collapse;
+    margin-bottom: 70px;
+}
+.loginTable input {
+    line-height: 40px;
+    width: 540px;
+    border: none;
+    font-size: 20px;
+    padding-left: 10px;
+}
+.loginTable tr{
+    border-bottom: 1px solid var(--main-border-color);
+}
+div.find {
+    display: flex;
+    justify-content: center;
+}
+div.find>a {
+    text-decoration: none;
+    font-size: 18px;
+    padding: 0;
+}
+div.find>a::after {
+    content: "|";
+    margin: 0 25px;
+}
+div.find>a:last-child::after {
+    content: "";
+}
+table.joinInfo {
+    width: 625px;
+    height: 150px;
+    background-color: #efefef;
+
+}
+table.joinInfo td {
+    padding: 20px;
+}
+table.joinInfo p {
+    margin: 5px;
+    font-size: 17px;
+}

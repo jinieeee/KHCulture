@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>header</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/css/common/header.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+</head>
+<header id="header">
+    <div class="header-box">
+
+    <h1 class="mainLogo" onclick="location.href='main'">KH문화센터</h1>
+        
+    <div class="nav">
+        <ul class="nav-menu">
+            <li class="depth1 lecture">수강신청
+                <ul class="depth2 submenu">
+                    <li><a href="#">강좌검색</a></li>
+                    <li><a href="#">강좌스케줄</a></li>
+                    <li><a href="#">강사정보</a></li>
+                </ul>
+            </li>
+            <li class="depth1 comunity">커뮤니티
+                <ul class="depth2 submenu">
+                    <li><a href="../notice/noticeList.html">공지사항</a></li>
+                    <li><a href="../board/boardList.html">수강후기</a></li>
+                </ul>
+            </li>
+            <!-- 관리자 로그인 시 관리자페이지 -->
+            <li class="depth1 mypage"><a href="../mypage/mypagemain.html" style="color: #000000;
+                text-decoration: none;">마이페이지</a>
+                <ul class="depth2 submenu">
+                    <li><a href="../mypage/memberModify.html">회원정보변경</a></li>
+                    <li><a href="#">장바구니</a></li>
+                    <li><a href="#">구매내역</a></li>
+                    <li><a href="../mypage/myhistory.html">수강내역</a></li>
+                    <li><a href="../mypage/myRiew.html">내가 쓴 수강후기</a></li>
+                    <li><a href="#">1:1 문의내역</a></li>
+                </ul>
+            </li>
+        </ul>
+        <!-- 비로그인시 로그인 / 회원가입 -->
+        <div class="userInfo">
+            <!-- <a>이지은 님</a>
+            <a>로그아웃</a> -->
+            <button type="button" id="loginBtn" onclick="location.href='member/login'">LOGIN</button>
+            <button type="button" id="joinBtm">SIGN UP</button>
+        </div>
+    </div>
+    </div>
+    <script>
+        $('ul.nav-menu').on('mouseover', function(){
+            $(".depth2").slideDown(300)
+        });
+    </script>
+</header>
+</html>
