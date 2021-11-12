@@ -1,0 +1,78 @@
+#joinForm {
+    display: flex;
+    justify-content: center;
+    margin-top: 150px;
+    /* background-color: lightgreen; 테스트용 */
+}
+#joinForm h1 {
+    font-size: 48px;
+}
+#joinForm div>p {
+    font-size: 20px;
+    margin: 0;
+}
+#joinForm div {
+    margin-bottom: 20px;
+}
+.joinTable {
+    width: 650px;
+    background: #fff;
+    border: solid 1px #AEAEAE;
+    border-collapse: collapse;
+}
+.joinTable tr, 
+.joinTable td {
+    border: 1px solid #AEAEAE;
+    padding : 10px 0 10px 10px;
+}
+td>input[type=text],
+td>input[type=password] {
+    width: 350px;
+    line-height: 30px;
+    border: none;
+    font-size: 14px;
+}
+.joinTable button {
+    height: 35px;
+    width: 120px;
+    border-style: none;
+    margin-right: 15px;
+    color: #fff;
+    background-color: #F0B95E;
+}
+.joinTable tr > th{
+    background-color: lightgray;
+}
+.joinTable ul,
+.joinTable li {
+    list-style: none;
+    padding: 0;
+}
+.joinTable input[type=checkbox] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+.joinTable span {
+    display: flex;
+    align-items: center;
+    padding: 5px 0;
+}
+.btnArea {
+    display: flex;
+    justify-content: center;
+}
+.btnArea>button {
+    width: 200px;
+    height: 50px;
+    border: none;
+    border-radius: 0;
+    font-size: 20px;
+    color: white;
+    background-color: #6A6A6A;
+    margin-top: 20px;
+}
+.btnArea>button:first-child {
+    margin-right: 20px;
+}
