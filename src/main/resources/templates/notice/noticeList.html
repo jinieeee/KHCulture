@@ -1,16 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>noticeList</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link href="../../static/css/mypage/notice.css" rel="stylesheet">
-</style>
+<link href="/css/mypage/notice.css" rel="stylesheet">
+
 </head>
-<header id="inputHeader"></header>
+<header th:include="fragments/header.html"></header>
 <body>
-    
-    <h1 align="center">공지사항</h1>
+    <div class="titleArea">
+        <h1 align="center">공지사항</h1>
+    </div>
 
     <div class="notice_search">
 
@@ -32,39 +33,63 @@
     </div>
 
     <div class="notice_list">
-        <div class="notice_select">
-            <span id="notice_no">65</span> 
+      
+        <div class="notice_select" th:each="n : ${ noticeList }" >
+            <span id="notice_no" th:text="${n.n_no}"></span> 
             <span id="notice_category">공지사항</span>
-            <span id="notice_comment">내용내용내용내용내용내용내용내용내용내용내용내용</span>
-            <span id="notice_create">2021-11-08</span>
+            <span id="notice_comment" th:text="${n.n_title}"></span>
+            <span id="notice_create" th:text="${n.n_enroll_date}" ></span>
         </div>
-        <div class="notice_select">
-            <span id="notice_no">65</span> 
-            <span id="notice_category">공지사항</span>
-            <span id="notice_comment">내용내용내용내용내용내용내용내용내용내용내용내용</span>
-            <span id="notice_create">2021-11-08</span>
-        </div>
-        <div class="notice_select">
-            <span id="notice_no">65</span> 
-            <span id="notice_category">공지사항</span>
-            <span id="notice_comment">내용내용내용내용내용내용내용내용내용내용내용내용</span>
-            <span id="notice_create">2021-11-08</span>
-        </div>
-        <div class="notice_select">
-            <span id="notice_no">65</span> 
-            <span id="notice_category">공지사항</span>
-            <span id="notice_comment">내용내용내용내용내용내용내용내용내용내용내용내용</span>
-            <span id="notice_create">2021-11-08</span>
-        </div>
-
-        <div class="notice_paging">페이징처리 구간</div>
+        
+     <!--  
+     <table>
+        <tr class="notice_select" th:each="noticeList : ${ noticeList }">
+           <td id="notice_no" th:text="${noticeList.n_no}"></td> 
+           <td id="notice_category">공지사항</td>
+           <td id="notice_comment" th:text="${noticeList.n_title}"></td>
+           <td id="notice_create" th:text="${noticeList.n_enroll_date}" ></td>
+       </tr>
+     </table>  
+     -->
+      <div class="notice_area">
+        <ul class="notice_paging">  
+        <!--  맨 처음으로 (<<) -->
+        	<li><a th:href="@{/?page=1}">&lt;&lt;</a></li>
+        	
+        <!--  이전 페이지(<) -->	
+        	<li><a th:href="@{?page={page}(page = ${pi.page-1})}">&lt;</a></li>
+        	
+        <!-- 페이지수 -->	
+        	<th:block th:with="start=${pi.startPage}, end=${pi.endPage}">
+	        	<th:block th:each="pageNum :${#numbers.sequence(start,end)}" th:if ="${pageNum == pi.page}">
+	        		<li> <a th:text="${pageNum}"></a></li>
+	        	</th:block>
+	        	<th:block th:each="pageNum :${#numbers.sequence(start,end)}" th:if ="${pageNum != pi.page}">
+	        		<li> <a th:text="${pageNum}"></a></li>
+	        	</th:block>
+        	</th:block>
+        	
+        <!-- 다음 페이지로(>) -->	
+        	<li><a th:href="@{?page={page} (page = ${pi.page+1})}" >&gt;</a></li>
+       
+        <!-- 맨 뒤로(>>) -->	
+        	<li><a th:href="@{?page={page} (page = ${pi.maxPage})}">&gt;&gt;</a></li>
+        </ul>
+       
     </div>
-    <footer id="inputFooter"></footer>
+    </div>
+    <footer th:include="fragments/footer.html"></footer>
     <script>
         $(document).ready(function(){
-            $("#inputHeader").load("../common/header.html");
-            $("#inputFooter").load("../common/footer.html");
+            $("#inputHeader").load("../fragments/header.html");
+            $("#inputFooter").load("../fragments/footer.html");
         });
     </script>
+    
+    <script id="notice_regist">
+    	
+    </script>
+    
+    
 </body>
 </html>

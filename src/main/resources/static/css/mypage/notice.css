@@ -66,21 +66,44 @@ form#notice_form {
 }
 .notice_select > span{
     padding: 8px 10px;
-
     margin-top: 8px;
     margin-left: 20px;
 }
-#notice_comment{
+#notice_title{
     text-align: left;
     width: 500px;
     /*background-color: aquamarine;*/
 }
-.notice_paging{
-    text-align: center;
-    width: 800px;
+span#notice_comment {
+    width: 55%;
+    text-align: left;
+}
+.notice_area{
+	display: flex;
+    width: 890px;
     margin: 0 auto;
-    margin-top: 10px;
-    background-color: antiquewhite;
+}
+.notice_paging {
+	
+	line-height: 50px;
+	display: flex;
+	justify-content: center;
+	list-style: none;
+	width: 480px;
+}
+.notice_paging li{
+	    margin-right: -57px;
+}
+.notice_paging a {
+	text-decoration: none;
+	color: #282A35;
+	width: 40px;
+	display: block;
+	text-align: center;
+}
+.notice_paging a.current_page {
+	border-bottom: 2px solid #282A35;
+	font-weight: bold;
 }
 /* =================================================== noticeDetatil =========================== */
 .notice_detail_title{
