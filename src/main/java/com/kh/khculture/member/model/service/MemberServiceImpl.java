@@ -105,4 +105,11 @@ public class MemberServiceImpl implements MemberService {
 		return user;
 	}
 
+	// 중복아이디 조회
+	@Override
+	public int checkId(String userId) {
+		List<Member> memberList = memberMapper.checkId(userId);
+		return (memberList.size() > 0) ? 1 : 0;
+	}
+
 }

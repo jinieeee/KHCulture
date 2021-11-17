@@ -17,4 +17,7 @@ public interface MemberService extends UserDetailsService{
 	
 	// 비밀번호 힌트 목록 조회
 	List<PwdHint> findAllHint();
+	
+	// 중복아이디 조회
+	int checkId(String userId);
 }

@@ -61,7 +61,7 @@ body {
     font-size: 17px;
 }
 .depth2 {
-    padding-top: 10px;
+    padding-top: 20px;
 }
 .depth2 a {
     color: #6A6A6A;
@@ -82,7 +82,7 @@ li ul.submenu {
     display: none;
     position: absolute;
     width: 150px;
-    top: 92px;
+    top: 85px;
     z-index: 2;
 }
 ul.nav-menu::after {

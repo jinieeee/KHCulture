@@ -92,7 +92,9 @@ td>input[type=password] {
 #idVerify,
 #pwdVerify,
 #pwdDblChk,
-#nameVerify {
+#nameVerify,
+#emailVerify,
+#hintAVerify {
 	font-size: 12px;
 	display: block;
 	height: 15px;

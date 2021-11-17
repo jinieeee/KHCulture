@@ -18,9 +18,10 @@ $(function(){
 document.querySelector("[name=id]").addEventListener('keyup', function(){
     var id = $("[name=id]").val();
     var idPattern = /^[0-9a-zA-Z]{4,12}$/;
-    console.log(idPattern.test(id));
-    console.log(id);
-    if(!idPattern.test(id)) {
+    // console.log(idPattern.test(id));
+    // console.log(id);
+    if($("[name=id]").attr("readonly") == "readonly") return;
+    if(!idPattern.test(id) && !$("[name=id]").attr("readonly")) {
         $("#idVerify").text("아이디는 4~12자의 영문 대소문자와 숫자로만 입력 가능합니다");
         $("#idVerify").css('color', 'red');
         $("#idCheck").attr('disabled', true);
@@ -36,7 +37,27 @@ document.querySelector("[name=id]").addEventListener('keyup', function(){
 
 $("#idCheck").on('click', function(){
 	// DB 중복 검사 필요 - checkId
-	alert("중복 확인 완료!");
+	var userId = $("[name=id]");
+	$.ajax({
+		url: "/member/checkId",
+		data: { userId : userId.val() },
+		type : "post",
+		success : function(data) {
+			if(data == "success") {
+				alert("사용 가능한 아이디입니다");
+				userId.attr('readonly', true);
+				$("#idCheck").attr("disabled", true);
+				$("#idCheck").css('background-color', 'var(--inactive-btn-color)');
+				$("#joinBtn").attr('disabled', false);
+        		$("#joinBtn").css('background-color', 'var(--active-btn-color)');
+			} else {
+				alert("사용할 수 없는 아이디입니다");
+			}
+		},
+		error : function(e) {
+			console.log(e);
+		}
+	});
 });
 
 /* 비밀번호 유효성 검사 */
@@ -91,6 +112,32 @@ $(".sendAuth").click(function(){
 	}
 });
 
+/* 이메일 유효성 검사 */
+$("#inputEmail").keyup(function(){
+	var email = $("#inputEmail").val();
+	var emailPattern = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+	if(!emailPattern.test(email)){
+		$("#emailVerify").text("이메일 형식에 맞지 않습니다");
+		$("#emailVerify").css('color', 'red');
+	} else {
+		$("#emailVerify").text("올바른 이메일 형식입니다");
+		$("#emailVerify").css('color', 'green');
+	}
+});
+
+/* 비밀번호 힌트 답 유효성 검사 */
+$("[name=hintA]").keyup(function(){
+	var hintA = $("[name=hintA]").val();
+	var hintAPattern = /^[0-9a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣]{2,}$/;
+	if(!hintAPattern.test(hintA)){
+		$("#hintAVerify").text("영문 대소문자, 숫자, 한글로만 2자 이상 입력해야 합니다");
+		$("#hintAVerify").css('color', 'red');
+	} else {
+		$("#hintAVerify").text("올바른 비밀번호 힌트에 대한 답 형식입니다");
+		$("#hintAVerify").css('color', 'green');	
+	}
+});
+
 /* ajax 문자 전송 */
 var authCode1 = "";
 function sendAuth(phone) {
@@ -121,7 +168,6 @@ function sendAuth(phone) {
 /* 인증번호 일치 확인 */
 function authCodeCheck() {
 	var authCode2 = $("#inputAuthCode").val();
-	
 	if(authCode2 == authCode1) {
 		alert("인증이 완료되었습니다");
 		$("#inputAuthCode").attr("disabled", true);
@@ -160,4 +206,22 @@ $(".chkbox").find('input').change(function(){
 	} else {
 		$("#alljoin").prop("checked", false);
 	}
+});
+
+/* 가입하기 클릭 */
+$("#joinBtn").on('click', function(){
+	var submitBool = false;
+	if( $("#chkjoin1").is(":checked")							// 필수 동의 1
+		&& $("#chkjoin2").is(":checked")						// 필수 동의 2
+		&& $("#idVerify").css('color') == "rgb(0, 128, 0)"		// id 형식
+		&& $("#pwdVerify").css('color') == "rgb(0, 128, 0)"		// pwd 형식
+		&& $("#pwdDblChk").css('color') == "rgb(0, 128, 0)"		// pwd 일치 확인
+		&& $("#nameVerify").css('color') == "rgb(0, 128, 0)"	// 회원명 형식
+		&& $("#emailVerify").css('color') == "rgb(0, 128, 0)"	// 이메일 형식
+		&& $("#hintAVerify").css('color') == "rgb(0, 128, 0)"){	// 힌트답 형식
+		submitBool = true;
+	} else {
+		alert("형식에 맞지 않는 입력이 존재합니다 ! 다시 한번 확인하세요");
+	}
+	return submitBool;
 });

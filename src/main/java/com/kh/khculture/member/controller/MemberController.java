@@ -3,13 +3,14 @@ package com.kh.khculture.member.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.khculture.member.model.service.MemberService;
 import com.kh.khculture.member.model.vo.Member;
@@ -23,10 +24,12 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberController {
 	
 	private MemberService memberService;
+	private MessageSource messageSource;
 	
 	@Autowired
-	public MemberController(MemberService memberService) {
+	public MemberController(MemberService memberService, MessageSource messageSource) {
 		this.memberService = memberService;
+		this.messageSource = messageSource;
 	}
 	
 	@GetMapping("login")
@@ -42,13 +45,11 @@ public class MemberController {
 	public void findPwd() {}
 	
 	@PostMapping("signUpMember")
-	public ModelAndView signUpMember(Member member, ModelAndView mv) {
-		log.info("회원 정보 조회 : {}", member.getAddress());
+	public String signUpMember(Member member, RedirectAttributes rttr/*, HttpSession session */) {
+		// log.info("회원 정보 조회 : {}", member.getAddress());
 		String msg = memberService.signUpMember(member) > 0 ? "회원가입 완료, 로그인하실 수 있습니다": "회원가입 실패";
-		
-		mv.addObject("msg", msg);
-		mv.setViewName("member/login");
-		return mv;
+		rttr.addFlashAttribute("msg", msg);
+		return "redirect:/member/login";
 	}
 	
 	// 힌트 리스트 조회
@@ -70,4 +71,11 @@ public class MemberController {
 		return Integer.toString(randomNumber);
 	}
 
+	@PostMapping("checkId")
+	@ResponseBody
+	public String checkId(String userId) {
+		
+		String result = (memberService.checkId(userId) == 0) ? "success" : "failure";
+		return result;
+	}
 }

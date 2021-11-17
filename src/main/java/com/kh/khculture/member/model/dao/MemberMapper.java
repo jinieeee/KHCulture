@@ -20,5 +20,7 @@ public interface MemberMapper {
 	int insertMemberRole(MemberRole memberRole);
 
 	Member findMemberById(String username);
+
+	List<Member> checkId(String userId);
 	
 }
