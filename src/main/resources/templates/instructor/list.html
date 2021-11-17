@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>강사 목록</title>
+<style>
+.outer {
+	width: 1000px;
+	margin: auto;
+}
+
+.wrap {
+	width: 890px;
+	margin: 100px auto;
+}
+
+.instructor_title {
+	border-bottom: 1px solid #F0B95E;
+}
+
+ul, li {
+	margin: 0;
+	padding: 0;
+}
+
+.list_div {
+	width : 100%;
+}
+
+.instructor_list {
+	list-style : none;
+	margin:50px 15px;
+	display : grid;
+	grid-template-columns: 250px 250px 250px;
+	gap : 55px;
+}
+
+.instructor_list .box:hover {
+	cursor : pointer;
+	transform:scale(1.05);
+}
+.instructor_list .category {
+    font-weight : thin;
+	font-size : 16px;
+}
+
+.instructor_list .title{
+	font-weight : bold;
+	font-size : 24px;
+	text-align: center;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.instructor_list .lecture {
+	color : #979797;
+	font-size : 0.8rem;
+}
+
+.instructor_list img {
+	max-width : 250px;
+	height : 100%;
+}
+
+.btn_area {
+	text-align:center;
+}
+
+.btn_area button {
+	width: 100px;
+	height: 35px;
+	border: 0px;
+	color: white;
+	background: #F0B95E;
+	margin: 5px;
+	cursor : pointer;
+}
+</style>
+</head>
+<body>
+</body>
+	<div class="outer">
+		<div class="wrap">
+			<div class="instructor_area">
+				<div class="instructor_title">
+					<h1 align="center">강사 관리</h1>
+				</div>
+				<div class="list_div">
+					<ul class="instructor_list">
+					<li>
+					<div class="box" onclick="location.href='/instructor/detail'">
+					    <img src="/images/instructor/instructor01.jpg">
+					    <p class="title">조인성 <a class="category">강사님</a><br><a class="lecture">[담당 강의 : 스케이트]</a></p>
+					</div>
+					</li>
+					</ul>
+				</div>
+				
+				
+				<div class="btn_area">
+				    <button onclick="location.href='/instructor/regist'">등록하기</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</html>
