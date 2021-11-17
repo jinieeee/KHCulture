@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kh.khculture.member.model.dao.MemberMapper">
+	<resultMap type="com.kh.khculture.member.model.vo.PwdHint" id="pwdHintResultMap">
+		<id property="hintNo" column="HINT_NO"/>
+		<result property="hintQ" column="HINT_Q"/>
+	</resultMap>
+	
+	<resultMap type="com.kh.khculture.member.model.vo.Member" id="loginMemberResultMap">
+		<id property="mno" column="M_NO"/>
+		<result property="id" column="ID"/>
+		<result property="pwd" column="PWD"/>
+		<result property="name" column="NAME"/>
+		<result property="phone" column="PHONE"/>
+		<result property="email" column="EMAIL"/>
+		<result property="address" column="ADDRESS"/>
+		<result property="hintNo" column="HINT_NO"/>
+		<result property="hintA" column="HINT_A"/>
+		<result property="enrollDate" column="M_ENROLL_DATE"/>
+		<result property="modifyDate" column="M_MODIFY_DATE"/>
+		<result property="pwdChangedDate" column="PWD_CHANGED_DATE"/>
+		<result property="pwdExpDate" column="PWD_EXP_DATE"/>
+		<result property="loginFailedCnt" column="LOGIN_FAILED_COUNT"/>	
+		<result property="accLockYN" column="ACC_LOCK_YN"/>	
+		<result property="accSecessionYN" column="ACC_SECESSION_YN"/>	
+		<result property="accSecessionDate" column="ACC_SECESSION_DATE"/>	
+		<collection property="memberRoleList" resultMap="memberRoleResultMap"/>
+	</resultMap>
+	
+	<resultMap type="com.kh.khculture.member.model.vo.MemberRole" id="memberRoleResultMap">
+		<id property="mno" column="REF_M_NO"/>
+		<id property="authorityCode" column="REF_AUTHORITY_CODE"/>
+		<association property="authority" resultMap="authorityResultMap"/>
+	</resultMap>
+	
+	<resultMap type="com.kh.khculture.member.model.vo.Authority" id="authorityResultMap">
+		<id property="authorityCode" column="REF_AUTHORITY_CODE2"/>
+		<result property="authorityName" column="AUTHORITY_NAME"/>
+		<result property="authorityDesc" column="AUTHORITY_DESC"/>
+	</resultMap>
+	
+	<select id="findMemberById" resultMap="loginMemberResultMap">
+		SELECT
+				A.M_NO
+			  , A.ID
+			  , A.PWD
+			  , A.NAME
+			  , A.PHONE
+			  , A.EMAIL
+			  , A.ADDRESS
+			  , A.HINT_NO
+			  , A.HINT_A
+			  , A.M_ENROLL_DATE
+			  , A.M_MODIFY_DATE
+			  , A.PWD_CHANGED_DATE
+			  , A.PWD_EXP_DATE
+			  , A.LOGIN_FAILED_COUNT
+			  , A.ACC_LOCK_YN
+			  , A.ACC_SECESSION_YN
+			  , A.ACC_SECESSION_DATE
+			  , B.M_NO REF_M_NO
+			  , B.AUTHORITY_CODE REF_AUTHORITY_CODE
+			  , C.AUTHORITY_CODE REF_AUTHORITY_CODE2
+			  , C.AUTHORITY_NAME
+		      , C.AUTHORITY_DESC
+		  FROM MEMBER A
+		  LEFT JOIN MEMBER_ROLE B ON(A.M_NO = B.M_NO)
+		  LEFT JOIN AUTHORITY C ON(B.AUTHORITY_CODE = C.AUTHORITY_CODE)
+		 WHERE A.ID = #{userId}
+	</select>
+	
+	<insert id="signUpMember" parameterType="com.kh.khculture.member.model.vo.Member">
+		INSERT
+		  INTO MEMBER
+		  	(
+		  		M_NO
+		  	  , ID
+		  	  , PWD
+		  	  , NAME
+		  	  , PHONE
+		  	  , EMAIL
+		  	  , ADDRESS
+		  	  , HINT_NO
+		  	  , HINT_A
+		  	  , M_ENROLL_DATE
+		  	  , M_MODIFY_DATE
+		  	  , PWD_CHANGED_DATE
+		  	  , PWD_EXP_DATE
+		  	)
+		VALUES
+			(
+				M_NO_SEQ.NEXTVAL
+			  , #{id}
+			  , #{pwd}
+			  , #{name}
+			  , #{phone}
+			  , #{email}
+			  , #{address}
+			  , #{hintNo}
+			  , #{hintA}
+			  , DEFAULT
+			  , DEFAULT
+			  , DEFAULT
+			  , TO_DATE(ADD_MONTHS(SYSDATE, 3), 'YYYY-MM-DD')
+			)
+	</insert>
+	
+	<insert id="insertMemberRole" parameterType="com.kh.khculture.member.model.vo.MemberRole">
+		INSERT
+		  INTO MEMBER_ROLE
+		  	(
+		  		M_NO
+		  	  , AUTHORITY_CODE
+		  	)
+		VALUES
+			(
+				M_NO_SEQ.CURRVAL
+			  , #{authorityCode}
+			)
+	</insert>
+	
+	<select id="findAllHint" resultMap="pwdHintResultMap">
+		SELECT
+				HINT_NO
+			  , HINT_Q
+		  FROM PWD_HINT
+	</select>
+	
+	
+</mapper>
