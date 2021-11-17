@@ -6,7 +6,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link href="/css/mypage/notice.css" rel="stylesheet">
 </head>
-<header id="inputHeader"></header>
+<header th:include="fragments/header.html"></header>
 <body>
     <div class="titleArea">
         <h1 align="center">등록하기</h1>
@@ -36,7 +36,8 @@
             </div>
         </form>
     </div>
-    <footer id="inputFooter"></footer>
+    <footer th:include="fragments/footer.html"></footer>
+    
     <script>
         $(document).ready(function(){
             $("#inputHeader").load("../common/header.html");

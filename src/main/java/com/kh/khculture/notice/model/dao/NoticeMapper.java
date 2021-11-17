@@ -16,8 +16,13 @@ public interface NoticeMapper {
 	//총 게시글 조회
 	List<Notice> findAllNotice();
 	*/
-	// 게시글 총 갯수
+	
+	//1. 게시글 총 갯수
 	int getListCount();
-	// 페이징된 게시글 수
-	List<Notice> selectList(PageInfo pi);
+	//2. 페이징된 게시글 수
+	List<Notice> selectList(int startRow, int endRow);
+	//3. 선택한 게시글
+	Notice selectNotice(int n_no);
+	//4. 게시글 작성
+	Notice insertNotice();
 }
