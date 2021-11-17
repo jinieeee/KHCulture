@@ -6,6 +6,9 @@
     --main-border-color : lightgray;
     --main-font-color : #4E4E4E;
 }
+article {
+	min-height: 875px;
+}
 #loginForm {
     display: flex;
     justify-content: center;

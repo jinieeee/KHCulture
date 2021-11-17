@@ -1,12 +1,21 @@
 html {
     min-width: 1920px;
-    min-height: 1080px;
-    display: flex;
-    justify-content: center;
     font-family: "Noto sans", sans-serif;
 }
 body {
     margin: 0;
+}
+.titleArea {
+  text-align: center;
+  margin-top : 100px;
+  height : 130px;
+  display : flex;
+  justify-content : center;
+  align-items : center;
+  width : 100%;
+}
+.titleArea h1 {
+   font-size : 52px;
 }
 #header {
     min-width: 1920px;
@@ -60,7 +69,7 @@ body {
     padding: 1px 0px;
 }
 .nav-menu>li.depth1 {
-    width: 130px;
+    min-width: 130px;
     padding: 27px 20px;
     font-size: 20px;
     position: relative;
