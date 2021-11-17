@@ -31,8 +31,20 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
-	public List<Notice> selectList(PageInfo pi) {
-		return noticeMapper.selectList(pi);
+	public List<Notice> selectList(int startRow, int endRow) {
+		//System.out.println("service단 : "+noticeMapper.selectList(startRow, endRow));
+		return noticeMapper.selectList(startRow, endRow);
+	}
+
+	@Override
+	public Notice selectNotice(int n_no) {
+		
+		return noticeMapper.selectNotice(n_no);
+	}
+
+	@Override
+	public Notice insertNotice() {
+		return noticeMapper.insertNotice();
 	}
 
 	

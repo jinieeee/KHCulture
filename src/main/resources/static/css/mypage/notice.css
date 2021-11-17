@@ -16,9 +16,11 @@ ul, li{
     margin-left: 100px;
     margin-top: 20px;
 }
+/*
 #header{
     margin-bottom: 100px;
 }
+*/
 
 .button{
     background-color: #F0B95E;
@@ -28,6 +30,10 @@ ul, li{
     
 }
 /* =================================================== noticeList =========================== */
+.notice_list {
+    height: 645px;
+}
+
 .notice_search {
     display: flex;
     width: 890px;
@@ -68,6 +74,11 @@ form#notice_form {
     padding: 8px 10px;
     margin-top: 8px;
     margin-left: 20px;
+    
+}
+.notice_select a{
+	text-decoration:none;
+	color:black;
 }
 #notice_title{
     text-align: left;
@@ -108,37 +119,41 @@ span#notice_comment {
 /* =================================================== noticeDetatil =========================== */
 .notice_detail_title{
     width: 1200px; /* 이 폭을 줄이면 세부폭은 알아서 따라옴 */
+    height: 60px;
     margin: 0 auto;
     margin-bottom: 10px;
     padding: 20px 10px;
     background-color: #F0B95E;
     display: flex;
+    margin-top: 100px;
+    font-size: 22px;
 }
 #notice_category2{
-    width: 100px;
-    padding: 8px 10px;
+    width: 150px;
+    padding: 16px 10px 10px;
     border-right: 3px solid black;
    /* background-color: aquamarine;*/
     
 }
 #notice_comment2{
-    width: 1000px;
-    padding: 8px 10px;
+    width: 830px;
+    padding: 16px 10px 10px;
     border-right: 3px solid black;
    /* background-color: aquamarine;*/
     
 }
 #notice_date2{
     width: 150px;
-    padding: 8px 10px;
+    padding: 16px 10px 10px;
    /* background-color: aquamarine;*/
 }
 
 .notice_detail_comment{
     width: 1200px; /* 이 폭을 줄이면 세부폭은 알아서 따라옴 */
+    height: 645px;
     margin: 0 auto;
     margin-bottom: 10px;
-   /* background-color: antiquewhite;*/
+   background-color: antiquewhite;
     text-align: center; /*이미지 가운데 정렬*/
     font-size: 10px;
 }

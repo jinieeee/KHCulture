@@ -31,7 +31,7 @@ SELECT
     N_NO
     , N_TITLE
     , N_CONTENT
-    , N_ENROLL_DATE
+    , TO_CHAR(N_ENROLL_DATE,'YYYY-MM-DD') N_ENROLL_DATE
     , M_NO
 FROM ( SELECT 
                ROWNUM RNUM, NLIST.*
@@ -42,17 +42,17 @@ FROM ( SELECT
                          WHERE AUTHORITY_CODE=1 
                             AND N_STATUS='Y' 
                             ORDER BY N_NO DESC) NLIST )
-WHERE RNUM BETWEEN #{ startPage } AND #{ endPage }
+WHERE RNUM BETWEEN #{ startRow } AND #{ endRow }
 </select>
 
 
-<!-- 모든 게시글의 내용 -->
-<select id="findAllNotice" resultMap="noticeResultMap">
+<!-- 선택한 게시글 정보들 -->
+<select id="selectNotice" resultMap="noticeResultMap">
 	SELECT
 		N_NO
 		, N_TITLE
 		, N_CONTENT
-		, N_ENROLL_DATE
+		, TO_CHAR(N_ENROLL_DATE,'YYYY-MM-DD') N_ENROLL_DATE
 		, N_COUNT
 		, N_MODIFY_DATE
 		, N_COUNT
@@ -61,7 +61,8 @@ WHERE RNUM BETWEEN #{ startPage } AND #{ endPage }
 		, M_NO
 	FROM NOTICE
    WHERE N_STATUS='Y'
-   ORDER BY N_NO DESC
+     AND N_NO = #{ n_no }
+   ORDER BY N_NO DESC 
 </select>
 
 </mapper>

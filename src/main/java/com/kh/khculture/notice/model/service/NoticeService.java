@@ -12,7 +12,11 @@ public interface NoticeService {
 	//1. 게시글 총 개수
 	int getListCount();
 	//2. 페이징된 게시글 들
-	List<Notice> selectList(PageInfo pi);
+	List<Notice> selectList(int startRow, int endRow);
+	//3. 선택한 게시물
+	Notice selectNotice(int n_no);
+	//4. 게시글 쓰기
+	Notice insertNotice();
 
 
 	
