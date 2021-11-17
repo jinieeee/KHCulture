@@ -1,44 +1,47 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8">
-<title>member join</title>
+<title>sign up</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<link rel="stylesheet" type="text/css" href="/css/member/memberJoin.css">
+<link rel="stylesheet" type="text/css" href="/css/member/signUpMember.css">
 </head>
 <header th:include="fragments/header.html"></header>
 <body>
-<article id="joinForm">
+<article id="signUpForm">
     <div>
         <div>
         <h1>회원가입</h1>
         <p>가입하실 회원 정보를 입력하세요.</p>
         <p>연락처 인증 후 가입 버튼이 활성화됩니다 :)</p>
     </div>
-    <form class="joinForm" action="" method="post" onsubmit="return validate();">
-        <table class="joinTable">
+    <form class="signUpForm" th:action="@{/member/signUpMember}" method="post">
+        <table class="signUpTable">
             <tr>
                 <th>아이디</th>
-                <td><input type="text" maxlength="50" name="userId" placeholder="아이디를 입력해주세요" required>
-                    <button id="idCheck" type="button" onclick="idChk()">중복 확인</button></td>
+                <td><input type="text" maxlength="12" name="id" placeholder="아이디를 입력해주세요" required>
+                    <button id="idCheck" type="button" disabled>중복 확인</button><br>
+                    <span id="idVerify"></span></td>
             </tr>
             <tr>
                 <th>비밀번호</th>
-                <td><input type="password" maxlength="15" name="userPwd" required></td>
+                <td><input type="password" maxlength="14" name="pwd" required>
+                <span id="pwdVerify"></span></td>
             </tr>
             <tr>
                 <th>비밀번호 확인</th>
-                <td><input type="password" maxlength="15" name="userPwd2" required>
-                    <label for="pwdResult"></label></td>
+                <td><input type="password" maxlength="14" name="pwd2" required>
+                <span id="pwdDblChk"></span></td>
             </tr>
             <tr>
                 <th>이름</th>
-                <td><input type="text" maxlength="5" name="userName" placeholder="실명으로 입력해주세요" required></td>
+                <td><input type="text" maxlength="5" name="name" placeholder="실명으로 입력해주세요" required>
+                <span id="nameVerify"></span></td>
             </tr>
             <tr>
                 <th>전화번호</th>
-                <td><input type="text" maxlength="11" name="phone" placeholder="전화번호를 입력해주세요 Ex)000-0000-0000" required>
-                    <button onclick="sendAuth()" id="sendAuth" type="button" disabled="disabled" class="sendAuth">인증코드 전송</button></td>
+                <td><input type="text" maxlength="11" name="phone" placeholder="' - ' 제외한 전화번호를 입력해주세요" required>
+                    <button id="sendAuth" type="button" class="sendAuth">인증코드 전송</button></td>
             </tr>
             <tr>
                 <th rowspan="2">인증번호 입력</th>
@@ -72,7 +75,7 @@
             </tr>
             <tr>
                 <th>비밀번호 힌트 답</th>
-                <td><input type="text" maxlength="15" name="pwd_answer" placeholder="비밀번호 힌트에 대한 답을 입력하세요(2자 이상)"></td>
+                <td><input type="text" maxlength="15" name="hintA" placeholder="비밀번호 힌트에 대한 답을 입력하세요(2자 이상)"></td>
             </tr>
             <tr>
                 <th rowspan="2">약관동의</th>
@@ -87,19 +90,19 @@
                 <td>
                     <ul class="chkList">
                         <li>
-                            <span class="chkbox1">
+                            <span class="chkbox">
                                 <input type="checkbox" id="chkjoin1" name="chkjoin1" required>
                                 <label for="chkjoin1">(필수) 서비스 이용약관 동의</label>
                             </span>
                         </li>
                         <li>
-                            <span>
+                            <span class="chkbox">
                                 <input type="checkbox" id="chkjoin2" name="chkjoin2" required>
                                 <label for="chkjoin2">(필수) 개인정보 수집 및 이용동의</label>
                             </span>
                         </li>
                         <li>
-                            <span>
+                            <span class="chkbox">
                                 <input type="checkbox" id="chkjoin3" name="chkjoin3">
                                 <label for="chkjoin3">(선택) 광고성 정보 수신</label>
                             </span>
@@ -118,6 +121,12 @@
 </div>
 </article>
 <footer th:include="fragments/footer.html"></footer>
-
 </body>
+<script type="text/javascript" src="/js/member/signUpMember.js"></script>
+<script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
+<script>
+	$(function() {
+		$("#postcodify_search_button").postcodifyPopUp();
+	});
+</script>
 </html>
