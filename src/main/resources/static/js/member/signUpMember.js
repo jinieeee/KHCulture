@@ -1,3 +1,19 @@
+/* 비밀번호 힌트 ajax 조회 */
+$(function(){
+	$.ajax({
+		url:"/member/pwdHint",
+		success: function(data){
+			var hintNo = $("#hintNo");
+			for(let index in data) {
+				hintNo.append($("<option>").val(data[index].hintNo).text(data[index].hintQ));
+			}
+		},
+		error: function(e){
+			console.log(e);
+		}
+	});
+});
+
 /* 아이디 유효성 검사 */
 document.querySelector("[name=id]").addEventListener('keyup', function(){
     var id = $("[name=id]").val();
@@ -28,10 +44,10 @@ document.querySelector("[name=pwd]").addEventListener('keyup', function(){
 	var pwd = $("[name=pwd]").val();
 	var pwdPattern = /^(?=.*[a-zA-Z])(?=.*[-!@#$%^*+=])(?=.*[0-9]).{8,14}$/;
 	if(!pwdPattern.test(pwd)) {
-		$("#pwdVerify").text("8~14자리의 숫자, 영문자, 특수문자 입력 필수입니다.");
+		$("#pwdVerify").text("8~14자리의 숫자, 영문자, 특수문자 입력 필수입니다");
 		$("#pwdVerify").css('color', 'red');
 	} else {
-		$("#pwdVerify").text("사용 가능한 비밀번호입니다.");
+		$("#pwdVerify").text("사용 가능한 비밀번호입니다");
 		$("#pwdVerify").css('color', 'green');		
 	}
 });
@@ -41,10 +57,10 @@ document.querySelector("[name=pwd2]").addEventListener('keyup', function(){
 	var pwd = $("[name=pwd]").val();
 	var pwd2 = $("[name=pwd2]").val();
 	if(pwd == pwd2) {
-		$("#pwdDblChk").text("비밀번호가 일치합니다.");
+		$("#pwdDblChk").text("비밀번호가 일치합니다");
 		$("#pwdDblChk").css('color', 'green');
 	} else {
-		$("#pwdDblChk").text("비밀번호가 일치하지 않습니다.");
+		$("#pwdDblChk").text("비밀번호가 일치하지 않습니다");
 		$("#pwdDblChk").css('color', 'red');		
 	}
 });
@@ -57,7 +73,7 @@ $("[name=name]").keyup(function(){
 		$("#nameVerify").text("한글명으로 2~6자 입력 가능합니다");
 		$("#nameVerify").css('color', 'red');
 	} else {
-		$("#nameVerify").text("사용 가능한 한글명입니다.");
+		$("#nameVerify").text("사용 가능한 한글명입니다");
 		$("#nameVerify").css('color', 'green');			
 	}
 });
@@ -76,9 +92,45 @@ $(".sendAuth").click(function(){
 });
 
 /* ajax 문자 전송 */
+var authCode1 = "";
 function sendAuth(phone) {
-	
+	$.ajax({
+		type: "GET",
+		url: "sendAuth?phone=" + phone,
+		success: function(data) {
+			if(data == "error") {
+				alert("휴대폰 번호가 올바르지 않습니다. 유효한 번호를 입력해주세요")
+			} else {
+				alert("인증번호가 전송되었습니다");
+				$("[name=phone]").attr("readonly", true);
+				$("#sendAuth").attr("disabled", true);
+				$("#sendAuth").css('background-color', 'var(--inactive-btn-color)');
+				$("#inputAuthCode").attr("disabled", false);
+				$("#authCodeCheckBtn").attr("disabled", false);
+				$("#authCodeCheckBtn").css('background-color', 'var(--active-btn-color)');
+				console.log(data);
+				authCode1 = data;
+			}
+		},
+		error: function(e) {
+			console.log(e);
+		}
+	});
 };
+
+/* 인증번호 일치 확인 */
+function authCodeCheck() {
+	var authCode2 = $("#inputAuthCode").val();
+	
+	if(authCode2 == authCode1) {
+		alert("인증이 완료되었습니다");
+		$("#inputAuthCode").attr("disabled", true);
+		$("#authCodeCheckBtn").attr("disabled", true);
+		$("#authCodeCheckBtn").css('background-color', 'var(--inactive-btn-color)');
+	} else {
+		alert("인증번호가 일치하지 않습니다");
+	}
+}
 
 /* 약관 전체 동의 체크 & 해제 */
 $("#alljoin").change(function(){

@@ -9,7 +9,7 @@
 #signUpForm {
     display: flex;
     justify-content: center;
-    margin-top: 150px;
+    margin-top: 100px;
     /* background-color: lightgreen; 테스트용 */
 }
 #signUpForm h1 {
