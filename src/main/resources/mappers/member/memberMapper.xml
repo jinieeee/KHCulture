@@ -126,5 +126,10 @@
 		  FROM PWD_HINT
 	</select>
 	
-	
+	<select id="checkId" resultMap="loginMemberResultMap">
+		SELECT
+				ID
+		  FROM MEMBER
+		 WHERE ID = #{userId}
+	</select>
 </mapper>

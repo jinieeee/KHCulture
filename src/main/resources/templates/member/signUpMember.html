@@ -9,12 +9,12 @@
 <header th:include="fragments/header.html"></header>
 <body>
 <article id="signUpForm">
+<div>
     <div>
-        <div>
-        <h1>회원가입</h1>
-        <p>가입하실 회원 정보를 입력하세요.</p>
-        <p>연락처 인증 후 가입 버튼이 활성화됩니다 :)</p>
-    </div>
+	    <h1>회원가입</h1>
+	    <p>가입하실 회원 정보를 입력하세요.</p>
+	    <p>연락처 인증 후 가입 버튼이 활성화됩니다 :)</p>
+   	</div>
     <form class="signUpForm" th:action="@{/member/signUpMember}" method="post">
         <table class="signUpTable">
             <tr>
@@ -54,7 +54,8 @@
             </tr>
             <tr>
             	<th>이메일</th>
-            	<td><input type="text" maxlength="50" name="email" id="inputEmail" placeholder="kh@kh.kr 형식으로 입력해주세요"></td>
+            	<td><input type="text" maxlength="50" name="email" id="inputEmail" placeholder="kh@khculture.kr 형식으로 입력해주세요">
+            	<span id="emailVerify"></span></td>
             </tr>
             <tr>
                 <th>우편번호</th>
@@ -79,7 +80,8 @@
             </tr>
             <tr>
                 <th>비밀번호 힌트 답</th>
-                <td><input type="text" maxlength="15" name="hintA" placeholder="비밀번호 힌트에 대한 답을 입력하세요(2자 이상)" required></td>
+                <td><input type="text" maxlength="15" name="hintA" placeholder="비밀번호 힌트에 대한 답을 입력하세요(2자 이상)" required>
+                <span id="hintAVerify"></span></td>
             </tr>
             <tr>
                 <th rowspan="2">약관동의</th>
@@ -118,10 +120,9 @@
         <div class="btnArea">
             <button type="button" id="cancelBtn">취소</button>
             <!-- 인증 완료 후 색상 변환 -->
-            <button type="submit" id="joinBtn">가입하기</button>
+            <button type="submit" id="joinBtn" disabled>가입하기</button>
         </div>
     </form>
-</div>
 </div>
 </article>
 <footer th:include="fragments/footer.html"></footer>
