@@ -1,0 +1,109 @@
+@charset "UTF-8";
+.listContainer{
+    display: flex;
+    margin: 100px auto;
+    max-width: 1320px;
+    min-height: 500px;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+.listContainer > .content{
+    min-width: 1320px;
+}
+.listContainer > .content > .titleArea{
+    width: 1320px;
+    height: 150px;
+    font-weight: 500;
+    font-size: 52px;
+    text-align: center;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid #F0B95E;
+    margin-bottom: 70px;
+}
+.listContainer > .content > .contentArea{
+    width: 1320px;
+    min-height: 750px;
+    font-size: 20px;
+}
+.listContainer > .content > .contentArea > .selectArea1{
+    width: 1320px;
+    height: 50px;
+    margin-bottom: 15px;
+}
+.listContainer > .content > .contentArea > .selectArea1 > input{
+    border: 1px solid #F0B95E;
+    width: 120px;
+    height: 50px;
+    text-align: center;
+    margin-right: 10px;
+}
+.listContainer > .content > .contentArea > .selectArea1 > select{
+    width: 290px;
+    height: 50px;
+    font-size: 20px;
+    border: 1px solid #F0B95E;
+    background-color: white;
+    -webkit-appearance:searchfield;
+    margin-right: 10px;
+    padding-left: 20px;
+    
+}
+.listContainer > .content > .contentArea > .selectArea2 {
+    width: 1320px;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+.listContainer > .content > .contentArea > .selectArea2 > span{
+    display: inline-block;
+    width: 150px;
+    height: 50px;
+    border: 1px solid #F0B95E;
+    text-align: center;
+    line-height: 50px;
+    margin-right: 20px;
+}
+
+.listContainer > .content > .contentArea > .selectArea2 > .imgArea{
+    width: 150px;
+    height: 150px;
+    border: 1px dashed #F0B95E;
+    visibility: hidden;
+}
+.listContainer > .content > .contentArea > .selectArea2 > .imgArea > img{
+    width: 150px;
+    height: 150px;
+}
+
+.listContainer > .content > .contentArea > .lectureTitle {
+    width: 1320px;
+    height: 50px;
+    border: 1px solid #F0B95E;
+    padding-left: 10px;
+    line-height: 50px;
+    margin-bottom: 15px;
+}
+
+.listContainer > .content > .contentArea > .lectureTitle > input[type=text]{
+    width: 1300px;
+}
+
+.listContainer > .content > .btnArea{
+    width: 1320px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.listContainer > .content > .btnArea > input[type=button]{
+    width: 220px;
+    height: 80px;
+    text-align: center;
+    color: white;
+    background-color: #EA9155;
+}
