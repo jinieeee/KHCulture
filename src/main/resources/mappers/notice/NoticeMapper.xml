@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kh.khculture.notice.model.dao.NoticeMapper">
+
+
+<resultMap id="noticeResultMap" type="com.kh.khculture.notice.model.vo.Notice">
+	<id property="n_no" column="N_NO"/>
+	<result property="n_title" column="N_TITLE"/>
+	<result property="n_content" column="N_CONTENT"/>
+	<result property="n_enroll_date" column="N_ENROLL_DATE"/>
+	<result property="n_count" column="N_COUNT"/>
+	<result property="n_modify_date" column="N_MODIFY_DATE"/>
+	<result property="n_status" column="N_STATUS"/>
+	<association property="member_roletest" javaType ="com.kh.khculture.notice.model.vo.Member_RoleTEST">
+		<id property="m_no" column="M_NO"/>
+		<result property="authority_code" column="AUTHORITY_CODE"/>
+	</association>
+</resultMap>
+
+
+<!-- 페이지개수 -->
+<select id="getListCount" resultType="_int">
+	SELECT
+		COUNT(*)
+	FROM NOTICE
+	WHERE N_STATUS ='Y'
+</select>
+<!-- 페이징처리된 게시글  -->
+<select id="selectList" parameterType="com.kh.khculture.notice.model.vo.PageInfo" resultMap="noticeResultMap">
+SELECT
+    N_NO
+    , N_TITLE
+    , N_CONTENT
+    , N_ENROLL_DATE
+    , M_NO
+FROM ( SELECT 
+               ROWNUM RNUM, NLIST.*
+             FROM(  SELECT 
+                            *
+                         FROM NOTICE
+                         JOIN MEMBER_ROLE USING(M_NO)
+                         WHERE AUTHORITY_CODE=1 
+                            AND N_STATUS='Y' 
+                            ORDER BY N_NO DESC) NLIST )
+WHERE RNUM BETWEEN #{ startPage } AND #{ endPage }
+</select>
+
+
+<!-- 모든 게시글의 내용 -->
+<select id="findAllNotice" resultMap="noticeResultMap">
+	SELECT
+		N_NO
+		, N_TITLE
+		, N_CONTENT
+		, N_ENROLL_DATE
+		, N_COUNT
+		, N_MODIFY_DATE
+		, N_COUNT
+		, N_MODIFY_DATE
+		, N_STATUS
+		, M_NO
+	FROM NOTICE
+   WHERE N_STATUS='Y'
+   ORDER BY N_NO DESC
+</select>
+
+</mapper>
