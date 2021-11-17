@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>1:1문의</title>
+<style>
+.outer {
+	width: 1000px;
+	margin: auto;
+}
+
+.wrap {
+	width: 890px;
+	margin: 100px auto;
+}
+
+ul, li {
+	margin: 0;
+	padding: 0;
+}
+
+.titleArea {
+	border-bottom: 1px solid #F0B95E;
+}
+
+.questionnaire_list {
+	margin: 20px 30px;
+	min-height: 565px;
+}
+
+.questionnaire_list>ul {
+	border-bottom: 1px solid #F0B95E;
+	height: 50px;
+	line-height: 50px;
+	display: flex;
+	justify-content: space-around;
+	list-style: none;
+}
+
+.questionnaire_list>ul.last {
+	border: 0;
+}
+
+.questionnaire_list>ul>li {
+	text-align: center;
+}
+
+.questionnaire_header {
+	background: #FFFFFF;
+	color: black;
+	font-weight: bold;
+}
+
+.questionnaire_list .id {
+	width: 60px;
+}
+
+.questionnaire_list .category {
+	width: 60px;
+}
+
+.questionnaire_list .title {
+	width: 350px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.questionnaire_list .writer {
+	width: 80px;
+}
+
+.questionnaire_list .count {
+	width: 60px;
+}
+
+.questionnaire_list .date {
+	width: 100px;
+}
+
+.onmouseover {
+	background: #f3f5f7;
+	cursor: pointer;
+}
+
+.questionnaire_paging {
+	height: 50px;
+	line-height: 50px;
+	display: flex;
+	justify-content: center;
+	list-style: none;
+	width: 480px;
+	margin: auto;
+}
+
+.questionnaire_paging a {
+	text-decoration: none;
+	color: #282A35;
+	width: 40px;
+	display: block;
+	text-align: center;
+}
+
+.questionnaire_paging a.current_page {
+	border-bottom: 2px solid #282A35;
+	font-weight: bold;
+}
+
+.search_area {
+	text-align: center;
+	padding: 30px;
+	background: #F0B95E;
+}
+
+.search_area select {
+	width: 150px;
+	height: 30px;
+	border: 0px;
+}
+
+.input_area {
+	border: solid 1px #dadada;
+	padding: 10px 10px 14px 10px;
+	margin-right: 20px;
+	background: white;
+}
+
+.input_area input {
+	width: 250px;
+	height: 30px;
+	border: 0px;
+}
+
+.input_area input:focus, .search_area select:focus {
+	outline: none;
+}
+
+.search_area button {
+	width: 100px;
+	height: 35px;
+	border: 0px;
+	color: black;
+	background: #FEF0A7;
+	margin: 5px;
+}
+.btn_area {
+	text-align:center;
+}
+
+.btn_area button {
+	width: 100px;
+	height: 35px;
+	border: 0px;
+	color: white;
+	background: #F0B95E;
+	margin: 5px;
+	cursor : pointer;
+}
+</style>
+</head>
+<body>
+
+	<div class="outer">
+		<div class="wrap">
+			<div class="questionnaire_area">
+				<div class="titleArea">
+					<h1 align="center">1:1문의</h1>
+				</div>
+                <div class="search_area">
+				<form method="get" action=" ">
+					<select id="searchCondition" name="searchCondition">
+						<option value="title" selected>번호</option>
+						<option value="content" selected>내용</option>
+						<option value="writer" selected>작성일</option>
+					</select> 
+					<span class="input_area"> 
+						<input type="search" name="searchValue" value="검색어를 입력해 주세요.">
+					</span>
+					<button type="submit">검색하기</button>
+					
+				</form>
+			</div>				
+				<div class="questionnaire_list">
+					<ul class="questionnaire_header">
+						<li class="id">NO.</li>
+						<li class="category">분류</li>
+						<li class="title">내용</li>
+						<li class="date">작성일</li>
+					</ul>
+					<ul class="questionnaire_ul" onclick=" ">
+					    <li class="id">01</li>
+					    <li class="category">1:1문의</li>
+					    <li class="title">내년에도 비누공예 개강하나요?</li>
+					    <li class="date">2021.11.14</li>
+					</ul>
+					<div class="btn_area">
+				    <button onclick="location.href='/instructor/regist'">작성하기</button>
+				</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
