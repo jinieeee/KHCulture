@@ -30,19 +30,19 @@
     min-height: 750px;
     font-size: 20px;
 }
-.listContainer > .content > .contentArea > .selectArea1{
+.listContainer > .content > .contentArea > form > .selectArea1{
     width: 1320px;
     height: 50px;
     margin-bottom: 15px;
 }
-.listContainer > .content > .contentArea > .selectArea1 > input{
+.listContainer > .content > .contentArea > form > .selectArea1 > input{
     border: 1px solid #F0B95E;
     width: 120px;
     height: 50px;
     text-align: center;
     margin-right: 10px;
 }
-.listContainer > .content > .contentArea > .selectArea1 > select{
+.listContainer > .content > .contentArea > form > .selectArea1 > select{
     width: 290px;
     height: 50px;
     font-size: 20px;
@@ -53,14 +53,14 @@
     padding-left: 20px;
     
 }
-.listContainer > .content > .contentArea > .selectArea2 {
+.listContainer > .content > .contentArea > form > .selectArea2 {
     width: 1320px;
     min-height: 50px;
     display: flex;
     align-items: center;
     margin-bottom: 15px;
 }
-.listContainer > .content > .contentArea > .selectArea2 > span{
+.listContainer > .content > .contentArea > form > .selectArea2 > span{
     display: inline-block;
     width: 150px;
     height: 50px;
@@ -70,18 +70,18 @@
     margin-right: 20px;
 }
 
-.listContainer > .content > .contentArea > .selectArea2 > .imgArea{
+.listContainer > .content > .contentArea > form > .selectArea2 > .imgArea{
     width: 150px;
     height: 150px;
     border: 1px dashed #F0B95E;
     visibility: hidden;
 }
-.listContainer > .content > .contentArea > .selectArea2 > .imgArea > img{
+.listContainer > .content > .contentArea > form > .selectArea2 > .imgArea > img{
     width: 150px;
     height: 150px;
 }
 
-.listContainer > .content > .contentArea > .lectureTitle {
+.listContainer > .content > .contentArea > form > .lectureTitle {
     width: 1320px;
     height: 50px;
     border: 1px solid #F0B95E;
@@ -90,11 +90,11 @@
     margin-bottom: 15px;
 }
 
-.listContainer > .content > .contentArea > .lectureTitle > input[type=text]{
+.listContainer > .content > .contentArea > form > .lectureTitle > input[type=text]{
     width: 1300px;
 }
 
-.listContainer > .content > .btnArea{
+.listContainer > .content > .contentArea > form > .btnArea{
     width: 1320px;
     height: 80px;
     display: flex;
@@ -102,7 +102,7 @@
     margin-top: 50px;
 }
 
-.listContainer > .content > .btnArea > input[type=button]{
+.listContainer > .content > .contentArea > form > .btnArea > input[type=submit]{
     width: 220px;
     height: 80px;
     text-align: center;
