@@ -1,8 +1,5 @@
 
 /* 나중에 header에 일괄적용 */
-.titleArea {
-  text-align: center;
-}
 
 
 :root {
@@ -11,6 +8,8 @@
   --days-color : #333333;
   --target-color : #FFD287;
   --category-color : #E4E7EB;
+  --child-color : #9BDFF2;
+  --kid-color : #37BDB5;
 }
 * {
   box-sizing: border-box;

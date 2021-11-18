@@ -123,7 +123,7 @@ if(document.querySelector('#searchBtn') != null) {
 }
 
 
-
+/*
 if(document.querySelector('#scheduleBtn') != null) {
     
 document.querySelector('#scheduleBtn').addEventListener('click', () => {
@@ -198,4 +198,4 @@ document.querySelector('#scheduleBtn').addEventListener('click', () => {
     console.log(time);
     console.log(typing);
 });
-}
+}*/

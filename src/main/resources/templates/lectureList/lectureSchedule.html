@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -7,11 +7,11 @@
     <title>강좌 스케줄</title>
     <link
       rel="stylesheet"
-      href="../../static/css/lectureList/lectureList.css"
+      href="/css/lectureList/lectureList.css"
     />
     <link
     rel="stylesheet"
-    href="../../static/css/lectureList/lectureSchedultStyle.css"
+    href="/css/lectureList/lectureSchedultStyle.css"
   />
     <script
       src="https://kit.fontawesome.com/1be9c91961.js"
@@ -30,6 +30,7 @@
       rel="stylesheet"
     />
   </head>
+  <header th:include="fragments/header.html"></header>
   <body class="lecturelist lectureScheduleBody">
     
 
@@ -150,7 +151,7 @@
         <a><i class="far fa-calendar-alt"></i> 전체 조회 하기</a>
         <div>
           <input type="text" name="" id="" placeholder="강좌명/강사명을 입력하세요.">
-          <button type="button" id="scheduleBtn"><i class="fas fa-search"></i></button>
+          <button type="button" id="scheduleBtn" onclick="searchList()"><i class="fas fa-search"></i></button>
         </div>
       </div>
     </div>
@@ -189,10 +190,7 @@
       <div>
         <div class="lectureModal">
           <div class="lectureImg">
-            <img
-              src="../../static/images/lectureList/20181129114054.jpg"
-              alt=""
-            />
+			<img src="/images/lectureList/20181129114054.jpg" alt=""/>
           </div>
           <div class="lectureInfo">
             <div>
@@ -208,12 +206,250 @@
         </div>
       </div>
     </div>
-  </div>
 
+	<script>
+	
+	let category = null;
+	let target = null;
+	let status = null;
+	let year = null;
+	let month = null;
+	let day = null;
+	let time = null;
+	let typing = null;
+	
+	 var date = new Date();
+
+	 function renderCalendar() {
+	     date.setDate(1);
+	     var monthDays = document.querySelector('.days');
+	     var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+	     var prevLastDay =  new Date(date.getFullYear(), date.getMonth(), 0).getDate();
+
+	     var firstDayIndex = date.getDay();
+	     var lastDatyIndex = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDay();
+	     var nextDays = 7 - lastDatyIndex - 1;
+
+	     var months = ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"];
+	     document.querySelector('.date h1').innerHTML = months[date.getMonth()];
+
+	     //document.querySelector('.date p').innerHTML = new Date().toDateString();
+
+	     let days = "";
+
+	     for(let x = firstDayIndex; x > 0; x--) {
+	         days += `<div class="prev-date"><div><p>${prevLastDay - x + 1}</p></div></div>`
+	     }
+	     for(let i = 1; i <= lastDay; i++) {
+	         if(i === new Date().getDate() && date.getMonth() === new Date().getMonth() && date.getFullYear() === new Date().getFullYear()) {
+	             days += `<div class="current"><div><p class="today">${i}</p></div><div class="contents"></div></div>`;
+	         } else {
+	             days += `<div class="current"><div><p>${i}</p></div><div class="contents"></div></div>`;
+	         }
+	     }
+	     
+	     for(let j = 1; j <= nextDays; j++) {
+	         days += `<div class="next-date"><div><p>${j}</p></div></div>`;
+	     }
+	     monthDays.innerHTML = days;
+
+	     lectureContents();
+	 }
+	 
+	 function searchList() {
+		 category = document.querySelector('.scheduleContainer .categorySearch > div > span').innerText;
+ 		target = document.querySelector('.scheduleContainer .targetSearch > div > span').innerText;
+ 		status = document.querySelector('.scheduleContainer .registStatus > div > span').innerText;
+ 		year = document.querySelector('.scheduleContainer .yearSearch > div > span').innerText;
+ 		month = document.querySelector('.scheduleContainer .monthSearch > div > span').innerText;
+			day = document.querySelector('.scheduleContainer .daySearch > div > span').innerText;
+ 		time = document.querySelector('.scheduleContainer .timeSearch > div > span').innerText;
+ 		typing = document.querySelector('.scheduleContainer .typingSearch > div > input').value;
+
+			    switch(category) {
+			        case category == '정기강좌' :
+			            category = 1;
+			            break;
+			        case category == '단기강좌' :
+			            category = 2;
+			            break;
+			        case category == '무료강좌' :
+			            category = '단기강좌';
+			            break;
+			            default : 
+			        category = null;
+			    }
+			
+			    switch(target) {
+			        case target == '성인강좌' :
+			        target = '1';
+			        break;
+			        case target == '아동강좌' :
+			        target = '2';
+			        break;
+			        case target == '영유아강좌' :
+			            target = '3';
+			            break;
+			            default :
+			            target = null;
+			
+			    }
+			
+			   if(status == '전체' || status == '접수 상태') {
+			       status = null;
+			   }
+			
+			   if(year == '전체' || year == '개강 년도') {
+			       year = null;
+			   }
+			
+			   if(month =='전체' || month =='개강 월') {
+			       month = null;
+			   }
+			
+			   if(day == '전체' || day == '개강 요일') {
+			       day = null;
+			   }
+			
+			   if(time == '전체' || time == '개강 시간') {
+			       time = null;
+			   }
+			
+			   if(typing == '') {
+			       typing = null;
+			   }
+			
+			    console.log(category);
+			    console.log(target);
+			    console.log(status);
+			    console.log(year);
+			    console.log(month);
+			    console.log(day);
+			    console.log(time);
+			    console.log(typing);
+	 }
+
+	 function lectureContents() {
+		 /* 마감임박순, 낮은 가격순, 높은 가격순, 시간대 */
+		 
+		 	var obj = {target : target};
+		 
+			 $.ajax({
+				 url : "/lecture/list/",
+				 data : obj,
+				 success : function(data) {
+					 console.log(data);
+					 var contents = document.querySelectorAll('.days > div.current');
+				     contents.forEach(item => {
+				    	 /* 비워주는 작업 필요*/
+				    	 item.children[1].innerHTML = '';
+				        for (var key in data) {
+				             if(item.children[0].children[0].innerHTML == data[key].lrParDate.substr(8, 2)) {
+				                 var html = '';
+			                         html += `<a href="#"><p>` + data[key].lrStartTime +  ` ~ ` +  data[key].lrEndTime + 
+			                         `</p><p>` + data[key].lecture.ltitle + `</p>
+			                         <input type="hidden" value="` + data[key].lecture.lthumbnail + `">
+			                         <input type="hidden" value="` + data[key].instructor.instructorName + `">
+			                         <input type="hidden" value="` + data[key].lrDay + `">
+			                         <input type="hidden" value="` + data[key].lrFee + `">
+			                         <input type="hidden" value="` + data[key].lrNumber + `">
+			                         <input type="hidden" value="` + data[key].lrStartDate + `">
+			                         <input type="hidden" value="` + data[key].lecture.lcNo + `">
+			                         <input type="hidden" value="` + data[key].lecture.ltNo + `">
+			                         </a>`;
+				                 item.children[1].insertAdjacentHTML('beforeend', html);
+				             }
+				         }
+				         
+				     });
+				     
+				     modalShow();
+				 },
+				 error : function(e) {
+					 console.log(e);
+				 }
+			 })
+	 }
+
+	 document.querySelector('.prev').addEventListener('click', () => {
+	     date.setMonth(date.getMonth() - 1);
+	     renderCalendar();
+	 });
+
+	 document.querySelector('.next').addEventListener('click', () => {
+	     date.setMonth(date.getMonth() + 1);
+	     renderCalendar();
+	 });
+
+	 document.querySelector('#year').addEventListener('change', () => {
+	     let val = document.getElementById('year').value;
+	     date.setFullYear(val);
+	     renderCalendar();
+	 });
+
+	 renderCalendar();
+	
+		function modalShow() {
+			 const cursorTag = document.querySelector("div.cursors");
+			 const modalDiv = cursorTag.querySelector("div");
+			 const lectureModal = cursorTag.querySelector("div.lectureModal");
+			 const lectures = document.querySelectorAll("div.days a");
+			console.log(lectures);
+			 document.addEventListener("mousemove", function(event) {
+			     modalDiv.style.left = event.pageX + "px";
+			     modalDiv.style.top = event.pageY + "px";
+			 })
+
+			 lectures.forEach(lecture => {
+			     lecture.addEventListener("mouseover", function() {
+			         let time = this.children[0].innerHTML;
+			         let lectureTitle = this.children[1].innerHTML;
+			         let modalTarget = ``;
+			         if (this.children[8].value == 1) {
+			        	 modalTarget = `<p class="regular">정기강좌</p>`;
+			         } else if (this.children[8].value == 2) {
+			        	 modalTarget = `<p class="short">단기강좌</p>`;
+			         } else {
+			        	 modalTarget = `<p class="free">무료강좌</p>`;
+			         }
+			         
+			         let categoryModal = ``;
+			         if (this.children[9].value == 1) {
+			        	 categoryModal = `<p class="adult">성인강좌</p>`;
+			         } else if (this.children[8] == 2) {
+			        	 categoryModal = `<p class="child">아동강좌</p>`;
+			         } else {
+			        	 categoryModal = `<p class="kid">영유아강좌</p>`;
+			         }
+			         
+			         let html = `<div class="lectureImg">
+			         <img src="/images/lectureList/` + this.children[2].value + `" alt="">
+			       </div>
+			       <div class="lectureInfo">
+			         <div>` + categoryModal + modalTarget +
+			         `</div>
+			         <div>
+			           <h3>` + this.children[7].value.substr(5, 2) + `/` + this.children[7].value.substr(8, 2) + ` ` + lectureTitle +`</h3>
+			           <p>` + this.children[3].value + ` | (` + this.children[4].value + `)` + time + `</p>
+			           <p>` + this.children[5].value + `원(총` + this.children[6].value + `회)</p>
+			         </div>
+			       </div>`;
+			       lectureModal.innerHTML = html;
+			       lectureModal.classList.add("visible");
+			     })
+
+			     lecture.addEventListener("mouseout", function() {
+			         lectureModal.classList.remove("visible");
+			     })
+			 });
+		}
+	 
+	</script>
     <!-- js -->
-    <script src="../../static/js/lectureList/lectureList.js"></script>
-    <script src="../../static/js/lectureList/cursors.js"></script>
+   <!-- <script src="/js/lectureList/cursors.js"></script> -->
     
-  <script src="../../static/js/lectureList/selectStyle.js"></script>
+  <script src="/js/lectureList/selectStyle.js"></script>
   </body>
+  <footer th:include="fragments/footer.html"></footer>
+  
 </html>
