@@ -121,18 +121,21 @@ ul.nav-menu:hover .submenu {
     margin: 10px;
     width : 210px;
 }
-.userInfo>a {
+.userInfo>th {
+	display: flex;
+}
+.userInfo a {
     padding: 10px;
 }
-.userInfo>a::after {
+.userInfo a::after {
     content: "|";
     float: right;
     margin-right: -13px;
 }
-.userInfo>a:last-child::after {
+.userInfo a:last-child::after {
     content:"";
 }
-.userInfo>button {
+.userInfo button {
     width: 100px;
     height: 35px;
     border: solid 2px #F0B95E;
@@ -142,7 +145,7 @@ ul.nav-menu:hover .submenu {
     font-weight: 700;
     color: #4e4e4e;
 }
-.userInfo>button:first-child {
+.userInfo button:first-child {
     margin-right: 10px;
 }
 @media (hover) {

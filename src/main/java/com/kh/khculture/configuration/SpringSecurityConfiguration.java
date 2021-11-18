@@ -11,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import com.kh.khculture.handler.AuthFailureHandler;
 import com.kh.khculture.member.model.service.MemberService;
 
 /* 스프링 시큐리티 설정 활성화 + bean 등록 가능 */
@@ -18,10 +19,12 @@ import com.kh.khculture.member.model.service.MemberService;
 public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	private MemberService memberService;
+	private AuthFailureHandler authFailureHandler;
 	
 	@Autowired
-	public SpringSecurityConfiguration(MemberService memberService) {
+	public SpringSecurityConfiguration(MemberService memberService, AuthFailureHandler authFailureHandler) {
 		this.memberService = memberService;
+		this.authFailureHandler = authFailureHandler;
 	}
 	
 	@Bean
@@ -45,6 +48,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.formLogin()	// 로그인 설정
 			.loginPage("/member/login")	// 로그인 페이지 설정
 			.successForwardUrl("/")	// 로그인 성공 시 랜딩 페이지 설정
+			.failureHandler(authFailureHandler) // 로그인 실패 시 핸들러
 		.and()
 			.logout()	// 로그아웃 설정
 			.logoutRequestMatcher(new AntPathRequestMatcher("/member/logout")) // 로그아웃 요청 주소

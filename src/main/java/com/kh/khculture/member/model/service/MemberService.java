@@ -20,4 +20,13 @@ public interface MemberService extends UserDetailsService{
 	
 	// 중복아이디 조회
 	int checkId(String userId);
+	
+	// 로그인 실패 횟수 카운트
+	void loginFailureCount(String userId);
+
+	// 로그인 실패 횟수 조회
+	int checkFailureCount(String userId);
+
+	// 계정 잠금
+	void lockUserId(String userId);
 }
