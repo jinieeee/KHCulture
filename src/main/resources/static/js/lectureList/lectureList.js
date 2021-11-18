@@ -1,6 +1,10 @@
+<script th:inline="javascript">
+
 var date = new Date();
 
 function renderCalendar() {
+
+	console.log("[[${lectureList}]]");
     date.setDate(1);
     var monthDays = document.querySelector('.days');
     var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
@@ -76,3 +80,4 @@ document.querySelector('#year').addEventListener('change', () => {
 });
 
 renderCalendar();
+</script>

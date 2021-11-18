@@ -119,6 +119,12 @@
 
 .lectureScheduleBody .days > div > div:last-of-type a {
   color: gray;
+  padding-top : 3px;
+  padding-bottom : 3px;
+}
+
+.lectureScheduleBody .days > div > div:last-of-type a:not(:nth-of-type(1)) {
+	border-top : 0.02px solid lightgray;
 }
 
 .lectureScheduleBody .days > div > div:last-of-type a p:last-of-type {
@@ -212,6 +218,10 @@
   padding: 10px;
 }
 
+.lectureScheduleBody div.lectureInfo div:first-of-type p:first-of-type {
+  margin-right : 7px
+}
+
 .lectureScheduleBody div.lectureInfo h3 {
   line-height: 1.2em;
   margin-top: 10px;
@@ -229,9 +239,29 @@
   color: white;
 }
 
+.lectureScheduleBody .child {
+  background-color: var(--child-color);
+  color: white;
+}
+
+.lectureScheduleBody .kid {
+  background-color: var( --kid-color);
+  color: white;
+}
+
 .lectureScheduleBody .regular {
   color: white;
-  background-color: gray;
+  background-color: #70634D;
+}
+
+.lectureScheduleBody .short {
+  color: white;
+  background-color: #BD914A;
+}
+
+.lectureScheduleBody .free {
+  color: white;
+  background-color: #70562C;
 }
 
 .lectureScheduleBody div.cursors div.visible {

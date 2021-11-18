@@ -1,7 +1,7 @@
 const cursorTag = document.querySelector("div.cursors");
 const modalDiv = cursorTag.querySelector("div");
 const lectureModal = cursorTag.querySelector("div.lectureModal");
-const lectures = document.querySelectorAll("div.days a");
+const lectures = document.querySelectorAll("div.days .contents a");
 
 document.addEventListener("mousemove", function(event) {
     modalDiv.style.left = event.pageX + "px";
@@ -11,9 +11,10 @@ document.addEventListener("mousemove", function(event) {
 lectures.forEach(lecture => {
     lecture.addEventListener("mouseover", function() {
         let time = this.children[0].innerHTML;
+        console.log(time);
         let lectureTitle = this.children[1].innerHTML;
         let html = `<div class="lectureImg">
-        <img src="../../static/images/lectureList/20181129114054.jpg" alt="">
+        <img src="/images/lectureList/20181129114054.jpg" alt="">
       </div>
       <div class="lectureInfo">
         <div>
