@@ -89,7 +89,7 @@
 		  	)
 		VALUES
 			(
-				M_NO_SEQ.NEXTVAL
+				SEQ_M_NO.NEXTVAL
 			  , #{id}
 			  , #{pwd}
 			  , #{name}
@@ -114,7 +114,7 @@
 		  	)
 		VALUES
 			(
-				M_NO_SEQ.CURRVAL
+				SEQ_M_NO.CURRVAL
 			  , #{authorityCode}
 			)
 	</insert>
@@ -149,6 +149,12 @@
 	<update id="lockUserId">
 		UPDATE MEMBER
 		   SET ACC_LOCK_YN = 'Y'
+		 WHERE ID = #{userId}
+	</update>
+	
+	<update id="initializeFailureCount">
+		UPDATE MEMBER
+		   SET LOGIN_FAILED_COUNT = DEFAULT
 		 WHERE ID = #{userId}
 	</update>
 </mapper>

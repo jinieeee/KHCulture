@@ -148,5 +148,11 @@ public class MemberServiceImpl implements MemberService{
 		
 	}
 	
+	// 로그인 실패 횟수 초기화
+	@Override
+	public void initializeFailureCount(String userId) {
+		memberMapper.initializeFailureCount(userId);
+	}
+	
 
 }
