@@ -1,0 +1,120 @@
+@charset "UTF-8";
+.listContainer{
+    display: flex;
+    margin: 0px auto;
+    margin-bottom: 100px;
+    max-width: 1320px;
+    min-height: 645px;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+.listContainer > .content{
+    min-width: 1320px;
+    min-height: 645px;
+}
+.listContainer > .content > .listTitle{
+    text-align: center;
+    margin-top : 100px;
+    height : 130px;
+    display : flex;
+    justify-content : center;
+    align-items : center;
+    width : 100%;
+    margin-bottom: 70px;
+}
+
+.listContainer > .content > .listTitle > h1{
+    font-size: 52px;
+}
+
+.listContainer > .content > .searchArea{
+    width: 1320px;
+    height: 90px;
+    background-color: #FEF0A7;
+    border: 1px solid #F0B95E;
+    display: flex;
+    padding: 20px 30px;
+    justify-content: flex-end;
+    align-items: center;
+
+}
+.listContainer > .content > .searchArea > #condition{
+    width: 200px;
+    height: 50px;
+    font-size: 20px;
+    border: 1px solid #F0B95E;
+    background-color: white;
+    -webkit-appearance:searchfield;
+}
+.listContainer > .content > .searchArea > input[type=text]{
+    width: 520px;
+    height: 50px;
+    font-size: 20px;
+    background-color: white;
+    border: 1px solid #F0B95E;
+    margin-left: 10px;
+    padding-left: 10px;
+}
+.listContainer > .content > .searchArea > input[type=button]{
+    width: 120px;
+    height: 50px;
+    font-size: 20px;
+    background-color: #EA9155;
+    color: white;
+    
+}
+
+.listContainer > .content > .searchArea > #searchIcon{
+    background-image: url(images/icon_search.png);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-color: black;
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+    font-size: 0;
+    line-height: 0;
+    text-align: center;
+    margin-right: 150px;
+}
+
+.listContainer > .content > .listArea{
+    width: 1320px;
+    min-height: 300px;
+    border: 1px solid #F0B95E;
+    margin-top: 20px;
+}
+.listContainer > .content > .listArea > table{
+    border-spacing: 0;
+}
+.listContainer > .content > .listArea > table > tbody > tr{
+    width: 1320px;
+    height: 90px;
+    font-size: 20px;
+}
+.listContainer > .content > .listArea > table > tbody > tr > td{
+    border-bottom: 1px solid #F0B95E;
+}
+
+.listContainer > .content > .listArea > table > tbody > tr > td > a > img{
+    width: 70px;
+    height: 70px;
+}
+.listContainer > .content > .listArea > table > tbody > tr > td:nth-of-type(1){
+    width: 100px;
+    text-align: center;
+    
+}
+.listContainer > .content > .listArea > table > tbody > tr > td:nth-of-type(2){
+    width: 120px;
+    text-align: center;
+}
+.listContainer > .content > .listArea > table > tbody > tr > td:nth-of-type(3){
+    width: 120px;
+    text-align: center;
+}
+.listContainer > .content > .listArea > table > tbody > tr > td:nth-of-type(4){
+    width: 820px;
+    font-weight: 500;
+}
