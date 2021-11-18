@@ -34,4 +34,7 @@ public interface MemberMapper {
 	// 계정 잠금
 	void lockUserId(String userId);
 	
+	// 로그인 실패 횟수 초기화
+	void initializeFailureCount(String userId);
+	
 }

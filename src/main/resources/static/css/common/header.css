@@ -121,7 +121,7 @@ ul.nav-menu:hover .submenu {
     margin: 10px;
     width : 210px;
 }
-.userInfo>th {
+.userInfo>div {
 	display: flex;
 }
 .userInfo a {
