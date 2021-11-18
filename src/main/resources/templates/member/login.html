@@ -1,20 +1,14 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <meta charset="utf-8">
 <title>login</title>
 <link rel="stylesheet" type="text/css" href="/css/member/login.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<script>
-	var msg = '[[${msg}]]';
-	// console.log(msg);
-	if(msg) {
-		alert(msg);
-	}
-</script>
 </head>
-<header th:include="fragments/header.html"></header>
 <body>
+<header th:include="fragments/header.html"></header>
 <article id="loginForm">
     <div>    
         <div>
@@ -44,13 +38,19 @@
                     <p>강좌 신청 서비스는 회원가입 후 이용 가능합니다.</p>
                 </td>
                 <td>
-                    <button type="button" name="joinBtm" onclick="location.href='/member/memberJoin'">회원가입</button>
+                    <button type="button" name="joinBtm" onclick="location.href='/member/signUpMember'">회원가입</button>
                 </td>
             </tr>
         </table>
     </div>
 </article>
-
-</body>
 <footer th:include="fragments/footer.html"></footer>
+</body>
+<script>
+	var msg = '[[${msg}]]';
+	console.log(msg);
+	if(msg) {
+		alert(msg);
+	}
+</script>
 </html>

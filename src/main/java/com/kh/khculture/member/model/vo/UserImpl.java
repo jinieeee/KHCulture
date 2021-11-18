@@ -28,8 +28,15 @@ public class UserImpl extends User {
 	private Date accSecessionDate;				// 회원탈퇴일
 	private List<MemberRole> memberRoleList;	// 회원권한목록
 	
-	public UserImpl(String username, String password, Collection<? extends GrantedAuthority> authorities) {
-		super(username, password, authorities);
+//	public UserImpl(String username, String password, Collection<? extends GrantedAuthority> authorities) {
+//		super(username, password, authorities);
+//	}
+
+
+	public UserImpl(String username, String password, boolean enabled, boolean accountNonExpired,
+			boolean credentialsNonExpired, boolean accountNonLocked,
+			Collection<? extends GrantedAuthority> authorities) {
+		super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
 	}
 	
 	public void setDetails(Member member) {

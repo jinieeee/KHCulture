@@ -1,6 +1,8 @@
 package com.kh.khculture.member.model.service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -21,11 +23,13 @@ import com.kh.khculture.member.model.vo.MemberRole;
 import com.kh.khculture.member.model.vo.PwdHint;
 import com.kh.khculture.member.model.vo.UserImpl;
 
+import lombok.extern.slf4j.Slf4j;
 import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
 
+@Slf4j
 @Service
-public class MemberServiceImpl implements MemberService {
+public class MemberServiceImpl implements MemberService{
 
 	private MemberMapper memberMapper;
 	
@@ -82,7 +86,7 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Member member = memberMapper.findMemberById(username);
-		
+
 		if(member == null) {
 			member = new Member();
 		}
@@ -99,8 +103,21 @@ public class MemberServiceImpl implements MemberService {
 				}
 			}
 		}
-		
-		UserImpl user = new UserImpl(member.getId(), member.getPwd(), authorities);
+		SimpleDateFormat sdf = new SimpleDateFormat("YY-MM-dd");
+		boolean enabled = member.getAccSecessionYN().equals("N")? true: false;
+		boolean accountNonExpired = true;
+		boolean credentialsNonExpired = sdf.format(member.getPwdExpDate()).compareTo(sdf.format(new Date())) >= 0? true: false;
+		boolean accountNonLocked = member.getAccLockYN().equals("N")? true: false;
+		// log.info("로그인 계정 : {}", member);
+		// log.info("사용 가능 계정 여부 : {}", enabled);
+		// log.info("계정 만료 여부 : {}", accountNonExpired);
+		// log.info("비밀번호 만료 여부 : {}", credentialsNonExpired);
+		// log.info("비밀번호 만료일 : {}", sdf.format(member.getPwdExpDate()));
+		// log.info("현재일 : {}", sdf.format(new Date()));
+		// log.info("비밀번호 만료 여부 : {}", sdf.format(member.getPwdExpDate()).compareTo(sdf.format(new Date())));
+		// log.info("계정 잠금 여부 : {}", accountNonLocked);
+		UserImpl user = 
+				new UserImpl(member.getId(), member.getPwd(), enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
 		user.setDetails(member);
 		return user;
 	}
@@ -111,5 +128,25 @@ public class MemberServiceImpl implements MemberService {
 		List<Member> memberList = memberMapper.checkId(userId);
 		return (memberList.size() > 0) ? 1 : 0;
 	}
+	
+	// 로그인 실패 횟수 카운트
+	@Override
+	public void loginFailureCount(String userId) {
+		memberMapper.loginFailureCount(userId);
+	}
+	
+	// 로그인 실패 횟수 조회
+	@Override
+	public int checkFailureCount(String userId) {
+		return memberMapper.checkFailureCount(userId);
+	}
+	
+	// 계정 잠금
+	@Override
+	public void lockUserId(String userId) {
+		memberMapper.lockUserId(userId);
+		
+	}
+	
 
 }

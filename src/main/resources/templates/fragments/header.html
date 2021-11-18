@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html 
-xmlns:th="http://www.thymeleaf.org"
+<html xmlns:th="http://www.thymeleaf.org"
 xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <meta charset="utf-8">
@@ -50,9 +49,11 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 	            <a href="/member/logout">로그아웃</a>        	
         	</th:block>
         	<th:block sec:authorize="isAnonymous()">
+        	<!-- <th:block test="${#authentication == null}"> -->
 	            <button type="button" id="loginBtn" onclick="location.href='/member/login'">LOGIN</button>
 	            <button type="button" id="joinBtm" onclick="location.href='/member/signUpMember'">SIGN UP</button>
-        	</th:block>
+        	<!-- </th:block> -->
+			</th:block>
         </div>
     </div>
     </div>

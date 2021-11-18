@@ -132,4 +132,23 @@
 		  FROM MEMBER
 		 WHERE ID = #{userId}
 	</select>
+	
+	<update id="loginFailureCount">
+		UPDATE MEMBER
+		   SET LOGIN_FAILED_COUNT = LOGIN_FAILED_COUNT + 1
+		 WHERE ID = #{userId}
+	</update>
+	
+	<select id="checkFailureCount" resultType="_int">
+		SELECT
+				LOGIN_FAILED_COUNT
+		  FROM MEMBER
+		 WHERE ID = #{userId}
+	</select>
+	
+	<update id="lockUserId">
+		UPDATE MEMBER
+		   SET ACC_LOCK_YN = 'Y'
+		 WHERE ID = #{userId}
+	</update>
 </mapper>
