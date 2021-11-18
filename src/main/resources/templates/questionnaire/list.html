@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>1:1문의</title>
 <style>
 .outer {
-	width: 1000px;
+	width: 1920px;
 	margin: auto;
 }
 
 .wrap {
-	width: 890px;
+	width: 1320px;
 	margin: 100px auto;
 }
 
@@ -43,12 +43,14 @@ ul, li {
 
 .questionnaire_list>ul>li {
 	text-align: center;
+	font-size: 20px;
 }
 
 .questionnaire_header {
 	background: #FFFFFF;
 	color: black;
 	font-weight: bold;
+	font-size: 20px;
 }
 
 .questionnaire_list .id {
@@ -56,7 +58,7 @@ ul, li {
 }
 
 .questionnaire_list .category {
-	width: 60px;
+	width: 100px;
 }
 
 .questionnaire_list .title {
@@ -95,14 +97,14 @@ ul, li {
 
 .questionnaire_paging a {
 	text-decoration: none;
-	color: #282A35;
+	color: black;
 	width: 40px;
 	display: block;
 	text-align: center;
 }
 
 .questionnaire_paging a.current_page {
-	border-bottom: 2px solid #282A35;
+	border-bottom: 2px solid black;
 	font-weight: bold;
 }
 
@@ -113,92 +115,101 @@ ul, li {
 }
 
 .search_area select {
-	width: 150px;
-	height: 30px;
+	width: 250px;
+	height: 47px;
 	border: 0px;
+	background: #FEF0A7;
+	margin: 10px;
+	font-size: 18px;
 }
 
 .input_area {
-	border: solid 1px #dadada;
+	border: solid 1px #FEF0A7;
 	padding: 10px 10px 14px 10px;
 	margin-right: 20px;
-	background: white;
+	background: #FEF0A7;
 }
 
 .input_area input {
-	width: 250px;
+	width: 720px;
 	height: 30px;
-	border: 0px;
+	border: 5px;
+	background: #FEF0A7;
+	font-size: 18px;
 }
 
 .input_area input:focus, .search_area select:focus {
 	outline: none;
 }
 
-.search_area button {
+.search_area #searchBtn {
 	width: 100px;
-	height: 35px;
+	height: 47px;
 	border: 0px;
-	color: black;
-	background: #FEF0A7;
+	color: white;
+	background: #6A6A6A;
 	margin: 5px;
+	font-weight: bold;
 }
+
 .btn_area {
 	text-align:center;
 }
 
-.btn_area button {
-	width: 100px;
-	height: 35px;
+.btn_area #regist {
+	width: 130px;
+	height: 50px;
 	border: 0px;
 	color: white;
 	background: #F0B95E;
-	margin: 5px;
 	cursor : pointer;
+	font-size: 20px;
+	margin-top: 100px;
 }
 </style>
 </head>
+<header th:include="fragments/header.html"></header>
 <body>
-
 	<div class="outer">
 		<div class="wrap">
 			<div class="questionnaire_area">
 				<div class="titleArea">
-					<h1 align="center">1:1문의</h1>
+					<h1 align="center">1:1 문의</h1>
 				</div>
                 <div class="search_area">
-				<form method="get" action=" ">
+				<form method="get" action="${ contextPath }/board/list">
 					<select id="searchCondition" name="searchCondition">
-						<option value="title" selected>번호</option>
-						<option value="content" selected>내용</option>
-						<option value="writer" selected>작성일</option>
+						<option value="title" selected> 제목 </option>
+						<option value="content" selected> 내용 </option>
+						<option value="writer" selected> 작성자 </option>
+						<option value="all" selected> 전체 </option>
 					</select> 
 					<span class="input_area"> 
-						<input type="search" name="searchValue" value="검색어를 입력해 주세요.">
+						<input type="search" name="searchValue" value="검색어를 입력해주세요">
 					</span>
-					<button type="submit">검색하기</button>
-					
+					<button type="submit" id="searchBtn">검색</button>
 				</form>
-			</div>				
+			  </div>	
 				<div class="questionnaire_list">
 					<ul class="questionnaire_header">
-						<li class="id">NO.</li>
-						<li class="category">분류</li>
-						<li class="title">내용</li>
-						<li class="date">작성일</li>
+						<li class="id"> NO.</li>
+						<li class="category"> 카테고리</li>
+						<li class="title"> 내용</li>
+						<li class="date"> 작성일</li>
 					</ul>
-					<ul class="questionnaire_ul" onclick=" ">
+					<ul class="questionnaire_ul" onclick="location.href='/questionnaire/detail'">
 					    <li class="id">01</li>
 					    <li class="category">1:1문의</li>
 					    <li class="title">내년에도 비누공예 개강하나요?</li>
 					    <li class="date">2021.11.14</li>
 					</ul>
 					<div class="btn_area">
-				    <button onclick="location.href='/instructor/regist'">작성하기</button>
-				</div>
+				    <button id="regist" onclick="location.href='/questionnaire/regist'">작성하기</button>
+				  </div>
 				</div>
 			</div>
 		</div>
 	</div>
 </body>
+<footer th:include="fragments/footer.html"></footer>
 </html>
