@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>통계 그래프</title>
+<style>
+.outer {
+	width: 1920px;
+	margin: auto;
+}
+
+.wrap {
+	width: 1320px;
+	margin: 100px auto;
+}
+.titleArea {
+	border-bottom: 1px solid #F0B95E;
+}
+
+h2 {
+    margin-top: 50px;
+}
+.title_span {
+	background-color: black;
+	font-size: 20px;
+}
+/*-------------------------------------------------------------------------*/
+/*  연령대별 수강 현황 */
+/*-------------------------------------------------------------------------*/
+.pie-chart {
+    position: relative;
+    display:inline-block;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    transition: 0.3s;
+    margin: 13px;
+}
+ span.center{
+    background: #fff;
+    display : block;
+    position: absolute;
+    top:50%; left:50%;
+    width:180px; height:180px;
+    border-radius: 50%;
+    text-align:center; 
+    line-height: 180px;
+    font-size:30px;
+    transform: translate(-50%, -50%);
+}
+
+/*-------------------------------------------------------------------------*/
+/*  강의별 수강신청 현황 */
+/*-------------------------------------------------------------------------*/
+
+    .zt-skill-bar {
+        color: #fff;
+        font-size: 20px;
+        font-weight: bold;
+        line-height: 30px;
+        height: 30px;
+        margin-bottom: 5px;
+
+        background-color: rgba(0,0,0,0.1);
+
+        -webkit-border-radius: 2px;
+           -moz-border-radius: 2px;
+            -ms-border-radius: 2px;
+                border-radius: 2px;
+
+    }
+
+    .zt-skill-bar * {
+        -webkit-transition: all 5s ease;
+          -moz-transition: all 5s ease;
+           -ms-transition: all 5s ease;
+            -o-transition: all 5s ease;
+               transition: all 5s ease;
+    }
+
+    .zt-skill-bar div {
+        background-color: #ffc600;
+        position: relative;
+        padding-left: 25px;
+        width: 0;
+
+        -webkit-border-radius: 2px;
+           -moz-border-radius: 2px;
+           -ms-border-radius: 2px;
+                border-radius: 2px;
+    }
+
+    .zt-skill-bar span {
+        display: block;
+        position: absolute;
+        right: 0;
+        top: 0;
+        height: 100%;
+        padding: 0 5px 0 10px;
+        background-color: #1a1a1a;
+
+        -webkit-border-radius: 0 2px 2px 0;
+           -moz-border-radius: 0 2px 2px 0;
+            -ms-border-radius: 0 2px 2px 0;
+                border-radius: 0 2px 2px 0;
+    }
+
+    .zt-skill-bar span:before {
+        content: "";
+        position: absolute;
+        width: 6px;
+        height: 6px;
+        top: 50%;
+        left: -3px;
+        margin-top: -3px;
+        background-color: #1a1a1a;
+
+        -webkit-transform: rotate(45deg);
+           -moz-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+                transform: rotate(45deg);
+    } 
+    
+/*-------------------------------------------------------------------------*/
+/*  강의별 최대 인원 */
+/*-------------------------------------------------------------------------*/
+.vGraph { 
+   padding:20px 0;
+ }
+.vGraph ul { 
+   margin:0; 
+   padding:0; 
+   height:500px; 
+   border:1px solid #EA9155; 
+   border-top:0; 
+   border-right:0; 
+   font-size:11px; 
+   font-family:Tahoma, Geneva, sans-serif; 
+   list-style:none;
+ }
+ 
+.vGraph ul:after { 
+   content:""; 
+   display:block; 
+   clear:both;
+ }
+ 
+.vGraph li { 
+   float:left; 
+   display:inline; 
+   width:8%; 
+   height:100%; 
+   margin:0 3%; 
+   position:relative; 
+   text-align:center; 
+   white-space:nowrap;
+ }
+ 
+.vGraph .gTerm { 
+   position:relative;  
+   display:inline-block; 
+   width:100%; 
+   height:50px; 
+   line-height:50px; 
+   margin: 0 -100% -50px 0; 
+   padding:500px 0 0 0; 
+   vertical-align:bottom; 
+   color:#767676; 
+   font-size: 20px; 
+   font-weight:bold;
+ }
+
+.vGraph .gBar { 
+   position:relative; 
+   display:inline-block; 
+   width:100%;
+   margin:-1px 0 0 0; 
+   border:1px solid #EA9155; 
+   border-bottom:0; 
+   background: #EEC37F; 
+   vertical-align:bottom;
+}
+
+.vGraph .gBar span {
+   position:absolute; 
+   width:100%; 
+   top:-30px; 
+   left:0; 
+   color:#767676; 
+   font-size:20px;
+   font-weight: bold;
+} 
+</style>
+</head>
+<header th:include="fragments/header.html"></header>
+<body>
+	<div class="outer">
+		<div class="wrap">
+			<div class="statistics_area">
+				<div class="titleArea">
+					<h1 align="center">현황 통계</h1>
+				</div>
+				
+				<div class="statistics_content">
+				    <h2><span class="title_span">&nbsp;</span> 회원 연령대별 수강신청 현황</h2>
+                    <div class="cGraph">			
+                         <div class="pie-chart pie-chart1"><span class="center">10대 이하<br>82%</span></div>
+                         <div class="pie-chart pie-chart2"><span class="center">2,30대<br>57%</span></div>
+                         <div class="pie-chart pie-chart3"><span class="center">4,50대<br>90%</span></div>
+                         <div class="pie-chart pie-chart4"><span class="center">60대 이상<br>63%</span></div>
+                     </div>
+                    <p>&nbsp;</p>
+                    <p>&nbsp;</p>
+                    	
+                    <div class="zt-span6 last">
+                         <h2><span class="title_span">&nbsp;</span> 강의별 수강신청 현황</h2>
+                         <div class="zt-skill-bar"><div data-width="64" >쿠키 만들기<span>64%</span></div></div>
+                         <div class="zt-skill-bar"><div data-width="27" >북 토크<span>27%</span></div></div>
+                         <div class="zt-skill-bar"><div data-width="94" >요가<span>94%</span></div></div>
+                         <div class="zt-skill-bar"><div data-width="52" >비누 공방<span>52%</span></div></div>
+                         <div class="zt-skill-bar"><div data-width="60" >도자기 공예<span>60%</span></div></div>
+                         <div class="zt-skill-bar"><div data-width="85" >스케이트<span>85%</span></div></div>
+                         <div class="zt-skill-bar"><div data-width="70" >영어교실<span>70%</span></div></div>
+                     </div>
+                     <p>&nbsp;</p>
+                     <p>&nbsp;</p>
+                     
+                     <h2><span class="title_span">&nbsp;</span> 강의별 최대 인원</h2>
+                     <div class="vGraph">
+                         <ul>
+                            <li><span class="gTerm">쿠키 만들기</span><span class="gBar" style="height:70%"><span>35명</span></span></li>
+                            <li><span class="gTerm">북 토크</span><span class="gBar" style="height:40%"><span>20명</span></span></li>
+                            <li><span class="gTerm">요가</span><span class="gBar" style="height:80%"><span>40명</span></span></li>
+                            <li><span class="gTerm">비누 공방</span><span class="gBar" style="height:50%"><span>25명</span></span></li>
+                            <li><span class="gTerm">도자기 공예</span><span class="gBar" style="height:20%"><span>10명</span></span></li>
+                            <li><span class="gTerm">스케이트</span><span class="gBar" style="height:60%"><span>30명</span></span></li>
+                            <li><span class="gTerm">영어교실</span><span class="gBar" style="height:100%"><span>50명</span></span></li>
+                          </ul>
+                     </div>
+                   <p>&nbsp;</p>
+                   <p>&nbsp;</p> 
+				</div>
+			</div>
+		</div>
+	</div>	
+</body>
+<footer th:include="fragments/footer.html"></footer>
+<script>
+$(window).ready(function(){
+	  draw(82, '.pie-chart1', ' #FEF0A7');
+	  draw(57, '.pie-chart2', '#FFD287');
+	  draw(90, '.pie-chart3','#F0B95E');
+	  draw(63, '.pie-chart4','#EA9155');
+	});
+
+	function draw(max, classname, colorname){
+	   var i=1;
+	    var func1 = setInterval(function(){
+	      if(i<max){
+	          color1(i,classname,colorname);
+	          i++;
+	      } else{
+	        clearInterval(func1);
+	      }
+	    },20);
+	}
+	function color1(i, classname,colorname){
+	   $(classname).css({
+	        "background":"conic-gradient("+colorname+" 0% "+i+"%, #e9e9e9 "+i+"% 100%)"
+	   });
+	}
+
+
+	function replay(){
+	  draw(80, '.pie-chart1', ' #FEF0A7;');
+	  draw(80, '.pie-chart2', '#FFD287');
+	  draw(90, '.pie-chart3','#F0B95E');
+	  draw(100, '.pie-chart4','#EA9155');
+	}
+
+</script>
+<script>
+
+(function( $ ) {
+    "use strict";
+    $(function() {
+        function animated_contents() {
+            $(".zt-skill-bar > div ").each(function (i) {
+                var $this  = $(this),
+                    skills = $this.data('width');
+
+                $this.css({'width' : skills + '%'});
+
+            });
+        }
+        
+        if(jQuery().appear) {
+            $('.zt-skill-bar').appear().on('appear', function() {
+                animated_contents();
+            });
+        } else {
+            animated_contents();
+        }
+    });
+}(jQuery));
+
+</script>
+</html>
