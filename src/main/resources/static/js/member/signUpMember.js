@@ -71,10 +71,16 @@ document.querySelector("[name=pwd]").addEventListener('keyup', function(){
 		$("#pwdVerify").text("사용 가능한 비밀번호입니다");
 		$("#pwdVerify").css('color', 'green');		
 	}
+	// 기존 비밀번호가 변경되면 비밀번호 확인란도 다시 검사
+	if($("[name=pwd2]").val() != '') pwdDblChk();
 });
 
 /* 비밀번호 일치 확인 */
 document.querySelector("[name=pwd2]").addEventListener('keyup', function(){
+	pwdDblChk();
+});
+
+function pwdDblChk(){
 	var pwd = $("[name=pwd]").val();
 	var pwd2 = $("[name=pwd2]").val();
 	if(pwd == pwd2) {
@@ -84,7 +90,7 @@ document.querySelector("[name=pwd2]").addEventListener('keyup', function(){
 		$("#pwdDblChk").text("비밀번호가 일치하지 않습니다");
 		$("#pwdDblChk").css('color', 'red');		
 	}
-});
+}
 
 /* 이름 유효성 검사 */
 $("[name=name]").keyup(function(){
