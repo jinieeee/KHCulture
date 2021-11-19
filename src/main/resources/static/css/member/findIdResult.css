@@ -84,3 +84,9 @@ div#emailResult,
     margin-top: 30px;
     background-color: var(--inactive-btn-color);
 }
+#pwdDblChk {
+	font-size: 12px;
+	display: block;
+	height: 15px;
+	padding: 0;
+}

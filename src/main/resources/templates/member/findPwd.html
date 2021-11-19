@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8">
 <title>비밀번호 찾기</title>
@@ -12,25 +12,34 @@
         <p>비밀번호 힌트에 대한 질문과 답으로</p>
         <p>비밀번호를 재설정하실 수 있습니다.</p>
     </div>
-    <form id="inputArea">
+    <form id="inputArea" th:action="@{/member/findPwd}" method="post">
         <table>
             <tr>
                 <th>아이디</th>
-                <td><input type="text" name="id" placeholder="아이디를 입력하세요"></td>
+                <td><input type="text" name="id" placeholder="아이디를 입력하세요" required></td>
             </tr>
             <tr>
                 <th>비밀번호 힌트</th>
-                <td><input type="text" name="pwdQ" placeholder="비밀번호 힌트에 대한 질문을 선택하세요"></td>
+                <td><select name="hintNo" id="hintNo">
+                </select></td>
             </tr>
             <tr>
                 <th>비밀번호 힌트 답</th>
-                <td><input type="text" name="pwdA" placeholder="비밀번호 힌트에 대한 답을 입력하세요"></td>
+                <td><input type="text" name="hintA" placeholder="비밀번호 힌트에 대한 답을 입력하세요" required></td>
             </tr>
         </table>
     </form>
     <div id="btnArea">
-        <button type="button" id="cancelBtn">취소</button>
+        <button type="button" id="cancelBtn" onclick="window.close();">취소</button>
         <button type="submit" id="findPwdBtn">비밀번호 찾기</button>
     </div>
 </body>
+<script type="text/javascript" src="/js/member/findPwd.js"></script>
+<script>
+	var msg = '[[${msg}]]';
+	
+	if(msg) {
+		alert(msg);
+	}
+</script>
 </html>

@@ -157,4 +157,23 @@
 		   SET LOGIN_FAILED_COUNT = DEFAULT
 		 WHERE ID = #{userId}
 	</update>
+	
+	<select id="findPwd" resultMap="loginMemberResultMap" parameterType="com.kh.khculture.member.model.vo.Member">
+		SELECT
+				ID
+		  FROM MEMBER
+		 WHERE ID = #{id}
+		   AND HINT_NO = #{hintNo}
+		   AND HINT_A = #{hintA}
+	</select>
+	
+	<update id="resetPwd" parameterType="com.kh.khculture.member.model.vo.Member">
+		UPDATE MEMBER
+		   SET PWD = #{pwd}
+			 , PWD_CHANGED_DATE = SYSDATE
+			 , PWD_EXP_DATE = TO_DATE(ADD_MONTHS(SYSDATE, 3), 'YYYY-MM-DD')
+			 , LOGIN_FAILED_COUNT = DEFAULT
+			 , ACC_LOCK_YN = 'N'
+		 WHERE ID = #{id}
+	</update>
 </mapper>
