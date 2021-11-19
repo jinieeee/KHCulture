@@ -38,4 +38,9 @@ public interface MemberService extends UserDetailsService{
 	
 	// 비밀번호 재설정
 	int resetPwd(Member member);
+
+	// 아이디 찾기용 계정 조회
+	Member findId(Member member);
+
+	void sendEmailAuth(String email, int authCode);
 }

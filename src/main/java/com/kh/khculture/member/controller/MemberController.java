@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.kh.khculture.member.model.service.MemberService;
 import com.kh.khculture.member.model.vo.Member;
 import com.kh.khculture.member.model.vo.PwdHint;
+import com.kh.khculture.member.model.vo.RandomNum;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,10 +25,12 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberController {
 	
 	private MemberService memberService;
+	private RandomNum randomNum;
 	
 	@Autowired
-	public MemberController(MemberService memberService) {
+	public MemberController(MemberService memberService, RandomNum randomNum) {
 		this.memberService = memberService;
+		this.randomNum = randomNum;
 	}
 	
 	@RequestMapping("login")
@@ -37,6 +41,9 @@ public class MemberController {
 	
 	@GetMapping("findId")
 	public void findId() {}
+	
+	@GetMapping("findIdResult")
+	public void findIdResult() {}
 	
 	@GetMapping("findPwd")
 	public void findPwd() {}
@@ -63,12 +70,10 @@ public class MemberController {
 	@GetMapping(value="sendAuth")
 	@ResponseBody
 	public String sendAuth(@RequestParam("phone") String phone) {
-		// System.out.println(phone);
-		// 6자리 난수 생성
-		int randomNumber = (int)(Math.random()*(999999 - 100000 + 1)) + 100000;
-		
-		// memberService.sendAuthCode(phone, randomNumber);
-		return Integer.toString(randomNumber);
+		int authCode = randomNum.getRandomNum();
+		// 문자 전송
+		// memberService.sendAuthCode(phone, authCode);
+		return Integer.toString(authCode);
 	}
 
 	// 아이디 중복 확인
@@ -109,5 +114,32 @@ public class MemberController {
 		rttr.addFlashAttribute("msg", msg);
 		
 		return "redirect:/member/findPwdResult";
+	}
+	
+	// 아이디 찾기용 계정 조회
+	@PostMapping("findId")
+	public String findId(Member member, RedirectAttributes rttr, Model model) {
+		String returnUrl = "";
+		Member findResult = memberService.findId(member);
+		if(findResult.getId() != null) {
+			// rttr.addFlashAttribute("findResult", findResult);
+			model.addAttribute("findResult", findResult);
+			returnUrl = "/member/findIdResult";
+		} else {
+			rttr.addFlashAttribute("msg", "일치하는 계정을 찾을 수 없습니다");
+			returnUrl = "redirect:/member/findId";
+		}
+		return returnUrl;
+	}
+	
+	// 이메일 인증
+	@PostMapping(value="sendEmailAuth")
+	@ResponseBody
+	public String sendEmailAuth(@RequestParam String email) {
+		// log.info("{}", email);
+		int authCode = randomNum.getRandomNum();
+		// 이메일 전송
+		// memberService.sendEmailAuth(email, authCode);
+		return Integer.toString(randomNum.getRandomNum());
 	}
 }

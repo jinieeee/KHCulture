@@ -173,6 +173,7 @@
 		 WHERE ID = #{id}
 		   AND HINT_NO = #{hintNo}
 		   AND HINT_A = #{hintA}
+		   AND ACC_SECESSION_YN = 'N'
 	</select>
 	
 	<update id="resetPwd" parameterType="com.kh.khculture.member.model.vo.Member">
@@ -184,4 +185,15 @@
 			 , ACC_LOCK_YN = 'N'
 		 WHERE ID = #{id}
 	</update>
+	
+	<select id="findId" resultMap="loginMemberResultMap" parameterType="com.kh.khculture.member.model.vo.Member">
+		SELECT
+				ID
+			  , NAME
+			  , EMAIL
+		  FROM MEMBER
+		 WHERE NAME = #{name}
+		   AND EMAIL = #{email}
+		   AND ACC_SECESSION_YN = 'N'
+	</select>
 </mapper>
