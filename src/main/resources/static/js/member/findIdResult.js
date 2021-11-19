@@ -7,7 +7,7 @@ $(function(){
 var authCode1 = "";
 $("#sendAuth").on('click', function(){
 	$.ajax({
-		url: "/member/sendEmailAuth",
+		url: "/sendEmailAuth",
 		type: "POST",
 		data: {"email": $("#emailResult").text()},
 		success: function(data) {
@@ -34,7 +34,7 @@ function authCodeCheck(){
 	var authCode2 = $("#inputAuthCode").val();
 	if(authCode1 == authCode2) {
 		alert("인증이 완료되었습니다! 화면에 출력되는 아이디를 확인하세요");
-		$("#fullIdResult").text(email);
+		$("#fullIdResult").text(id);
 	} else {
 		alert("인증번호가 일치하지 않습니다. 다시 확인하세요");
 	}

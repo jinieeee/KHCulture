@@ -131,15 +131,4 @@ public class MemberController {
 		}
 		return returnUrl;
 	}
-	
-	// 이메일 인증
-	@PostMapping(value="sendEmailAuth")
-	@ResponseBody
-	public String sendEmailAuth(@RequestParam String email) {
-		// log.info("{}", email);
-		int authCode = randomNum.getRandomNum();
-		// 이메일 전송
-		// memberService.sendEmailAuth(email, authCode);
-		return Integer.toString(randomNum.getRandomNum());
-	}
 }
