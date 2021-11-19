@@ -41,6 +41,9 @@ public class MemberController {
 	@GetMapping("findPwd")
 	public void findPwd() {}
 	
+	@GetMapping("findPwdResult")
+	public void findPwdResult() {}
+	
 	@PostMapping("signUpMember")
 	public String signUpMember(Member member, RedirectAttributes rttr/*, HttpSession session */) {
 		// log.info("회원 정보 조회 : {}", member.getAddress());
@@ -68,11 +71,43 @@ public class MemberController {
 		return Integer.toString(randomNumber);
 	}
 
+	// 아이디 중복 확인
 	@PostMapping("checkId")
 	@ResponseBody
 	public String checkId(String userId) {
 		
 		String result = (memberService.checkId(userId) == 0) ? "success" : "failure";
 		return result;
+	}
+	
+	// 비밀번호 재설정용 계정 조회
+	@PostMapping("findPwd")
+	public String findPwd(Member member, RedirectAttributes rttr) {
+		// log.info("비밀번호 재설정 : {}", member);
+		String returnUrl = "";
+		String userId = memberService.findPwd(member);
+		// log.info("비밀번호 재설정 id : {}", userId);
+		if(userId != null) {
+			rttr.addFlashAttribute("userId", userId);
+			returnUrl = "redirect:/member/findPwdResult";
+		} else {
+			rttr.addFlashAttribute("msg", "일치하는 계정을 찾을 수 없습니다");
+			returnUrl = "redirect:/member/findPwd";
+		}
+		return returnUrl;
+	}
+	
+	// 비밀번호 재설정
+	@PostMapping("findPwdResult")
+	public String findPwdResult(Member member, RedirectAttributes rttr) {
+		
+		int result = memberService.resetPwd(member);
+		String msg = result > 0? "비밀번호가 재설정되었습니다. 재설정한 비밀번호로 로그인하세요":
+								"비밀번호 재설정에 실패하였습니다. 재시도해주세요";
+		log.info("{}", msg);
+		
+		rttr.addFlashAttribute("msg", msg);
+		
+		return "redirect:/member/findPwdResult";
 	}
 }

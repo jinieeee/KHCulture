@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>비밀번호 찾기 결과</title>
 <link rel="stylesheet" type="text/css" href="/css/member/findPwdResult.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 </head>
 <body>
     <div id="titleArea">
@@ -12,27 +13,37 @@
         <p>비밀번호를 재설정하실 수 있습니다.</p>
     </div>
     <div id="resultArea">
-        <p><span id="userId"></span> 님의 비밀번호를 재설정합니다.</p>
+        <p><span th:text="${userId}" id="userId"></span> 님의 비밀번호를 재설정합니다.</p>
     </div>
-    <form id="passwordReset">
+    <form id="passwordReset" th:action="@{/member/findPwdResult}" method="post">
+    	<input type="hidden" name="id">
         <table id="pwdResetTbl">
             <tr>
                 <th>비밀번호 재설정</th>
-                <td><input type="password" placeholder="비밀번호를 입력하세요"></td>
+                <td><input type="password" placeholder="비밀번호를 입력하세요" name="pwd"></td>
             </tr>
             <tr>
                 <th></th>
-                <td style="height: 20px;"><p>4 ~ 12자 영문 대소문자, 숫자만 입력 가능합니다</p></td>
+                <td style="height: 20px;"><span id="pwdVerify"></span></td>
             </tr>
             <tr>
                 <th>비밀번호 확인</th>
-                <td><input type="password" placeholder="비밀번호를 확인합니다"></td>              
+                <td><input type="password" placeholder="비밀번호를 확인합니다" name="pwd2"><br>
+                <span id="pwdDblChk"></span></td>              
             </tr>
         </table>
     </form>
     <div id="btnArea">
-        <button type="button" id="closeBtn">닫기</button>
-        <button type="button" id="">비밀번호 재설정</button>
+        <button type="button" id="closeBtn" onclick="window.close();">닫기</button>
+        <button type="button" id="setNewPwd" disabled>비밀번호 재설정</button>
     </div>
 </body>
+<script type="text/javascript" src="/js/member/findPwdResult.js"></script>
+<script>
+	var msg = '[[${msg}]]';
+	if(msg) {
+		alert(msg);
+		self.close();
+	}
+</script>
 </html>

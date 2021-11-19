@@ -148,5 +148,28 @@ public class MemberServiceImpl implements MemberService{
 		
 	}
 	
+	// 로그인 실패 횟수 초기화
+	@Override
+	public void initializeFailureCount(String userId) {
+		memberMapper.initializeFailureCount(userId);
+	}
+
+	// 비밀번호 재설정용 계정 조회
+	@Override
+	public String findPwd(Member member) {
+		Member findMember = memberMapper.findPwd(member);
+		if(findMember == null) {
+			findMember = new Member();
+		}
+		
+		return findMember.getId();
+	}
+	
+	// 비밀번호 재설정
+	@Override
+	public int resetPwd(Member member) {
+		return memberMapper.resetPwd(member);
+	}
+	
 
 }

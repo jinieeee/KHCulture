@@ -24,7 +24,6 @@ import lombok.extern.slf4j.Slf4j;
 public class AuthFailureHandler implements AuthenticationFailureHandler{
 
 	private String username;
-	private String password;
 	private MemberService memberService;
 	
 	@Autowired
@@ -54,7 +53,7 @@ public class AuthFailureHandler implements AuthenticationFailureHandler{
 			// request.getSession().setAttribute("msg", "현재 잠긴 계정입니다. 비밀번호 재설정 후 로그인이 가능합니다");
 		} else if(exception instanceof CredentialsExpiredException) {
 			// 인증 거부 - 비밀번호 유효기간 만료
-			request.setAttribute("msg", "비밀번호가 만료된 계정입니다");
+			request.setAttribute("msg", "비밀번호가 만료된 계정입니다. 비밀번호 재설정 후 로그인이 가능합니다");
 			// request.getSession().setAttribute("msg", "비밀번호가 만료된 계정입니다");
 		} else if(exception instanceof AuthenticationServiceException) {
 			request.setAttribute("msg", "존재하지 않는 계정입니다");

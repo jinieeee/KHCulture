@@ -29,4 +29,13 @@ public interface MemberService extends UserDetailsService{
 
 	// 계정 잠금
 	void lockUserId(String userId);
+
+	// 로그인 실패 횟수 초기화
+	void initializeFailureCount(String userId);
+
+	// 비밀번호 재설정용 계정 조회
+	String findPwd(Member member);
+	
+	// 비밀번호 재설정
+	int resetPwd(Member member);
 }

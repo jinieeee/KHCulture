@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>강사 상세페이지</title>
+<title>1:1문의 상세페이지</title>
 <style>
 .outer {
 	width: 1920px;
@@ -18,11 +18,11 @@
 	border-bottom: 1px solid #F0B95E;
 }
 
-.instructor_content {
+.questionnaire_content {
 	padding: 0px 20px;
 }
 
-.instructor_content .content {
+.questionnaire_content .content {
 	margin-bottom: 30px;
 }
 
@@ -30,6 +30,14 @@
 	padding: 10px 10px 14px 10px;
 	background: none;
 	color: #000000;
+	font-weight: thin;
+	font-size: 20px;
+}
+
+ .input_area2 {
+	padding: 10px 10px 14px 10px;
+	background: none;
+	color: #979797;
 	font-weight: thin;
 	font-size: 20px;
 }
@@ -51,7 +59,7 @@
 }
 
 .textarea {
-	width: 830px;
+	width: 1280px;
 	resize: none;
 	border: solid 1px #F0B95E;
 }
@@ -72,10 +80,10 @@
 
 .image_area img {
     margin: 20px;
-	width: 50%;
+	width: 70%;
 }
 
-.instructor_area button {
+.questionnaire_area button {
 	width: 130px;
 	height: 50px;
 	border: 0px;
@@ -84,10 +92,15 @@
 	cursor: pointer;
 	font-size: 20px;
 }
-.instructor_area #goList{
+.questionnaire_area #goList {
 	background: #6A6A6A;
 }
-.instructor_area #regist{
+
+.questionnaire_area #delete {
+	background: #F0B95E;
+}
+
+.questionnaire_area #answer {
 	background: #F0B95E;
 }
 
@@ -95,6 +108,7 @@
 	text-align: center;
 	border-top: 1px solid #FFFFFF;
 	padding: 30px;
+	margin-top: 300px;
 }
 
 h2 {
@@ -106,40 +120,27 @@ h2 {
 <body>
 	<div class="outer">
 		<div class="wrap">
-			<div class="instructor_area">
+			<div class="questionnaire_area">
 				<div class="titleArea">
-					<h1 align="center">강사 관리</h1>
+					<h1 align="center">1:1 문의</h1>
 				</div>
-				<div class="instructor_content">
+				<div class="questionnaire_content">
 					<form method="post" action="${ contextPath }/gallery/insert"
 					enctype="multipart/form-data">
 						<div class="content">
-							
-							<h2> <span class="title_span">&nbsp;</span>  강사 이름 </h2>
-							<span class="input_area"> 조인성 </span>
-							
-							<h2> <span class="title_span">&nbsp;</span>  프로필 사진</h2>
-							<div class="image_area">
-							<img src="/images/instructor/instructor01.jpg">
-							</div>
-							
+							<h2><span class="title_span">&nbsp;</span> 문의사항 </h2>
+							<span class="input_area"> 내년에도 비누공예 개강하나요? </span>
 
-							<h2> <span class="title_span">&nbsp;</span>  생년월일 </h2>
-							<span class="input_area">1981.00.00</span> 
-
-							<h2> <span class="title_span">&nbsp;</span>  전화번호 </h2>
-							<span class="input_area">010-1234-5678</span>
-							
-							<h2> <span class="title_span">&nbsp;</span> 담당 강의명 </h2>
-							<span class="input_area">스케이트</span>
-							
-							<h2> <span class="title_span">&nbsp;</span>  경력 사항 </h2>
-							<span class="input_area">OO 대학교 체육교육과 학사 졸업 </span>
+							<h2><span class="title_span">&nbsp;</span> 답변 </h2>
+							<span class="input_area2">미답변 (문의 사항을 확인 중입니다.) </span>
 						</div>
+						
 						<div class="btn_area">
-						<button type="button" id="regist" onclick="location.href='/instructor/update'">수정하기</button>
-						<button type="button" id="regist">삭제하기</button>
-						<button type="button" id="goList" onclick="location.href='/instructor/list'">목록으로</button>
+						<!--  관리자에게만 보이는 버튼 -->
+						<button type="button" id="answer" onclick="location.href='/questionnaire/answer'">답변하기</button>
+						<!-- 공통으로 보이는 버튼 -->
+						<button type="button" id="delete">삭제하기</button>
+						<button type="button" id="goList" onclick="location.href='/questionnaire/list'">목록으로</button>
 						</div>
 					</form>
 				</div>

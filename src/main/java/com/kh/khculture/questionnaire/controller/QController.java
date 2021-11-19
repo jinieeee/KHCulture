@@ -12,5 +12,22 @@ public class QController {
 	public String findList() {
 		return "questionnaire/list";
 	}
+	
+	@GetMapping("/detail")
+	public String findDetail() {
+		return "questionnaire/detail";
+	}
+	
+	@GetMapping("/regist")
+	public String findRegist() {
+		return "questionnaire/regist";
+	}
+	
+	@GetMapping("/answer")
+	public String answerRegist() {
+		return "questionnaire/answer";
+	}
+	
+	
 
 }
