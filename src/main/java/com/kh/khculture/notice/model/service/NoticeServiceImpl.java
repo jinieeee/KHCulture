@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.kh.khculture.notice.model.dao.NoticeMapper;
 import com.kh.khculture.notice.model.vo.Notice;
-import com.kh.khculture.notice.model.vo.PageInfo;
 
 @Service("noticeService")
 public class NoticeServiceImpl implements NoticeService {
@@ -38,14 +37,14 @@ public class NoticeServiceImpl implements NoticeService {
 
 	@Override
 	public Notice selectNotice(int n_no) {
-		
 		return noticeMapper.selectNotice(n_no);
 	}
 
 	@Override
-	public Notice insertNotice() {
-		return noticeMapper.insertNotice();
+	public int noticeInsert(Notice notice) {
+		return noticeMapper.noticeInsert(notice);
 	}
+
 
 	
 }

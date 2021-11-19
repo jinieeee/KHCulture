@@ -89,7 +89,7 @@
 		  	)
 		VALUES
 			(
-				M_NO_SEQ.NEXTVAL
+				SEQ_MEMBER_NO.NEXTVAL
 			  , #{id}
 			  , #{pwd}
 			  , #{name}
@@ -114,7 +114,7 @@
 		  	)
 		VALUES
 			(
-				M_NO_SEQ.CURRVAL
+				SEQ_MEMBER_NO.CURRVAL
 			  , #{authorityCode}
 			)
 	</insert>

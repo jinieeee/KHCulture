@@ -2,12 +2,15 @@ package com.kh.khculture.notice.controller;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.khculture.notice.model.service.NoticeService;
@@ -20,26 +23,11 @@ public class NoticeController {
 	
 	private NoticeService noticeService;
 	
-	
 	@Autowired
 	public NoticeController(NoticeService noticeService) {
 		this.noticeService = noticeService;	
 	}
-	/*  No.1
-	//전체 공지글
-	@GetMapping("/noticeList")
-	public ModelAndView findNoticeList(Model model) {
-		List<Notice> noticeList = noticeService.getNoticeList();
-		System.out.println("noticeList : "+noticeList);
-		
-		mv.addObject(noticeList);
-		mv.setViewName("notice/noticeList");
-		
-		return mv;
-	}
-	
-	*/
-	
+
 	//전체 List + paging처리
 	@GetMapping("noticeList")
 	public String noticeList(Model model, @RequestParam(value="page" , defaultValue="1") int page) {
@@ -68,24 +56,45 @@ public class NoticeController {
 		return "notice/noticeList";
 	}
 	
-	@GetMapping("/detail.do")
+	@GetMapping("detail.do")
 	public ModelAndView noticeDetail( ModelAndView mv, @RequestParam int n_no) {
 	
-		System.out.println(n_no);
+		//System.out.println(n_no);
 		Notice n = noticeService.selectNotice(n_no);
-		System.out.println(n);
-		
+		System.out.println("selectNotice 의 n  = "+n);
+		System.out.println("selectNotice 의 n  = "+n.getN_enroll_date());
 		mv.addObject("notice",n);
 		mv.setViewName("notice/noticeDetail");
 		
 		return mv;
 		
 	}
-	@GetMapping("/insert")
-	public String noticeInsert(Model model) {
-		
-		return "notice/noticeInsert";
-		
+	
+	//게시글 insert
+	@GetMapping("insert") 
+	public String noticeInsertPage(Model model) {
+		return "notice/noticeInsert";	//HTMl 경로	
 	}
+	@PostMapping("insert")
+	public String noticeInsert(Notice Newnotice) {
+		noticeService.noticeInsert(Newnotice);
+		return "redirect:/notice/noticeList";
+	}
+	
+	
+	//http://localhost:8006/notice/detail.do?n_no=20
+	//게시글 수정하기
+	@GetMapping("updateView")
+	public String noticeUpdatePage(Model model) {
+		System.out.println("model = "+model);
+		return "notice/noticeUpdate";
+	}
+	@PostMapping("update")
+	public String noticeUpdate(Notice uptNotice) {
+		System.out.println("uptNotice = "+uptNotice);
+		return null;
+	}
+	
+
 }
 

@@ -225,6 +225,7 @@ span#notice_comment {
 }
 #notice_insert2{
     width: 99%;
+    height: 645px;
 }
 /* =================================================== boardUpdate =========================== */
 .notice_update_boundary{

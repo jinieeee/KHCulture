@@ -6,7 +6,6 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.kh.khculture.notice.model.vo.Notice;
-import com.kh.khculture.notice.model.vo.PageInfo;
 
 
 @Mapper
@@ -24,5 +23,7 @@ public interface NoticeMapper {
 	//3. 선택한 게시글
 	Notice selectNotice(int n_no);
 	//4. 게시글 작성
-	Notice insertNotice();
+	int noticeInsert(Notice notice);
+	
+	
 }
