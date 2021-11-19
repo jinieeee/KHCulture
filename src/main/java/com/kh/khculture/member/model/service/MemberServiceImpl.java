@@ -168,8 +168,26 @@ public class MemberServiceImpl implements MemberService{
 	// 비밀번호 재설정
 	@Override
 	public int resetPwd(Member member) {
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		member.setPwd(passwordEncoder.encode(member.getPwd()));
+		
 		return memberMapper.resetPwd(member);
 	}
-	
 
+	// 아이디 찾기용 계정 조회
+	@Override
+	public Member findId(Member member) {
+		Member findMember = memberMapper.findId(member);
+		if(findMember == null) {
+			findMember = new Member();
+		}
+		return findMember;
+	}
+
+	// 이메일 인증번호 전송
+	@Override
+	public void sendEmailAuth(String email, int authCode) {
+		
+		
+	}
 }

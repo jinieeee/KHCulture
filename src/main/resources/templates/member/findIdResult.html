@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>아이디 찾기 결과</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <link rel="stylesheet" type="text/css" href="/css/member/findIdResult.css">
 </head>
 <body>
@@ -10,7 +11,7 @@
         <h1>아이디 찾기 결과</h1>
     </div>
     <div id="resultArea">
-        <p><span id="name"></span> 님의 아이디입니다.</p>
+        <p><span id="name" th:text="${findResult.name}"></span> 님의 아이디입니다.</p>
         <div id="idResult"></div>
         <br><br>
         <p style="padding: none;">이메일 전체 확인</p>
@@ -22,12 +23,12 @@
         </div>
         <table id="emailAuthTbl">
             <tr>
-                <td><div id="emailResult"></div></td>
-                <td><input type="button" value="인증코드 전송"></td>
+                <td><div id="emailResult" th:text="${findResult.email}"></div></td>
+                <td><input type="button" value="인증코드 전송" style="background-color: var(--active-btn-color);" id="sendAuth"></td>
             </tr>
             <tr>
-                <td><input type="text" placeholder="인증코드 입력"></div></td>
-                <td><input type="button" value="인증하기"></td>              
+                <td><input type="text" placeholder="인증코드 입력" id="inputAuthCode" readonly></td>
+                <td><input type="button" value="인증하기" id="authCodeCheckBtn" onclick="authCodeCheck();" disabled></td>              
             </tr>
             <tr>
                 <td><div id="fullIdResult"></div></td>
@@ -36,7 +37,15 @@
         </table>
     </form>
     <div id="btnArea">
-        <button type="button" id="closeBtn">닫기</button>
+        <button type="button" id="closeBtn" onclick="window.close();">닫기</button>
     </div>
 </body>
+<script type="text/javascript" src="/js/member/findIdResult.js"></script>
+
+<script th:inline="javascript">
+/* <![CDATA[ */
+	var id = /*[[${findResult.id}]]*/;
+	var email = /*[[${findResult.email}]]*/;
+/* ]]> */
+</script>
 </html>
