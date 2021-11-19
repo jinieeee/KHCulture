@@ -90,6 +90,8 @@
 		    <artifactId>javaSDK</artifactId>
 		    <version>2.2</version>
 		</dependency>
+		<!-- 11/18 섬머노트 이미지 insert 때 추가  -->
+		
 	</dependencies>
 
 	<build>

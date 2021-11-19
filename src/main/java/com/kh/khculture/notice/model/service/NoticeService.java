@@ -3,7 +3,6 @@ package com.kh.khculture.notice.model.service;
 import java.util.List;
 
 import com.kh.khculture.notice.model.vo.Notice;
-import com.kh.khculture.notice.model.vo.PageInfo;
 
 public interface NoticeService {
 	
@@ -16,7 +15,9 @@ public interface NoticeService {
 	//3. 선택한 게시물
 	Notice selectNotice(int n_no);
 	//4. 게시글 쓰기
-	Notice insertNotice();
+	int noticeInsert(Notice notice);
+	
+	
 
 
 	

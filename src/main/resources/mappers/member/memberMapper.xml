@@ -89,7 +89,11 @@
 		  	)
 		VALUES
 			(
+
+			
+
 				SEQ_M_NO.NEXTVAL
+
 			  , #{id}
 			  , #{pwd}
 			  , #{name}
@@ -114,7 +118,11 @@
 		  	)
 		VALUES
 			(
+
+				
+
 				SEQ_M_NO.CURRVAL
+
 			  , #{authorityCode}
 			)
 	</insert>

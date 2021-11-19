@@ -8,30 +8,35 @@
 </head>
 <header th:include="fragments/header.html"></header>
 <body>
+   <form method="get" action="/notice/updateView">
    
-    <div class="notice_detail_title">
-        <div id="notice_category2">공지사항</div>
-        <div id="notice_comment2" th:text="${notice.n_title}">11월 오픈강좌 안내드립니다.</div>
-        <div id="notice_date2" th:text="${notice.n_enroll_date}"></div>
-      
-    </div>
-    
-     <div class="notice_detail_comment">
-     	<div> 스마트 에디터 </div>
-     </div>
-     
-     <!-- 관리자에게만 수정하기 버튼이 활성화됨 -->
-    <div align="right" class="notice_detail_button">
-        <input type="button"  id="notice_button"  value="수정하기" class="button"/> 
-    </div>
-    
+   		<input type="hidden"  name="n_no" value="${notice.n_no}">
+   
+	    <div class="notice_detail_title">
+	        <div id="notice_category2">공지사항</div>
+	        <div id="notice_comment2" th:text="${notice.n_title}"></div>
+	        <div id="notice_date2" th:text="${notice.n_enroll_date}"></div>
+	      
+	    </div>
+	    
+	     <div class="notice_detail_comment">
+	     	<div th:utext="${notice.n_content}"> </div>
+	     </div>
+	     
+	     <!-- 관리자에게만 수정하기 버튼이 활성화됨 -->
+	
+	    <div align="right" class="notice_detail_button">
+	        <button type="submit" id="notice_update" class="button">수정하기</button>
+	    </div>
+   
+   </form> 
     <div class="notice_detail_reply">
         <div class="notice_reply_select">
             <div id="reply_name">양*하</div> 
             <div id="reply_comment2">언제나 좋은 강의 개설해주셔서 감사합니다. ^__^</div> 
             <div id="reply_date">2021-11-15</div>
             <!-- 본인이 쓴 댓글에만 활성화됨-->
-            <input type="button" value="수정" class="button">
+            <button type="button" id="reply_update" class="button">수정</button>
    		</div>
    </div>  
    
@@ -44,4 +49,5 @@
 	        $("#inputFooter").load("../fragments/footer.html");
 	    });
     </script>
+    
 </html>
