@@ -183,11 +183,4 @@ public class MemberServiceImpl implements MemberService{
 		}
 		return findMember;
 	}
-
-	// 이메일 인증번호 전송
-	@Override
-	public void sendEmailAuth(String email, int authCode) {
-		
-		
-	}
 }

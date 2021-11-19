@@ -41,6 +41,4 @@ public interface MemberService extends UserDetailsService{
 
 	// 아이디 찾기용 계정 조회
 	Member findId(Member member);
-
-	void sendEmailAuth(String email, int authCode);
 }
