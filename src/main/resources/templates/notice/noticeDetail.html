@@ -9,9 +9,7 @@
 <header th:include="fragments/header.html"></header>
 <body>
    <form method="get" action="/notice/updateView">
-   
-   		<input type="hidden"  name="n_no" value="${notice.n_no}">
-   
+		<input type="hidden" name="n_no" th:value="${notice.n_no}">
 	    <div class="notice_detail_title">
 	        <div id="notice_category2">공지사항</div>
 	        <div id="notice_comment2" th:text="${notice.n_title}"></div>

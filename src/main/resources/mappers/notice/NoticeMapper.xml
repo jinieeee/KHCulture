@@ -28,6 +28,14 @@
 	FROM NOTICE
 	WHERE N_STATUS ='Y'
 </select>
+<select id="getcountentListCount" resultType="_int">
+	SELECT
+		COUNT(*)
+	FROM NOTICE
+	WHERE N_STATUS ='Y'
+		AND N_TITLE LIKE '%' || #{ searchValue } || '%'
+
+</select>
 <!-- 페이징처리된 게시글  -->
 <select id="selectList" parameterType="com.kh.khculture.notice.model.vo.PageInfo" resultMap="noticeResultMap">
 SELECT
@@ -48,7 +56,27 @@ FROM ( SELECT
 WHERE RNUM BETWEEN #{ startRow } AND #{ endRow }
 </select>
 
+<select id="selectContentList" parameterType="com.kh.khculture.notice.model.vo.PageInfo"  resultMap="noticeResultMap" >
+SELECT
+    N_NO
+    , N_TITLE
+    , N_CONTENT
+    , TO_CHAR(N_ENROLL_DATE,'YYYY-MM-DD') N_ENROLL_DATE
+    , M_NO
+FROM ( SELECT 
+               ROWNUM RNUM, NLIST.*
+             FROM(  SELECT 
+                            *
+                         FROM NOTICE
+                         JOIN MEMBER_ROLE USING(M_NO)
+                         WHERE AUTHORITY_CODE=1 
+                            AND N_STATUS='Y' 
+                            AND N_TITLE LIKE '%' || #{ searchValue } || '%'
+                            ORDER BY N_NO DESC) NLIST )
+WHERE RNUM BETWEEN #{ startRow } AND #{ endRow }
 
+</select>
+ 
 <!-- 선택한 게시글 정보들 -->
 <select id="selectNotice" resultMap="noticeResultMap">
 	SELECT
@@ -74,7 +102,6 @@ WHERE RNUM BETWEEN #{ startRow } AND #{ endRow }
 			, N_CONTENT
 			, N_ENROLL_DATE
 			, N_COUNT
-			, N_MODIFY_DATE
 			, N_STATUS
 			, M_NO
 		)
@@ -85,10 +112,26 @@ WHERE RNUM BETWEEN #{ startRow } AND #{ endRow }
 			, #{ n_content }
 			, SYSDATE
 			, DEFAULT
-			, SYSDATE
 			, DEFAULT
 			, #{ m_no }
 		)
 		
 </insert>
+<update id="noticeUpdate" parameterType="com.kh.khculture.notice.model.vo.Notice">
+UPDATE 
+	NOTICE 
+SET N_TITLE = #{ n_title } , N_CONTENT = #{ n_content } , N_ENROLL_DATE = SYSDATE
+WHERE N_NO=#{ n_no }
+
+
+
+</update>
+<delete id="noticeDelete" parameterType="com.kh.khculture.notice.model.vo.Notice">
+UPDATE
+NOTICE
+SET N_STATUS ='N'
+WHERE N_NO=#{ n_no }
+
+</delete>
+
 </mapper>

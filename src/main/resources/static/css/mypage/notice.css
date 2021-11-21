@@ -89,7 +89,7 @@ span#notice_comment {
     width: 55%;
     text-align: left;
 }
-.notice_area{
+.notice_paging_area{
 	display: flex;
     width: 890px;
     margin: 0 auto;

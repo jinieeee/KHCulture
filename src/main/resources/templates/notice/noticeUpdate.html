@@ -32,25 +32,26 @@
         <h1 align="center">수정하기</h1>
     </div>
     <div class="notice_update_boundary">
-        <form method ="post" action="notice/update">
-            
+         <form name="noticeUpdateForm"  method="post">
+            <input type="hidden" name="n_no" th:value="${notice.n_no}">
             <div id="Ltitle">
                 <span id="Ltitle2">제목 : </span>
-                <input type="text" name="Ltitle" id="notice_update"  >
-                
+                <input type="text" name="n_title" id="notice_update" th:value="${notice.n_title}">
             </div>
             
             <div id="Lcomment">
                 <div id="Lcomment2">내용 : </div>
-                <input type="text" name="Lcomment" id="summernote">
+                <textarea id="summernote" name="n_content" style='background-color:orange;' th:utext="${notice.n_content}"></textarea>
             </div>
+            
             <div>
             <!-- 관리자로 로그인하면 그 로그인의 M_no loginUser.m_no --> 
             	<input type="hidden" name="m_no" value=1>
             </div>
+      
             <div align="center" style="margin-top: 20px;margin-bottom: 20px;padding-bottom: 20px;">
-                <span><button type="submit" class="button">수정하기</button></span>
-                <input type="button" value="삭제하기" class="button">
+                <span><button type="button" class="button" onclick="updateNotice()">수정하기</button></span>
+                <button type="button"  class="button" onclick="deleteNotice()">삭제하기</button>
             </div>
         </form>
     </div>
@@ -69,6 +70,16 @@
     		focus: true
     	})
     	
+    </script>
+    <script>
+    	function updateNotice(){
+    		document.forms.noticeUpdateForm.action="update";
+    		document.forms.noticeUpdateForm.submit();
+    	}
+    	function deleteNotice(){
+    		document.forms.noticeUpdateForm.action="delete";
+    		document.forms.noticeUpdateForm.submit();
+    	}
     </script>
 </body>
 </html>

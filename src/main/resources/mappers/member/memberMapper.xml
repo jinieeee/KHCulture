@@ -90,9 +90,11 @@
 		VALUES
 			(
 
+
 			
 
 				SEQ_M_NO.NEXTVAL
+
 
 			  , #{id}
 			  , #{pwd}
@@ -122,6 +124,7 @@
 				
 
 				SEQ_M_NO.CURRVAL
+
 
 			  , #{authorityCode}
 			)

@@ -2,6 +2,7 @@ package com.kh.khculture.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -64,11 +65,13 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.logoutRequestMatcher(new AntPathRequestMatcher("/member/logout")) // 로그아웃 요청 주소
 			.deleteCookies("JSESSIONID")	// JSESSIONID 쿠키 삭제
 			.invalidateHttpSession(true)	// 세션 만료
+
 			.logoutSuccessUrl("/")			// 로그아웃 성공 시 랜딩 페이지
 		.and()
 			.exceptionHandling()
 			.authenticationEntryPoint(authEntryPoint)
 			.accessDeniedPage("/common/denied");
+
 	}
 
 	@Override
