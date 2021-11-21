@@ -31,7 +31,7 @@
         <div class="categorySearch">
           <p>강좌 분류</p>
           <div class="sel sel--black-panther selectDiv">
-            <select name="select-profession" id="select-profession">
+            <select id="select-profession">
               <option value="" disabled>강좌 분류</option>
               <option value="전체">전체</option>
               <option value="정기강좌">정기강좌</option>
@@ -43,7 +43,7 @@
         <div class="targetSearch">
           <p>강좌 대상</p>
           <div class="sel sel--black-panther selectDiv">
-            <select name="select-profession" id="select-profession">
+            <select id="select-profession">
               <option value="" disabled>강좌 대상</option>
               <option value="전체">전체</option>
               <option value="성인강좌">성인강좌</option>
@@ -55,7 +55,7 @@
         <div class="registStatus">
           <p>접수 상태</p>
           <div class="sel sel--black-panther selectDiv">
-            <select name="select-profession" id="select-profession">
+            <select id="select-profession">
                 <option value="" disabled>접수 상태</option>
               <option value="전체">전체</option>
               <option value="접수 예정">접수 예정</option>
@@ -67,22 +67,17 @@
         <div class="yearSearch">
           <p>개강 년도</p>
           <div class="sel sel--black-panther selectDiv">
-            <select name="select-profession" id="select-profession">
-                <option value="" disabled>개강 년도</option>
+            <select id="selectYearSearch">
+              <option value="" disabled>개강 년도</option>
               <option value="전체">전체</option>
-              <option value="2021">2021</option>
-              <option value="2020">2020</option>
-              <option value="2019">2019</option>
-              <option value="2018">2018</option>
-              <option value="2017">2017</option>
             </select>
           </div>
         </div>
         <div class="monthSearch">
           <p>개강 월</p>
           <div class="sel sel--black-panther selectDiv">
-            <select name="select-profession" id="searchMonth">
-                <option value="" disabled>개강 월</option>
+            <select id="searchMonth">
+              <option value="" disabled>개강 월</option>
               <option value="">전체</option>
               <option value="1">1월</option>
               <option value="2">2월</option>
@@ -102,7 +97,7 @@
         <div class="daySearch">
           <p>개강 요일</p>
           <div class="sel sel--black-panther selectDiv">
-            <select name="select-profession" id="searchDay" placeholder="개강 시간">
+            <select id="searchDay" placeholder="개강 시간">
                 <option value="" disabled>개강 요일</option>
                 <option value="전체">전체</option>
                 <option value="월요일">월요일</option>
@@ -118,33 +113,44 @@
         <div class="timeSearch">
           <p>개강 시간</p>
           <div class="sel sel--black-panther selectDiv">
-            <select name="select-profession" id="select-profession" placeholder="전체">
-                <option value="" disabled>개강 시간</option>
-                <option value="">전체</option>
-                <option value="09~10">9~10(시)</option>
-                <option value="10~11">10~11(시)</option>
-                <option value="11~12">11~12(시)</option>
-                <option value="12~13">12~13(시)</option>
-                <option value="13~14">13~14(시)</option>
-                <option value="14~15">14~15(시)</option>
-                <option value="15~16">15~16(시)</option>
-                <option value="16~17">16~17(시)</option>
-                <option value="17~18">17~18(시)</option>
-                <option value="18~19">18~19(시)</option>
-                <option value="19~20">19~20(시)</option>
-                <option value="20~21">20~21(시)</option>
+            <select id="select-profession" placeholder="전체">
+				<option value="" disabled>개강 시간</option>
+				<option value="">전체</option>
+				<option value="09~10">9시타임</option>
+				<option value="10~11">10시타임</option>
+				<option value="11~12">11시타임</option>
+				<option value="12~13">12시타임</option>
+				<option value="13~14">13시타임</option>
+				<option value="14~15">14시타임</option>
+				<option value="15~16">15시타임</option>
+				<option value="16~17">16시타임</option>
+				<option value="17~18">17시타임</option>
+				<option value="18~19">18시타임</option>
+				<option value="19~20">19시타임</option>
+				<option value="20~21">20시타임</option>
             </select>
           </div>
         </div>
         <div class="typingSearch">
           <a><i class="far fa-calendar-alt"></i> 전체 조회 하기</a>
           <div>
-            <input type="text" name="" id="" placeholder="강좌명/강사명을 입력하세요.">
-            <button type="button" id="searchBtn"><i class="fas fa-search"></i></button>
+            <input type="text" name="typing" id="" placeholder="강좌명/강사명을 입력하세요.">
+            <button type="button" id="searchBtn" onclick="searchList();"><i class="fas fa-search"></i></button>
           </div>
         </div>
       </div>
 	</div>
+	
+	<form class="searchForm" th:action="@{/main/search}" method="post">
+		<input type="hidden" name="category">
+		<input type="hidden" name="target">
+		<input type="hidden" name="status">
+		<input type="hidden" name="year">
+		<input type="hidden" name="month">
+		<input type="hidden" name="day">
+		<input type="hidden" name="time">
+		<input type="hidden" name="typing">
+	</form>
 	
 	<!-- 추천 강좌 -->
 	<div class="recommendList">
@@ -350,9 +356,169 @@
 			<i class="fas fa-chevron-right fa-4x"></i>
 		</div>
 	</div>
+	
 </article>
+
 </body>
 <footer th:include="fragments/footer.html"></footer>
-<script type="text/javascript" src="/js/main/selectStyle.js"></script>
 <script type="text/javascript" src="/js/main/recommendList.js"></script>
+<script>
+	let category = '';
+	let target = '';
+	let status = '';
+	let year = '';
+	let month = '';
+	let day = '';
+	let time = '';
+	let typing = '';
+	
+/* 검색 바 */
+$(function() {
+	$.ajax({
+		url : "/lecture/year",
+		success : function(data) {
+			const selectYearDiv = document.querySelector("#selectYearSearch");
+			for(let index in data) {
+				selectYearDiv.insertAdjacentHTML('beforeend', '<option value="' + data[index] + '">' + data[index] + '</option>');
+			}
+			
+			/* ===== Logic for creating fake Select Boxes ===== */
+			$('.sel').each(function() {
+			    $(this).children('select').css('display', 'none');
+			    
+			    var $current = $(this);
+			    
+			    $(this).find('option').each(function(i) {
+			      if (i == 0) {
+			        $current.prepend($('<div>', {
+			          class: $current.attr('class').replace(/sel/g, 'sel__box')
+			        }));
+			        
+			        var placeholder = $(this).text();
+			        $current.prepend($('<span>', {
+			          class: $current.attr('class').replace(/sel/g, 'sel__placeholder'),
+			          text: placeholder,
+			          'data-placeholder': placeholder
+			        }));
+			        
+			        return;
+			      }
+			      
+			      $current.children('div').append($('<span>', {
+			        class: $current.attr('class').replace(/sel/g, 'sel__box__options'),
+			        text: $(this).text()
+			      }));
+			    });
+			  });
+			  
+			  // Toggling the `.active` state on the `.sel`.
+			  $('.sel').click(function() {
+			    $(this).toggleClass('active');
+			  });
+			  
+			  // Toggling the `.selected` state on the options.
+			  $('.sel__box__options').click(function() {
+			    var txt = $(this).text();
+			    var index = $(this).index();
+			      
+			    $(this).siblings('.sel__box__options').removeClass('selected');
+			    $(this).addClass('selected');
+			    
+			    var $currentSel = $(this).closest('.sel');
+			    $currentSel.children('.sel__placeholder').text(txt);
+			    $currentSel.children('select').prop('selectedIndex', index + 1);
+			  });
+		},
+		error : function(e) {
+			console.log(e);
+		}
+	})
+})
+
+  	
+/* 검색 */
+function searchList() {
+	category = document.querySelector('.listSearchContainer .categorySearch > div > span').innerText;
+ 	target = document.querySelector('.listSearchContainer .targetSearch > div > span').innerText;
+ 	status = document.querySelector('.listSearchContainer .registStatus > div > span').innerText;
+ 	year = document.querySelector('.listSearchContainer .yearSearch > div > span').innerText;
+ 	month = document.querySelector('.listSearchContainer .monthSearch > div > span').innerText;
+	day = document.querySelector('.listSearchContainer .daySearch > div > span').innerText;
+ 	time = document.querySelector('.listSearchContainer .timeSearch > div > span').innerText;
+ 	typing = document.querySelector('.listSearchContainer .typingSearch > div > input').value;
+ 	
+ 	switch(category) {
+	    case '정기강좌' :
+	        category = 1;
+	        break;
+	    case '단기강좌' :
+	        category = 2;
+	        break;
+	    case '무료강좌' :
+	        category = 3;
+	        break;
+	    default : 
+	    category = '';
+	}
+ 	
+ 	switch(target) {
+	    case '성인강좌' :
+	    target = 1;
+	    break;
+	    case '아동강좌' :
+	    target = 2;
+	    break;
+	    case '영유아강좌' :
+	        target = 3;
+	        break;
+	    default :
+	        target = '';
+	}
+ 	
+   if(status == '전체' || status == '접수 상태') {
+       status = '';
+   }
+
+   if(year == '전체' || year == '개강 년도') {
+       year = '';
+   }
+
+   if(month =='전체' || month =='개강 월') {
+       month = '';
+   }
+
+   if(day == '전체' || day == '개강 요일') {
+       day = '';
+   }
+
+   if(time == '전체' || time == '개강 시간') {
+       time = '';
+   }
+	
+   
+   if(month != '') {
+	   month = month.substr(0, month.indexOf("월"));
+   }
+   if(time != '') {
+	   time = time.substr(0, time.indexOf("시"));
+   }
+   
+	document.querySelector("[name=category]").value = category;
+	document.querySelector("[name=target]").value = target;
+	document.querySelector("[name=status]").value = status;
+	document.querySelector("[name=year]").value = year;
+	document.querySelector("[name=month]").value = month;
+	document.querySelector("[name=day]").value = day;
+	document.querySelector("[name=time]").value = time;
+	document.querySelector("[name=typing]").value = typing;
+	
+	console.log(category);
+	submitSearchForm();
+}
+
+function submitSearchForm(){
+   
+	$(".searchForm").submit();
+}
+</script>
 </html>

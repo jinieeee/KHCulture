@@ -3,6 +3,7 @@ package com.kh.khculture.lecture.model.vo;
 import java.util.Date;
 
 import lombok.Data;
+import lombok.ToString;
 
 @Data
 public class Search {
