@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+
+    <title>강의 업데이트</title>
+    <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
+	<link rel="stylesheet" href="/css/management/lectureRegist.css">
+	
+ 	<script src="/summernote/summernote-lite.js"></script>
+	<script src="/summernote/summernote-ko-KR.js"></script>
+    <link rel="stylesheet" href="/css/summernote/summernote-lite.css">
+    
+<script>
+    $(document).ready(function ()
+        {
+
+            $('#summernote').summernote({
+                height: 300,                 // 에디터 높이
+                minHeight: null,             // 최소 높이
+                maxHeight: null,             // 최대 높이
+                focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
+                lang: "ko-KR",					// 한글 설정
+                placeholder: '강의 내용을 입력해 주세요'	//placeholder 설정' 
+                 
+            });
+        
+        });
+</script>
+</head>
+<body>
+	<header th:include="fragments/header.html"></header>
+    <div class="listContainer">
+        <div class="content">
+            <div class="titleArea">
+                <h1>강의 업데이트</h1>
+            </div>
+            
+            <div class="contentArea">
+            	<form method="post" action="/updateserver" encType="multipart/form-data">
+            		<input type="hidden" name="lNo" th:value="${lecture.lNo}">
+	                <div class="selectArea1">
+	                    <input type="text" value="본사" style="background-color: #FBFEE1;" readonly>
+	                    <select name="lcNo" id="classification">
+	                        <option value="1" th:selected="${lecture.lcNo}==1">정기강좌</option>
+	                        <option value="2" th:selected="${lecture.lcNo}==2">단기강좌</option>
+	                        <option value="3" th:selected="${lecture.lcNo}==3">무료강좌</option>
+	                    </select>
+	                    <select name="ltNo" id="target">
+	                        <option value="1" th:selected="${lecture.ltNo}==1">성인강좌</option>
+	                        <option value="2" th:selected="${lecture.ltNo}==2">아동강좌</option>
+	                        <option value="3" th:selected="${lecture.ltNo}==3">영유아강좌</option>
+	                    </select>
+	                </div>
+	                <div class="selectArea2">
+	                    <span style="background-color: #FBFEE1;">강의 대표 이미지</span>
+	                    <input type="file" id="file" name="singleFile" disabled th:text="대표이미지변경불가">
+	                    <div class="imgArea"></div>
+	                </div>
+	                <div class="lectureTitle">
+	                    <input type="text" name="lTitle" placeholder="강의 제목을 입력해 주세요" th:value="${lecture.lTitle}" required>
+	                </div>
+                    <textarea id="summernote" name="lContent" th:text="${lecture.lContent}"></textarea>
+	            <div class="btnArea">
+	                    <input type="submit" value="오픈하기">
+            	</div>
+				</form>
+			</div>          	
+       	</div>
+        
+    </div>
+
+	<footer th:include="fragments/footer.html"></footer>
+
+    <script>
+		
+    	console.log($("#file")[0]);
+    
+        $("#file").change(preview);
+        function preview(){
+     		
+        	console.log("this : " + this);
+        	console.log("this.files[0] : " + this.files[0]);
+        	
+            let reader = new FileReader();
+            reader.readAsDataURL(this.files[0]);
+            reader.onload = function(){
+                $(".imgArea").css('visibility', "visible");
+                $(".imgArea").html('<img src="' + reader.result + '">');
+            }
+        }
+		
+        
+        
+        
+    </script>
+</body>
+</html>

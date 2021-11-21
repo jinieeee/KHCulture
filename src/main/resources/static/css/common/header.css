@@ -1,6 +1,9 @@
+* {
+    font-family: 'Noto Sans KR', sans-serif;
+	box-sizing: border-box;
+}
 html {
     min-width: 1920px;
-    font-family: "Noto sans", sans-serif;
 }
 body {
     margin: 0;
@@ -73,7 +76,7 @@ body {
     padding: 1px 0px;
 }
 .nav-menu>li.depth1 {
-    min-width: 130px;
+    min-width: 150px;
     padding: 27px 20px;
     font-size: 20px;
     position: relative;
@@ -121,7 +124,7 @@ ul.nav-menu:hover .submenu {
     margin: 10px;
     width : 210px;
 }
-.userInfo>th {
+.userInfo>div {
 	display: flex;
 }
 .userInfo a {

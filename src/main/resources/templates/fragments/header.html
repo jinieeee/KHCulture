@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="utf-8">
 <title>header</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" type="text/css" href="/css/common/header.css">
 </head>
 <header id="header">
@@ -18,7 +19,7 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
         <ul class="nav-menu">
             <li class="depth1 lecture">수강신청
                 <ul class="depth2 submenu">
-                    <li><a href="#">강좌검색</a></li>
+                    <li><a href="/lecture/search">강좌검색</a></li>
                     <li><a href="#">강좌스케줄</a></li>
                     <li><a href="#">강사정보</a></li>
                 </ul>
@@ -30,6 +31,7 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
                 </ul>
             </li>
             <!-- 관리자 로그인 시 관리자페이지 -->
+            <th:block sec:authorize="isAnonymous() || (hasRole('MEMBER') && !hasRole('ADMIN'))">
             <li class="depth1 mypage"><a href="/mypage/mypagemain" style="color: #000000;
                 text-decoration: none;">마이페이지</a>
                 <ul class="depth2 submenu">
@@ -41,26 +43,49 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
                     <li><a href="#">1:1 문의내역</a></li>
                 </ul>
             </li>
+            </th:block>
+            <li th:if="${#authentication == null}" class="depth1 mypage">
+			<a href="/mypage/mypagemain" style="color: #000000; text-decoration: none;">마이페이지</a>
+                <ul class="depth2 submenu">
+                    <li><a href="/mypage/memberModify">회원정보변경</a></li>
+                    <li><a href="#">장바구니</a></li>
+                    <li><a href="#">구매내역</a></li>
+                    <li><a href="/mypage/myhistory">수강내역</a></li>
+                    <li><a href="/mypage/myRiew">내가 쓴 수강후기</a></li>
+                    <li><a href="#">1:1 문의내역</a></li>
+                </ul>
+            </li>
+            <th:block sec:authorize="hasRole('ADMIN')">
+            <li class="depth1 adminpage"><a style="color: #000000;
+                text-decoration: none;">관리자페이지</a>
+                <ul class="depth2 submenu">
+                    <li><a href="#">강의관리</a></li>
+                    <li><a href="#">강사관리</a></li>
+                    <li><a href="#">회원관리</a>
+                    <li><a href="#">1:1 문의</a></li>
+                    <th:block sec:authorize="hasRole('HEAD')">
+                    <li><a href="#">관리자목록</a>
+                    </th:block>
+                </ul>
+            </li>
+            </th:block>
         </ul>
         <!-- 비로그인시 로그인 / 회원가입 -->
         <div class="userInfo">
              <th:block sec:authorize="isAuthenticated()">
 	            <a><span sec:authentication="principal.name"></span> 님</a>
-	            <a href="/member/logout">로그아웃</a>        	
+	            <a href="/member/logout">로그아웃</a>
         	</th:block>
-        	<th:block sec:authorize="isAnonymous()">
-        	<!-- <th:block test="${#authentication == null}"> -->
+        	<div th:if="${#authentication == null}">
 	            <button type="button" id="loginBtn" onclick="location.href='/member/login'">LOGIN</button>
 	            <button type="button" id="joinBtm" onclick="location.href='/member/signUpMember'">SIGN UP</button>
-        	<!-- </th:block> -->
+			</div>
+        	<th:block sec:authorize="isAnonymous()">
+	            <button type="button" id="loginBtn" onclick="location.href='/member/login'">LOGIN</button>
+	            <button type="button" id="joinBtm" onclick="location.href='/member/signUpMember'">SIGN UP</button>
 			</th:block>
         </div>
     </div>
     </div>
-    <script>
-        $('ul.nav-menu').on('mouseover', function(){
-            $(".depth2").slideDown(300)
-        });
-    </script>
 </header>
 </html>

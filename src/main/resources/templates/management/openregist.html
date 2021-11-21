@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -33,7 +33,8 @@
 
             $("#jqxTimePicker").jqxTimePicker({
                 width: 200,
-                height: 300
+                height: 300,
+                format: "24-hour"
             });
             $("#jqxTimePicker").on("change", function (event)
             {
@@ -67,9 +68,10 @@
 
         });
     </script>
-
+	
 </head>
 <body>
+<header th:include="fragments/header.html"></header>
     <div class="listContainer">
         <div class="content">
             <div class="titleArea">
@@ -99,13 +101,13 @@
                 <div class="selectArea1">
                     <select name="lrDay" id="lrDay">
                         <option value="" selected>요일을 선택해 주세요</option>
-                        <option value="월">매주 월요일</option>
-                        <option value="화">매주 화요일</option>
-                        <option value="수">매주 수요일</option>
-                        <option value="목">매주 목요일</option>
-                        <option value="금">매주 금요일</option>
-                        <option value="토">매주 토요일</option>
-                        <option value="일">매주 일요일</option>
+                        <option value="월요일">매주 월요일</option>
+                        <option value="화요일">매주 화요일</option>
+                        <option value="수요일">매주 수요일</option>
+                        <option value="목요일">매주 목요일</option>
+                        <option value="금요일">매주 금요일</option>
+                        <option value="토요일">매주 토요일</option>
+                        <option value="일요일">매주 일요일</option>
                     </select>
                 </div>
                 <div class="selectArea1">
@@ -136,20 +138,14 @@
     </div>
     <div class="modal" id="modalLecture">
         <div class="modalWindow">
-            <div class="listArea">
-                <ul>
-                    <li>
-                        <input type="radio" name="instructor">
-                        <img src="#">
-                        <span>강의제목입니다</span>
-                    </li>
-                </ul>
+            <div class="listArea" id="listArea">
             </div>
             <div class="btnArea">
-                <button type="button">선택하기</button>
+                <button type="button" id="modalLectureBtn">선택하기</button>
             </div>
         </div>
     </div>
+<footer th:include="fragments/footer.html"></footer>
 <script>
 
     var dateSelector = $('.dateSelector');
@@ -166,12 +162,53 @@
     var body = document.body,
     html = document.documentElement;
     
+    $("#modalLectureBtn").click(function(){
+    	
+    	
+    	$("#lectureBtn").val($("input[name='instructor']:checked").next().next().text());
+    	$("#lectureBtn").css("background-color", "red");
+    	$("#lectureBtn").css("color", "white");
+    	$(".modal").fadeOut();
+    });
+    
+    
     $("#instructorBtn").click(function(){
         var height = Math.max( body.scrollHeight, body.offsetHeight, 
                        html.clientHeight, html.scrollHeight, html.offsetHeight );
 
         $("#modalInstructor").height(height);
         $("#modalInstructor").fadeIn();
+        
+        var param = {};
+        
+		param.startDate = $("#lrStartDate").val();
+		param.endDate = $("#lrEndDate").val();
+		param.day = $("#lrDay").val();
+		param.startTime = $("#lrStartTime").val();
+		param.endTime = $("#lrEndTime").val();
+
+        
+		$.ajax({
+			
+			url : "/modal/instructor",
+			type : "post",
+			data : JSON.stringify(param),
+			dataType : "json",
+			contentType : "application/json; charset=UTF-8", // 서버로 송신할 데이터 타입
+			success : function(data){
+				
+				console.log(data);
+				
+				
+				
+				
+			},
+			error : function(request,status,error){
+				
+				console.log(e);
+			}
+		});
+        
         
     });
 
@@ -187,6 +224,36 @@
 
         $("#modalLecture").height(height);
         $("#modalLecture").fadeIn();
+        
+		$.ajax({
+			
+			url : "/modal/lecture",
+			type : "get",
+			dataType : "json",
+			success : function(data){
+				console.log(data);
+				console.log(data[0].ltitle);
+				
+				
+				let html = "<ul>";
+		
+				for(let index in data){
+					
+					html += "<li><input type='radio' name='instructor' value='" + data[index].lno + "'>"
+						  + "<img src='images/upload/" + data[index].lthumbnail + "' alt='thumbnail'>"
+						  + "<span>" + data[index].ltitle + "</span></li>"
+				}
+				
+				html += "</ul>";
+				
+				$("#listArea").html(html);
+				
+			},
+			error : function(request,status,error){
+				
+				console.log(e);
+			}
+		});
     });
 
 </script>

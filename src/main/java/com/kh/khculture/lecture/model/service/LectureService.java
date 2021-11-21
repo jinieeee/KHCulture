@@ -1,11 +1,14 @@
 package com.kh.khculture.lecture.model.service;
 
 import java.util.List;
+import java.util.Map;
 
-import com.kh.khculture.lecture.model.vo.LectureOpen;
+import com.kh.khculture.lecture.model.vo.Search;
 
 public interface LectureService {
 
-	List<LectureOpen> selectLectureList();
+	Map<String, Object> selectLectureList(Search search);
+
+	List<Integer> findYear();
 
 }

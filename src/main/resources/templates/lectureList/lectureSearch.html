@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -11,15 +11,15 @@
     />
     <link rel="stylesheet" href="/css/lectureList/lectureSearchStyle.css">
    
-    <script
+   <script
       src="https://kit.fontawesome.com/1be9c91961.js"
       crossorigin="anonymous"
     ></script>
-    <script
+ 	<script
       src="https://code.jquery.com/jquery-3.6.0.min.js"
       integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
       crossorigin="anonymous"
-    ></script>
+    ></script> 
     <!-- noto sans 폰트 -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -28,6 +28,7 @@
       rel="stylesheet"
     />
   </head>
+  <header th:include="fragments/header.html"></header>
   <body class="lecturelist lectureSearchBody">
     <div class="titleArea">
       <h1>강좌검색</h1>
@@ -37,8 +38,8 @@
         <div class="categorySearch">
           <p>강좌 분류</p>
           <div class="sel sel--black-panther selectDiv">
-            <select name="select-profession" id="select-profession">
-                <option value="" disabled>강좌 분류</option>
+            <select name="select-profession" id="">
+              <option value="" disabled>강좌 분류</option>
               <option value="전체">전체</option>
               <option value="정기강좌">정기강좌</option>
               <option value="단기강좌">단기강좌</option>
@@ -49,7 +50,7 @@
         <div class="targetSearch">
           <p>강좌 대상</p>
           <div class="sel sel--black-panther selectDiv">
-            <select name="select-profession" id="select-profession">
+            <select name="select-profession" id="">
                 <option value="" disabled>강좌 대상</option>
               <option value="전체">전체</option>
               <option value="성인강좌">성인강좌</option>
@@ -61,7 +62,7 @@
         <div class="registStatus">
           <p>접수 상태</p>
           <div class="sel sel--black-panther selectDiv">
-            <select name="select-profession" id="select-profession">
+            <select name="select-profession" id="">
                 <option value="" disabled>접수 상태</option>
               <option value="전체">전체</option>
               <option value="접수 예정">접수 예정</option>
@@ -73,14 +74,14 @@
         <div class="yearSearch">
           <p>개강 년도</p>
           <div class="sel sel--black-panther selectDiv">
-            <select name="select-profession" id="select-profession">
-                <option value="" disabled>개강 년도</option>
+            <select name="select-profession" id="selectYearSearch">
+              <option value="" disabled>개강 년도</option>
               <option value="전체">전체</option>
-              <option value="2021">2021</option>
+              <!-- <option value="2021">2021</option>
               <option value="2020">2020</option>
               <option value="2019">2019</option>
               <option value="2018">2018</option>
-              <option value="2017">2017</option>
+              <option value="2017">2017</option> -->
             </select>
           </div>
         </div>
@@ -127,40 +128,40 @@
             <select name="select-profession" id="select-profession" placeholder="전체">
                 <option value="" disabled>개강 시간</option>
                 <option value="">전체</option>
-                <option value="09~10">9~10(시)</option>
-                <option value="10~11">10~11(시)</option>
-                <option value="11~12">11~12(시)</option>
-                <option value="12~13">12~13(시)</option>
-                <option value="13~14">13~14(시)</option>
-                <option value="14~15">14~15(시)</option>
-                <option value="15~16">15~16(시)</option>
-                <option value="16~17">16~17(시)</option>
-                <option value="17~18">17~18(시)</option>
-                <option value="18~19">18~19(시)</option>
-                <option value="19~20">19~20(시)</option>
-                <option value="20~21">20~21(시)</option>
+                <option value="09~10">9시타임</option>
+	              <option value="10~11">10시타임</option>
+	              <option value="11~12">11시타임</option>
+	              <option value="12~13">12시타임</option>
+	              <option value="13~14">13시타임</option>
+	              <option value="14~15">14시타임</option>
+	              <option value="15~16">15시타임</option>
+	              <option value="16~17">16시타임</option>
+	              <option value="17~18">17시타임</option>
+	              <option value="18~19">18시타임</option>
+	              <option value="19~20">19시타임</option>
+	              <option value="20~21">20시타임</option>
             </select>
           </div>
         </div>
         <div class="typingSearch">
-          <a><i class="far fa-calendar-alt"></i> 전체 조회 하기</a>
+          <a onclick="searchAll()"><i class="far fa-calendar-alt"></i> 전체 조회 하기</a>
           <div>
             <input type="text" name="" id="" placeholder="강좌명/강사명을 입력하세요.">
-            <button type="button" id="searchBtn"><i class="fas fa-search"></i></button>
+            <button type="button" id="searchBtn" onclick="searchList()"><i class="fas fa-search"></i></button>
           </div>
         </div>
       </div>
       <div class="listDiv">
         <div class="alignDiv">
           <div class="alignStandard">
-            <a id="deadline" href="#" class="line" data-click="deadline">마감 임박순</a>
+            <a id="deadline" href="#" class="line" data-click="deadline">날짜순</a>
              | 
              <a id="lowPrice" href="#" data-click="lowPrice">낮은 가격순</a>
              |
              <a id="highPrice" href="#" data-click="highPrice">높은 가격순</a>
           </div>
           <div class="listCount">
-            <p>조회 강좌 총 <span>50</span>건</p>
+            <p>조회 강좌 총 <span class="count">50</span>건</p>
           </div>
         </div>
         <div class="lectureDiv">
@@ -194,311 +195,444 @@
               </div>
           </div>
           </div>
-          <div class="lectureDesc">
-            <div class="lectureImg">
-              <img
-                src="/images/lectureList/20181129114054.jpg"
-                alt=""
-              />
-            </div>
-            <div class="lectureInfo">
-              <div>
-                <p class="adult">성인강좌</p>
-                <p class="regular">정기강좌</p>
-              </div>
-              <div class="lectureContent">
-                <h3>10/30 실내 인테리어 플라원 데코 인테리어 플라원 데코</h3>
-                <p>김선우 | (월) 14:00 ~ 15:20</p>
-                <p>5,000원(총1회)</p>
-              </div>
-              
-            </div>
-            <div class="btnDiv">
-              <div class="cart">
-                <i class="fas fa-shopping-bag"></i>
-                <p>장바구니</p>
-              </div>
-              <div class="applyInpossible">
-                <i class="far fa-times-circle"></i>
-                <p>접수 마감</p>
-              </div>
-          </div>
-          </div>
-          <div class="lectureDesc">
-            <div class="lectureImg">
-              <img
-                src="/images/lectureList/20181129114054.jpg"
-                alt=""
-              />
-            </div>
-            <div class="lectureInfo">
-              <div>
-                <p class="adult">성인강좌</p>
-                <p class="regular">정기강좌</p>
-              </div>
-              <div class="lectureContent">
-                <h3>10/10 실내 인테리어 플라원 데코 인테리어 플라원 데코</h3>
-                <p>김선우 | (월) 14:00 ~ 15:20</p>
-                <p>5,000원(총1회)</p>
-              </div>
-              
-            </div>
-            <div class="btnDiv">
-              <div class="cart">
-                <i class="fas fa-shopping-bag"></i>
-                <p>장바구니</p>
-              </div>
-              <div class="applyPlan">
-                <i class="far fa-calendar-alt"></i>
-                <p>접수 예정</p>
-              </div>
-          </div>
-          </div>
-          <div class="lectureDesc">
-            <div class="lectureImg">
-              <img
-                src="/images/lectureList/20181129114054.jpg"
-                alt=""
-              />
-            </div>
-            <div class="lectureInfo">
-              <div>
-                <p class="adult">성인강좌</p>
-                <p class="regular">정기강좌</p>
-              </div>
-              <div class="lectureContent">
-                <h3>10/25 실내 인테리어 플라원 데코 인테리어 플라원 데코</h3>
-                <p>김선우 | (월) 14:00 ~ 15:20</p>
-                <p>5,000원(총1회)</p>
-              </div>
-              
-            </div>
-            <div class="btnDiv">
-              <div class="cart">
-                <i class="fas fa-shopping-bag"></i>
-                <p>장바구니</p>
-              </div>
-              <div class="applyPossible">
-                <i class="far fa-calendar-alt"></i>
-                <p>접수 예정</p>
-              </div>
-          </div>
-          </div>
-          <div class="lectureDesc">
-            <div class="lectureImg">
-              <img
-                src="/images/lectureList/20181129114054.jpg"
-                alt=""
-              />
-            </div>
-            <div class="lectureInfo">
-              <div>
-                <p class="adult">성인강좌</p>
-                <p class="regular">정기강좌</p>
-              </div>
-              <div class="lectureContent">
-                <h3>10/25 실내 인테리어 플라원 데코 인테리어 플라원 데코</h3>
-                <p>김선우 | (월) 14:00 ~ 15:20</p>
-                <p>5,000원(총1회)</p>
-              </div>
-              
-            </div>
-            <div class="btnDiv">
-              <div class="cart">
-                <i class="fas fa-shopping-bag"></i>
-                <p>장바구니</p>
-              </div>
-              <div class="applyPossible">
-                <i class="far fa-calendar-alt"></i>
-                <p>접수 예정</p>
-              </div>
-          </div>
-          </div>
-          <div class="lectureDesc">
-            <div class="lectureImg">
-              <img
-                src="/images/lectureList/20181129114054.jpg"
-                alt=""
-              />
-            </div>
-            <div class="lectureInfo">
-              <div>
-                <p class="adult">성인강좌</p>
-                <p class="regular">정기강좌</p>
-              </div>
-              <div class="lectureContent">
-                <h3>10/25 실내 인테리어 플라원 데코 인테리어 플라원 데코</h3>
-                <p>김선우 | (월) 14:00 ~ 15:20</p>
-                <p>5,000원(총1회)</p>
-              </div>
-              
-            </div>
-            <div class="btnDiv">
-              <div class="cart">
-                <i class="fas fa-shopping-bag"></i>
-                <p>장바구니</p>
-              </div>
-              <div class="applyPossible">
-                <i class="far fa-calendar-alt"></i>
-                <p>접수 예정</p>
-              </div>
-          </div>
-          </div>
-          <div class="lectureDesc">
-            <div class="lectureImg">
-              <img
-                src="/images/lectureList/20181129114054.jpg"
-                alt=""
-              />
-            </div>
-            <div class="lectureInfo">
-              <div>
-                <p class="adult">성인강좌</p>
-                <p class="regular">정기강좌</p>
-              </div>
-              <div class="lectureContent">
-                <h3>10/25 실내 인테리어 플라원 데코 인테리어 플라원 데코</h3>
-                <p>김선우 | (월) 14:00 ~ 15:20</p>
-                <p>5,000원(총1회)</p>
-              </div>
-              
-            </div>
-            <div class="btnDiv">
-              <div class="cart">
-                <i class="fas fa-shopping-bag"></i>
-                <p>장바구니</p>
-              </div>
-              <div class="applyPossible">
-                <i class="far fa-calendar-alt"></i>
-                <p>접수 예정</p>
-              </div>
-          </div>
-          </div>
-          <div class="lectureDesc">
-            <div class="lectureImg">
-              <img
-                src="/images/lectureList/20181129114054.jpg"
-                alt=""
-              />
-            </div>
-            <div class="lectureInfo">
-              <div>
-                <p class="adult">성인강좌</p>
-                <p class="regular">정기강좌</p>
-              </div>
-              <div class="lectureContent">
-                <h3>10/25 실내 인테리어 플라원 데코 인테리어 플라원 데코</h3>
-                <p>김선우 | (월) 14:00 ~ 15:20</p>
-                <p>5,000원(총1회)</p>
-              </div>
-              
-            </div>
-            <div class="btnDiv">
-              <div class="cart">
-                <i class="fas fa-shopping-bag"></i>
-                <p>장바구니</p>
-              </div>
-              <div class="applyPossible">
-                <i class="far fa-calendar-alt"></i>
-                <p>접수 예정</p>
-              </div>
-          </div>
-          </div>
-          <div class="lectureDesc">
-            <div class="lectureImg">
-              <img
-                src="/images/lectureList/20181129114054.jpg"
-                alt=""
-              />
-            </div>
-            <div class="lectureInfo">
-              <div>
-                <p class="adult">성인강좌</p>
-                <p class="regular">정기강좌</p>
-              </div>
-              <div class="lectureContent">
-                <h3>10/25 실내 인테리어 플라원 데코 인테리어 플라원 데코</h3>
-                <p>김선우 | (월) 14:00 ~ 15:20</p>
-                <p>5,000원(총1회)</p>
-              </div>
-              
-            </div>
-            <div class="btnDiv">
-              <div class="cart">
-                <i class="fas fa-shopping-bag"></i>
-                <p>장바구니</p>
-              </div>
-              <div class="applyPossible">
-                <i class="far fa-calendar-alt"></i>
-                <p>접수 예정</p>
-              </div>
-          </div>
-          </div>
-          <div class="lectureDesc">
-            <div class="lectureImg">
-              <img
-                src="/images/lectureList/20181129114054.jpg"
-                alt=""
-              />
-            </div>
-            <div class="lectureInfo">
-              <div>
-                <p class="adult">성인강좌</p>
-                <p class="regular">정기강좌</p>
-              </div>
-              <div class="lectureContent">
-                <h3>10/25 실내 인테리어 플라원 데코 인테리어 플라원 데코</h3>
-                <p>김선우 | (월) 14:00 ~ 15:20</p>
-                <p>5,000원(총1회)</p>
-              </div>
-              
-            </div>
-            <div class="btnDiv">
-              <div class="cart">
-                <i class="fas fa-shopping-bag"></i>
-                <p>장바구니</p>
-              </div>
-              <div class="applyPossible">
-                <i class="far fa-calendar-alt"></i>
-                <p>접수 예정</p>
-              </div>
-          </div>
-          </div>
+          
+        
         </div>
         <div class="pagingDiv">
           <!-- <c:if test="${fn:length(visitCarList) ne 0}"> -->
 							
 		<ul class="board_paging">
 		
-		
-			<!-- <c:set var="searchParam" value="&date=${ paramDate }&carNo=${paramCarNo }&applicant=${paramApplicant}" /> -->
-			<!-- 맨 처음으로 (<<) -->
-			<li><a href="${contextPath }/visitCarList?page=1${searchParam}">&lt;&lt;</a></li>
-			<!-- 이전 페이지로(<) -->
-			<li><a href="#">&lt;</a></li>
-
-			<!-- 페이지 목록 (최대 10개) -->
-			<!-- <c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }"> -->
-				<li><a href="#" class="current_page">1</a></li>
-				<li><a href="#" class="current_page">1</a></li>
-				<li><a href="#" class="current_page">1</a></li>
-				<li><a href="#" class="current_page">1</a></li>
-				<li><a href="#" class="current_page">1</a></li>
-				<li><a href="#" class="current_page">1</a></li>
-		
-
-			<!-- 다음 페이지로 (>) -->
-			<li><a href="#">&gt;</a></li>
-
-			<!-- 맨 끝으로 (>>) -->
-			<li><a
-				href="${contextPath }/visitCarList?page=${pi.maxPage}${searchParam}">&gt;&gt;</a></li>
 		</ul>
-		<!-- </c:if> -->
           
         </div>
       </div>
-      <script src="/js/lectureList/selectStyle.js"></script>
-      <script src="/js/lectureList/lectureSearch.js"></script>
+     </div>
+      <script>
+    	let category = '';
+    	let target = '';
+    	let status = '';
+    	let year = '';
+    	let month = '';
+    	let day = '';
+    	let time = '';
+    	let typing = '';
+    	let arrayStand = 'date';
+      	let page = 1;
+		
+		if("[[${search}]]"){
+			category = "[[${search.category}]]" == null? '': "[[${search.category}]]";
+			target = "[[${search.target}]]" == null? '': "[[${search.target}]]";
+			status = "[[${search.status}]]" == null? '': "[[${search.status}]]";
+			year = "[[${search.year}]]" == null? '': "[[${search.year}]]";
+			month = "[[${search.month}]]" == null? '': "[[${search.month}]]";
+			day = "[[${search.day}]]" == null? '': "[[${search.day}]]";
+			time = "[[${search.time}]]" == null? '': "[[${search.time}]]";
+			typing = "[[${search.typing}]]" == null? '': "[[${search.typing}]]";
+		}
+
+    /* 검색 바 */
+      $(function() {
+  		$.ajax({
+  			url : "/lecture/year",
+  			success : function(data) {
+  				const selectYearDiv = document.querySelector("#selectYearSearch");
+  				for(let index in data) {
+  					selectYearDiv.insertAdjacentHTML('beforeend', '<option value="' + data[index] + '">' + data[index] + '</option>');
+  				}
+  				
+  				/* ===== Logic for creating fake Select Boxes ===== */
+  				$('.sel').each(function() {
+  				    $(this).children('select').css('display', 'none');
+  				    
+  				    var $current = $(this);
+  				    
+  				    $(this).find('option').each(function(i) {
+  				      if (i == 0) {
+  				        $current.prepend($('<div>', {
+  				          class: $current.attr('class').replace(/sel/g, 'sel__box')
+  				        }));
+  				        
+  				        var placeholder = $(this).text();
+  				        $current.prepend($('<span>', {
+  				          class: $current.attr('class').replace(/sel/g, 'sel__placeholder'),
+  				          text: placeholder,
+  				          'data-placeholder': placeholder
+  				        }));
+  				        
+  				        return;
+  				      }
+  				      
+  				      $current.children('div').append($('<span>', {
+  				        class: $current.attr('class').replace(/sel/g, 'sel__box__options'),
+  				        text: $(this).text()
+  				      }));
+  				    });
+  				  });
+  				  
+  				  // Toggling the `.active` state on the `.sel`.
+  				  $('.sel').click(function() {
+  				    $(this).toggleClass('active');
+  				  });
+  				  
+  				  // Toggling the `.selected` state on the options.
+  				  $('.sel__box__options').click(function() {
+  				    var txt = $(this).text();
+  				    var index = $(this).index();
+  				      
+  				    $(this).siblings('.sel__box__options').removeClass('selected');
+  				    $(this).addClass('selected');
+  				    
+  				    var $currentSel = $(this).closest('.sel');
+  				    $currentSel.children('.sel__placeholder').text(txt);
+  				    $currentSel.children('select').prop('selectedIndex', index + 1);
+  				  });
+  				  
+  				  if("[[${search}]]") {  					  
+  					document.querySelector('.listSearchContainer .categorySearch > div > span').innerText = category == 1? "정기강좌": category == 2? "단기강좌" : category == 3? "무료강좌" : "강좌 분류";
+  					document.querySelector('.listSearchContainer .targetSearch > div > span').innerText = target == 1? "성인강좌" : target == 2? "영유아강좌": target == 3? "아동강좌": "강좌 대상";
+  			 		document.querySelector('.listSearchContainer .registStatus > div > span').innerText = status == ''? "접수 상태": status;
+  			 		document.querySelector('.listSearchContainer .yearSearch > div > span').innerText = year == ''? "개강 년도": status;
+  			 		document.querySelector('.listSearchContainer .monthSearch > div > span').innerText = month == ''? "개강 월": month + "월";
+  					document.querySelector('.listSearchContainer .daySearch > div > span').innerText = day == ''? "개강 요일": day;
+  			 		document.querySelector('.listSearchContainer .timeSearch > div > span').innerText = time == ''? "개강 시간": time+"시타임";
+  			 		document.querySelector('.listSearchContainer .typingSearch > div > input').value = typing;
+  				  }
+  			},
+  			error : function(e) {
+  				console.log(e);
+  			}
+  		})
+  	})
+  	
+  	/* 정렬 조건  */
+  	$('.alignStandard a').on('click', function(e){
+  	    // let test = $('this').attr('data-click');
+  	    $('.alignStandard a').removeClass('line');
+  	    $(this).addClass('line');
+  	    
+  	  	arrayStand = this.getAttribute('data-click');
+  		lectureContents();
+  	})
+  	
+  	/* 검색 */
+  	function searchList() {
+		category = document.querySelector('.listSearchContainer .categorySearch > div > span').innerText;
+ 		target = document.querySelector('.listSearchContainer .targetSearch > div > span').innerText;
+ 		status = document.querySelector('.listSearchContainer .registStatus > div > span').innerText;
+ 		year = document.querySelector('.listSearchContainer .yearSearch > div > span').innerText;
+ 		month = document.querySelector('.listSearchContainer .monthSearch > div > span').innerText;
+		day = document.querySelector('.listSearchContainer .daySearch > div > span').innerText;
+ 		time = document.querySelector('.listSearchContainer .timeSearch > div > span').innerText;
+ 		typing = document.querySelector('.listSearchContainer .typingSearch > div > input').value;
+ 		
+			    switch(category) {
+			        case '정기강좌' :
+			            category = 1;
+			            break;
+			        case '단기강좌' :
+			            category = 2;
+			            break;
+			        case '무료강좌' :
+			            category = 3;
+			            break;
+			        default : 
+			        category = '';
+			    }
+			    
+			    switch(target) {
+			        case '성인강좌' :
+			        target = 1;
+			        break;
+			        case '아동강좌' :
+			        target = 2;
+			        break;
+			        case '영유아강좌' :
+			            target = 3;
+			            break;
+		            default :
+			            target = '';
+			
+			    }
+			
+			   if(status == '전체' || status == '접수 상태') {
+			       status = '';
+			   }
+			
+			   if(year == '전체' || year == '개강 년도') {
+			       year = '';
+			   }
+			
+			   if(month =='전체' || month =='개강 월') {
+			       month = '';
+			   }
+			
+			   if(day == '전체' || day == '개강 요일') {
+			       day = '';
+			   }
+			
+			   if(time == '전체' || time == '개강 시간') {
+			       time = '';
+			   }
+				
+			   
+			   if(month != '') {
+				   month = month.substr(0, month.indexOf("월"));
+			   }
+			   if(time != '') {
+				   time = time.substr(0, time.indexOf("시"));
+			   }
+			   
+			   lectureContents();
+	 }
+
+    /* 강좌 조회 */
+	 function lectureContents() {
+		 /* 마감임박순, 낮은 가격순, 높은 가격순, 시간대 */
+		 let today = new Date();
+		 	var obj = {category : category, target : target, status : status, year : year, month : month, day : day, time : time, typing : typing, today : today, arrayStand : arrayStand, page : page};
+			 $.ajax({
+				 url : "/lecture/list/",
+				 data : obj,
+				 success : function(data) {
+					 console.log(data);
+					 var lectureDiv = document.querySelector('.lectureDiv');
+					 let listCount = document.querySelector('.count');
+					 listCount.innerHTML = data.lecturelist.length;
+				    	 /* 비워주는 작업 필요*/
+				    	 lectureDiv.innerHTML = '';
+				        for (var key in data.lecturelist) {
+				        	let targetEle = ``;
+				        	if (data.lecturelist[key].lecture.ltNo == 1) {
+				        		targetEle = `<p class="adult">성인강좌</p>`;
+					         } else if (data.lecturelist[key].lecture.ltNo == 2) {
+					        	 targetEle = `<p class="child">아동강좌</p>`;
+					         } else {
+					        	 targetEle = `<p class="kid">영유아강좌</p>`;
+					         }
+				        	
+				        	let categoryEle = ``;
+				        	if (data.lecturelist[key].lecture.lcNo == 1) {
+				        		categoryEle = `<p class="regular">정기강좌</p>`;
+					         } else if (data.lecturelist[key].lecture.ltNo == 2) {
+					        	 categoryEle = `<p class="short">단기강좌</p>`;
+					         } else {
+					        	 categoryEle = `<p class="free">무료강좌</p>`;
+					         }
+				        	
+				        	let statusEle = ``;
+				        	let nowDate = new Date(); //오늘
+				        	let lecDate = new Date(); //강의시작날짜
+				        	
+				        	nowDate.setHours(0);
+				        	nowDate.setMinutes(0);
+				        	nowDate.setSeconds(0);
+				        	nowDate.setMilliseconds(0);
+				        	
+				        	lecDate.setHours(0);
+				        	lecDate.setMinutes(0);
+				        	lecDate.setSeconds(0);
+				        	lecDate.setMilliseconds(0);
+				        	
+				        	lecDate.setFullYear(data.lecturelist[key].lrStartDate.substr(0, 4));
+				        	lecDate.setMonth(data.lecturelist[key].lrStartDate.substr(5, 2)-1);
+				        	lecDate.setDate(data.lecturelist[key].lrStartDate.substr(8, 2));
+				        	
+				        	let openDate = new Date(); //접수 오픈 날짜
+				        	openDate.setFullYear(lecDate.getFullYear());
+				        	openDate.setMonth(lecDate.getMonth());
+				        	openDate.setDate(lecDate.getDate());
+				        	openDate.setDate(openDate.getDate() - 30);
+				        	openDate.setHours(0);
+				        	openDate.setMinutes(0);
+				        	openDate.setSeconds(0);
+				        	openDate.setMilliseconds(0);
+				        	
+				        	let openNotice = '';
+				        	if (lecDate <= nowDate) {
+				        		statusEle = 
+				        			`<div class="applyInpossible">
+		                               <i class="far fa-times-circle"></i>
+		                               <p>접수 마감</p> <input type="hidden" value="접수마감">
+		                             </div>`;
+				        	} else if (data.lecturelist[key].lrCount == data.lecturelist[key].lrCapacity) {
+				        		statusEle = 
+				        			`<div class="applyInpossible">
+		                               <i class="far fa-times-circle"></i>
+		                               <p>접수 마감</p> <input type="hidden" value="정원마감">
+		                             </div>`;
+				        	} else if (openDate > nowDate) {
+				        		statusEle = `<div class="applyPlan">
+					                <i class="far fa-calendar-alt"></i>
+					                <p>접수 예정</p> <input type="hidden" value="` + openDate.getFullYear() + `년 ` + (openDate.getMonth()+1) + `월 ` + openDate.getDate() + `일부터 강좌 접수가 가능합니다.">
+					              </div>`;
+				        		openNotice = `<span class='openNotice'> 접수 오픈 : ` + openDate.getFullYear() + `년 ` + (openDate.getMonth()+1) + `월 ` + openDate.getDate() + `일</span>`;
+				        	} else {
+				        		statusEle = `<div class="applyPossible">
+					                <i class="far fa-check-circle"></i>
+					                <p>접수 중</p>
+					              </div>`;
+				        	}
+				        	
+				                 var html = '';
+			                         html += `<div class="lectureDesc">
+			                             <div class="lectureImg">
+			                             <img
+			                               src="/images/lectureList/` + data.lecturelist[key].lecture.lthumbnail  + `"
+			                               alt=""
+			                             />
+			                           </div>
+			                           <div class="lectureInfo">
+			                             <div>` + targetEle + categoryEle + `
+			                             </div>
+			                             <div class="lectureContent">
+			                               <h3><a href="#">` + data.lecturelist[key].lrStartDate.substr(5, 2) + `/` + data.lecturelist[key].lrStartDate.substr(8, 2) + ` ` + data.lecturelist[key].lecture.ltitle + openNotice + `</a></h3>
+			                               <p>` + data.lecturelist[key].instructor.instructorName + ` | (` + data.lecturelist[key].lrDay + `) ` + data.lecturelist[key].lrStartTime + ` ~ ` + data.lecturelist[key].lrEndTime + `</p>
+			                               <p>` + data.lecturelist[key].lrFee + `원(총` + data.lecturelist[key].lrNumber + `회)</p>
+			                             </div>
+			                             
+			                           </div>
+			                           <div class="btnDiv">
+			                             <div class="cart">
+			                               <i class="fas fa-shopping-bag"></i>
+			                               <p>장바구니</p>
+			                             </div>` + statusEle			                             
+			                         + `</div>
+			                         </div>`;
+			                         
+			                         lectureDiv.insertAdjacentHTML('beforeend', html);
+				         }
+				        
+				        $('.cart').on('click', function(e){
+				            let test = 2;
+				            if (test == 1) { //로그인안했을 경우
+				                if(confirm('로그인이 필요합니다. 로그인창으로 이동하시겠습니까?')) {
+									//로그인 창 이동
+				                } else {
+				                    return;
+				                }
+				            }
+
+				            let name = this.parentElement.parentElement.children[1].children[1].children[0].innerText;
+				            if(confirm(name + "강좌를 장바구니에 담으시겠습니까?")) {
+				                //장바구니 저장 로직
+				            }
+				        });
+				        
+				        $('.applyInpossible').on('click', function(){
+				            if(this.children[2].value == '정원마감') {
+				                alert('정원이 마감된 강좌 입니다.')
+				            } else {
+				                alert('접수가 종료된 강좌 입니다.');
+				            }
+				        })
+						//접수 예정 알림 alert
+				        $('.applyPlan').on('click', function(){
+				            alert(this.children[2].value);
+				        })
+				        
+				        
+				        var pagingUl = document.querySelector(".board_paging");
+				        pagingUl.innerHTML = ``;
+				        let pagingHtml = `
+				        <li><a href="#" onclick="firstPage()">&lt;&lt;</a></li>
+						<li><a href="#" onclick="minusPage()">&lt;</a></li>`;
+						
+						for(let i = data.pi.startPage; i < data.pi.endPage + 1; i++) {
+							if(i == data.pi.page) {
+								pagingHtml += `<li><a href="#" class="current_page pagingNum">` + i + `</a></li>`;
+							} else {
+								pagingHtml += `<li><a href="#" class="pagingNum">` + i + `</a></li>`;
+							}
+						}
+
+						pagingHtml += `
+						<li><a href="#" onclick="plusPage(` + data.pi.maxPage + `)">&gt;</a></li>
+						<li><a href="#" onclick="lastPage(` + data.pi.maxPage + `)">&gt;&gt;</a></li>`
+							
+						pagingUl.insertAdjacentHTML('beforeend', pagingHtml);
+						
+						
+						//요청 페이지 저장
+						 $('a.pagingNum').on('click', function(e){
+					          page = this.innerHTML;
+					          lectureContents();
+					       });
+						
+				 },
+				 error : function(e) {
+					 console.log(e);
+				 }
+			 })
+	 }
+	 
+	 lectureContents();
+	 
+	 //전체 조회
+	 function searchAll() {
+		 category = '';
+			target = '';
+			status = '';
+			year = '';
+			month = '';
+			day = '';
+			time = '';
+			typing = '';
+			
+			document.querySelector('.listSearchContainer .categorySearch > div > span').innerText = '강좌 분류';
+	 		document.querySelector('.listSearchContainer .targetSearch > div > span').innerText = '강좌 대상';
+	 		document.querySelector('.listSearchContainer .registStatus > div > span').innerText = '접수 상태';
+	 		document.querySelector('.listSearchContainer .yearSearch > div > span').innerText = '개강 년도';
+	 		document.querySelector('.listSearchContainer .monthSearch > div > span').innerText = '개강 월';
+			document.querySelector('.listSearchContainer .daySearch > div > span').innerText = '개강 요일';
+	 		document.querySelector('.listSearchContainer .timeSearch > div > span').innerText = "개강 시간";
+	 		document.querySelector('.listSearchContainer .typingSearch > div > input').value = '';
+	 		
+	 		let selectSpans = document.querySelectorAll(".scheduleContainer .sel__box__options");
+	 		selectSpans.forEach(span => {
+	 			$(span).removeClass('selected');
+	 		});
+	 		
+			let selectDivs = document.querySelectorAll('.scheduleContainer .selectDiv');
+			selectDivs.forEach(div => {
+				$(div).removeClass('active');
+			});
+	 		
+			lectureContents();
+	 }
+	 
+	 function firstPage() {
+		 page = 1;
+		 lectureContents();
+	 }
+	 
+	 function minusPage() {
+		 if(page == 1) {
+			 return;
+		 }
+		 page = Number(page) - 1;
+		 lectureContents();
+	 }
+	 
+	 function plusPage(maxPage) {
+		 if(page == maxPage) {
+			 return;
+		 }
+		 
+		 page = Number(page) + 1;
+		 lectureContents();
+	 }
+	 
+	 function lastPage(maxPage) {
+		 page = maxPage;
+		 lectureContents();
+	 }
+	 
+      </script>
+      
+      <!-- <script src="/js/lectureList/selectStyle.js"></script> -->
+      <!-- <script src="/js/lectureList/lectureSearch.js"></script> -->
+
   </body>
+  <footer th:include="fragments/footer.html"></footer>
 </html>

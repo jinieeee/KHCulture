@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>1:1문의 답변 [관리자]</title>
+<style>
+.outer {
+	width: 1920px;
+	margin: auto;
+}
+
+.wrap {
+	width: 1320px;
+	margin: 100px auto;
+}
+
+.titleArea {
+	border-bottom: 1px solid #F0B95E;
+}
+
+.answer_content {
+	padding: 0px 20px;
+}
+
+.answer_content .content {
+	margin-bottom: 30px;
+}
+
+.input_area {
+	border: solid 1px #FFFFFF;
+	padding: 10px 10px 14px 10px;
+	background: white;
+	font-size: 20px;
+}
+
+.input_area select {
+	width: 150px;
+	height: 30px;
+	border: 0px;
+}
+
+.input_area input {
+	width: 810px;
+	height: 30px;
+	border: 0px;
+	font-size: 20px;
+}
+
+.input_area input:focus, .input_area select:focus {
+	outline: none;
+}
+
+.textarea {
+    font-size: 20px;
+	width: 1280px;
+	resize: none;
+	border: solid 1px #F0B95E;
+}
+
+.textarea:focus {
+	outline: none;
+}
+
+.title_span {
+	background-color: black;
+	font-size: 20px;
+}
+
+.image_area {
+	padding: 20px;
+	text-align: center;
+}
+
+.image_area img {
+    margin: 20px;
+	width: 70%;
+}
+
+.answer_area button {
+	width: 130px;
+	height: 50px;
+	border: 0px;
+	color: white;
+	margin: 5px;
+	cursor: pointer;
+	font-size: 20px;
+}
+.answer_area #goList{
+	background: #6A6A6A;
+}
+.answer_area #regist{
+	background: #F0B95E;
+}
+
+.btn_area {
+	text-align: center;
+	border-top: 1px solid #FFFFFF;
+	padding: 30px;
+}
+
+h2 {
+    margin-top: 50px;
+}
+</style>
+</head>
+<header th:include="fragments/header.html"></header>
+<body>
+	<div class="outer">
+		<div class="wrap">
+			<div class="answer_area">
+				<div class="titleArea">
+					<h1 align="center">1:1 문의</h1>
+				</div>
+				<div class="answer_content">
+					<form method="post" action="${ contextPath }/gallery/insert"
+					enctype="multipart/form-data">
+						<div class="content">
+							
+							<h2><span class="title_span">&nbsp;</span> 문의사항 </h2>
+							<span class="input_area"> 내년에도 비누공예 개강하나요? </span>
+							
+							<h2><span class="title_span">&nbsp;</span> 답변 </h2>
+							<textarea class="textarea" rows="20" cols="100" name="content" required></textarea>
+
+						</div>
+						<div class="btn_area">
+						<button type="submit" id="regist">등록하기</button>
+							<button type="button" id="goList" onclick="location.href='/questionnaire/list'">목록으로</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<footer th:include="fragments/footer.html"></footer>
+</html>

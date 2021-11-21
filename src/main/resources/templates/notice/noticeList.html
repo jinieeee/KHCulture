@@ -45,41 +45,43 @@
             <span id="notice_create" th:text="${n.n_enroll_date}"></span>
         </div>
     
-	      <div class="notice_paging_area">
-	        <ul class="notice_paging">  
-	        <!--  맨 처음으로 (<<) /notice/noticeList/?-->
-	        	<li><a th:href="@{?page=1}">&lt;&lt;</a></li>
-	        	
-	        <!--  이전 페이지(<) -->
-		       	<li th:if="${ pi.page > 1 }">
-		       		<a th:href="@{?page={page}(page =  ${pi.page-1})}">&lt;</a>
-		       	</li>
-		       	<li th:unless="${ pi.page > 1 }">
-		       		<a th:href="@{?page={page}(page =  ${pi.page})}">&lt;</a>
-		       	</li>
-	       	
-	
-	        <!-- 페이지수 -->	
-	        	<th:block th:with="start=${pi.startPage}, end=${pi.endPage}">
-	        		<li th:with="start=${pi.startPage}, end=${pi.endPage}" th:each="pageNum : ${#numbers.sequence(start,end)}">
-	        			<a th:href="@{/notice/noticeList/?page={page}(page = ${ pageNum})}" th:text=${pageNum}></a>
-	        		</li>
-	        	</th:block>
-	        		
-	        <!-- 다음 페이지로(>) -->	
-		        <li th:if="${ pi.page < maxPage }">
-		       		<a th:href="@{?page={page}(page =  ${pi.page+1})}">&gt;</a>
-		       	</li>
-		       	<li th:unless="${ pi.page == maxPage }">
-		       		<a th:href="@{?page={page}(page =  ${pi.page})}">&gt;</a>
-		       	</li>
-	        
-	        <!-- 맨 뒤로(>>) --> 	
-	        	<li><a th:href="@{?page={page} (page = ${pi.maxPage})}">&gt;&gt;</a></li>
-	        	
-	        </ul>
-	       
-	    </div>
+
+      <div class="notice_area">
+        <ul class="notice_paging">  
+        <!--  맨 처음으로 (<<) /notice/noticeList/?-->
+        	<li><a th:href="@{?page=1}">&lt;&lt;</a></li>
+        	
+        <!--  이전 페이지(<) -->
+	       	<li th:if="${ pi.page > 1 }">
+	       		<a th:href="@{?page={page}(page =  ${pi.page-1})}">&lt;</a>
+	       	</li>
+	       	<li th:unless="${ pi.page > 1 }">
+	       		<a th:href="@{?page={page}(page =  ${pi.page})}">&lt;</a>
+	       	</li>
+       	
+
+        <!-- 페이지수 -->	
+        	<th:block th:with="start=${pi.startPage}, end=${pi.endPage}">
+        		<li th:with="start=${pi.startPage}, end=${pi.endPage}" th:each="pageNum : ${#numbers.sequence(start,end)}">
+        			<a th:href="@{/notice/noticeList/?page={page}(page = ${ pageNum})}" th:text=${pageNum}></a>
+        		</li>
+        	</th:block>
+        		
+        <!-- 다음 페이지로(>) -->	
+	        <li th:if="${ pi.page < pi.maxPage }">
+	       		<a th:href="@{?page={page}(page =  ${pi.page+2})}">&gt;</a>
+	       	</li>
+	       	<li th:if="${ pi.page == pi.maxPage }">
+	       		<a th:href="@{?page={page}(page =  ${pi.page+3})}">&gt;</a>
+	       	</li>
+        
+        <!-- 맨 뒤로(>>) --> 	
+        	<li><a th:href="@{?page={page} (page = ${pi.maxPage})}">&gt;&gt;</a></li>
+        	
+        </ul>
+       
+    </div>
+
     </div>
 
 </body>

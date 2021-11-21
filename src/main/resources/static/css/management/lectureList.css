@@ -66,7 +66,7 @@
 }
 
 .listContainer > .content > .searchArea > #searchIcon{
-    background-image: url(images/icon_search.png);
+    background-image: url(../../images/management/icon_search.png);
     background-position: center center;
     background-repeat: no-repeat;
     background-color: black;
@@ -117,4 +117,25 @@
 .listContainer > .content > .listArea > table > tbody > tr > td:nth-of-type(4){
     width: 820px;
     font-weight: 500;
+}
+
+.listContainer > .content > .pagingArea{
+	width: 1320px;
+	display: flex;
+	justify-content: center;
+}
+
+.listContainer > .content > .pagingArea > .list_paging{
+	display: flex;
+	list-style: none;
+	
+	line-height: 50px;
+	font-size: 22px;
+	width: 480px;
+	justify-content: space-between;
+	
+}
+
+a{
+	text-decoration: none;
 }

@@ -1,20 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>강사 목록</title>
 <style>
 .outer {
-	width: 1000px;
+	width: 1920px;
 	margin: auto;
 }
 
 .wrap {
-	width: 890px;
+	width: 1320px;
 	margin: 100px auto;
 }
 
-.instructor_title {
+.titleArea {
 	border-bottom: 1px solid #F0B95E;
 }
 
@@ -29,10 +29,10 @@ ul, li {
 
 .instructor_list {
 	list-style : none;
-	margin:50px 15px;
+	margin: 50px 15px;
 	display : grid;
-	grid-template-columns: 250px 250px 250px;
-	gap : 55px;
+	grid-template-columns: 340px 340px 340px;
+	gap : 135px;
 }
 
 .instructor_list .box:hover {
@@ -59,7 +59,7 @@ ul, li {
 }
 
 .instructor_list img {
-	max-width : 250px;
+	max-width : 340px;
 	height : 100%;
 }
 
@@ -68,22 +68,23 @@ ul, li {
 }
 
 .btn_area button {
-	width: 100px;
-	height: 35px;
+	width: 130px;
+	height: 50px;
 	border: 0px;
 	color: white;
 	background: #F0B95E;
 	margin: 5px;
 	cursor : pointer;
+	font-size: 20px;
 }
 </style>
 </head>
+<header th:include="fragments/header.html"></header>
 <body>
-</body>
 	<div class="outer">
 		<div class="wrap">
 			<div class="instructor_area">
-				<div class="instructor_title">
+				<div class="titleArea">
 					<h1 align="center">강사 관리</h1>
 				</div>
 				<div class="list_div">
@@ -96,12 +97,12 @@ ul, li {
 					</li>
 					</ul>
 				</div>
-				
-				
 				<div class="btn_area">
 				    <button onclick="location.href='/instructor/regist'">등록하기</button>
 				</div>
 			</div>
 		</div>
 	</div>
+<footer th:include="fragments/footer.html"></footer>
+</body>	
 </html>
