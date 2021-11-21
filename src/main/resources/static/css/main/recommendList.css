@@ -1,0 +1,129 @@
+.recommendList ul,
+.recommendList li {
+	list-style: none;
+}
+
+article .recommendList {
+	width: 1320px;
+	height: 330px;
+	margin: 0 auto 20px auto;
+	display:flex;
+}
+
+article .leftDiv,
+article .rightDiv {
+	width: 160px;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	background-color: var(--main-color);
+	position: relative;
+}
+.listbox .fas {
+	color: white;
+	position: absolute;
+	top: 140px;
+	left: 55px;
+	
+}
+
+article .leftDiv p {
+	font-size: 28px;
+	color: white;
+	text-align: center;
+	text-decoration: underline solid ;
+	text-underline-position: under;
+}
+
+.recommendClassArea {
+	display: flex;
+	width: 1000px;
+	height: 100%;
+	overflow: hidden;
+	margin: 0;
+	padding: 0 5px;
+
+}
+
+.recommendClassArea li {
+	position: relative;
+	min-width: calc(990px/4 - 20px);
+	height: 97%;
+	box-shadow: 2px 2px 12px -5px gray;
+	margin: 3px 10px 0 10px;
+	overflow: hidden;
+}
+.proItem {
+	position: relative;
+	top: 0;
+}
+.proItem .thum {
+	overflow: hidden;
+}
+.thum img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.tagArea {
+	width: 100%;
+	height: 32px;
+	display: flex;
+}
+
+.tagArea span {
+	width: 50%;
+	display: block;
+	overflow: hidden;
+	text-align: center;
+	line-height: 32px;
+}
+
+.tagArea .targetTag {
+	background-color: var(--target-color);
+}
+
+.tagArea .categoryTag {
+	background-color: var(--category-color);
+}
+.txtBox {
+	padding: 3%;
+}
+.txtBox span.subject {
+	width: 200px;
+	height: 50px;
+	font-size: 18px;
+	font-weight: 550;
+	display: -webkit-box;
+	text-overflow: ellipsis;
+	white-space: normal;
+	word-wrap: break-word;
+	overflow: hidden;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	word-break: keep-all;
+	word-break: keep-all;
+}
+/* .txtBox:nth-child(n) {
+	margin-bottom: 5px;
+} */
+.subTxt {
+	display: flex;
+}
+.subTxt span,
+.price span,
+.price b {
+	font-size: 15px;
+}
+
+.subTxt .name::after {
+	content: "|";
+	margin: 5px;
+}
+span.blind{
+	display: none;
+}
+
+
+

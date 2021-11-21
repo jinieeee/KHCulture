@@ -11,10 +11,13 @@
 	<result property="n_count" column="N_COUNT"/>
 	<result property="n_modify_date" column="N_MODIFY_DATE"/>
 	<result property="n_status" column="N_STATUS"/>
+	<result property="m_no" column="M_NO"/>
+	<!-- 
 	<association property="member_roletest" javaType ="com.kh.khculture.notice.model.vo.Member_RoleTEST">
 		<id property="m_no" column="M_NO"/>
 		<result property="authority_code" column="AUTHORITY_CODE"/>
 	</association>
+	 -->
 </resultMap>
 
 
@@ -55,14 +58,37 @@ WHERE RNUM BETWEEN #{ startRow } AND #{ endRow }
 		, TO_CHAR(N_ENROLL_DATE,'YYYY-MM-DD') N_ENROLL_DATE
 		, N_COUNT
 		, N_MODIFY_DATE
-		, N_COUNT
-		, N_MODIFY_DATE
 		, N_STATUS
-		, M_NO
 	FROM NOTICE
    WHERE N_STATUS='Y'
      AND N_NO = #{ n_no }
    ORDER BY N_NO DESC 
 </select>
 
+<insert id="noticeInsert" parameterType="com.kh.khculture.notice.model.vo.Notice">
+		INSERT
+		INTO NOTICE
+		(
+			  N_NO
+			, N_TITLE
+			, N_CONTENT
+			, N_ENROLL_DATE
+			, N_COUNT
+			, N_MODIFY_DATE
+			, N_STATUS
+			, M_NO
+		)
+		VALUES
+		(
+			SEQ_NOTICE_NO.NEXTVAL
+			, #{ n_title }
+			, #{ n_content }
+			, SYSDATE
+			, DEFAULT
+			, SYSDATE
+			, DEFAULT
+			, #{ m_no }
+		)
+		
+</insert>
 </mapper>

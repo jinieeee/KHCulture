@@ -41,6 +41,13 @@
 .lectureScheduleBody .month p {
   font-size: 36px;
 }
+
+.lectureScheduleBody .month .year {
+  font-size: 25px;
+  height: 25px;
+  margin-bottom : 20px;
+}
+
 .lectureScheduleBody .date {
   display: flex;
   justify-content: center;

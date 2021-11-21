@@ -65,13 +65,18 @@
     margin-bottom: 3px;
   }
   
+  .listSearchContainer div.lectureInfo h3 a{
+    color : var(--main-font-color);
+  }
+  
   .listSearchContainer div.lectureInfo div.lectureContent {
       width: 860px;
   }
   .listSearchContainer div.lectureInfo div.lectureContent p {
     font-size: 15px;
-    margin-bottom: 7px;
+    margin-bottom: 0;
     font-weight: 400;
+    color : var(--main-font-color);
   }
   
   .listSearchContainer .adult {
@@ -79,10 +84,40 @@
     color: white;
   }
   
+  .listSearchContainer .child {
+  background-color: var(--child-color);
+  color: white;
+}
+
+.listSearchContainer .kid {
+  background-color: var( --kid-color);
+  color: white;
+}
+  
   .listSearchContainer .regular {
     color: white;
     background-color: gray;
   }
+  
+  .listSearchContainer .short {
+  color: white;
+  background-color: #BD914A;
+}
+
+.listSearchContainer .free {
+  color: white;
+  background-color: #70562C;
+}
+
+
+.listSearchContainer div.lectureInfo div:first-of-type p:first-of-type {
+    margin-right: 7px;
+}
+
+.listSearchContainer .lectureInfo .openNotice {
+	font-size : 13px;
+	color : red;
+}
 
   .listSearchContainer div.btnDiv {
       display: flex;
@@ -111,3 +146,35 @@
     .listSearchContainer div.btnDiv div:first-of-type {
         margin-right: 15px;
     }
+    
+    .listSearchContainer .pagingDiv {
+   		 width: 890px;
+   		 margin: 0 auto;
+    }
+    
+    .listSearchContainer .board_paging {
+    	line-height: 50px;
+	display: flex;
+	justify-content: center;
+	list-style: none;
+	/* width: 480px; */
+	margin : 0 auto;
+	padding: 0;
+    }
+    
+    /* .listSearchContainer .board_paging li{
+    	margin-right: -57px;
+    } */
+    
+     .listSearchContainer .board_paging a {
+	text-decoration: none;
+	color: #282A35;
+	width: 40px;
+	display: block;
+	text-align: center;
+}
+	 .listSearchContainer .board_paging a.current_page {
+		border-bottom: 2px solid #282A35;
+		font-weight: bold;
+	}
+    

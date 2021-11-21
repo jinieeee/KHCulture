@@ -11,12 +11,24 @@ public class Notice {
 	private int n_count; // 조회수
 	private String n_modify_date; // 수정일
 	private String n_status; // 게시글 삭제
-//	private int m_no; // 작성자 번호(관리자만 가능)
+	private int m_no; // 작성자 번호(관리자만 가능)
 	
-	private Member_RoleTEST member_roletest; //게시글을 쓴 사람의 권한
-	
-	
+
 	public Notice() {}
+	
+	
+	
+
+	public Notice(String n_title, String n_content, String n_enroll_date, String n_status, int m_no) {
+		super();
+		this.n_title = n_title;
+		this.n_content = n_content;
+		this.n_enroll_date = n_enroll_date;
+		this.n_status = n_status;
+		this.m_no = m_no;
+	}
+
+
 
 
 	public int getN_no() {
@@ -88,22 +100,26 @@ public class Notice {
 		this.n_status = n_status;
 	}
 
+	
+	
 
-	public Member_RoleTEST getMember_roletest() {
-		return member_roletest;
+	public int getM_no() {
+		return m_no;
 	}
 
 
-	public void setMember_roletest(Member_RoleTEST member_roletest) {
-		this.member_roletest = member_roletest;
+	public void setM_no(int m_no) {
+		this.m_no = m_no;
 	}
 
+
+	
 
 	@Override
 	public String toString() {
 		return "Notice [n_no=" + n_no + ", n_title=" + n_title + ", n_content=" + n_content + ", n_enroll_date="
-				+ n_enroll_date + ", n_count=" + n_count + ", n_modify_date=" + n_modify_date + ", n_status=" + n_status
-				+ ", member_roletest=" + member_roletest + "]";
+				+ n_enroll_date + ", n_count=" + n_count + ", n_modify_date=" + n_modify_date + ", n_status=" + n_status  + ", m_no= "+m_no
+				+ "]";
 	}
 
 	

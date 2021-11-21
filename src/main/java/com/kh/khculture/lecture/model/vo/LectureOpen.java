@@ -2,16 +2,21 @@ package com.kh.khculture.lecture.model.vo;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Data;
 
 @Data
-public class LectureOpen {
+public class LectureOpen implements Comparable<LectureOpen>{
 	private int lrNo; //강의등록번호
 	private int lrCapacity; //정원
 	private int lrCount; //신청인 수
-	private int lrFee; //수강료
+	private String lrFee; //수강료
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone="Asia/Seoul")
 	private Date lrStartDate; //수강시작일
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone="Asia/Seoul")
 	private Date lrEndDate; //수강 종료일
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone="Asia/Seoul")
 	private Date lrParDate; //수업일
 	private int lrNumber; //강의횟수
 	private String lrDay; //수강요일
@@ -35,4 +40,9 @@ public class LectureOpen {
 //		this.lecture = lc.getLecture();
 //		this.instructor = lc.getInstructor();
 //	}
+	@Override
+	public int compareTo(LectureOpen o) {
+		// TODO Auto-generated method stub
+		return lrParDate.compareTo(o.getLrParDate());
+	}
 }
