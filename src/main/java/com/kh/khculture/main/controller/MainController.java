@@ -23,9 +23,12 @@ public class MainController {
 		return "redirect:/";
 	}
 	
-	@RequestMapping(value="/main/search")
+	@PostMapping(value="/main/search")
 	public String submitSearch(Search search, Model model) {
-		log.info("{}", search);
+//		log.info("{}", search == null);
+//		log.info("{}", search.getCategory() == null);
+//		log.info("{}", search.getCategory() == "");
+		
 		model.addAttribute("search", search);
 		return "/lectureList/lectureSearch";
 	}
