@@ -3,10 +3,356 @@
 <head>
 <meta charset="UTF-8">
 <title>main</title>
+<link rel="stylesheet" type="text/css" href="/css/main/main.css">
+<link rel="stylesheet" type="text/css" href="/css/main/lectureList.css">
+<link rel="stylesheet" type="text/css" href="/css/main/recommendList.css">
+
+<script
+     src="https://kit.fontawesome.com/1be9c91961.js"
+     crossorigin="anonymous"
+   ></script>
+   <script
+     src="https://code.jquery.com/jquery-3.6.0.min.js"
+     integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+     crossorigin="anonymous"
+   ></script>
 </head>
 <header th:include="fragments/header.html"></header>
 <body>
-main/main
+<article id="mainArea">
+	<div id="imgSlide">
+		<!-- 이미지 리스트 출력 -->
+		<img src="/images/main/sample.png">
+	</div>
+	
+	<!-- 강좌검색 -->
+	<div class="listSearchContainer">
+      <div class="searchContainer">
+        <div class="categorySearch">
+          <p>강좌 분류</p>
+          <div class="sel sel--black-panther selectDiv">
+            <select name="select-profession" id="select-profession">
+              <option value="" disabled>강좌 분류</option>
+              <option value="전체">전체</option>
+              <option value="정기강좌">정기강좌</option>
+              <option value="단기강좌">단기강좌</option>
+              <option value="무료강좌">무료강좌</option>
+            </select>
+          </div>
+        </div>
+        <div class="targetSearch">
+          <p>강좌 대상</p>
+          <div class="sel sel--black-panther selectDiv">
+            <select name="select-profession" id="select-profession">
+              <option value="" disabled>강좌 대상</option>
+              <option value="전체">전체</option>
+              <option value="성인강좌">성인강좌</option>
+              <option value="아동강좌">아동강좌</option>
+              <option value="영유아강좌">영유아강좌</option>
+            </select>
+          </div>
+        </div>
+        <div class="registStatus">
+          <p>접수 상태</p>
+          <div class="sel sel--black-panther selectDiv">
+            <select name="select-profession" id="select-profession">
+                <option value="" disabled>접수 상태</option>
+              <option value="전체">전체</option>
+              <option value="접수 예정">접수 예정</option>
+              <option value="접수 중">접수 중</option>
+              <option value="접수 마감">접수 마감</option>
+            </select>
+          </div>
+        </div>
+        <div class="yearSearch">
+          <p>개강 년도</p>
+          <div class="sel sel--black-panther selectDiv">
+            <select name="select-profession" id="select-profession">
+                <option value="" disabled>개강 년도</option>
+              <option value="전체">전체</option>
+              <option value="2021">2021</option>
+              <option value="2020">2020</option>
+              <option value="2019">2019</option>
+              <option value="2018">2018</option>
+              <option value="2017">2017</option>
+            </select>
+          </div>
+        </div>
+        <div class="monthSearch">
+          <p>개강 월</p>
+          <div class="sel sel--black-panther selectDiv">
+            <select name="select-profession" id="searchMonth">
+                <option value="" disabled>개강 월</option>
+              <option value="">전체</option>
+              <option value="1">1월</option>
+              <option value="2">2월</option>
+              <option value="3">3월</option>
+              <option value="4">4월</option>
+              <option value="5">5월</option>
+              <option value="6">6월</option>
+              <option value="7">7월</option>
+              <option value="8">8월</option>
+              <option value="9">9월</option>
+              <option value="10">10월</option>
+              <option value="11">11월</option>
+              <option value="12">12월</option>
+            </select>
+          </div>
+        </div>
+        <div class="daySearch">
+          <p>개강 요일</p>
+          <div class="sel sel--black-panther selectDiv">
+            <select name="select-profession" id="searchDay" placeholder="개강 시간">
+                <option value="" disabled>개강 요일</option>
+                <option value="전체">전체</option>
+                <option value="월요일">월요일</option>
+                <option value="화요일">화요일</option>
+                <option value="수요일">수요일</option>
+                <option value="목요일">목요일</option>
+                <option value="금요일">금요일</option>
+                <option value="토요일">토요일</option>
+                <option value="일요일">일요일</option>
+            </select>
+          </div>
+        </div>
+        <div class="timeSearch">
+          <p>개강 시간</p>
+          <div class="sel sel--black-panther selectDiv">
+            <select name="select-profession" id="select-profession" placeholder="전체">
+                <option value="" disabled>개강 시간</option>
+                <option value="">전체</option>
+                <option value="09~10">9~10(시)</option>
+                <option value="10~11">10~11(시)</option>
+                <option value="11~12">11~12(시)</option>
+                <option value="12~13">12~13(시)</option>
+                <option value="13~14">13~14(시)</option>
+                <option value="14~15">14~15(시)</option>
+                <option value="15~16">15~16(시)</option>
+                <option value="16~17">16~17(시)</option>
+                <option value="17~18">17~18(시)</option>
+                <option value="18~19">18~19(시)</option>
+                <option value="19~20">19~20(시)</option>
+                <option value="20~21">20~21(시)</option>
+            </select>
+          </div>
+        </div>
+        <div class="typingSearch">
+          <a><i class="far fa-calendar-alt"></i> 전체 조회 하기</a>
+          <div>
+            <input type="text" name="" id="" placeholder="강좌명/강사명을 입력하세요.">
+            <button type="button" id="searchBtn"><i class="fas fa-search"></i></button>
+          </div>
+        </div>
+      </div>
+	</div>
+	
+	<!-- 추천 강좌 -->
+	<div class="recommendList">
+		<div class="leftDiv listbox">
+			<p>추천강좌</p>
+			<i class="fas fa-chevron-left fa-4x"></i>
+		</div>
+		<ul class="recommendClassArea">
+			<!-- 추천강좌 목록 -->
+			<li><div class="proItem">
+				<div class="thum"><img src="/images/lecture/20181129114054.jpg" alt=""></div>
+				<div class="info">
+					<div class="tagArea">
+						<span class="targetTag">성인강좌</span>
+						<span class="categoryTag">단기강좌</span>
+					</div>
+					<div class="txtBox">
+						<span class="subject">[10/25] 실내 인테리어 플라워 데코 실내 인테리어 플라워 데코2</span>
+						<div class="info">
+							<div class="subTxt">
+								<span class="name">김선우</span>
+								<span class="time">(목) 19:10 ~ 20:40</span>
+							</div>
+							<div class="price">
+								<span class="blind">판매가</span>
+								<b>75,000</b>원
+								<span>(총 1회)</span>
+							</div>
+						</div>
+					</div>
+				</div>	
+			</div></li>
+			<!-- 추천강좌 목록 -->
+			<li><div class="proItem">
+				<div class="thum"><img src="/images/lecture/20181129114054.jpg" alt=""></div>
+				<div class="info">
+					<div class="tagArea">
+						<span class="targetTag">성인강좌</span>
+						<span class="categoryTag">단기강좌</span>
+					</div>
+					<div class="txtBox">
+						<span class="subject">[10/25] 실내 인테리어 플라워 데코3</span>
+						<div class="info">
+							<div class="subTxt">
+								<span class="name">김선우</span>
+								<span class="time">(목) 19:10 ~ 20:40</span>
+							</div>
+							<div class="price">
+								<span class="blind">판매가</span>
+								<b>75,000</b>원
+								<span>(총 1회)</span>
+							</div>
+						</div>
+					</div>
+				</div>	
+			</div></li>
+			<!-- 추천강좌 목록 -->
+			<li><div class="proItem">
+				<div class="thum"><img src="/images/lecture/20181129114054.jpg" alt=""></div>
+				<div class="info">
+					<div class="tagArea">
+						<span class="targetTag">성인강좌</span>
+						<span class="categoryTag">단기강좌</span>
+					</div>
+					<div class="txtBox">
+						<span class="subject">[10/25] 실내 인테리어 플라워 데코4</span>
+						<div class="info">
+							<div class="subTxt">
+								<span class="name">김선우</span>
+								<span class="time">(목) 19:10 ~ 20:40</span>
+							</div>
+							<div class="price">
+								<span class="blind">판매가</span>
+								<b>75,000</b>원
+								<span>(총 1회)</span>
+							</div>
+						</div>
+					</div>
+				</div>	
+			</div></li>
+			<!-- 추천강좌 목록 -->
+			<li><div class="proItem">
+				<div class="thum"><img src="/images/lecture/20181129114054.jpg" alt=""></div>
+				<div class="info">
+					<div class="tagArea">
+						<span class="targetTag">성인강좌</span>
+						<span class="categoryTag">단기강좌</span>
+					</div>
+					<div class="txtBox">
+						<span class="subject">[10/25] 실내 인테리어 플라워 데코5</span>
+						<div class="info">
+							<div class="subTxt">
+								<span class="name">김선우</span>
+								<span class="time">(목) 19:10 ~ 20:40</span>
+							</div>
+							<div class="price">
+								<span class="blind">판매가</span>
+								<b>75,000</b>원
+								<span>(총 1회)</span>
+							</div>
+						</div>
+					</div>
+				</div>	
+			</div></li>
+			<!-- 추천강좌 목록 -->
+			<li><div class="proItem">
+				<div class="thum"><img src="/images/lecture/20181129114054.jpg" alt=""></div>
+				<div class="info">
+					<div class="tagArea">
+						<span class="targetTag">성인강좌</span>
+						<span class="categoryTag">단기강좌</span>
+					</div>
+					<div class="txtBox">
+						<span class="subject">[10/25] 실내 인테리어 플라워 데코6</span>
+						<div class="info">
+							<div class="subTxt">
+								<span class="name">김선우</span>
+								<span class="time">(목) 19:10 ~ 20:40</span>
+							</div>
+							<div class="price">
+								<span class="blind">판매가</span>
+								<b>75,000</b>원
+								<span>(총 1회)</span>
+							</div>
+						</div>
+					</div>
+				</div>	
+			</div></li>
+			<!-- 추천강좌 목록 -->
+			<li><div class="proItem">
+				<div class="thum"><img src="/images/lecture/20181129114054.jpg" alt=""></div>
+				<div class="info">
+					<div class="tagArea">
+						<span class="targetTag">성인강좌</span>
+						<span class="categoryTag">단기강좌</span>
+					</div>
+					<div class="txtBox">
+						<span class="subject">[10/25] 실내 인테리어 플라워 데코7</span>
+						<div class="info">
+							<div class="subTxt">
+								<span class="name">김선우</span>
+								<span class="time">(목) 19:10 ~ 20:40</span>
+							</div>
+							<div class="price">
+								<span class="blind">판매가</span>
+								<b>75,000</b>원
+								<span>(총 1회)</span>
+							</div>
+						</div>
+					</div>
+				</div>	
+			</div></li>
+			<!-- 추천강좌 목록 -->
+			<li><div class="proItem">
+				<div class="thum"><img src="/images/lecture/20181129114054.jpg" alt=""></div>
+				<div class="info">
+					<div class="tagArea">
+						<span class="targetTag">성인강좌</span>
+						<span class="categoryTag">단기강좌</span>
+					</div>
+					<div class="txtBox">
+						<span class="subject">[10/25] 실내 인테리어 플라워 데코8</span>
+						<div class="info">
+							<div class="subTxt">
+								<span class="name">김선우</span>
+								<span class="time">(목) 19:10 ~ 20:40</span>
+							</div>
+							<div class="price">
+								<span class="blind">판매가</span>
+								<b>75,000</b>원
+								<span>(총 1회)</span>
+							</div>
+						</div>
+					</div>
+				</div>	
+			</div></li>
+			<!-- 추천강좌 목록 -->
+			<li><div class="proItem">
+				<div class="thum"><img src="/images/lecture/20181129114054.jpg" alt=""></div>
+				<div class="info">
+					<div class="tagArea">
+						<span class="targetTag">성인강좌</span>
+						<span class="categoryTag">단기강좌</span>
+					</div>
+					<div class="txtBox">
+						<span class="subject">[10/25] 실내 인테리어 플라워 데코</span>
+						<div class="info">
+							<div class="subTxt">
+								<span class="name">김선우</span>
+								<span class="time">(목) 19:10 ~ 20:40</span>
+							</div>
+							<div class="price">
+								<span class="blind">판매가</span>
+								<b>75,000</b>원
+								<span>(총 1회)</span>
+							</div>
+						</div>
+					</div>
+				</div>	
+			</div></li>
+		</ul>
+		<div class="rightDiv listbox">
+			<i class="fas fa-chevron-right fa-4x"></i>
+		</div>
+	</div>
+</article>
 </body>
 <footer th:include="fragments/footer.html"></footer>
+<script type="text/javascript" src="/js/main/selectStyle.js"></script>
+<script type="text/javascript" src="/js/main/recommendList.js"></script>
 </html>

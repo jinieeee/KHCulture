@@ -11,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import com.kh.khculture.handler.AuthEntryPoint;
 import com.kh.khculture.handler.AuthFailureHandler;
 import com.kh.khculture.handler.AuthSuccessHandler;
 import com.kh.khculture.member.model.service.MemberService;
@@ -22,14 +23,17 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	private MemberService memberService;
 	private AuthFailureHandler authFailureHandler;
 	private AuthSuccessHandler authSuccessHandler;
+	private AuthEntryPoint authEntryPoint;
 	
 	@Autowired
 	public SpringSecurityConfiguration(MemberService memberService 
 									 , AuthFailureHandler authFailureHandler
-									 , AuthSuccessHandler authSuccessHandler) {
+									 , AuthSuccessHandler authSuccessHandler
+									 , AuthEntryPoint authEntryPoint) {
 		this.memberService = memberService;
 		this.authFailureHandler = authFailureHandler;
 		this.authSuccessHandler = authSuccessHandler;
+		this.authEntryPoint = authEntryPoint;
 	}
 	
 	@Bean
@@ -60,11 +64,11 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.logoutRequestMatcher(new AntPathRequestMatcher("/member/logout")) // 로그아웃 요청 주소
 			.deleteCookies("JSESSIONID")	// JSESSIONID 쿠키 삭제
 			.invalidateHttpSession(true)	// 세션 만료
-			.logoutSuccessUrl("/");			// 로그아웃 성공 시 랜딩 페이지
-//		.and()
-//			.exceptionHandling()
-//			// 인가되지 않았을 때 - 권한이 없을 때 이동할 페이지
-//			.accessDeniedPage("/common/denied");
+			.logoutSuccessUrl("/")			// 로그아웃 성공 시 랜딩 페이지
+		.and()
+			.exceptionHandling()
+			.authenticationEntryPoint(authEntryPoint)
+			.accessDeniedPage("/common/denied");
 	}
 
 	@Override
