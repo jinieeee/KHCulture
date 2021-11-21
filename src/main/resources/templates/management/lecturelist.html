@@ -9,6 +9,17 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="/css/management/lectureList.css">
+	
+<script>
+const msg = '[[${msg}]]';
+
+if(msg){
+	alert(msg);
+}
+
+</script>
+	
+	
 </head>
 <body>
 <header th:include="fragments/header.html"></header>
@@ -30,62 +41,71 @@
             <div class="listArea">
                 <table>
                     <tbody>
-                        <tr>
-                            <td>6</td>
-                            <td>정기강좌</td>
-                            <td>성인강좌</td>
-                            <td>도자기 아트 화이트</td>
-                            <td><a href="#"><img src="images/management/edit.png"></a></td>
-                            <td><a href="#"><img src="images/management/delete.png"></a></td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>단기강좌</td>
-                            <td>영유아강좌</td>
-                            <td>김장김치 만들기 강의요~</td>
-                            <td><a href="#"><img src="images/management/edit.png"></a></td>
-                            <td><a href="#"><img src="images/management/delete.png"></a></td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>정기강좌</td>
-                            <td>영유아강좌</td>
-                            <td>강의제목입니다~</td>
-                            <td><a href="#"><img src="images/management/edit.png"></a></td>
-                            <td><a href="#"><img src="images/management/delete.png"></a></td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>정기강좌</td>
-                            <td>성인강좌</td>
-                            <td>도자기 아트 화이트</td>
-                            <td><a href="#"><img src="images/management/edit.png"></a></td>
-                            <td><a href="#"><img src="images/management/delete.png"></a></td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>단기강좌</td>
-                            <td>영유아강좌</td>
-                            <td>김장김치 만들기 강의요~</td>
-                            <td><a href="#"><img src="images/management/edit.png"></a></td>
-                            <td><a href="#"><img src="images/management/delete.png"></a></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>정기강좌</td>
-                            <td>영유아강좌</td>
-                            <td>강의제목입니다~</td>
-                            <td><a href="#"><img src="images/management/edit.png"></a></td>
-                            <td><a href="#"><img src="images/management/delete.png"></a></td>
+                        <tr th:each="lecture : ${lectureList}">
+                            <td th:text="${lecture.lNo}"></td>
+                            <td th:text="${lecture.lcName}"></td>
+                            <td th:text="${lecture.ltName}"></td>
+                            <td th:text="${lecture.lTitle}"></td>
+                            <td><a href="#" th:onclick="|editLecture('${lecture.lNo}')|"><img src="images/management/edit.png"></a></td>
+                            <td><a href="#" th:onclick="|deleteLecture('${lecture.lNo}')|"><img src="images/management/delete.png"></a></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
+            <div class="pagingArea">
+	           	<ul class="list_paging">
+				        <!--  맨 처음으로 (<<) /notice/noticeList/?-->
+		        	<li><a th:href="@{?page=1}">&lt;&lt;</a></li>
+		        	
+		        <!--  이전 페이지(<) -->
+			       	<li th:if="${ pi.page > 1 }">
+			       		<a th:href="@{?page={page}(page =  ${pi.page-1})}">&lt;</a>
+			       	</li>
+			       	<li th:unless="${ pi.page > 1 }">
+			       		<a th:href="@{?page={page}(page =  ${pi.page})}">&lt;</a>
+			       	</li>
+		       	
+		        <!-- 페이지수 -->	
+		        	<th:block th:with="start=${pi.startPage}, end=${pi.endPage}">
+		        		<li th:with="start=${pi.startPage}, end=${pi.endPage}" th:each="pageNum : ${#numbers.sequence(start,end)}">
+		        			<a th:href="@{?page={page}(page = ${ pageNum})}" th:text=${pageNum}></a>
+		        		</li>
+		        	</th:block>
+		        		
+		        <!-- 다음 페이지로(>) -->	
+			        <li th:if="${ pi.page <pi.maxPage }">
+			       		<a th:href="@{?page={page}(page=${pi.page + 1})}">&gt;</a>
+			       	</li>
+			       	<li th:if="${ pi.page == pi.maxPage }">
+			       		<a th:href="@{?page={page}(page =  ${pi.page})}">&gt;</a>
+			       	</li>
+		        
+		        <!-- 맨 뒤로(>>) --> 	
+		        	<li><a th:href="@{?page={page} (page = ${pi.maxPage})}">&gt;&gt;</a></li>
+		        	
+		        </ul>
+		       
+		    </div>
         </div>
     </div>
     <footer th:include="fragments/footer.html"></footer>
-    <script>
+    <script type="text/javascript" th:inline="javascript">
     	
+    	function editLecture(lNo){
+    		
+    		location.href="lectureupdate/" + lNo;	
+    	}
+    	
+    	function deleteLecture(lNo){
+    		
+    		if(confirm("정말삭제하시겠습니까?")){
+    			
+    			location.href="lecturedelete/" + lNo;
+    			
+    		} else{
+    			console.log("삭제취소");
+    		}
+    	}
     </script>
 </body>
 </html>
