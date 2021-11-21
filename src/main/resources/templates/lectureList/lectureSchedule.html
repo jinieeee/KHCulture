@@ -42,7 +42,7 @@
       <div class="categorySearch">
         <p>강좌 분류</p>
         <div class="sel sel--black-panther selectDiv">
-          <select name="select-profession" id="select-profession">
+          <select name="select-profession" id="">
               <option value="" disabled>강좌 분류</option>
             <option value="전체">전체</option>
             <option value="정기강좌">정기강좌</option>
@@ -54,7 +54,7 @@
       <div class="targetSearch">
         <p>강좌 대상</p>
         <div class="sel sel--black-panther selectDiv">
-          <select name="select-profession" id="select-profession">
+          <select name="select-profession" id="">
               <option value="" disabled>강좌 대상</option>
             <option value="전체">전체</option>
             <option value="성인강좌">성인강좌</option>
@@ -66,7 +66,7 @@
       <div class="registStatus">
         <p>접수 상태</p>
         <div class="sel sel--black-panther selectDiv">
-          <select name="select-profession" id="select-profession">
+          <select name="select-profession" id="">
               <option value="" disabled>접수 상태</option>
             <option value="전체">전체</option>
             <option value="접수 예정">접수 예정</option>
@@ -78,14 +78,14 @@
       <div class="yearSearch">
         <p>개강 년도</p>
         <div class="sel sel--black-panther selectDiv">
-          <select name="select-profession" id="select-profession">
+          <select name="select-profession" id="selectYear">
               <option value="" disabled>개강 년도</option>
             <option value="전체">전체</option>
-            <option value="2021">2021</option>
+            <!-- <option value="2021">2021</option>
             <option value="2020">2020</option>
             <option value="2019">2019</option>
             <option value="2018">2018</option>
-            <option value="2017">2017</option>
+            <option value="2017">2017</option> -->
           </select>
         </div>
       </div>
@@ -129,26 +129,26 @@
       <div class="timeSearch">
         <p>개강 시간</p>
         <div class="sel sel--black-panther selectDiv">
-          <select name="select-profession" id="select-profession" placeholder="전체">
+          <select name="select-profession" id="" placeholder="전체">
               <option value="" disabled>개강 시간</option>
               <option value="">전체</option>
-              <option value="09~10">9~10(시)</option>
-              <option value="10~11">10~11(시)</option>
-              <option value="11~12">11~12(시)</option>
-              <option value="12~13">12~13(시)</option>
-              <option value="13~14">13~14(시)</option>
-              <option value="14~15">14~15(시)</option>
-              <option value="15~16">15~16(시)</option>
-              <option value="16~17">16~17(시)</option>
-              <option value="17~18">17~18(시)</option>
-              <option value="18~19">18~19(시)</option>
-              <option value="19~20">19~20(시)</option>
-              <option value="20~21">20~21(시)</option>
+              <option value="09~10">9시타임</option>
+              <option value="10~11">10시타임</option>
+              <option value="11~12">11시타임</option>
+              <option value="12~13">12시타임</option>
+              <option value="13~14">13시타임</option>
+              <option value="14~15">14시타임</option>
+              <option value="15~16">15시타임</option>
+              <option value="16~17">16시타임</option>
+              <option value="17~18">17시타임</option>
+              <option value="18~19">18시타임</option>
+              <option value="19~20">19시타임</option>
+              <option value="20~21">20시타임</option>
           </select>
         </div>
       </div>
       <div class="typingSearch">
-        <a><i class="far fa-calendar-alt"></i> 전체 조회 하기</a>
+        <a onclick="searchAll()"><i class="far fa-calendar-alt"></i> 전체 조회 하기</a>
         <div>
           <input type="text" name="" id="" placeholder="강좌명/강사명을 입력하세요.">
           <button type="button" id="scheduleBtn" onclick="searchList()"><i class="fas fa-search"></i></button>
@@ -158,14 +158,14 @@
       <div class="calendar">
         <div class="month">
           <div class="yearDiv">
-            <select name="" id="year">
+          	<h1 class="year">2021년</h1>
+            <!-- <select name="" id="year">
               <option value="2021">2021</option>
               <option value="2020">2020</option>
-              <option value="2021">2021</option>
-              <option value="2021">2021</option>
-              <option value="2021">2021</option>
-              <option value="2021">2021</option>
-            </select>
+              <option value="2019">2019</option>
+              <option value="2018">2018</option>
+              <option value="2017">2017</option>
+            </select> -->
           </div>
           <div class="date">
             <i class="fas fa-angle-left prev"></i>
@@ -209,14 +209,84 @@
 
 	<script>
 	
-	let category = null;
-	let target = null;
-	let status = null;
-	let year = null;
-	let month = null;
-	let day = null;
-	let time = null;
-	let typing = null;
+	let category = '';
+	let target = '';
+	let status = '';
+	let year = '';
+	let month = '';
+	let day = '';
+	let time = '';
+	let typing = '';
+	let arrayStand = 'time';
+	
+	//검색 바
+	$(function() {
+		$.ajax({
+			url : "/lecture/year",
+			success : function(data) {
+				const selectYearDiv = document.querySelector("#selectYear");
+				for(let index in data) {
+					selectYearDiv.insertAdjacentHTML('beforeend', '<option value="' + data[index] + '">' + data[index] + '</option>');
+				}
+				
+				/* ===== Logic for creating fake Select Boxes ===== */
+				$('.sel').each(function() {
+				    $(this).children('select').css('display', 'none');
+				    
+				    var $current = $(this);
+				    
+				    $(this).find('option').each(function(i) {
+				      if (i == 0) {
+				        $current.prepend($('<div>', {
+				          class: $current.attr('class').replace(/sel/g, 'sel__box')
+				        }));
+				        
+				        var placeholder = $(this).text();
+				        $current.prepend($('<span>', {
+				          class: $current.attr('class').replace(/sel/g, 'sel__placeholder'),
+				          text: placeholder,
+				          'data-placeholder': placeholder
+				        }));
+				        
+				        return;
+				      }
+				      
+				      $current.children('div').append($('<span>', {
+				        class: $current.attr('class').replace(/sel/g, 'sel__box__options'),
+				        text: $(this).text()
+				      }));
+				    });
+				  });
+				  
+				  // Toggling the `.active` state on the `.sel`.
+				  $('.sel').click(function() {
+				    $(this).toggleClass('active');
+				  });
+				  
+				  // Toggling the `.selected` state on the options.
+				  $('.sel__box__options').click(function() {
+				    var txt = $(this).text();
+				    var index = $(this).index();
+				    
+				    $(this).siblings('.sel__box__options').removeClass('selected');
+				    $(this).addClass('selected');
+				    
+				    var $currentSel = $(this).closest('.sel');
+				    $currentSel.children('.sel__placeholder').text(txt);
+				    $currentSel.children('select').prop('selectedIndex', index + 1);
+				  });
+				
+				
+				
+				
+			},
+			error : function(e) {
+				console.log(e);
+			}
+		})
+	})
+	
+
 	
 	 var date = new Date();
 
@@ -252,88 +322,98 @@
 	         days += `<div class="next-date"><div><p>${j}</p></div></div>`;
 	     }
 	     monthDays.innerHTML = days;
-
+		
+	     document.querySelector('.year').innerHTML = date.getFullYear() + '년';
 	     lectureContents();
 	 }
 	 
 	 function searchList() {
-		 category = document.querySelector('.scheduleContainer .categorySearch > div > span').innerText;
+		category = document.querySelector('.scheduleContainer .categorySearch > div > span').innerText;
  		target = document.querySelector('.scheduleContainer .targetSearch > div > span').innerText;
  		status = document.querySelector('.scheduleContainer .registStatus > div > span').innerText;
  		year = document.querySelector('.scheduleContainer .yearSearch > div > span').innerText;
  		month = document.querySelector('.scheduleContainer .monthSearch > div > span').innerText;
-			day = document.querySelector('.scheduleContainer .daySearch > div > span').innerText;
+		day = document.querySelector('.scheduleContainer .daySearch > div > span').innerText;
  		time = document.querySelector('.scheduleContainer .timeSearch > div > span').innerText;
  		typing = document.querySelector('.scheduleContainer .typingSearch > div > input').value;
-
+ 		
 			    switch(category) {
-			        case category == '정기강좌' :
+			        case '정기강좌' :
 			            category = 1;
 			            break;
-			        case category == '단기강좌' :
+			        case '단기강좌' :
 			            category = 2;
 			            break;
-			        case category == '무료강좌' :
-			            category = '단기강좌';
+			        case '무료강좌' :
+			            category = 3;
 			            break;
-			            default : 
-			        category = null;
+			        default : 
+			        category = '';
 			    }
-			
+			    
 			    switch(target) {
-			        case target == '성인강좌' :
-			        target = '1';
+			        case '성인강좌' :
+			        target = 1;
 			        break;
-			        case target == '아동강좌' :
-			        target = '2';
+			        case '아동강좌' :
+			        target = 2;
 			        break;
-			        case target == '영유아강좌' :
-			            target = '3';
+			        case '영유아강좌' :
+			            target = 3;
 			            break;
-			            default :
-			            target = null;
+		            default :
+			            target = '';
 			
 			    }
 			
 			   if(status == '전체' || status == '접수 상태') {
-			       status = null;
+			       status = '';
 			   }
 			
 			   if(year == '전체' || year == '개강 년도') {
-			       year = null;
+			       year = '';
 			   }
 			
 			   if(month =='전체' || month =='개강 월') {
-			       month = null;
+			       month = '';
 			   }
 			
 			   if(day == '전체' || day == '개강 요일') {
-			       day = null;
+			       day = '';
 			   }
 			
 			   if(time == '전체' || time == '개강 시간') {
-			       time = null;
+			       time = '';
 			   }
-			
-			   if(typing == '') {
-			       typing = null;
+				
+			   if(year != '') {
+				   date.setFullYear(year);
+				   /* let options = document.querySelectorAll('#year option');
+				   for (let key in options) {
+						   options[key].selected = false;
+				   }
+				   
+				   for (let key in options) {
+					   if (year == options[key].value) {
+						   options[key].selected = true;
+					   }
+				   } */
 			   }
-			
-			    console.log(category);
-			    console.log(target);
-			    console.log(status);
-			    console.log(year);
-			    console.log(month);
-			    console.log(day);
-			    console.log(time);
-			    console.log(typing);
+			   if(month != '') {
+				   date.setMonth(month.substr(0, month.indexOf("월"))-1);
+				   month = month.substr(0, month.indexOf("월"));
+			   }
+			   if(time != '') {
+				   time = time.substr(0, time.indexOf("시"));
+			   }
+			   
+			   renderCalendar();
 	 }
 
 	 function lectureContents() {
 		 /* 마감임박순, 낮은 가격순, 높은 가격순, 시간대 */
-		 
-		 	var obj = {target : target};
-		 
+		 let today = new Date();
+		 	var obj = {category : category, target : target, status : status, year : year, month : month, day : day, time : time, typing : typing, today : today, arrayStand : arrayStand};
 			 $.ajax({
 				 url : "/lecture/list/",
 				 data : obj,
@@ -343,19 +423,37 @@
 				     contents.forEach(item => {
 				    	 /* 비워주는 작업 필요*/
 				    	 item.children[1].innerHTML = '';
-				        for (var key in data) {
-				             if(item.children[0].children[0].innerHTML == data[key].lrParDate.substr(8, 2)) {
+				        for (var key in data.newlectureList) {
+			            	 
+			            	 let calMonth = '';
+			            	 let calDate = '';
+			            	 let test = "" + (date.getMonth() + 1);
+			            	 if(test.length == 1) {
+			            		 calMonth = '0'+ test;
+			            	 } else {
+			            		 calMonth = test;
+			            	 }
+			            	 
+			            	 let test2 = item.children[0].children[0].innerHTML;
+			            	 if(test2.length == 1) {
+			            		 calDate = '0'+ test2;
+			            	 } else {
+			            		 calDate = test2;
+			            	 }
+			            	 
+				             if( date.getFullYear() == data.newlectureList[key].lrParDate.substr(0, 4) && calMonth == data.newlectureList[key].lrParDate.substr(5, 2) && calDate == data.newlectureList[key].lrParDate.substr(8, 2)) {
+				            	 
 				                 var html = '';
-			                         html += `<a href="#"><p>` + data[key].lrStartTime +  ` ~ ` +  data[key].lrEndTime + 
-			                         `</p><p>` + data[key].lecture.ltitle + `</p>
-			                         <input type="hidden" value="` + data[key].lecture.lthumbnail + `">
-			                         <input type="hidden" value="` + data[key].instructor.instructorName + `">
-			                         <input type="hidden" value="` + data[key].lrDay + `">
-			                         <input type="hidden" value="` + data[key].lrFee + `">
-			                         <input type="hidden" value="` + data[key].lrNumber + `">
-			                         <input type="hidden" value="` + data[key].lrStartDate + `">
-			                         <input type="hidden" value="` + data[key].lecture.lcNo + `">
-			                         <input type="hidden" value="` + data[key].lecture.ltNo + `">
+			                         html += `<a href="#"><p>` + data.newlectureList[key].lrStartTime +  ` ~ ` +  data.newlectureList[key].lrEndTime + 
+			                         `</p><p>` + data.newlectureList[key].lecture.ltitle + `</p>
+			                         <input type="hidden" value="` + data.newlectureList[key].lecture.lthumbnail + `">
+			                         <input type="hidden" value="` + data.newlectureList[key].instructor.instructorName + `">
+			                         <input type="hidden" value="` + data.newlectureList[key].lrDay + `">
+			                         <input type="hidden" value="` + data.newlectureList[key].lrFee + `">
+			                         <input type="hidden" value="` + data.newlectureList[key].lrNumber + `">
+			                         <input type="hidden" value="` + data.newlectureList[key].lrStartDate + `">
+			                         <input type="hidden" value="` + data.newlectureList[key].lecture.lcNo + `">
+			                         <input type="hidden" value="` + data.newlectureList[key].lecture.ltNo + `">
 			                         </a>`;
 				                 item.children[1].insertAdjacentHTML('beforeend', html);
 				             }
@@ -381,20 +479,55 @@
 	     renderCalendar();
 	 });
 
-	 document.querySelector('#year').addEventListener('change', () => {
+	 /* document.querySelector('#year').addEventListener('change', () => {
 	     let val = document.getElementById('year').value;
 	     date.setFullYear(val);
 	     renderCalendar();
-	 });
+	 }); */
 
 	 renderCalendar();
 	
+	 function searchAll() {
+		 category = '';
+			target = '';
+			status = '';
+			year = '';
+			month = '';
+			day = '';
+			time = '';
+			typing = '';
+			
+			let now = new Date();
+			date.setFullYear(now.getFullYear());
+			date.setMonth(now.getMonth());
+			
+			document.querySelector('.scheduleContainer .categorySearch > div > span').innerText = '강좌 분류';
+	 		document.querySelector('.scheduleContainer .targetSearch > div > span').innerText = '강좌 대상';
+	 		document.querySelector('.scheduleContainer .registStatus > div > span').innerText = '접수 상태';
+	 		document.querySelector('.scheduleContainer .yearSearch > div > span').innerText = '개강 년도';
+	 		document.querySelector('.scheduleContainer .monthSearch > div > span').innerText = '개강 월';
+			document.querySelector('.scheduleContainer .daySearch > div > span').innerText = '개강 요일';
+	 		document.querySelector('.scheduleContainer .timeSearch > div > span').innerText = "개강 시간";
+	 		document.querySelector('.scheduleContainer .typingSearch > div > input').value = '';
+	 		
+	 		let selectSpans = document.querySelectorAll(".scheduleContainer .sel__box__options");
+	 		selectSpans.forEach(span => {
+	 			$(span).removeClass('selected');
+	 		});
+	 		
+			let selectDivs = document.querySelectorAll('.scheduleContainer .selectDiv');
+			selectDivs.forEach(div => {
+				$(div).removeClass('active');
+			});
+	 		
+			renderCalendar();
+	 }
+	 
 		function modalShow() {
 			 const cursorTag = document.querySelector("div.cursors");
 			 const modalDiv = cursorTag.querySelector("div");
 			 const lectureModal = cursorTag.querySelector("div.lectureModal");
 			 const lectures = document.querySelectorAll("div.days a");
-			console.log(lectures);
 			 document.addEventListener("mousemove", function(event) {
 			     modalDiv.style.left = event.pageX + "px";
 			     modalDiv.style.top = event.pageY + "px";
@@ -448,7 +581,7 @@
     <!-- js -->
    <!-- <script src="/js/lectureList/cursors.js"></script> -->
     
-  <script src="/js/lectureList/selectStyle.js"></script>
+ <!--  <script src="/js/lectureList/selectStyle.js"></script> -->
   </body>
   <footer th:include="fragments/footer.html"></footer>
   

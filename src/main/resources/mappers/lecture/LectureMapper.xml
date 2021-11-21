@@ -31,12 +31,136 @@
 		<result property="instructorPhone" column="INSTRUCTOR_PHONE"></result>
 		<result property="career" column="CAREER"></result>
 	</resultMap>
-	<select id="selectLectureList" resultMap="selectListResultMap">
-		select 
+	<select id="selectLectureList" parameterType="com.kh.khculture.lecture.model.vo.Search" resultMap="selectListResultMap">
+		select * 
+		from (
+			select ROWNUM RNUM, A.*
+		from (
+			select 
 		* 
 		from lecture_registration
 		join lecture using (l_no)
 		join instructor using (instructor_no)
+		where lr_status = 'N'
+		<if test="category != ''">
+			and lc_no = #{category}
+		</if>
+		<if test="target != ''">
+			and lt_no = #{target}
+		</if>
+		<if test="year != ''">
+			and EXTRACT(year FROM LR_START_DATE) = #{year}
+		</if>
+		<if test="month != ''">
+			and EXTRACT(month FROM LR_START_DATE) = #{month}
+		</if>
+		<if test="day != ''">
+			and lr_day = #{day}
+		</if>
+		<if test="typing != ''">
+			and (replace(l_title, ' ', '') LIKE '%' || #{typing} || '%'
+			or instructor_name LIKE '%' || #{typing} || '%'
+			)
+		</if>
+		<if test="time != ''">
+			and substr(lr_start_time, 1, instr(lr_start_time, ':')-1) = #{time}
+		</if>
+		<choose>
+			<when test="status == '접수 중'">
+				and (lr_capacity > lr_count
+				and #{today} >= lr_start_date - 30
+				and lr_start_date > #{today}
+				)
+			</when>
+			<when test="status == '접수 예정'">
+				and lr_start_date - 30 > #{today}
+			</when>
+			<when test="status == '접수 마감'">
+				and (#{today} >= lr_start_date
+				or lr_capacity = lr_count
+				)
+			</when>
+		</choose>
+		<choose>
+			<when test="arrayStand == 'date'">
+			order by lr_start_date desc
+			</when>
+			<when test="arrayStand == 'lowPrice'">
+			order by lr_Fee
+			</when>
+			<when test="arrayStand == 'highPrice'">
+			order by lr_Fee desc
+			</when>
+		</choose>
+		) A
+		) 
+		<if test="page != 0">
+		where RNUM between #{startRow} and #{endRow}
+		</if>
+		
 	</select>
-	
+	<select id="findYear" resultType="_int">
+		select
+		DISTINCT  EXTRACT(year FROM LR_START_DATE)
+		from lecture_registration
+		order by EXTRACT(year FROM LR_START_DATE) desc
+	</select>
+	<select id="getListCount" resultType="_int" parameterType="com.kh.khculture.lecture.model.vo.Search">
+		select 
+		count(*) 
+		from lecture_registration
+		join lecture using (l_no)
+		join instructor using (instructor_no)
+		where lr_status = 'N'
+		<if test="category != ''">
+			and lc_no = #{category}
+		</if>
+		<if test="target != ''">
+			and lt_no = #{target}
+		</if>
+		<if test="year != ''">
+			and EXTRACT(year FROM LR_START_DATE) = #{year}
+		</if>
+		<if test="month != ''">
+			and EXTRACT(month FROM LR_START_DATE) = #{month}
+		</if>
+		<if test="day != ''">
+			and lr_day = #{day}
+		</if>
+		<if test="typing != ''">
+			and (replace(l_title, ' ', '') LIKE '%' || #{typing} || '%'
+			or instructor_name LIKE '%' || #{typing} || '%'
+			)
+		</if>
+		<if test="time != ''">
+			and substr(lr_start_time, 1, instr(lr_start_time, ':')-1) = #{time}
+		</if>
+		<choose>
+			<when test="status == '접수 중'">
+				and (lr_capacity > lr_count
+				and #{today} >= lr_start_date - 30
+				and lr_start_date > #{today}
+				)
+			</when>
+			<when test="status == '접수 예정'">
+				and lr_start_date - 30 > #{today}
+			</when>
+			<when test="status == '접수 마감'">
+				and (#{today} >= lr_start_date
+				or lr_capacity = lr_count
+				)
+			</when>
+		</choose>
+		<choose>
+			<when test="arrayStand == 'date'">
+			order by lr_start_date desc
+			</when>
+			<when test="arrayStand == 'lowPrice'">
+			order by lr_Fee
+			</when>
+			<when test="arrayStand == 'highPrice'">
+			order by lr_Fee desc
+			</when>
+		</choose>
+	</select>
 </mapper>

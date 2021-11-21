@@ -21,19 +21,12 @@ $('.cart').on('click', function(e){
 //     $(this).addClass('btnClicked');
 // });
 
-$('.alignStandard a').on('click', function(e){
-    // let test = $('this').attr('data-click');
-    $('.alignStandard a').removeClass('line');
-    $(this).addClass('line');
-    let alignStandard = this.getAttribute('data-click');
-    console.log(alignStandard);
-    //검색 함수
-})
+
 
 $('.applyInpossible').on('click', function(){
     let test = 2;
     if(test == 1) {
-        alert('접수 기한이 아닙니다.')
+        alert('접수가 종료된 강좌 입니다.')
     } else {
         alert('정원이 마감된 강좌 입니다.');
     }
