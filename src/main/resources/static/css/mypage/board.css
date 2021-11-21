@@ -33,7 +33,19 @@ ul, li{
     padding: 10px;
     margin-left: 40px;
 }
-
+.board_search_area{
+    width: 1200px; /* 이 폭을 줄이면 세부폭은 알아서 따라옴 */
+    margin: 0 auto;
+    margin-bottom: 10px;
+    padding: 20px 10px;
+    background-color: #F0B95E;
+    margin-top: 10px;
+}
+#board_searchText{
+    margin: 0 auto;
+    width:500px;
+    height:50px;
+}
 .board_list > .board_select{
     width: 890px;
     text-align: center;
@@ -58,13 +70,32 @@ ul, li{
 #board_star{
     height: 23px;
 }
-.board_paging{
-    text-align: center;
-    width: 800px;
+.board_paging_area{
+	width: 890px;
     margin: 0 auto;
-    margin-top: 10px;
-    background-color: antiquewhite;
+    justify-content:space-around;
+    display: flex;
 }
+.board_paging{
+	list-style: none;
+	display:flex;
+	line-height: 50px;
+	width: 480px;
+}
+.board_paging li{
+	margin-right:51px;
+}
+.board_paging a {
+	text-decoration: none;
+	color: #282A35;
+	width: 40px;
+	text-align: center;
+}
+.board_paging a.current_page {
+	border-bottom: 2px solid #282A35;
+	font-weight: bold;
+}
+
 
 .button{
     background-color: #F0B95E;
@@ -73,6 +104,9 @@ ul, li{
     color: white;
     
 }
+
+
+
 /* =================================================== board_Detail=========================== */
 .board_detail_title{
     width: 1200px; /* 이 폭을 줄이면 세부폭은 알아서 따라옴 */

@@ -2,7 +2,6 @@ package com.kh.khculture.notice.controller;
 
 import java.util.List;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,12 +9,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.khculture.notice.model.service.NoticeService;
 import com.kh.khculture.notice.model.vo.Notice;
 import com.kh.khculture.notice.model.vo.PageInfo;
+import com.kh.khculture.notice.model.vo.Search;
 
 @Controller
 @RequestMapping("/notice")
@@ -30,26 +29,16 @@ public class NoticeController {
 
 	//전체 List + paging처리
 	@GetMapping("noticeList")
-	public String noticeList(Model model, @RequestParam(value="page" , defaultValue="1") int page) {
+	public String noticeList(  Model model, @RequestParam(value="page" , defaultValue="1") int page
+								,@RequestParam(value="searchValue", required = false) String searchValue) {
 		
-		// 게시글 총 개수
-		int listCount = noticeService.getListCount();
-			//System.out.println("listCount : " + listCount);
+		
+		int	listCount = noticeService.getListCount(searchValue);
+		System.out.println(listCount);
 		
 		PageInfo pi = new PageInfo( page , listCount, 10,3);
-			//System.out.println("pi : "+pi);
-			//System.out.println(pi.getMaxPage());
+		List<Notice> noticeList = noticeService.selectList(pi,searchValue); 
 		
-		int startRow = (pi.getPage() -1)* pi.getBoardLimit() +1;
-		int endRow = startRow +pi.getBoardLimit() -1;
-		
-		//System.out.println("test: "+startRow);
-		//System.out.println(endRow);
-		
-		List<Notice> noticeList = noticeService.selectList(startRow,endRow);
-		//	System.out.println("noticeList : " + noticeList);
-		//	System.out.println(noticeList.get(0));
-			
 		model.addAttribute("noticeList", noticeList);
 		model.addAttribute("pi", pi);
 		
@@ -61,8 +50,8 @@ public class NoticeController {
 	
 		//System.out.println(n_no);
 		Notice n = noticeService.selectNotice(n_no);
-		System.out.println("selectNotice 의 n  = "+n);
-		System.out.println("selectNotice 의 n  = "+n.getN_enroll_date());
+		//System.out.println("selectNotice 의 n  = "+n);
+		//System.out.println("selectNotice 의 n  = "+n.getN_enroll_date());
 		mv.addObject("notice",n);
 		mv.setViewName("notice/noticeDetail");
 		
@@ -77,22 +66,34 @@ public class NoticeController {
 	}
 	@PostMapping("insert")
 	public String noticeInsert(Notice Newnotice) {
+	//	System.out.println("Newnotice = " + Newnotice);
 		noticeService.noticeInsert(Newnotice);
 		return "redirect:/notice/noticeList";
 	}
 	
 	
-	//http://localhost:8006/notice/detail.do?n_no=20
+	
 	//게시글 수정하기
 	@GetMapping("updateView")
-	public String noticeUpdatePage(Model model) {
-		System.out.println("model = "+model);
+	public String noticeUpdatePage(Model model,@RequestParam("n_no") int n_no) {
+	//	System.out.println(n_no);
+		Notice n = noticeService.selectNotice(n_no);
+	//	System.out.println(n);
+		model.addAttribute("notice", n);
 		return "notice/noticeUpdate";
 	}
+	//?n_no=22
 	@PostMapping("update")
 	public String noticeUpdate(Notice uptNotice) {
-		System.out.println("uptNotice = "+uptNotice);
-		return null;
+		noticeService.noticeUpdate(uptNotice);
+	//	System.out.println("uptNotice = "+uptNotice);
+		return "redirect:/notice/detail.do?n_no="+ uptNotice.getN_no();
+	}
+	
+	@PostMapping("delete")
+	public String noticeDelete(Notice deleteNotice, @RequestParam("n_no") int n_no) {
+		noticeService.deleteNotice(deleteNotice);
+		return "redirect:/notice/noticeList";
 	}
 	
 

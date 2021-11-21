@@ -2,6 +2,7 @@ package com.kh.khculture.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -55,10 +56,12 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.deleteCookies("JSESSIONID")	// JSESSIONID 쿠키 삭제
 			.invalidateHttpSession(true)	// 세션 만료
 			.logoutSuccessUrl("/");			// 로그아웃 성공 시 랜딩 페이지
+		
 //		.and()
 //			.exceptionHandling()
 //			// 인가되지 않았을 때 - 권한이 없을 때 이동할 페이지
 //			.accessDeniedPage("/common/denied");
+		
 	}
 
 	@Override
