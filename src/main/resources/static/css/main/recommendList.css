@@ -5,7 +5,7 @@
 
 article .recommendList {
 	width: 1320px;
-	height: 330px;
+	height: 340px;
 	margin: 0 auto 20px auto;
 	display:flex;
 }
@@ -88,7 +88,7 @@ article .leftDiv p {
 	background-color: var(--category-color);
 }
 .txtBox {
-	padding: 3%;
+	padding: 3% 5%;
 }
 .txtBox span.subject {
 	width: 200px;
@@ -104,6 +104,7 @@ article .leftDiv p {
 	-webkit-box-orient: vertical;
 	word-break: keep-all;
 	word-break: keep-all;
+	margin-bottom: 3%;
 }
 /* .txtBox:nth-child(n) {
 	margin-bottom: 5px;

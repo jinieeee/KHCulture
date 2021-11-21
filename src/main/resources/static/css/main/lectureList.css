@@ -11,13 +11,6 @@
   --child-color : #9BDFF2;
   --kid-color : #37BDB5;
 }
-* {
-  box-sizing: border-box;
-  font-family: 'Noto Sans KR', sans-serif;
-}
-/* 나중에 header에 일괄 적용 */
-  
-
 
 .listSearchContainer {
     width: 100%;
@@ -83,7 +76,7 @@
 	content : "";
 	display: flex;
 	position: absolute;
-	top: 968px;
+	top: 972px;
 	height: 2px;
 	background-color: var(--lecturebackground-color);
 	width: 1320px;
