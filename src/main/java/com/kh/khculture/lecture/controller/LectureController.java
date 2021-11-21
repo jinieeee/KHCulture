@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.khculture.lecture.model.service.LectureService;
-import com.kh.khculture.lecture.model.vo.LectureOpen;
 import com.kh.khculture.lecture.model.vo.Search;
 
 import lombok.extern.slf4j.Slf4j;
@@ -51,7 +50,9 @@ public class LectureController {
 	
 	
 	@GetMapping("search")
-	public String getLectureList() {
+	public String getLectureList(Model model) {
+		Search search = new Search();
+		model.addAttribute("search", search);
 		return "lectureList/lectureSearch";
 	}
 // 김현주
