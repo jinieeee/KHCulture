@@ -55,15 +55,15 @@ REFERENCES "LECTURE_TARGET" (
 	"LT_NO"
 );
 
-insert into lecture values (1
-, '소믈리에와 함께하는 즐거운 이탈리아 양식'
-, '와아아아아ㅏ아앙아ㅏ아아아아아아아ㅏ아아아아ㅏ아아ㅏ아아아아ㅏ아아아ㅏ아아아아ㅏ아아아ㅏ아아아아아아ㅏ아앙'
+insert into lecture values (2
+, '도자기 공예'
 , '20181129114054.jpg'
 , '21/11/30'
 , '21/11/30'
 , 'N'
-, 1
-, 1);
+, 2
+, 2
+, '와아아아아ㅏ아앙아ㅏ아아아아아아아ㅏ아아아아ㅏ아아ㅏ아아아아ㅏ아아아ㅏ아아아아ㅏ아아아ㅏ아아아아아아ㅏ아앙');
 
 CREATE TABLE "INSTRUCTOR" (
 	"INSTRUCTOR_NO"	NUMBER		NOT NULL,
@@ -135,20 +135,19 @@ insert into lecture_registration values (
 , '2021-11-26'
 , 2
 , '월'
-, '13:00'
+, '09:00'
 , '15:00'
 , sysdate
 , sysdate
 , DEFAULT
-, 1
-, 1
+, 2
+, 2
 );
 
 insert into lecture_registration values (
-2 
+11 
 ,20
 , 2
-, 30000
 , '2021-11-19'
 , '2021-11-26'
 , 2
@@ -160,14 +159,34 @@ insert into lecture_registration values (
 , DEFAULT
 , 1
 , 2
+, to_char(77000, '99,999')
 );
 
 
 select 
-* 
+substr(lr_start_time, 1, instr(lr_start_time, ':')-1)
 from lecture_registration
 join lecture using (l_no)
 join instructor using (instructor_no);
 
 
+select
+DISTINCT  EXTRACT(year FROM LR_START_DATE)
+from lecture_registration
+order by EXTRACT(year FROM LR_START_DATE) desc;
+
+
+
+
+select 
+		* 
+		from lecture_registration
+		join lecture using (l_no)
+		join instructor using (instructor_no)
+		where lr_status = 'N';
+
 commit;
+
+alter table lecture_registration drop column LR_FEE;
+alter table lecture_registration modify LR_FEE not null;
+update lecture_registration set LR_FEE = null;

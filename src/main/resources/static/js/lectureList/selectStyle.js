@@ -44,7 +44,7 @@ $('.sel').each(function() {
     $currentSel.children('.sel__placeholder').text(txt);
     $currentSel.children('select').prop('selectedIndex', index + 1);
   });
-  
+  /*
 if(document.querySelector('#searchBtn') != null) {
     
   document.querySelector('#searchBtn').addEventListener('click', () => {
@@ -120,7 +120,7 @@ if(document.querySelector('#searchBtn') != null) {
     console.log(typing);
 });
 
-}
+}*/
 
 
 /*
