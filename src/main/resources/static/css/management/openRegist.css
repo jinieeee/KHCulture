@@ -149,7 +149,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
+	z-index: 1;
     background: rgba(0,0,0,0.8);
     font-family: 'Noto Sans KR', sans-serif;
 }
@@ -189,6 +189,7 @@
     width: 50px;
     height: 50px;
     margin-right: 25px;
+    margin-left : 25px;
 }
 
 .modal >.modalWindow > .listArea > ul > li > img{

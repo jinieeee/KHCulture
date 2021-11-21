@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kh.khculture.management.model.dao.ManagementMapper">
+
+
+<resultMap type="com.kh.khculture.lecture.model.vo.Instructor" id="instructorResultMap">
+	<id property="instructorNo" column="INSTRUCTOR_NO"></id>
+	<result property="instructorName" column="INSTRUCTOR_NAME"></result>
+	<result property="profilePhoto" column="PROFILE_PHOTO"></result>
+	<result property="birthDate" column="BIRTH_DATE"></result>
+	<result property="instructorPhone" column="INSTRUCTOR_PHONE"></result>
+	<result property="career" column="CAREER"></result>
+</resultMap>
+
+
+<resultMap type="com.kh.khculture.lecture.model.vo.Lecture" id="lectureResultMap">
+		<id property="lNo" column="l_no"></id>
+		<result property="lTitle" column="l_title"></result>
+		<result property="lContent" column="l_content"></result>
+		<result property="lThumbnail" column="l_thumbnail"></result>
+		<result property="lcNo" column="LC_NO"></result>
+		<result property="ltNo" column="lT_NO"></result>
+</resultMap>
+<resultMap type="com.kh.khculture.management.model.vo.Lecture2" id="lecture2ResultMap">
+		<id property="lNo" column="l_no"></id>
+		<result property="lTitle" column="l_title"></result>
+		<result property="lContent" column="l_content"></result>
+		<result property="lThumbnail" column="l_thumbnail"></result>
+		<result property="lcName" column="LC_NAME"></result>
+		<result property="ltName" column="lT_NAME"></result>
+</resultMap>
+
+<insert id="registLecture" parameterType="com.kh.khculture.lecture.model.vo.Lecture">
+	INSERT INTO LECTURE
+	(
+		L_NO
+	  , L_TITLE
+	  , L_THUMBNAIL
+	  , L_ENROLL_DATE
+	  , L_MODIFY_DATE
+	  , L_STATUS
+	  , LC_NO
+	  , LT_NO
+	  , L_CONTENT
+	)
+	VALUES
+	(
+		12
+	  , #{lTitle}
+	  , #{lThumbnail}
+	  , SYSDATE
+	  , SYSDATE
+	  , DEFAULT
+	  , #{lcNo}
+	  , #{ltNo}
+	  , #{lContent}
+	)
+</insert>
+
+<!-- 페이지개수 -->
+<select id="getListCount" resultType="_int">
+	SELECT
+		   COUNT(*)
+	  FROM LECTURE
+	 WHERE L_STATUS = 'N'
+</select>
+
+<select id="selectLectureList" parameterType="com.kh.khculture.notice.model.vo.PageInfo" resultMap="lecture2ResultMap">
+SELECT
+       L_NO
+     , L_TITLE
+     , L_THUMBNAIL
+     , LC_NAME
+     , LT_NAME
+     , L_CONTENT
+  FROM (SELECT 
+               ROWNUM RNUM, L.*
+          FROM(SELECT 
+                      *
+                 FROM LECTURE O
+                 JOIN LECTURE_CLASSIFICATION C1 ON(O.LC_NO = C1.LC_NO)
+                 JOIN LECTURE_TARGET C2 ON(O.LT_NO = C2.LT_NO)
+                WHERE L_STATUS = 'N'
+                ORDER BY L_NO DESC) L
+        )
+	WHERE RNUM BETWEEN #{startRow} AND #{endRow}
+</select>
+
+
+<update id="deleteLecture" parameterType="_int">
+	UPDATE LECTURE
+   	   SET L_STATUS = 'Y'
+ 	 WHERE L_NO = #{lNo}
+</update>
+
+<select id="selectLecture" parameterType="_int" resultMap="lectureResultMap">
+	SELECT
+			L_NO
+		  , L_TITLE
+		  , L_THUMBNAIL
+		  , LC_NO
+		  , LT_NO
+		  , L_CONTENT
+	  FROM LECTURE
+	 WHERE L_NO=#{lNo}
+</select>
+
+<update id="updateLecture" parameterType="com.kh.khculture.lecture.model.vo.Lecture">
+	UPDATE LECTURE
+	   SET L_TITLE = #{lTitle}
+	     , LC_NO = #{lcNo}
+	     , LT_NO = #{ltNo}
+	     , L_CONTENT = #{lContent}
+	     , L_MODIFY_DATE = SYSDATE
+	 WHERE L_NO = #{lNo}
+</update>
+
+<select id="selectAllLectureList"  resultMap="lectureResultMap">
+	SELECT
+		   L_NO
+		 , L_TITLE
+		 , L_THUMBNAIL
+	  FROM LECTURE
+	 WHERE L_STATUS = 'N'
+	 ORDER BY L_NO DESC
+</select>
+
+<select id="selectInstructor" parameterType="com.kh.khculture.management.model.vo.SearchInstructor" resultMap="instructorResultMap">
+	SELECT
+	       INSTRUCTOR_NO
+	     , INSTRUCTOR_NAME
+	     , PROFILE_PHOTO
+	     , BIRTH_DATE
+	     , INSTRUCTOR_PHONE
+	     , CAREER
+	  FROM INSTRUCTOR
+	 WHERE INSTRUCTOR_NO NOT IN(SELECT
+								       INSTRUCTOR_NO
+								  FROM LECTURE_REGISTRATION
+								 WHERE (TO_DATE(#{startDate}, 'YYYY-MM-DD') BETWEEN LR_START_DATE AND LR_END_DATE
+								    OR TO_DATE(#{endDate}, 'YYYY-MM-DD') BETWEEN LR_START_DATE AND LR_END_DATE)
+								   AND #{day} = LR_DAY
+								   AND (#{startTime} BETWEEN LR_START_TIME AND LR_END_TIME
+								    OR #{endTime} BETWEEN LR_START_TIME AND LR_END_TIME))
+</select>
+
+</mapper>
+

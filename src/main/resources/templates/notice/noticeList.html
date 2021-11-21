@@ -71,11 +71,11 @@
         	</th:block>
         		
         <!-- 다음 페이지로(>) -->	
-	        <li th:if="${ pi.page < maxPage }">
-	       		<a th:href="@{?page={page}(page =  ${pi.page+1})}">&gt;</a>
+	        <li th:if="${ pi.page < pi.maxPage }">
+	       		<a th:href="@{?page={page}(page =  ${pi.page+2})}">&gt;</a>
 	       	</li>
-	       	<li th:unless="${ pi.page == maxPage }">
-	       		<a th:href="@{?page={page}(page =  ${pi.page})}">&gt;</a>
+	       	<li th:if="${ pi.page == pi.maxPage }">
+	       		<a th:href="@{?page={page}(page =  ${pi.page+3})}">&gt;</a>
 	       	</li>
         
         <!-- 맨 뒤로(>>) --> 	
