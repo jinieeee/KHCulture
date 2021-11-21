@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -39,7 +39,7 @@
           <p>강좌 분류</p>
           <div class="sel sel--black-panther selectDiv">
             <select name="select-profession" id="">
-                <option value="" disabled>강좌 분류</option>
+              <option value="" disabled>강좌 분류</option>
               <option value="전체">전체</option>
               <option value="정기강좌">정기강좌</option>
               <option value="단기강좌">단기강좌</option>
@@ -75,7 +75,7 @@
           <p>개강 년도</p>
           <div class="sel sel--black-panther selectDiv">
             <select name="select-profession" id="selectYearSearch">
-                <option value="" disabled>개강 년도</option>
+              <option value="" disabled>개강 년도</option>
               <option value="전체">전체</option>
               <!-- <option value="2021">2021</option>
               <option value="2020">2020</option>
@@ -209,7 +209,6 @@
       </div>
      </div>
       <script>
-
     	let category = '';
     	let target = '';
     	let status = '';
@@ -220,8 +219,19 @@
     	let typing = '';
     	let arrayStand = 'date';
       	let page = 1;
-    	
-    	/* 검색 바 */
+
+      	if("[[search]]") {
+			category = "[[${search.category}]]";
+			target = "[[${search.target}]]";
+			status = "[[${search.status}]]";
+			year = "[[${search.year}]]";
+			month = "[[${search.month}]]";
+			day = "[[${search.day}]]";
+			time = "[[${search.time}]]";
+			typing = "[[${search.typing}]]";
+      	}
+
+    /* 검색 바 */
       $(function() {
   		$.ajax({
   			url : "/lecture/year",
@@ -277,6 +287,17 @@
   				    $currentSel.children('.sel__placeholder').text(txt);
   				    $currentSel.children('select').prop('selectedIndex', index + 1);
   				  });
+  				  
+  				  if("[[${search}]]"){
+  					document.querySelector('.listSearchContainer .categorySearch > div > span').innerText = category == 1? "정기강좌": category == 2? "단기강좌" : category == 3? "무료강좌" : "강좌 분류";
+  			 		document.querySelector('.listSearchContainer .targetSearch > div > span').innerText = target == 1? "성인강좌" : target == 2? "영유아강좌": target == 3? "아동강좌": "강좌 대상";
+  			 		document.querySelector('.listSearchContainer .registStatus > div > span').innerText = status == ''? "접수 상태": status;
+  			 		document.querySelector('.listSearchContainer .yearSearch > div > span').innerText = year == ''? "개강 년도": status;
+  			 		document.querySelector('.listSearchContainer .monthSearch > div > span').innerText = month == ''? "개강 월": month + "월";
+  					document.querySelector('.listSearchContainer .daySearch > div > span').innerText = day == ''? "개강 요일": day;
+  			 		document.querySelector('.listSearchContainer .timeSearch > div > span').innerText = time == ''? "개강 시간": time+"시타임";
+  			 		document.querySelector('.listSearchContainer .typingSearch > div > input').value = typing;
+  				  } 
   			},
   			error : function(e) {
   				console.log(e);
@@ -611,6 +632,7 @@
       
       <!-- <script src="/js/lectureList/selectStyle.js"></script> -->
       <!-- <script src="/js/lectureList/lectureSearch.js"></script> -->
+
   </body>
   <footer th:include="fragments/footer.html"></footer>
 </html>
