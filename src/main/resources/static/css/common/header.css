@@ -98,7 +98,7 @@ ul.nav-menu::after {
     display: none;
     z-index: -1;
     background-color: white;
-	box-shadow:  rgba(0,0,0,0.3) 0 9999px 0 9999px, rgba(0,0,0,0.3) 0px 5px 5px 3px;
+	box-shadow:  rgba(0,0,0,0.4) 0 9999px 0 9999px, rgba(0,0,0,0.3) 0px 5px 5px 3px;
 }
 ul.nav-menu>li::before {
     content: "";
@@ -148,6 +148,33 @@ ul.nav-menu:hover .submenu {
     font-size: 13px;
     font-weight: 700;
     color: #4e4e4e;
+    transition: all 0.5s;
+    cursor: pointer;
+}
+.userInfo button>span {
+	cursor: pointer;
+	display: inline-block;
+	position: relative;
+	transition: 0.5s;
+}
+.userInfo button>span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -10px;
+  transition: 0.3s;
+}
+.userInfo button:hover {
+  background-color: var(--main-color);	
+}
+.userInfo button:hover span {
+  padding-right: 15px;
+  color: white;
+}
+.userInfo button:hover span:after {
+  opacity: 1;
+  right: 0;
 }
 .userInfo button:first-child {
     margin-right: 10px;
