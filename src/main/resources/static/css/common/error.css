@@ -1,0 +1,28 @@
+:root {
+    --main-color : #F0B95E;
+    --active-btn-color : #F0B95E;
+    --target-color : #FFD287;
+    --inactive-btn-color : #6A6A6A;
+    --btn-font-color : white;
+    --main-border-color : lightgray;
+    --main-font-color : #4E4E4E;
+}
+
+.errorPrint {
+	min-height: 875px;
+}
+.errorPrint .error-box {
+	min-height: 875px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+.errorPrint img {
+	width: 20%;
+	height: 20%;
+}
+
+.errorPrint span {
+	font-size: 20px;
+}

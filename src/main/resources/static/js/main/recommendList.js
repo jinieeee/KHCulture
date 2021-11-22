@@ -9,24 +9,24 @@ $(function(){
 			var dataSize = 0;
 			for(var key in data.recommendList) {
 				var lecture = data.recommendList[key];
-				console.log(lecture);
+				// console.log(lecture);
 				html += `<li><div class="proItem"><div class="thum"><img src="/images/lecture/` + lecture.lecture.lthumbnail + `" alt="`
 					  + lecture.lecture.ltitle +`"></div>`
 					  + `<div class="info"><div class="tagArea">`;
 				if(lecture.lecture.ltNo == 1) {
-					html += `<span class="targetTag">성인강좌</span>`;
+					html += `<span class="targetTag" style="background-color: var(--main-color)">성인강좌</span>`;
 				} else if(lecture.lecture.ltNo == 2) {
-					html += `<span class="targetTag">아동강좌</span>`;
+					html += `<span class="targetTag" style="background-color: var(--child-color)">아동강좌</span>`;
 				} else {
-					html += `<span class="targetTag">영유아강좌</span>`;			
+					html += `<span class="targetTag" style="background-color: var(--kid-color)">영유아강좌</span>`;			
 				}
 				
 				if(lecture.lecture.lcNo == 1) {
-					html += `<span class="categoryTag">정기강좌</span>`;
+					html += `<span class="categoryTag" style="background-color: gray">정기강좌</span>`;
 				} else if(lecture.lecture.lcNo == 2) {
-					html += `<span class="categoryTag">단기강좌</span>`;
+					html += `<span class="categoryTag" style="background-color: #BD914A">단기강좌</span>`;
 				} else {
-					html += `<span class="categoryTag">무료강좌</span>`;
+					html += `<span class="categoryTag" style="background-color: #70562C">무료강좌</span>`;
 				}
 				
 				html += `</div><div class="txtBox"><span class="subject">[ ` + lecture.lrStartDate.substr(5,2) + `/` + lecture.lrStartDate.substr(8, 2) + ` ] ` + lecture.lecture.ltitle + `</span>`
@@ -77,10 +77,37 @@ function makeToggle(dataSize){
 		html += `<img class="circle circle` + (count + 1) + `">`
 	}
 	toggleBox.html(html);
+	
+	
+	document.querySelector(".circle1").addEventListener('click', function(){
+		goLeft();
+	});
+	
+	document.querySelector(".circle2").addEventListener('click', function(){
+		goRight();
+	});
 }
 
 /* 목록 좌우 이동버튼 */
 document.querySelector(".rightDiv").addEventListener('click', function(){
+	goRight();
+});
+
+document.querySelector(".leftDiv").addEventListener('click', function(){
+	goLeft();
+});
+
+function goLeft(){
+	var currentPoint = $(".recommendClassArea").children("li").css("left").replace("px", "") * 1;
+	if(currentPoint < 0) {
+		var movePoint = currentPoint + 990;
+		$(".recommendClassArea").children("li").animate({left: movePoint}, 500);
+		$(".circle1").css('background-color', 'var(--main-color)');
+		$(".circle2").css('background-color', 'var(--main-border-color)');
+	}
+}
+
+function goRight(){
 	var currentPoint = $(".recommendClassArea").children("li").css("left").replace("px", "") * 1;
 	var currentLi = $(".recommendClassArea").children("li").length;
 	if(currentPoint > -990 && currentLi > 4) {
@@ -89,14 +116,4 @@ document.querySelector(".rightDiv").addEventListener('click', function(){
 		$(".circle1").css('background-color', 'var(--main-border-color)');
 		$(".circle2").css('background-color', 'var(--main-color)');
 	}
-});
-
-document.querySelector(".leftDiv").addEventListener('click', function(){
-	var currentPoint = $(".recommendClassArea").children("li").css("left").replace("px", "") * 1;
-	if(currentPoint < 0) {
-		var movePoint = currentPoint + 990;
-		$(".recommendClassArea").children("li").animate({left: movePoint}, 500);
-		$(".circle1").css('background-color', 'var(--main-color)');
-		$(".circle2").css('background-color', 'var(--main-border-color)');
-	}
-});
+}
