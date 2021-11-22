@@ -23,6 +23,8 @@ import com.kh.khculture.lecture.model.vo.Instructor;
 import com.kh.khculture.lecture.model.vo.Lecture;
 import com.kh.khculture.management.model.service.ManagementService;
 import com.kh.khculture.management.model.vo.Lecture2;
+import com.kh.khculture.management.model.vo.LectureOpen2;
+import com.kh.khculture.management.model.vo.LectureOpen3;
 import com.kh.khculture.management.model.vo.SearchInstructor;
 import com.kh.khculture.notice.model.vo.PageInfo;
 
@@ -41,7 +43,22 @@ public class ManagementController {
 	
 	
 	@GetMapping("/openlist")
-	public String openList() {
+	public String openList(Model model, @RequestParam(value="page" , defaultValue="1") int page) {
+		
+		// 게시글 총 개수
+		int listCount = managementService.getOpenListCount();
+		
+		PageInfo pi = new PageInfo( page , listCount, 10, 10);
+		
+		int startRow = (pi.getPage() -1)* pi.getBoardLimit() +1;
+		int endRow = startRow +pi.getBoardLimit() -1;
+		
+		List<LectureOpen3> openList = managementService.selectOpenList(startRow, endRow);
+		
+		log.info("check123 : {}", openList);
+		
+		model.addAttribute("openList", openList);
+		model.addAttribute("pi", pi);
 		
 		return "management/openlist";
 	}
@@ -155,6 +172,33 @@ public class ManagementController {
 		
 		return "redirect:/lecturelist";
 	}
+	
+	@PostMapping("/openserver")
+	public String openRegistServer(LectureOpen2 lectureOpen, RedirectAttributes rttr) {
+		
+		String msg = "";
+		
+		log.info("lectureInfo : {}", lectureOpen);
+		
+		int result = managementService.registLectureOpen(lectureOpen);
+		
+		if(result > 0) {
+			msg = "강의 오픈 성공!";
+		} else {
+			msg = "강의 오픈 실패!";
+		}
+		
+		rttr.addFlashAttribute("msg", msg);
+		
+		return "redirect:/openlist";
+	}
+	
+	
+	
+	
+	
+	
+	
 	@PostMapping("/registserver")
 	public String lectureRegistServer(Lecture lecture, @RequestParam MultipartFile singleFile, 
 			HttpServletRequest request, RedirectAttributes rttr) {

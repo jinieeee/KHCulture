@@ -3,6 +3,29 @@
 <mapper namespace="com.kh.khculture.management.model.dao.ManagementMapper">
 
 
+<resultMap type="com.kh.khculture.management.model.vo.LectureOpen3" id="openLectureResultMap">
+	<id property="lrNo" column="LR_NO"></id>
+	<result property="lrCapacity" column="LR_CAPACITY"></result>
+	<result property="lrCount" column="LR_COUNT"></result>
+	<result property="lrStartDate" column="LR_START_DATE"></result>
+	<result property="lrEndDate" column="LR_END_DATE"></result>
+	<result property="lrNumber" column="LR_NUMBER"></result>
+	<result property="lrDay" column="LR_DAY"></result>
+	<result property="lrStartTime" column="LR_START_TIME"></result>
+	<result property="lrEndTime" column="LR_END_TIME"></result>
+	<result property="lrEnrollDate" column="LR_ENROLL_DATE"></result>
+	<result property="lrModifyDate" column="LR_MODIFY_DATE"></result>
+	<result property="lrStatus" column="LR_STATUS"></result>
+	<result property="instructorNo" column="INSTRUCTOR_NO"></result>
+	<result property="lNo" column="L_NO"></result>
+	<result property="lrFee" column="LR_FEE"></result>
+	<result property="lcName" column="LC_NAME"></result>
+	<result property="ltName" column="LT_NAME"></result>
+	<result property="lTitle" column="L_TITLE"></result>
+	<result property="instructorName" column="INSTRUCTOR_NAME"></result>
+</resultMap>
+
+
 <resultMap type="com.kh.khculture.lecture.model.vo.Instructor" id="instructorResultMap">
 	<id property="instructorNo" column="INSTRUCTOR_NO"></id>
 	<result property="instructorName" column="INSTRUCTOR_NAME"></result>
@@ -142,6 +165,87 @@ SELECT
 								   AND #{day} = LR_DAY
 								   AND (#{startTime} BETWEEN LR_START_TIME AND LR_END_TIME
 								    OR #{endTime} BETWEEN LR_START_TIME AND LR_END_TIME))
+</select>
+
+<insert id="registLectureOpen" parameterType="com.kh.khculture.management.model.vo.LectureOpen2">
+	INSERT INTO LECTURE_REGISTRATION
+	(
+	    LR_NO
+	  , LR_CAPACITY
+	  , LR_COUNT
+	  , LR_START_DATE
+	  , LR_END_DATE
+	  , LR_NUMBER
+	  , LR_DAY
+	  , LR_START_TIME
+	  , LR_END_TIME
+	  , LR_ENROLL_DATE
+	  , LR_MODIFY_DATE
+	  , LR_STATUS
+	  , INSTRUCTOR_NO
+	  , L_NO
+	  , LR_FEE
+	)
+	VALUES
+	(
+	    SEQ_LR_NO.NEXTVAL
+	  , #{lrCapacity}
+	  , DEFAULT
+	  , TO_DATE(#{lrStartDate}, 'YYYY-MM-DD')
+	  , TO_DATE(#{lrEndDate}, 'YYYY-MM-DD')
+	  , #{lrNumber}
+	  , #{lrDay}
+	  , #{lrStartTime}
+	  , #{lrEndTime}
+	  , SYSDATE
+	  , SYSDATE
+	  , DEFAULT
+	  , #{instructorNo}
+	  , #{lNo}
+	  , TO_CHAR(#{lrFee}, '99,999')
+	)
+</insert>
+
+
+<select id="getOpenListCount" resultType="_int">
+	SELECT
+		   COUNT(*)
+	  FROM LECTURE_REGISTRATION
+	 WHERE LR_STATUS = 'N'
+</select>
+
+<select id="selectOpenList" parameterType="com.kh.khculture.notice.model.vo.PageInfo" resultMap="openLectureResultMap">
+	SELECT
+       LR_NO
+     , LC_NAME
+     , LT_NAME
+     , L_TITLE
+     , INSTRUCTOR_NAME
+     , LR_MODIFY_DATE
+  FROM (SELECT 
+       ROWNUM RNUM
+     , L.LR_NO
+     , L.LC_NAME
+     , L.LT_NAME
+     , L.L_TITLE
+     , L.INSTRUCTOR_NAME
+     , L.LR_MODIFY_DATE
+  FROM(SELECT 
+              C3.LR_NO
+            , C1.LC_NAME
+            , C2.LT_NAME
+            , O.L_TITLE
+            , C4.INSTRUCTOR_NAME
+            , C3.LR_MODIFY_DATE
+         FROM LECTURE O
+         JOIN LECTURE_CLASSIFICATION C1 ON(O.LC_NO = C1.LC_NO)
+         JOIN LECTURE_TARGET C2 ON(O.LT_NO = C2.LT_NO)
+         JOIN LECTURE_REGISTRATION C3 ON(O.L_NO = C3.L_NO)
+         JOIN INSTRUCTOR C4 ON(C3.INSTRUCTOR_NO = C4.INSTRUCTOR_NO)
+        WHERE C3.LR_STATUS = 'N'
+        ORDER BY C3.LR_NO DESC) L
+        )
+	WHERE RNUM BETWEEN #{startRow} AND #{endRow}
 </select>
 
 </mapper>
