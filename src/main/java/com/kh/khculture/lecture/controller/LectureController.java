@@ -1,9 +1,11 @@
 package com.kh.khculture.lecture.controller;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.khculture.lecture.model.service.LectureService;
 import com.kh.khculture.lecture.model.vo.Search;
+import com.kh.khculture.member.model.vo.UserImpl;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -50,9 +53,13 @@ public class LectureController {
 	
 	
 	@GetMapping("search")
-	public String getLectureList(Model model) {
+	public String getLectureList(Model model, Principal principal) {
 		Search search = new Search();
 		model.addAttribute("search", search);
+		if(principal != null) {
+			UserImpl user = (UserImpl)((Authentication)principal).getPrincipal();
+			model.addAttribute("mno", user.getMno());
+		}
 		return "lectureList/lectureSearch";
 	}
 // 김현주

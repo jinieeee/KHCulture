@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kh.khculture.mypage.model.dao.MypageMapper">
+	<resultMap type="com.kh.khculture.lecture.model.vo.LectureOpen" id="selectListResultMap">
+		<id property="lrNo" column="lr_no"></id>
+		<result property="lrCapacity" column="lr_capacity"></result>
+		<result property="lrCount" column="LR_COUNT"></result>
+		<result property="lrFee" column="LR_FEE"></result>
+		<result property="lrStartDate" column="LR_START_DATE"></result>
+		<result property="lrEndDate" column="LR_END_DATE"></result>
+		<result property="lrNumber" column="LR_NUMBER"></result>
+		<result property="lrDay" column="LR_DAY"></result>
+		<result property="lrStartTime" column="LR_START_TIME"></result>
+		<result property="lrEndTime" column="LR_END_TIME"></result>
+		<association property="lecture" resultMap="lectureResultMap"/>
+		<association property="instructor" resultMap="instructorResultMap"/>
+	</resultMap>
+	<resultMap type="com.kh.khculture.lecture.model.vo.Lecture" id="lectureResultMap">
+		<id property="lNo" column="l_no"></id>
+		<result property="lTitle" column="l_title"></result>
+		<result property="lContent" column="l_content"></result>
+		<result property="lThumbnail" column="l_thumbnail"></result>
+		<result property="lcNo" column="LC_NO"></result>
+		<result property="ltNo" column="lT_NO"></result>
+	</resultMap>
+	<resultMap type="com.kh.khculture.lecture.model.vo.Instructor" id="instructorResultMap">
+		<id property="instructorNo" column="INSTRUCTOR_NO"></id>
+		<result property="instructorName" column="INSTRUCTOR_NAME"></result>
+		<result property="profilePhoto" column="PROFILE_PHOTO"></result>
+		<result property="birthDate" column="BIRTH_DATE"></result>
+		<result property="instructorPhone" column="INSTRUCTOR_PHONE"></result>
+		<result property="career" column="CAREER"></result>
+	</resultMap>
+	<select id="getCartList" resultMap="selectListResultMap">
+			select 
+					* 
+			        from cart
+					join lecture_registration using (lr_no)
+					join lecture using (l_no)
+					join instructor using (instructor_no)
+					where lr_status = 'N' and c_status = 'N'
+			        and m_no = #{mno}
+			        order by lr_start_date asc
+	</select>
+	<select id="getcartCount" parameterType="_int" resultType="_int">
+		select 
+		count(*) 
+        from cart
+		join lecture_registration using (lr_no)
+		join lecture using (l_no)
+		join instructor using (instructor_no)
+		where lr_status = 'N' and c_status = 'N'
+        and m_no = #{mno}
+	</select>
+	<insert id="putCart" parameterType="_int">
+		insert into cart
+		values (
+		seq_cart_no.nextval
+		, #{mno}
+		, #{lrNo}
+		, default
+		)
+	</insert>
+
+
+</mapper>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -28,6 +28,7 @@
       rel="stylesheet"
     />
   </head>
+  <header th:include="fragments/header.html"></header>
   <body class="mypageCart">
     <div class="titleArea">
         <h1>장바구니</h1>
@@ -38,7 +39,7 @@
     <div class="cartList">
         <div class="cartWrap">
 
-
+	<form action="/payment/approval" method="get" id="cartForm">
         <table>
             <caption>장바구니 목록</caption>
             <colgroup>
@@ -86,35 +87,13 @@
                     <span>접수 중</span>
                 </td>
                 </tr>
-                <tr>
-                    <td> <span class="bxCheck">
-                     <input type="checkbox" class="select">
-                 </span></td>
-                 <td>
-                     <div class="imgBox">
-                         <img src="/images/lectureList/20181129114054.jpg" alt="">
-                     </div>
-                 </td>
-                 <td>
-                     <div class="classInfo">
-                         <a href="#">
-                             *11/21* 예쁜 고양이 케이크
-                             </a>
-                         <p class="time">(일) 11:00 ~ 12:00</p>
-                     </div>
-                 </td>
-                 <td>백종수</td>
-                 <td>25,000dnjs</td>
-                 <td>
-                     <span>접수 중</span>
-                 </td>
-                 </tr>
+                
             </tbody>
             <tfoot>
                 <tr>
                     <td colspan="3">
                         <div class="btnArea">
-                            <a href="#" class="btn btnType04 btnWhite"><span>선택강좌 삭제</span></a>
+                            <a href="#" onclick="deleteCart()" class="btn btnType04 btnWhite"><span>선택강좌 삭제</span></a>
                         </div>
                     </td>
                     <td colspan="3">
@@ -127,11 +106,160 @@
             </tfoot>
         </table>
         <div class="billBtnArea aRight">
-            <a href="#" class="btnWhite btnType03 btn"><span>강좌 더보기</span></a>
-            <a href="#;" class="btnRed btnType03 btn"><span>수강 결제하기</span></a>
+            <a href="/lecture/search" class="btnWhite btnType03 btn"><span>강좌 더보기</span></a>
+            <a href="#;" id="submitBtn"class="btnRed btnType03 btn"><span>수강 결제하기</span></a>
         </div>
+    </form>
     </div>
 </div>
+<script>
+	
+	function deleteCart() {
+		
+		
+		
+		
+		/* $.ajax({
+			url : "/mypage/cart/delete",
+			data : {},
+			type : "delete",
+			success : function(data) {
+				console.log(data);
+			},
+			error : function(e) {
+				console.log(e);
+			}
+		}); */
+	}
+
+	 $(function() {
+	  		$.ajax({
+	  			url : "/mypage/cart/list",
+	  			success : function(data) {
+	  				console.log(data);
+	  				let tbodyDiv = document.querySelector(".cartWrap table tbody");
+	  				tbodyDiv.innerHTML = ``;
+	  				
+	  				let html = ``;
+	  				for(let key in data) {
+	  					
+		  				let lectureStatus = ``;	
+		  				let nowDate = new Date(); //오늘
+			        	let lecDate = new Date(); //강의시작날짜
+			        	
+			        	nowDate.setHours(0);
+			        	nowDate.setMinutes(0);
+			        	nowDate.setSeconds(0);
+			        	nowDate.setMilliseconds(0);
+			        	
+			        	lecDate.setHours(0);
+			        	lecDate.setMinutes(0);
+			        	lecDate.setSeconds(0);
+			        	lecDate.setMilliseconds(0);
+			        	
+			        	lecDate.setFullYear(data[key].lrStartDate.substr(0, 4));
+			        	lecDate.setMonth(data[key].lrStartDate.substr(5, 2)-1);
+			        	lecDate.setDate(data[key].lrStartDate.substr(8, 2));
+			        	
+			        	let openDate = new Date(); //접수 오픈 날짜
+			        	openDate.setFullYear(lecDate.getFullYear());
+			        	openDate.setMonth(lecDate.getMonth());
+			        	openDate.setDate(lecDate.getDate());
+			        	openDate.setDate(openDate.getDate() - 30);
+			        	openDate.setHours(0);
+			        	openDate.setMinutes(0);
+			        	openDate.setSeconds(0);
+			        	openDate.setMilliseconds(0);
+			        	
+		  				if(lecDate <= nowDate) {
+		  					lectureStatus = `<span class="applyImpossible">접수 마감</span>`;	
+		  				} else if (data[key].lrCount == data[key].lrCapacity) {
+		  					lectureStatus = `<span class="applyFull">정원 마감</span>`;	
+		  				} else if (openDate > nowDate) {
+		  					lectureStatus = `<span class="applyPlan">접수 예정</span>`;
+		  				} else {
+		  					lectureStatus = `<span class="applyPossible">접수 중</span>`;
+		  				}
+	  					
+	  					html += `
+	  						<tr>
+	  	                   <td> <span class="bxCheck">
+	  	                    <input type="checkbox" name="lrNo" class="select" value="` + data[key].lrNo + `"><input type="hidden" value="` + data[key].lrFee + `">
+	  	                </span></td>
+	  	                <td>
+	  	                    <div class="imgBox">
+	  	                        <img src="/images/upload/` + data[key].lecture.lthumbnail + `" alt="">
+	  	                    </div>
+	  	                </td>
+	  	                <td>
+	  	                    <div class="classInfo">
+	  	                        <a href="#">` + data[key].lrStartDate.substr(5, 2) + `/` + data[key].lrStartDate.substr(8, 2) + ` ` + data[key].lecture.ltitle + 
+	  	                            `</a>
+	  	                        <p class="time">(` + data[key].lrDay.substr(0, 1) + `) ` + data[key].lrStartTime + ` ~ ` + data[key].lrEndTime + `</p>
+	  	                    </div>
+	  	                </td>
+	  	                <td>` + data[key].instructor.instructorName +`</td>
+	  	                <td>` + data[key].lrFee + `원</td>
+	  	                <td>` +
+	  	                    lectureStatus
+	  	                + `</td>
+	  	                </tr>
+	  					`;
+	  				}
+	  				
+	  				tbodyDiv.insertAdjacentHTML('beforeend', html);
+	  				
+	  				$('.cartList .select').change(function(){
+	  				    let inputCnt = $('.cartList .select').length;
+	  				    let checkedCnt = $('.cartList .select:checked').length;
+	  				    
+	  				    if(inputCnt == checkedCnt) {
+	  				        $('.cartList .selectAll').prop('checked', true);
+	  				    } else {
+	  				        $('.cartList .selectAll').prop('checked', false);
+	  				    }
+	  				    
+	  				   selectedClass.innerHTML = $('.cartList .select:checked').length;
+	  				   
+	  				   let totalPrice = 0;
+	  				   
+	  				   let checkedSelect = document.querySelectorAll('.cartList .select:checked');
+	  				 checkedSelect.forEach( select => {
+	  					totalPrice += Number(select.parentElement.children[1].value.replace(",", ''));
+	  				 })
+	  				 totalAmount.innerHTML = String(totalPrice).replace(/(.)(?=(\d{3})+$)/g,'$1,');
+	  				    
+	  				})
+
+	  			},
+	  			error : function(e) {
+	  				console.log(e);
+	  			}
+	  		})
+	  	})
+	
+	  	submitBtn.onclick=function(){
+		 let over = false;
+		 if($('.cartList .select:checked').length == 0) {
+			 alert("선택된 강좌가 없습니다.");
+			 return;
+		 } else {
+			 let selectChecked = document.querySelectorAll('.cartList .select:checked');
+			 selectChecked.forEach(select => {
+				if(select.parentElement.parentElement.parentElement.children[5].children[0].innerHTML == '정원 마감' || select.parentElement.parentElement.parentElement.children[5].children[0].innerHTML == '접수 마감') {
+					alert(select.parentElement.parentElement.parentElement.children[2].children[0].children[0].innerHTML + '는 ' + select.parentElement.parentElement.parentElement.children[5].children[0].innerHTML + '된 강좌입니다. 다시 확인하여 주시기 바랍니다.');
+					over = true;
+				} 
+				
+			 })
+			 if(over) {
+					return;
+				}
+			cartForm.submit();
+		 }
+	 }
+</script>
 <script src="/js/lectureList/cartjs.js"></script>
   </body>
+  <footer th:include="fragments/footer.html"></footer>
 </html>

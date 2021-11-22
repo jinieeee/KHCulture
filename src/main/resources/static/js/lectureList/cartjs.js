@@ -1,4 +1,4 @@
-$('.cartList .select').change(function(){
+/*$('.cartList .select').change(function(){
     let inputCnt = $('.cartList .select').length;
     let checkedCnt = $('.cartList .select:checked').length;
     
@@ -7,7 +7,7 @@ $('.cartList .select').change(function(){
     } else {
         $('.cartList .selectAll').prop('checked', false);
     }
-})
+})*/
 
 $('.cartList .selectAll').change(function(){
     let select = document.querySelectorAll('.select');
@@ -23,6 +23,15 @@ $('.cartList .selectAll').change(function(){
         //     $(item).prop('checked', false);
         // })
     }
+    
+    selectedClass.innerHTML = $('.cartList .select:checked').length;
+    let totalPrice = 0;
+	  				   
+	   let checkedSelect = document.querySelectorAll('.cartList .select:checked');
+	 checkedSelect.forEach( select => {
+		totalPrice += Number(select.parentElement.children[1].value.replace(",", ''));
+	 })
+	 totalAmount.innerHTML = String(totalPrice).replace(/(.)(?=(\d{3})+$)/g,'$1,');
 })
     
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -30,6 +30,13 @@
   </head>
   <header th:include="fragments/header.html"></header>
   <body class="lecturelist lectureSearchBody">
+  	<!-- 회원번호 호출 -->
+  	<th:block sec:authorize="isAuthenticated()">
+  		<input id="mno" type="hidden" th:value="${mno}">
+  	</th:block>
+  	<th:block sec:authorize="isAnonymous()">
+  		<input id="mno" type="hidden" value="noLogin">
+  	</th:block>
     <div class="titleArea">
       <h1>강좌검색</h1>
     </div>
@@ -168,7 +175,7 @@
           <div class="lectureDesc">
             <div class="lectureImg">
               <img
-                src="/images/lectureList/20181129114054.jpg"
+                src="/images/upload/20181129114054.jpg"
                 alt=""
               />
             </div>
@@ -199,8 +206,6 @@
         
         </div>
         <div class="pagingDiv">
-          <!-- <c:if test="${fn:length(visitCarList) ne 0}"> -->
-							
 		<ul class="board_paging">
 		
 		</ul>
@@ -220,7 +225,7 @@
     	let arrayStand = 'date';
       	let page = 1;
 		
-		if("[[${search}]]"){
+		if("[[${search}]]"){  
 			category = "[[${search.category}]]" == null? '': "[[${search.category}]]";
 			target = "[[${search.target}]]" == null? '': "[[${search.target}]]";
 			status = "[[${search.status}]]" == null? '': "[[${search.status}]]";
@@ -230,6 +235,7 @@
 			time = "[[${search.time}]]" == null? '': "[[${search.time}]]";
 			typing = "[[${search.typing}]]" == null? '': "[[${search.typing}]]";
 		}
+		
 
     /* 검색 바 */
       $(function() {
@@ -398,9 +404,15 @@
 					 console.log(data);
 					 var lectureDiv = document.querySelector('.lectureDiv');
 					 let listCount = document.querySelector('.count');
-					 listCount.innerHTML = data.lecturelist.length;
+					 let dataLeng = data.lecturelist.length;
+					 listCount.innerHTML = dataLeng;
+					 var pagingUl = document.querySelector(".board_paging");
+				        pagingUl.innerHTML = ``;
 				    	 /* 비워주는 작업 필요*/
 				    	 lectureDiv.innerHTML = '';
+				    	 
+				    	if (dataLeng > 0) {		    		
+				    	
 				        for (var key in data.lecturelist) {
 				        	let targetEle = ``;
 				        	if (data.lecturelist[key].lecture.ltNo == 1) {
@@ -478,7 +490,7 @@
 			                         html += `<div class="lectureDesc">
 			                             <div class="lectureImg">
 			                             <img
-			                               src="/images/lectureList/` + data.lecturelist[key].lecture.lthumbnail  + `"
+			                               src="/images/upload/` + data.lecturelist[key].lecture.lthumbnail  + `"
 			                               alt=""
 			                             />
 			                           </div>
@@ -487,8 +499,9 @@
 			                             </div>
 			                             <div class="lectureContent">
 			                               <h3><a href="#">` + data.lecturelist[key].lrStartDate.substr(5, 2) + `/` + data.lecturelist[key].lrStartDate.substr(8, 2) + ` ` + data.lecturelist[key].lecture.ltitle + openNotice + `</a></h3>
-			                               <p>` + data.lecturelist[key].instructor.instructorName + ` | (` + data.lecturelist[key].lrDay + `) ` + data.lecturelist[key].lrStartTime + ` ~ ` + data.lecturelist[key].lrEndTime + `</p>
+			                               <p>` + data.lecturelist[key].instructor.instructorName + ` | (` + data.lecturelist[key].lrDay.substr(0, 1) + `) ` + data.lecturelist[key].lrStartTime + ` ~ ` + data.lecturelist[key].lrEndTime + `</p>
 			                               <p>` + data.lecturelist[key].lrFee + `원(총` + data.lecturelist[key].lrNumber + `회)</p>
+			                               <input type="hidden" value="` + data.lecturelist[key].lrNo + `">
 			                             </div>
 			                             
 			                           </div>
@@ -500,22 +513,50 @@
 			                         + `</div>
 			                         </div>`;
 			                         
-			                         lectureDiv.insertAdjacentHTML('beforeend', html);
+			                         lectureDiv.insertAdjacentHTML('beforeend', html);                         
+			                        
 				         }
 				        
+					      //페이징 처리
+	                       
+	 				        let pagingHtml = `
+	 				        <li><a href="#" onclick="firstPage()">&lt;&lt;</a></li>
+	 						<li><a href="#" onclick="minusPage()">&lt;</a></li>`;
+	 						
+	 						for(let i = data.pi.startPage; i < data.pi.endPage + 1; i++) {
+	 							if(i == data.pi.page) {
+	 								pagingHtml += `<li><a href="#" class="current_page pagingNum">` + i + `</a></li>`;
+	 							} else {
+	 								pagingHtml += `<li><a href="#" class="pagingNum">` + i + `</a></li>`;
+	 							}
+	 						}
+	
+	 						pagingHtml += `
+	 						<li><a href="#" onclick="plusPage(` + data.pi.maxPage + `)">&gt;</a></li>
+	 						<li><a href="#" onclick="lastPage(` + data.pi.maxPage + `)">&gt;&gt;</a></li>`
+	 							
+	 						pagingUl.insertAdjacentHTML('beforeend', pagingHtml);
+				    	} else {
+				    		 var html = '<h1 class="noLecture"><i class="fas fa-exclamation-triangle"></i> 조회된 강좌가 없습니다.</h1>';
+	                         lectureDiv.insertAdjacentHTML('beforeend', html);  
+	                         
+				    	}
+				    	
 				        $('.cart').on('click', function(e){
-				            let test = 2;
-				            if (test == 1) { //로그인안했을 경우
+				            if (mno.value == "noLogin") { //로그인안했을 경우
 				                if(confirm('로그인이 필요합니다. 로그인창으로 이동하시겠습니까?')) {
-									//로그인 창 이동
+									location.href = "/member/login";
+									return;
 				                } else {
 				                    return;
 				                }
 				            }
 
 				            let name = this.parentElement.parentElement.children[1].children[1].children[0].innerText;
-				            if(confirm(name + "강좌를 장바구니에 담으시겠습니까?")) {
+				            let lrNo = this.parentElement.parentElement.children[1].children[1].lastElementChild.value;
+				            if(confirm(name + " 강좌를 장바구니에 담으시겠습니까?")) {
 				                //장바구니 저장 로직
+				                putCart(mno.value, lrNo);
 				            }
 				        });
 				        
@@ -532,25 +573,7 @@
 				        })
 				        
 				        
-				        var pagingUl = document.querySelector(".board_paging");
-				        pagingUl.innerHTML = ``;
-				        let pagingHtml = `
-				        <li><a href="#" onclick="firstPage()">&lt;&lt;</a></li>
-						<li><a href="#" onclick="minusPage()">&lt;</a></li>`;
-						
-						for(let i = data.pi.startPage; i < data.pi.endPage + 1; i++) {
-							if(i == data.pi.page) {
-								pagingHtml += `<li><a href="#" class="current_page pagingNum">` + i + `</a></li>`;
-							} else {
-								pagingHtml += `<li><a href="#" class="pagingNum">` + i + `</a></li>`;
-							}
-						}
-
-						pagingHtml += `
-						<li><a href="#" onclick="plusPage(` + data.pi.maxPage + `)">&gt;</a></li>
-						<li><a href="#" onclick="lastPage(` + data.pi.maxPage + `)">&gt;&gt;</a></li>`
-							
-						pagingUl.insertAdjacentHTML('beforeend', pagingHtml);
+				       
 						
 						
 						//요청 페이지 저장
@@ -626,6 +649,24 @@
 	 function lastPage(maxPage) {
 		 page = maxPage;
 		 lectureContents();
+	 }
+	 
+	 function putCart(mno, lrNo) {
+		 $.ajax({
+			 url : "/mypage/cart/put",
+			 type : "post",
+			 data : {mno : mno, lrNo : lrNo},
+			 success : function(data) {
+					if(data == '성공') {
+						if(confirm('장바구니에 저장이 완료되었습니다. 장바구니 페이지로 이동하시겠습니까?')) {
+							location.href = "/mypage/cart";
+						}
+					}
+			 },
+			 error : function(e) {
+				 console.log(e);
+			 }
+		 })
 	 }
 	 
       </script>

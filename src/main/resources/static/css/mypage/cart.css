@@ -36,6 +36,8 @@
   .mypageCart .cartList {
     display: flex;
     justify-content: center;
+    min-height : 589px;
+    align-items: flex-start;
 }
 
   .mypageCart .cartList .cartWrap {
@@ -227,7 +229,29 @@ a:link, a:visited, a:hover, a:active, a:focus {
     height: 86px;
    }
 
+.mypageCart .applyImpossible,
+.mypageCart .applyFull,
+.mypageCart .applyPlan,
+.mypageCart .applyPossible {
+	color : white;
+	padding : 5px;
+}
+.mypageCart .applyImpossible {
+	background-color : red;
+	
+}
 
+.mypageCart .applyFull {
+	background-color : red;
+}
+
+.mypageCart .applyPlan {
+	background-color : var(--days-color);
+}
+
+.mypageCart .applyPossible {
+	background-color : var(--target-color);
+}
 
   .mypageCart .cartList input[type="checkbox"] {
     width: 20px;
