@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>error page</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+		integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+     	crossorigin="anonymous"></script>
+<!-- icon -->
+<script src="https://kit.fontawesome.com/1be9c91961.js" crossorigin="anonymous"></script>
+<!-- css -->
+<link rel="stylesheet" type="text/css" href="/css/common/error.css">
+</head>
+<body>
+<header th:include="fragments/header.html"></header>
+<article class="errorPrint">
+	<div class="error-box">
+		<img src="/images/common/error.svg">
+		<span th:text="${session.msg}"></span>
+	</div>
+</article>
+
+<footer th:include="fragments/footer.html"></footer>
+</body>
+</html>
