@@ -82,10 +82,11 @@ function makeToggle(dataSize){
 	document.querySelector(".circle1").addEventListener('click', function(){
 		goLeft();
 	});
-	
-	document.querySelector(".circle2").addEventListener('click', function(){
-		goRight();
-	});
+	if($(".circle2").length){
+		document.querySelector(".circle2").addEventListener('click', function(){
+			goRight();
+		});
+	}
 }
 
 /* 목록 좌우 이동버튼 */
@@ -117,3 +118,13 @@ function goRight(){
 		$(".circle2").css('background-color', 'var(--main-color)');
 	}
 }
+
+/* 마우스오버 */
+$(".listbox .fas").on('mouseover', function(){
+	$(this).parent(".listbox").css({'background-color': 'white', 'border':'2px solid var(--main-color)', 'transition':'0.3s'});
+	$(this).prev("p").css({'color':'black', 'transition':'0.3s'});
+});
+$(".listbox .fas").on('mouseout', function(){
+	$(this).parent(".listbox").css({'background-color': 'var(--main-color)', 'border':'none', 'transition':'0.3s'});
+	$(this).prev("p").css({'color':'white', 'transition':'0.3s'});
+});
