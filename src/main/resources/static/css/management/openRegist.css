@@ -32,37 +32,37 @@
     min-height: 500px;
     font-size: 20px;
 }
-.listContainer > .content > .contentArea > .selectArea1{
+.listContainer > .content > .contentArea > form > .selectArea1{
     width: 1320px;
     height: 50px;
     margin-bottom: 15px;
     
 }
-.listContainer > .content > .contentArea > .selectArea1 > input{
+.listContainer > .content > .contentArea > form > .selectArea1 > input{
     border: 1px solid #F0B95E;
     width: 120px;
     height: 50px;
     text-align: center;
     margin-right: 10px;
 }
-.listContainer > .content > .contentArea > .selectArea1 > input[type=number]{
+.listContainer > .content > .contentArea > form > .selectArea1 > input[type=number]{
     width: 290px;
     height: 50px;
     text-align: left;
     padding-left: 20px;
 
 }
-.listContainer > .content > .contentArea > .selectArea1 > input[type=text]{
+.listContainer > .content > .contentArea > form > .selectArea1 > input[type=text]{
     text-align: left;
     padding-left: 20px;
 
 }
-.listContainer > .content > .contentArea > .selectArea1 > input[type=button]{
+.listContainer > .content > .contentArea > form > .selectArea1 > input[type=button]{
     width: 290px;
     height: 50px;
     background-color: #EEC37F;
 }
-.listContainer > .content > .contentArea > .selectArea1 > .lectureDate{
+.listContainer > .content > .contentArea > form > .selectArea1 > .lectureDate{
     width: 340px;
     height: 50px;
     
@@ -75,7 +75,7 @@
     margin-right: 30px;
 }
 
-.listContainer > .content > .contentArea > .selectArea1 > .timePickerArea{
+.listContainer > .content > .contentArea > form > .selectArea1 > .timePickerArea{
     
     display: inline-block;
     position: relative;
@@ -88,16 +88,16 @@
     right: 100px;
     top: 0;
 }
-.listContainer > .content > .contentArea > .selectArea1 > .lectureTime{
+.listContainer > .content > .contentArea > form > .selectArea1 > .lectureTime{
     width: 200px;
     height: 50px;
     text-align: left;
 }
-.listContainer > .content > .contentArea > .selectArea1 > input[type=text]{
+.listContainer > .content > .contentArea > form > .selectArea1 > input[type=text]{
     padding-left: 20px;
 }
 
-.listContainer > .content > .contentArea > .selectArea1 > #startBtn, #endBtn{
+.listContainer > .content > .contentArea > form > .selectArea1 > #startBtn, #endBtn{
     width: 100px;
     height: 50px;
     border-radius: 50px;
@@ -106,7 +106,7 @@
     margin-right: 35px;
 }
 
-.listContainer > .content > .contentArea > .btnArea{
+.listContainer > .content > .contentArea > form > .btnArea{
     width: 1320px;
     height: 80px;
     display: flex;
@@ -114,7 +114,7 @@
     margin-top: 150px;
     
 }
-.listContainer > .content > .contentArea > .btnArea > input[type=button]{
+.listContainer > .content > .contentArea > form > .btnArea > input[type=button]{
     width: 220px;
     height: 80px;
     text-align: center;
@@ -167,7 +167,7 @@
 }
 .modal >.modalWindow > .listArea{
     width: 900px;
-    min-height: 300px;
+    
 }
 .modal >.modalWindow > .listArea > ul{
     list-style: none;
