@@ -18,13 +18,21 @@ article .rightDiv {
 	flex-direction: column;
 	background-color: var(--main-color);
 	position: relative;
+	border-radius: 10px;
 }
 .listbox .fas {
 	color: white;
 	position: absolute;
 	top: 140px;
 	left: 55px;
-	
+	cursor: pointer;	
+}
+.leftDiv .fas:hover p{
+	color: black;
+}
+
+.listbox .fas:hover {
+	color: var(--main-color);
 }
 
 article .leftDiv p {
@@ -128,6 +136,3 @@ article .leftDiv p {
 span.blind{
 	display: none;
 }
-
-
-
