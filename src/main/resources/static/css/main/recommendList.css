@@ -59,6 +59,7 @@ article .leftDiv p {
 }
 .proItem .thum {
 	overflow: hidden;
+	height: 232px;
 }
 .thum img {
 	width: 100%;
