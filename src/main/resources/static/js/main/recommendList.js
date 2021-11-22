@@ -36,7 +36,6 @@ $(function(){
 				dataSize++;
 			}
 			addEvent();
-
 			makeToggle(dataSize);
 		},
 		error: function(e) {
@@ -68,6 +67,7 @@ function addEvent(){
 	});
 }
 
+
 /* toggle 생성 */
 function makeToggle(dataSize){
 	var html = '';
@@ -85,8 +85,8 @@ document.querySelector(".rightDiv").addEventListener('click', function(){
 	if(currentPoint > -990 && currentLi > 4) {
 		var movePoint = currentPoint - 990;
 		$(".recommendClassArea").children("li").animate({left: movePoint}, 500);
-		$(".first-circle").css('background-color', 'var(--main-border-color)');
-		$(".second-circle").css('background-color', 'var(--main-color)');
+		$(".circle1").css('background-color', 'var(--main-border-color)');
+		$(".circle2").css('background-color', 'var(--main-color)');
 	}
 });
 
@@ -95,7 +95,7 @@ document.querySelector(".leftDiv").addEventListener('click', function(){
 	if(currentPoint < 0) {
 		var movePoint = currentPoint + 990;
 		$(".recommendClassArea").children("li").animate({left: movePoint}, 500);
-		$(".first-circle").css('background-color', 'var(--main-color)');
-		$(".second-circle").css('background-color', 'var(--main-border-color)');
+		$(".circle1").css('background-color', 'var(--main-color)');
+		$(".circle2").css('background-color', 'var(--main-border-color)');
 	}
 });

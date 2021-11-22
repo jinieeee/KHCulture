@@ -14,7 +14,6 @@
 
 .listSearchContainer {
     width: 100%;
-
     display: flex;
     justify-content: center;
     align-items: center;
@@ -71,8 +70,7 @@
   background-color: var(--lightgray-color);
 } */
 
-
-#mainArea .searchContainer::before {
+#mainArea .searchContainer::after {
 	content : "";
 	display: flex;
 	position: absolute;

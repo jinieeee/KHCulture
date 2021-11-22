@@ -31,6 +31,17 @@
 		<result property="instructorPhone" column="INSTRUCTOR_PHONE"></result>
 		<result property="career" column="CAREER"></result>
 	</resultMap>
+	
+	<resultMap type="com.kh.khculture.main.model.vo.MainImage" id="mainImageResultMap">
+		<id property="miNo" column="MI_NO"/>
+		<result property="mno" column="M_NO"/>
+		<result property="miRoute" column="MI_ROUTE"/>
+		<result property="miOrigin" column="MI_ORIGIN"/>
+		<result property="miRename" column="MI_RENAME"/>
+		<result property="refNo" column="REF_NO"/>
+		<result property="miStatus" column="MI_STATUS"/>
+	</resultMap>
+	
 	<select id="selectRecommendList" parameterType="com.kh.khculture.lecture.model.vo.Search" resultMap="selectListResultMap">
 		SELECT * 
 		  FROM (
@@ -47,4 +58,10 @@
 		WHERE RNUM &lt;= 8
 	</select>	
 
+	<select id="selectAllMainImage" resultMap="mainImageResultMap">
+		SELECT
+				*
+		  FROM MAIN_IMAGE
+		 WHERE MI_STATUS = 'Y'
+	</select>
 </mapper>

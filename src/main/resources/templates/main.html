@@ -3,22 +3,33 @@
 <head>
 <meta charset="UTF-8">
 <title>main</title>
+
+<!-- css -->
 <link rel="stylesheet" type="text/css" href="/css/main/main.css">
 <link rel="stylesheet" type="text/css" href="/css/main/lectureList.css">
 <link rel="stylesheet" type="text/css" href="/css/main/recommendList.css">
 
-<script src="https://kit.fontawesome.com/1be9c91961.js"
-     crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"
-     integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-     crossorigin="anonymous"></script>
+<!-- bxslider -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+
+<!-- icon -->
+<script src="https://kit.fontawesome.com/1be9c91961.js" crossorigin="anonymous"></script>
+<!-- jQuery -->
+<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+		integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+     	crossorigin="anonymous"></script> -->
 </head>
 <header th:include="fragments/header.html"></header>
 <body>
 <article id="mainArea">
-	<div id="imgSlide">
+	<div id="slideBox">
 		<!-- 이미지 리스트 출력 -->
-		<img src="/images/main/sample.png">
+		<ul class="slider">
+			<li th:each="mainImage : ${mainImages}"><a th:href="@{/notice/detail.do?n_no={refNo}(refNo=${mainImage.refNo})}">
+				<img th:src="@{/images/main/slide/{filename}(filename=${mainImage.miRename})}"></a></li>
+		</ul>
 	</div>
 	
 	<!-- 강좌검색 -->
@@ -170,6 +181,7 @@
 </body>
 <footer th:include="fragments/footer.html"></footer>
 <script type="text/javascript" src="/js/main/recommendList.js"></script>
+<script type="text/javascript" src="/js/main/imageSlideStyle.js"></script>
 <script>
 	let category = '';
 	let target = '';
