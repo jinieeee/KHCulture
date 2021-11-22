@@ -14,8 +14,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kh.khculture.notice.model.service.NoticeService;
 import com.kh.khculture.notice.model.vo.Notice;
 import com.kh.khculture.notice.model.vo.PageInfo;
-import com.kh.khculture.notice.model.vo.Search;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 @RequestMapping("/notice")
 public class NoticeController {

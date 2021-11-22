@@ -27,25 +27,56 @@ ul, li{
     display: flex;
     justify-content: center;
     padding: 10px;
+    width: 1500px;
+    margin: 0 auto;
 }
 .board_ranking > #board_ranking_1{
     border: 1px solid rgb(0, 0, 0);
     padding: 10px;
     margin-left: 40px;
 }
+
+.board_btn_area{
+	width: 1200px; /* 이 폭을 줄이면 세부폭은 알아서 따라옴 */
+    margin: 0 auto;
+    margin-bottom: 10px;
+    padding: 20px 10px;
+    margin-top: 10px;
+}
+#board_list_button{
+    width: 100px;
+    height: 50px;
+    font-size: 17px;
+    background-color:#f9dbab;
+    
+}
+
 .board_search_area{
-    width: 1200px; /* 이 폭을 줄이면 세부폭은 알아서 따라옴 */
+    width: 1200px; 
     margin: 0 auto;
     margin-bottom: 10px;
     padding: 20px 10px;
     background-color: #F0B95E;
     margin-top: 10px;
+    justify-content: center;
+    display: flex;
+}
+.board_search_area span{
+	margin-right: 20px;
+}
+.board_search_area #searchType {
+	margin: 0 auto;
+	height:50px;
+	font-size: 17px;
+    background-color:#f9dbab;
 }
 #board_searchText{
     margin: 0 auto;
     width:500px;
     height:50px;
 }
+
+
 .board_list > .board_select{
     width: 890px;
     text-align: center;
@@ -54,7 +85,7 @@ ul, li{
     display: flex;
     padding-bottom: 15px;
     border-bottom: 1px solid #F0B95E;
-    height: 60px;
+    height: 84px;
 }
 .board_select > span{
     margin-top: 8px;
@@ -95,16 +126,6 @@ ul, li{
 	border-bottom: 2px solid #282A35;
 	font-weight: bold;
 }
-
-
-.button{
-    background-color: #F0B95E;
-    border: 1px solid rgb(223, 115, 15);
-    border-radius: 0;
-    color: white;
-    
-}
-
 
 
 /* =================================================== board_Detail=========================== */
@@ -164,8 +185,11 @@ ul, li{
     /*background-color: cadetblue;*/
 }
 #board_button{
-    width: 90px;
-    height: 30px;
+    width: 100px;
+    height: 50px;
+    font-size: 17px;
+    background-color:#f9dbab;
+    
 }
 .board_detail_reply{
     width: 1000px; /* 이 폭을 줄이면 세부폭은 알아서 따라옴 */
@@ -205,13 +229,7 @@ ul, li{
     margin-right: 15px;
 } 
 
-.button{
-    background-color: #F0B95E;
-    border: 1px solid rgb(223, 115, 15);
-    border-radius: 0;
-    color: white;
-    
-}
+
 /* =================================================== board_Insert =========================== */
 .board_insert_boundary{
     width: 1000px; /* 이 폭을 줄이면 세부폭은 알아서 따라옴 */
@@ -240,12 +258,6 @@ ul, li{
     width: 99%;
 }
 
-.button{
-    background-color: #F0B95E;
-    border: 1px solid rgb(223, 115, 15);
-    border-radius: 0;
-    color: white;
-}
 /* =================================================== board_Update =========================== */
 .board_Update_boundary{
     width: 1000px; /* 이 폭을 줄이면 세부폭은 알아서 따라옴 */
@@ -272,12 +284,4 @@ ul, li{
 }
 #board_Update2{
     width: 99%;
-}
-
-.button{
-    background-color: #F0B95E;
-    border: 1px solid rgb(223, 115, 15);
-    border-radius: 0;
-    color: white;
-    
 }

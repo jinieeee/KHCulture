@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+		xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <meta charset="UTF-8">
 <title>boardList</title>
@@ -9,7 +10,9 @@
 <header th:include="fragments/header.html"></header>
 <body>
     
+    <div class="titleArea">
     <h1 align="center">수강후기</h1>
+    </div>
     <div class="board_ranking">
         <div id="board_ranking_1">
             <img src="/images/mypage/043.png" >
@@ -21,32 +24,37 @@
             <img src="/images/mypage/037.png" >
         </div>
     </div>
-   <form method="get" action="board/boardList">
-	    <div>
-	    	<button type="button"  onclick="location.href='/board/insert'">작성하기</button>
-	    </div>
-	    <div class="board_search_area">
-	    	<span>
-	            <select id="searchType">
-	            	<option value="lecture">강의이름</option>
-	            	<option value="title">제목</option>
-	            	<option value="content">내용</option>
-	            </select>
-	        </span>
-	        <span>
-	            <input type="search" name="searchValue" id="board_searchText" placeholder="검색어를 입력해주세요">
-	        </span>
-	        <button type="submit" id="board_button" class="button">검색하기</button>
-	    </div>
-    </form>
+   <div class="board_search_area">
+	   <form method="get" action="board/boardList">
+		    	<span>
+		            <select id="searchType">
+		            	<option value="lecture">강의이름</option>
+		            	<option value="title">제목</option>
+		            	<option value="content">내용</option>
+		            </select>
+		        </span>
+		        <span>
+		            <input type="search" name="searchValue" id="board_searchText" placeholder="검색어를 입력해주세요">
+		      	</span>
+		        
+			        <button type="submit" id="board_list_button" >검색하기</button>
+		    	
+	    </form>
+	    <form method="get" action="/board/insert">	
+	    	
+	   			<input type="hidden" name="user_name">
+	    		<button type="submit" id="board_list_button" >작성하기</button>
+	    	
+		</form>    		
+	</div>
     <div class="board_list">
         <div class="board_select" th:each=" b : ${ boardList }">
             <span id="board_no" th:text="${ b.b_no }"></span> 
             <span id="board_comment">
             <!-- b_modiry_date가 있으면 그걸로 없으면 b_enroll_date로  -->
                 <div th:text="${ b.b_enroll_date }"> </div>
-                <div th:text="${ b.b_title }"></div>
-                <div th:text="${ b.b_content }"></div>
+                <div>강의이름</div>
+                <div>후기 제목</div>
             </span>
             <span>
             	 <img src="/images/mypage/star.png" id="board_star">

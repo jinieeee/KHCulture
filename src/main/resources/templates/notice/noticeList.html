@@ -1,16 +1,106 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <meta charset="UTF-8">
 <title>noticeList</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- 
 <link href="/css/mypage/notice.css" rel="stylesheet">
+ -->
+<style>.notice_list {
+    height: 645px;
+}
 
+.notice_search {
+    display: flex;
+    width: 890px;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    padding: 20px 10px;
+    background-color: #F0B95E;
+    border-bottom: 2px solid black;
+}
+form#notice_form {
+    margin: auto;
+}
+
+#notice_choice{
+    width: 160px;
+    height: 30px;
+}
+#notice_searchText{
+    width: 400px;
+    height: 30px;
+}
+#notice_button{
+    width: 60px;
+    height: 30px;
+}
+
+.notice_list > .notice_select{
+    width: 890px;
+    text-align: center;
+    margin: 0 auto;
+    /*background-color: antiquewhite;*/
+    display: flex;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #F0B95E;
+    height: 40px;
+}
+.notice_select > span{
+    padding: 8px 10px;
+    margin-top: 8px;
+    margin-left: 20px;
+    
+}
+.notice_select a{
+	text-decoration:none;
+	color:black;
+}
+#notice_title{
+    text-align: left;
+    width: 500px;
+    /*background-color: aquamarine;*/
+}
+span#notice_comment {
+    width: 55%;
+    text-align: left;
+}
+.notice_paging_area{
+	display: flex;
+    width: 890px;
+    margin: 0 auto;
+}
+.notice_paging {
+	
+	line-height: 50px;
+	display: flex;
+	justify-content: center;
+	list-style: none;
+	width: 480px;
+}
+.notice_paging li{
+	    margin-right: -57px;
+}
+.notice_paging a {
+	text-decoration: none;
+	color: #282A35;
+	width: 40px;
+	display: block;
+	text-align: center;
+}
+.notice_paging a.current_page {
+	border-bottom: 2px solid #282A35;
+	font-weight: bold;
+}
+</style>
 </head>
 <header th:include="fragments/header.html"></header>
 <body>
     <div class="titleArea">
         <h1 align="center">공지사항</h1>
+      
     </div>
 
     <div class="notice_search">
@@ -28,7 +118,9 @@
             </span>
             <button type="submit" id="notice_button" class="button">검색하기</button>
             <!-- 관리자에게만 활성화 -->
+            <th:block sec:authorize="hasRole('ADMIN')">  </th:block>
             <span><button type="button" id="notice_regist" class="button" onclick="location.href='/notice/insert'">작성하기</button></span>
+          
         </form>
         
     </div>
@@ -44,45 +136,40 @@
            
             <span id="notice_create" th:text="${n.n_enroll_date}"></span>
         </div>
-    
-
-      <div class="notice_area">
-        <ul class="notice_paging">  
-        <!--  맨 처음으로 (<<) /notice/noticeList/?-->
-        	<li><a th:href="@{?page=1}">&lt;&lt;</a></li>
-        	
-        <!--  이전 페이지(<) -->
-	       	<li th:if="${ pi.page > 1 }">
-	       		<a th:href="@{?page={page}(page =  ${pi.page-1})}">&lt;</a>
-	       	</li>
-	       	<li th:unless="${ pi.page > 1 }">
-	       		<a th:href="@{?page={page}(page =  ${pi.page})}">&lt;</a>
-	       	</li>
-       	
-
-        <!-- 페이지수 -->	
-        	<th:block th:with="start=${pi.startPage}, end=${pi.endPage}">
-        		<li th:with="start=${pi.startPage}, end=${pi.endPage}" th:each="pageNum : ${#numbers.sequence(start,end)}">
-        			<a th:href="@{/notice/noticeList/?page={page}(page = ${ pageNum})}" th:text=${pageNum}></a>
-        		</li>
-        	</th:block>
-        		
-        <!-- 다음 페이지로(>) -->	
-	        <li th:if="${ pi.page < pi.maxPage }">
-	       		<a th:href="@{?page={page}(page =  ${pi.page+2})}">&gt;</a>
-	       	</li>
-	       	<li th:if="${ pi.page == pi.maxPage }">
-	       		<a th:href="@{?page={page}(page =  ${pi.page+3})}">&gt;</a>
-	       	</li>
-        
-        <!-- 맨 뒤로(>>) --> 	
-        	<li><a th:href="@{?page={page} (page = ${pi.maxPage})}">&gt;&gt;</a></li>
-        	
-        </ul>
-       
     </div>
-
-    </div>
+    <!-- 충돌시 mypage 기준으로....  -->
+    <div class="notice_paging_area">
+        	<ul class="notice_paging">  
+        	
+	        	<li><a th:href="@{?page=1}">&lt;&lt;</a></li>
+		    
+		       	<li th:if="${ pi.page > 1 }">
+		       		<a th:href="@{?page={page}(page =  ${pi.page-1})}">&lt;</a>
+		       	</li>
+		       	<li th:unless="${ pi.page > 1 }">
+		       		<a th:href="@{?page={page}(page =  ${pi.page})}">&lt;</a>
+		       	</li>
+	       	
+	
+	        	<th:block th:with="start=${pi.startPage}, end=${pi.endPage}">
+	        		<li th:with="start=${pi.startPage}, end=${pi.endPage}" th:each="pageNum : ${#numbers.sequence(start,end)}">
+	        			<a th:href="@{/notice/noticeList/?page={page}(page = ${ pageNum})}" th:text=${pageNum}></a>
+	        		</li>
+	        	</th:block>
+	        		
+		        <li th:if="${ pi.page < maxPage }">
+		       		<a th:href="@{?page={page}(page =  ${pi.page+1})}">&gt;</a>
+		       	</li>
+		       	<li th:unless="${ pi.page == maxPage }">
+		       		<a th:href="@{?page={page}(page =  ${pi.page})}">&gt;</a>
+		       	</li>
+	        
+	        	<li><a th:href="@{?page={page} (page = ${pi.maxPage})}">&gt;&gt;</a></li>
+	        	
+	        </ul>
+	        
+	        
+	   </div>
 
 </body>
  <footer th:include="fragments/footer.html"></footer>
