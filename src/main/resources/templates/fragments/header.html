@@ -77,12 +77,12 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 	            <a href="/member/logout">로그아웃</a>
         	</th:block>
         	<div th:if="${#authentication == null}">
-	            <button type="button" id="loginBtn" onclick="location.href='/member/login'">LOGIN</button>
-	            <button type="button" id="joinBtm" onclick="location.href='/member/signUpMember'">SIGN UP</button>
+	            <button type="button" id="loginBtn" onclick="location.href='/member/login'"><span>LOGIN</span></button>
+	            <button type="button" id="joinBtm" onclick="location.href='/member/signUpMember'"><span>SIGN UP</span></button>
 			</div>
         	<th:block sec:authorize="isAnonymous()">
-	            <button type="button" id="loginBtn" onclick="location.href='/member/login'">LOGIN</button>
-	            <button type="button" id="joinBtm" onclick="location.href='/member/signUpMember'">SIGN UP</button>
+	            <button type="button" id="loginBtn" onclick="location.href='/member/login'"><span>LOGIN</span></button>
+	            <button type="button" id="joinBtm" onclick="location.href='/member/signUpMember'"><span>SIGN UP</span></button>
 			</th:block>
         </div>
     </div>
