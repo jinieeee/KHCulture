@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>강좌 상세페이지</title>
+
+<link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/management/lectureDetail.css">
+
+</head>
+<body>
+<div class="detailContainer">
+        <div class="content">
+            <div class="tagArea">
+                <span id="status">접수예정</span>
+                <span id="target">성인강좌</span>
+                <span id="classification">정기강좌</span>
+            </div>
+            <div class="titleArea">
+                <p>김치 맛있게 담는법-쪽파김치</p>
+                <div class="btnArea">
+                    <a href="#"><img src="images/btn_cart_big.png"><span>장바구니 담기</span></a>
+                    <a href="#"><img src="images/btn_pay_big.png"><span>신청하기</span></a>
+                </div>
+            </div>
+            <div class="detailArea">
+                <div class="leftArea">
+                    <p class="">강좌소개</p>
+                    <div class="lectureContent"></div>
+                </div>
+                <div class="rightArea">
+                    
+                    <div class="lectureThumbnailImg">
+                        <img src="images/025.png">
+                    </div>
+                    <div class="infoList">
+                        <ul>
+                            <li>
+                                <dl>
+                                    <dt>지점</dt>
+                                    <dd>본점</dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <dl>
+                                    <dt>강좌구분</dt>
+                                    <dd><span>정기강좌</span></dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <dl>
+                                    <dt>강사명</dt>
+                                    <dd><span>홍길동</span><button type="button" id="modalInstructorBtn">강사소개</button></dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <dl>
+                                    <dt>수강기간</dt>
+                                    <dd><span>2021.11.08 ~ 2021.11.11</span></dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <dl>
+                                    <dt>수강시간</dt>
+                                    <dd><span>13:10 ~ 14:00</span></dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <dl>
+                                    <dt>강의횟수/정원</dt>
+                                    <dd><span>4회/10명</span></dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <dl>
+                                    <dt>강의실</dt>
+                                    <dd><span>LAB6</span></dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <dl>
+                                    <dt>수강료</dt>
+                                    <dd><span>5,000원</span></dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <dl>
+                                    <dt>대상구분</dt>
+                                    <dd><span>성인강좌</span></dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <dl>
+                                    <dt>접수기간</dt>
+                                    <dd><span>2021.10.08 ~ 2021.11.07</span></dd>
+                                </dl>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="stateTextArea">
+                        <em>접수예정</em> 입니다.
+                    </div>
+                </div>
+            </div>
+            <div class="listBtnArea">
+                <div class="leftArea">
+                    <button id="listBtn">목록</button>
+                </div>
+                <div class="rightArea">
+                    <a href="#" id="leftA"><span>장바구니 담기</span></a>
+                    <a href="#" id="rightA"><span>신청하기</span></a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="modal">
+        <div class="modalWindow">
+            <div class="miTitle">
+                <div class="textTitle">
+                    <span id="lectureTitle">김치 맛있게 담는법-쪽파김치</span><br>
+                    <span id="instructorName">꼬북이</span>
+                </div>
+                <div class="imgTitle">
+                    <img src="images/026.png">
+                </div>
+            </div>
+            <div class="miContent">
+                <div class="introduceTitle">강사소개</div>
+                <div class="instructorHistory">
+                    <span>강사이력</span>
+                    <div id="historyArea">
+                        울산대<br>
+                        경북대<br>
+                        대구예술대학교
+                    </div>
+                </div>
+                <div class="birthAndContact">
+                    <span>생년월일/<br>연락처</span>
+                    <div id="birthContactArea">
+                        1999.09.09<br>
+                        010-1234-1234
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
+    var body = document.body,
+    html = document.documentElement;
+
+    $("#modalInstructorBtn").click(function(){
+        var height = Math.max( body.scrollHeight, body.offsetHeight, 
+                       html.clientHeight, html.scrollHeight, html.offsetHeight );
+
+        $(".modal").height(height);
+        $(".modal").fadeIn();
+    });
+
+    $(".modal").click(function(e){
+        if(e.target.classList.contains("modal")){
+            $(".modal").fadeOut();
+        }
+    });
+
+</script>
+</body>
+</html>
