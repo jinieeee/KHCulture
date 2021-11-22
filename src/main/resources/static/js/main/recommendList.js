@@ -28,7 +28,7 @@ $(function(){
 					html += `<span class="categoryTag">무료강좌</span>`;
 				}
 				
-				html += `</div><div class="txtBox"><span class="subject">` + lecture.lecture.ltitle + `</span>`
+				html += `</div><div class="txtBox"><span class="subject">[ ` + lecture.lrStartDate.substr(5,2) + `/` + lecture.lrStartDate.substr(8, 2) + ` ] ` + lecture.lecture.ltitle + `</span>`
 					  + `<div class="info"><div class="subTxt"><span class="name">` + lecture.instructor.instructorName + `</span>`
 					  + `<span class="time">(` + lecture.lrDay.substr(0,1) + `) ` + lecture.lrStartTime + ` ~ ` + lecture.lrEndTime + `</span></div>`
 					  + `<div class="price"><span class="blind">판매가</span><b>` + lecture.lrFee + `</b>원<span> ( 정원 ` + lecture.lrCount + `명 )</span></div></div></div></div></div></li>`
