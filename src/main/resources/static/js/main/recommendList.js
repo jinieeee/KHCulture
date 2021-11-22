@@ -10,7 +10,8 @@ $(function(){
 			for(var key in data.recommendList) {
 				var lecture = data.recommendList[key];
 				console.log(lecture);
-				html += `<li><div class="proItem"><div class="thum"><img src="/images/lecture/` + lecture.lecture.lthumbnail + `" alt=""></div>`
+				html += `<li><div class="proItem"><div class="thum"><img src="/images/lecture/` + lecture.lecture.lthumbnail + `" alt="`
+					  + lecture.lecture.ltitle +`"></div>`
 					  + `<div class="info"><div class="tagArea">`;
 				if(lecture.lecture.ltNo == 1) {
 					html += `<span class="targetTag">성인강좌</span>`;
