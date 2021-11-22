@@ -30,7 +30,6 @@ body {
     /* background-color: lightpink; test */
 }
 #header a {
-	text-decoration: none;
 	color: black;
 }
 .header-box {
@@ -115,8 +114,7 @@ ul.nav-menu:hover::after {
 ul.nav-menu:hover .submenu {
     display: block;
 }
-.submenu>li>a:hover,
-.depth3>li>a:hover {
+.submenu>li>a:hover {
     color: black;
     text-decoration-line: underline;
     text-underline-position: under;
@@ -130,6 +128,7 @@ ul.nav-menu:hover .submenu {
 }
 .userInfo a {
     padding: 10px;
+    text-decoration: none;
 }
 .userInfo a::after {
     content: "|";
