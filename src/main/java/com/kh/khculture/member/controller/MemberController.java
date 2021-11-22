@@ -53,7 +53,7 @@ public class MemberController {
 	
 	@PostMapping("signUpMember")
 	public String signUpMember(Member member, RedirectAttributes rttr/*, HttpSession session */) {
-		// log.info("회원 정보 조회 : {}", member.getAddress());
+		log.info("회원 정보 조회 : {}", member.getAddress());
 		String msg = memberService.signUpMember(member) > 0 ? "회원가입 완료, 로그인하실 수 있습니다": "회원가입 실패";
 		rttr.addFlashAttribute("msg", msg);
 		return "redirect:/member/login";
