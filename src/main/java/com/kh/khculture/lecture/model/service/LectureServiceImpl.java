@@ -42,10 +42,8 @@ public class LectureServiceImpl implements LectureService{
 		
 		List<LectureOpen> lecturelist = lectureMapper.selectLectureList(search);
 		if(search.getArrayStand().equals("time")) {
-			log.info("time");
 			List<LectureOpen> newlectureList = new ArrayList<>();
 			for(LectureOpen lc : lecturelist) {
-				log.info("{}", lc.getLrStartDate().compareTo(lc.getLrEndDate()));
 				if(lc.getLrStartDate().compareTo(lc.getLrEndDate()) == 0) {
 					lc.setLrParDate(lc.getLrStartDate());
 					newlectureList.add(lc);
@@ -76,7 +74,6 @@ public class LectureServiceImpl implements LectureService{
 						lt.setLrEndTime(lc.getLrEndTime());
 						lt.setLecture(lc.getLecture());
 						lt.setInstructor(lc.getInstructor());
-						log.info("{}", cStartdt.getTime());
 						newlectureList.add(lt);
 						cStartdt.set(Calendar.HOUR_OF_DAY, 0);
 						cStartdt.set(Calendar.MINUTE, 0);

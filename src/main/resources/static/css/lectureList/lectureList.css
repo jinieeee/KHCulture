@@ -33,7 +33,7 @@
 
 .lecturelist .scheduleContainer, .lecturelist .listSearchContainer {
     width: 100%;
-    min-height : 875px;
+    min-height : 645px;
     background-color: var(--lecturebackground-color);
     
     display: flex;

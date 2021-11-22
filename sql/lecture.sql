@@ -28,13 +28,13 @@ insert into lecture_target values (3, '영유아강좌');
 CREATE TABLE "LECTURE" (
 	"L_NO"	NUMBER		NOT NULL,
 	"L_TITLE"	VARCHAR2(100)		NOT NULL,
-	"L_CONTENT"	VARCHAR2(5000)		NOT NULL,
 	"L_THUMBNAIL"	VARCHAR2(1000)		NOT NULL,
 	"L_ENROLL_DATE"	DATE	DEFAULT SYSDATE	NOT NULL,
 	"L_MODIFY_DATE"	DATE	DEFAULT SYSDATE	NOT NULL,
 	"L_STATUS"	VARCHAR2(1)	DEFAULT 'N'	NOT NULL,
 	"LC_NO"	NUMBER		NOT NULL,
-	"LT_NO"	NUMBER		NOT NULL
+	"LT_NO"	NUMBER		NOT NULL,
+    "L_CONTENT"	CLOB		NOT NULL
 );
 
 ALTER TABLE "LECTURE" ADD CONSTRAINT "PK_LECTURE" PRIMARY KEY (
@@ -55,7 +55,7 @@ REFERENCES "LECTURE_TARGET" (
 	"LT_NO"
 );
 
-insert into lecture values (2
+insert into lecture values (1
 , '도자기 공예'
 , '20181129114054.jpg'
 , '21/11/30'
@@ -93,7 +93,6 @@ CREATE TABLE "LECTURE_REGISTRATION" (
 	"LR_NO"	NUMBER		NOT NULL,
 	"LR_CAPACITY"	NUMBER		NOT NULL,
 	"LR_COUNT"	NUMBER	DEFAULT 0	NOT NULL,
-	"LR_FEE"	NUMBER		NOT NULL,
 	"LR_START_DATE"	  Date		NOT NULL,
 	"LR_END_DATE"	Date		NOT NULL,
 	"LR_NUMBER"	NUMBER		NOT NULL,
@@ -104,7 +103,8 @@ CREATE TABLE "LECTURE_REGISTRATION" (
 	"LR_MODIFY_DATE"	DATE		NOT NULL,
 	"LR_STATUS"	VARCHAR2(1)	DEFAULT 'N'	NOT NULL,
 	"INSTRUCTOR_NO"	NUMBER		NOT NULL,
-	"L_NO"	NUMBER		NOT NULL
+	"L_NO"	NUMBER		NOT NULL,
+    "LR_FEE"	NUMBER		NOT NULL
 );
 
 ALTER TABLE "LECTURE_REGISTRATION" ADD CONSTRAINT "PK_LECTURE_REGISTRATION" PRIMARY KEY (
@@ -126,26 +126,10 @@ REFERENCES "LECTURE" (
 );
 
 
-insert into lecture_registration values (
-1 
-,20
-, 2
-, 30000
-, '2021-11-19'
-, '2021-11-26'
-, 2
-, '월'
-, '09:00'
-, '15:00'
-, sysdate
-, sysdate
-, DEFAULT
-, 2
-, 2
-);
+
 
 insert into lecture_registration values (
-11 
+1 
 ,20
 , 2
 , '2021-11-19'
@@ -163,30 +147,29 @@ insert into lecture_registration values (
 );
 
 
-select 
-substr(lr_start_time, 1, instr(lr_start_time, ':')-1)
-from lecture_registration
-join lecture using (l_no)
-join instructor using (instructor_no);
+--select 
+--substr(lr_start_time, 1, instr(lr_start_time, ':')-1)
+--from lecture_registration
+--join lecture using (l_no)
+--join instructor using (instructor_no);
 
 
-select
-DISTINCT  EXTRACT(year FROM LR_START_DATE)
-from lecture_registration
-order by EXTRACT(year FROM LR_START_DATE) desc;
-
-
-
-
-select 
-		* 
-		from lecture_registration
-		join lecture using (l_no)
-		join instructor using (instructor_no)
-		where lr_status = 'N';
+--select
+--DISTINCT  EXTRACT(year FROM LR_START_DATE)
+--from lecture_registration
+--order by EXTRACT(year FROM LR_START_DATE) desc;
+--
+--select 
+--		* 
+--		from lecture_registration
+--		join lecture using (l_no)
+--		join instructor using (instructor_no)
+--		where lr_status = 'N';
 
 commit;
-
-alter table lecture_registration drop column LR_FEE;
-alter table lecture_registration modify LR_FEE not null;
-update lecture_registration set LR_FEE = null;
+--
+--alter table lecture_registration add column LR_FEE not null;
+--
+--alter table lecture_registration drop column LR_FEE;
+--alter table lecture_registration modify LR_FEE not null;
+--update lecture_registration set LR_FEE = null;

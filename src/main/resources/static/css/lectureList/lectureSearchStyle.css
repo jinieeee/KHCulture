@@ -12,6 +12,9 @@
 .listSearchContainer .lectureDiv {
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
+    min-height : 150px;
+    
 }
 
 .listSearchContainer .alignDiv {
@@ -109,7 +112,11 @@
   background-color: #70562C;
 }
 
-
+.listSearchContainer .noLecture {
+	text-align : center;
+	color : white;
+	width : 100%;
+}
 .listSearchContainer div.lectureInfo div:first-of-type p:first-of-type {
     margin-right: 7px;
 }

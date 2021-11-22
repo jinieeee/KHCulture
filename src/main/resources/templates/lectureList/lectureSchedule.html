@@ -190,7 +190,7 @@
       <div>
         <div class="lectureModal">
           <div class="lectureImg">
-			<img src="/images/lectureList/20181129114054.jpg" alt=""/>
+			<img src="/images/upload/20181129114054.jpg" alt=""/>
           </div>
           <div class="lectureInfo">
             <div>
@@ -556,14 +556,14 @@
 			         }
 			         
 			         let html = `<div class="lectureImg">
-			         <img src="/images/lectureList/` + this.children[2].value + `" alt="">
+			         <img src="/images/upload/` + this.children[2].value + `" alt="">
 			       </div>
 			       <div class="lectureInfo">
 			         <div>` + categoryModal + modalTarget +
 			         `</div>
 			         <div>
 			           <h3>` + this.children[7].value.substr(5, 2) + `/` + this.children[7].value.substr(8, 2) + ` ` + lectureTitle +`</h3>
-			           <p>` + this.children[3].value + ` | (` + this.children[4].value + `)` + time + `</p>
+			           <p>` + this.children[3].value + ` | (` + this.children[4].value.substr(0, 1) + `)` + time + `</p>
 			           <p>` + this.children[5].value + `원(총` + this.children[6].value + `회)</p>
 			         </div>
 			       </div>`;
