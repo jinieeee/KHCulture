@@ -82,7 +82,6 @@
 
 .listContainer > .content > .listArea{
     width: 1320px;
-    min-height: 300px;
     border: 1px solid #F0B95E;
     margin-top: 20px;
 }
@@ -127,4 +126,26 @@
 .listContainer > .content > .listArea > table > tbody > tr > td:nth-of-type(5){
     width: 120px;
     text-align: center;
+}
+
+
+.listContainer > .content > .pagingArea{
+	width: 1320px;
+	display: flex;
+	justify-content: center;
+}
+
+.listContainer > .content > .pagingArea > .list_paging{
+	display: flex;
+	list-style: none;
+	
+	line-height: 50px;
+	font-size: 22px;
+	width: 480px;
+	justify-content: space-between;
+	
+}
+
+a{
+	text-decoration: none;
 }

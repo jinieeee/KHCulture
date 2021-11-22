@@ -9,6 +9,8 @@ import com.kh.khculture.lecture.model.vo.Instructor;
 import com.kh.khculture.lecture.model.vo.Lecture;
 import com.kh.khculture.management.model.dao.ManagementMapper;
 import com.kh.khculture.management.model.vo.Lecture2;
+import com.kh.khculture.management.model.vo.LectureOpen2;
+import com.kh.khculture.management.model.vo.LectureOpen3;
 import com.kh.khculture.management.model.vo.SearchInstructor;
 
 @Service
@@ -66,6 +68,24 @@ public class ManagementServiceImpl implements ManagementService {
 	@Override
 	public List<Instructor> selectInstructor(SearchInstructor searchInstructor) {
 		return managementMapper.selectInstructor(searchInstructor);
+	}
+
+	@Override
+	public int registLectureOpen(LectureOpen2 lectureOpen) {
+
+		return managementMapper.registLectureOpen(lectureOpen);
+	}
+
+	@Override
+	public int getOpenListCount() {
+		
+		return managementMapper.getOpenListCount();
+	}
+
+	@Override
+	public List<LectureOpen3> selectOpenList(int startRow, int endRow) {
+		
+		return managementMapper.selectOpenList(startRow, endRow);
 	}
 
 	
