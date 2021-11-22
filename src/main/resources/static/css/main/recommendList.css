@@ -62,7 +62,8 @@ article .leftDiv p {
 }
 .thum img {
 	width: 100%;
-	height: 100%;
+	/* height: 100%; 있으면 사진 깨짐 표시*/
+	min-height: 232px;
 	object-fit: cover;
 }
 

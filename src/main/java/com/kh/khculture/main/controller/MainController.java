@@ -1,5 +1,6 @@
 package com.kh.khculture.main.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.khculture.lecture.model.vo.Search;
 import com.kh.khculture.main.model.service.MainService;
+import com.kh.khculture.main.model.vo.MainImage;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,7 +26,9 @@ public class MainController {
 		this.mainService = mainService;
 	}
 	@GetMapping(value= {"/", "/main"})
-	public String main() {
+	public String main(Model model) {
+		List<MainImage> mainImages = mainService.selectAllMainImage();
+		model.addAttribute("mainImages", mainImages);
 		return "main";
 	}
 	@PostMapping(value="/")
