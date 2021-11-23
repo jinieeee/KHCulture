@@ -133,6 +133,14 @@
 	width: 1320px;
 	display: flex;
 	justify-content: center;
+	
+	line-height: 50px;
+    list-style: none;
+    margin: 0 auto;
+    padding: 0;
+    
+    margin-bottom : 50px;
+	
 }
 
 .listContainer > .content > .pagingArea > .list_paging{
@@ -145,7 +153,27 @@
 	justify-content: space-between;
 	
 }
+.listContainer > .content > .pagingArea > .list_paging{
+	display: flex;
+	list-style: none;
+	
+	line-height: 50px;
+	font-size: 22px;
+	width: 480px;
+	justify-content: space-between;
+	
 
-a{
-	text-decoration: none;
 }
+
+.listContainer > .content > .pagingArea > .list_paging > li> a{
+	
+	text-decoration: none;
+	
+	color: #282A35;
+    width: 40px;
+    display: block;
+    text-align: center;
+	
+
+}
+
