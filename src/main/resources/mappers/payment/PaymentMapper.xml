@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kh.khculture.payment.model.dao.PaymentMapper">
+<resultMap type="com.kh.khculture.payment.model.vo.LectureDetail" id="lectureDetailResultMap">
+	<id property="lrNo" column="LR_NO"></id>
+	<result property="lThumbnail" column="L_Thumbnail"></result>
+	<result property="lTitle" column="L_TITLE"></result>
+	<result property="lContent" column="L_CONTENT"></result>
+	<result property="lcName" column="LC_NAME"></result>
+	<result property="ltName" column="LT_NAME"></result>
+	<result property="lrCapacity" column="LR_CAPACITY"></result>
+	<result property="lrCount" column="LR_COUNT"></result>
+	<result property="lrStartDate" column="LR_START_DATE"></result>
+	<result property="lrEndDate" column="LR_END_DATE"></result>
+	<result property="lrNumber" column="LR_NUMBER"></result>
+	<result property="lrDay" column="LR_DAY"></result>
+	<result property="lrStartTime" column="LR_START_TIME"></result>
+	<result property="lrEndTime" column="LR_END_TIME"></result>
+	<result property="lrFee" column="LR_FEE"></result>
+	<result property="instructorName" column="INSTRUCTOR_NAME"></result>
+	<result property="profilePhoto" column="PROFILE_PHOTO"></result>
+	<result property="birthDate" column="BIRTH_DATE"></result>
+	<result property="instructorPhone" column="INSTRUCTOR_PHONE"></result>
+	<result property="career" column="CAREER"></result>
+</resultMap>
+
+<select id="selectOneLectureOpen" parameterType="_int" resultMap="lectureDetailResultMap">
+	SELECT
+	       LR_NO
+	     , L_THUMBNAIL
+	     , L_TITLE
+	     , L_CONTENT
+	     , LC_NAME
+	     , LT_NAME
+	     , LR_CAPACITY
+	     , LR_COUNT
+	     , LR_START_DATE
+	     , LR_END_DATE
+	     , LR_NUMBER
+	     , LR_DAY
+	     , LR_START_TIME
+	     , LR_END_TIME
+	     , LR_FEE
+	     , INSTRUCTOR_NAME
+	     , PROFILE_PHOTO
+	     , BIRTH_DATE
+	     , INSTRUCTOR_PHONE
+	     , CAREER
+	  FROM LECTURE_REGISTRATION O
+	  JOIN LECTURE C1 ON(O.L_NO = C1.L_NO)
+	  JOIN LECTURE_CLASSIFICATION C2 ON(C1.LC_NO = C2.LC_NO)
+	  JOIN LECTURE_TARGET C3 ON(C1.LT_NO = C3.LT_NO)
+	  JOIN INSTRUCTOR C4 ON(O.INSTRUCTOR_NO = C4.INSTRUCTOR_NO)
+	 WHERE LR_NO = #{lrNo}
+
+</select>
+
+</mapper>
