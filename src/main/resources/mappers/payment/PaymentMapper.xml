@@ -86,7 +86,41 @@
 	 <foreach collection='list' index='i' item='lrNo' open='(' close=')' separator=','>
 	 	#{lrNo}
 	 </foreach>
+	 ORDER BY LR_NO DESC
 </select>
 
+<insert id="insertReceipt" parameterType="_int">
+	INSERT INTO RECEIPT
+	(
+		R_NO
+	  , PAYMENT_DATE
+	  , M_NO
+	)
+	VALUES
+	(
+		#{rNo}
+	  , SYSDATE
+	  , #{mno}
+	)
+</insert>
+
+<insert id="insertLectureBuy" parameterType="_int">
+	INSERT INTO LECTURE_BUY
+	(
+		R_NO
+	  , LR_NO
+	  , LB_STATUS
+	  , LB_ENROLL_DATE
+	  , LB_MODIFY_DATE
+	)
+	VALUES
+	(
+		#{rNo}
+	  , #{lr}
+	  , DEFAULT
+	  , SYSDATE
+	  , SYSDATE
+	)
+</insert>
 
 </mapper>

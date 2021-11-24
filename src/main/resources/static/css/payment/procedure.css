@@ -85,6 +85,7 @@
     width: 1320px;
     height: 80px;
     text-align: center;
+    margin-bottom: 100px;
 }
 .paymentContainer > .content > .paymentcontent > .paymentBtnArea > input[type=submit]{
     background-color: #EA9155;

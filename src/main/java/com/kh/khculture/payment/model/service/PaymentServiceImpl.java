@@ -32,7 +32,19 @@ public class PaymentServiceImpl implements PaymentService{
 		
 		return paymentMapper.selectLectureOpenList(lrNoList);
 	}
-	
-	
+
+
+	@Override
+	public int insertReceipt(int rNo, int mno) {
+		
+		return paymentMapper.insertReceipt(rNo, mno);
+	}
+
+	@Override
+	public int insertLectureBuy(int rNo, int lr) {
+		
+		return paymentMapper.insertLectureBuy(rNo, lr);
+	}
+
 
 }

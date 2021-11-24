@@ -13,4 +13,8 @@ public interface PaymentMapper {
 
 	List<LectureDetail> selectLectureOpenList(List<Integer> lrNoList);
 
+	int insertReceipt(int rNo, int mno);
+
+	int insertLectureBuy(int rNo, int lr);
+
 }

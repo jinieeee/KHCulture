@@ -166,6 +166,7 @@
     table-layout: fixed;
     width: 1320px;
     height: 70px;
+    margin-bottom: 100px;
 }
 .detailContainer > .content > .listBtnArea > .leftArea{
     float: left;

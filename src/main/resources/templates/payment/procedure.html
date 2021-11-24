@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <title>결제 페이지</title>
 <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
-<link rel="stylesheet" href="/css/payment/payment.css">
+<link rel="stylesheet" href="/css/payment/procedure.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
     
@@ -30,18 +30,20 @@
                     <tbody>
                         <tr th:each="lecture : ${lectureList}">
                             <td th:text="${lecture.lcName}"></td>
-                            <td th:utext="|[본점] ${lecture.lTitle}<br>
+                            <td class="lTitle" th:utext="|[${lecture.lrNo}] ${lecture.lTitle}<br>
                             강사 : ${lecture.instructorName}<br>
                             ${#dates.format(lecture.lrStartDate, 'yyyy-MM-dd')} ~ ${#dates.format(lecture.lrEndDate, 'yyyy-MM-dd')}<br>
                             ${lecture.lrStartTime} ~ ${lecture.lrEndTime}|">
                             </td>
-                            <td>홍길동</td>
+                            <td class="name" th:text="${name}"></td>
                             <td class="lrFee" th:text="|${lecture.lrFee}원|"></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
             <div class="dataTable2">
+            <input type="hidden" id="mno" th:value="${mno}">
+            <input type="hidden" id="email" th:value="${email}">
                 <table>
                     <thead>
                         <tr>
@@ -67,9 +69,29 @@
 	let lrFee = $('.lrFee');
 	let totalFee = 0;
 	
+	let productName = "lectureTitle";
+	let lTitle = $('.lTitle');
+	
+	
+	/* 아임포트  */
+	/* let price = totalFee; */
+    let price = 100;
+    let userName = $('.name')[0].innerText;
+    let mno = $('#mno')[0].value;
+    let email = $('#email')[0].value;
+
+    let lrNo = [];
+    /* ========================================  */
+    
+    //let valCheck = '[[${lectureList[0].lrNo}]]' // 대괄호 사용도 가능...ㅠㅠ
+    
 	for(let i=0; i< lrFee.length; i++){
 		totalFee += Number(lrFee[i].innerText.slice(0, -1).replace(/,/g, ""));
+		/* productName += $('.lTitle')[i].innerText; */
 		
+		
+		lrNo[i] = String($('.lTitle')[i].innerText.match(/\[.*\]/gi));
+		lrNo[i] = lrNo[i].substring(1, lrNo[i].indexOf("]"));		
 	}
 	
 	let viewTotal = ("" + totalFee).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -77,36 +99,45 @@
 	$('#total')[0].innerText = viewTotal;
 	
 	
-    let productName = "강의명";
-    let price = 100;
-    let userName = "장영재";
-    
     function iamport(){
-		//가맹점 식별코드
-		IMP.init('imp76581344');
-		IMP.request_pay({
-		    pg : 'kcp',
-		    pay_method : 'card',
-		    merchant_uid : "" + new Date().getTime(),
-		    name : productName , //결제창에서 보여질 이름
-		    amount : price, //실제 결제되는 가격
-		    buyer_email : 'jdudwo@google.com',
-		    buyer_name : userName,
-		}, function(rsp) {
-			console.log(rsp);
-		    if ( rsp.success ) {
-		    	var msg = '결제가 완료되었습니다.';
-		        msg += '고유ID : ' + rsp.imp_uid;
-		        msg += '상점 거래ID : ' + rsp.merchant_uid;
-		        msg += '결제 금액 : ' + rsp.paid_amount;
-		        msg += '카드 승인번호 : ' + rsp.apply_num;
-		    } else {
-		    	 var msg = '결제에 실패하였습니다.';
-		         msg += '에러내용 : ' + rsp.error_msg;
-		    }
-		    alert(msg);
-		});
-	}
+    	
+    	IMP.init('imp76581344');
+    	IMP.request_pay({ // param
+            pg: "html5_inicis", // PG사 선택
+            pay_method: "card", // 지불 수단
+            merchant_uid: new Date().getTime(), //가맹점에서 구별할 수 있는 고유한id
+            name: productName, // 상품명
+            amount: price, // 가격
+            buyer_email: email,
+            buyer_name: userName, // 구매자 이름
+          }, function (rsp) {
+        	  
+        	  console.log("rsp : " + rsp);
+        	  
+        	  $.ajax({
+        		  
+        		 url: "/verification/" + rsp.imp_uid, // 가맹점 서버
+		         method: "POST",
+		         data : {paidAmount : rsp.paid_amount, mno : mno, lrNo : lrNo}
+		         
+        	  }).done(function(data){
+        		  
+        		  console.log("data : " + data);
+        		  if(rsp.paid_amount == data.response.amount){
+        			  
+  		        	  alert("결제 및 결제검증완료");
+  		        	  location.href="/";
+  		        	  
+	  	          } else {
+	  	        	  
+	  	        	  alert("결제 실패");
+	  	        	  location.href="/";
+	  	          }
+        	  });
+        	  });
+    }
+    
+    
     
 </script>
 </body>
