@@ -1,0 +1,120 @@
+.memberList {
+	width: 1320px;
+	min-height: 875px;
+	margin: auto;
+}
+
+.memberList .memberContainer {
+	width : 100%;
+	background-color: #FEF0A7;
+	padding : 20px 30px;
+	border-radius: 10px 10px 0 0;
+	display: flex;
+	justify-content: space-between;
+}
+.memberContainer .total {
+	font-size: 20px;
+}
+.searchForm .memberRoleSel {
+	width: 120px;
+	height: 29px;
+	font-size: 15px;
+	border: 1px solid var(--main-color);
+}
+.memberList .memberBtnContainer {
+	width: 100%;
+	background-color: #FEF0A7;
+	padding : 20px 30px;
+	display: flex;
+	justify-content: right;
+}
+.memberBtnContainer button {
+	width:120px;
+	line-height: 30px;
+	background-color: var(--main-color);
+	color: white;
+	border: none;
+	font-size: 15px;
+	margin-left: 15px;
+	box-shadow: 3px 3px 10px 1px rgb(0, 0, 0, 0.1);
+}
+.memberList .memberTblContainer {
+	width: 100%;
+	height: 535px;
+	padding: 20px;
+	border-right: 2px solid #FEF0A7;
+	border-left: 2px solid #FEF0A7;
+}
+
+.memberListTbl {
+	width: 100%;
+}
+.memberListTbl #id,
+.memberListTbl #name,
+.memberListTbl #accLockYN,
+.memberListTbl #accSecessionYN {
+	width: 10%;
+}
+.memberListTbl #email {
+	width: 20%;
+}
+.memberListTbl #phone,
+.memberListTbl #enrollDate {
+	width: 15%;
+}
+
+.memberListTbl th,
+.memberListTbl td {
+	padding: 10px 10px;
+}
+.memberListTbl {
+    background: #fff;
+    /* border-bottom: solid 1px #AEAEAE; */
+    border-collapse: collapse;
+}
+.memberListTbl tr {
+	border-bottom: 1px solid lightgray;
+}
+.memberListTbl tr:nth-child(1) {
+	border-bottom: 2px solid gray;	
+}
+
+.memberListTbl td {
+	text-align: center;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+
+
+/* 페이징바 */
+
+.pagingDiv a {
+    word-break: break-all;
+}
+
+.pagingDiv .member_paging {
+    line-height: 50px;
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    margin: 0 auto;
+    padding-bottom: 20px;
+	border: 2px solid #FEF0A7;
+	border-top: none;
+	    
+    margin-bottom : 100px;
+}
+
+.pagingDiv .member_paging a{
+    text-decoration: none;
+    color: #282A35;
+    width: 40px;
+    display: block;
+    text-align: center;
+}
+
+.pagingDiv .member_paging a.current_page{
+border-bottom: 2px solid #282A35;
+    font-weight: bold;
+}
