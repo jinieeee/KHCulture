@@ -123,4 +123,10 @@
 	)
 </insert>
 
+<update id="updateLrCount" parameterType="_int">
+	UPDATE LECTURE_REGISTRATION
+	   SET LR_COUNT = LR_COUNT + 1
+	 WHERE LR_NO = #{lr}
+</update>
+
 </mapper>

@@ -83,7 +83,7 @@ public class PaymentController {
 		
 		
 		
-		String[] lrNo = {"111", "115"};		
+		String[] lrNo = {"3"};		
 		
 		List<Integer> lrNoList = new ArrayList<Integer>();
 		
@@ -131,15 +131,17 @@ public class PaymentController {
 			int rNo = Integer.parseInt(merchantUid.substring(5));
 			
 			int result1 = paymentService.insertReceipt(rNo, mno);
-			
 			int result2 = 0;
+			int result3 = 0;
 			
 			for(int lr : lrNoArr) {
 				
 				result2 += paymentService.insertLectureBuy(rNo, lr);
+				result3 += paymentService.updateLrCount(lr);
 			}
 			
-			if(result1 == 1 && result2 == lrNoArr.length) {
+			
+			if(result1 == 1 && result2 == lrNoArr.length && result3 == lrNoArr.length) {
 				
 				// 성공
 				log.info("성공입니다.");
