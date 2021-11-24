@@ -1,0 +1,96 @@
+@charset "UTF-8";
+.paymentContainer{
+    display: flex;
+    margin: 0px auto;
+    max-width: 1320px;
+    min-height: 900px;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+.paymentContainer > .content> .paymentTitle{
+    text-align: center;
+    margin-top : 100px;
+    height : 130px;
+    display : flex;
+    justify-content : center;
+    align-items : center;
+    width : 100%;
+    margin-bottom: 70px;
+}
+
+.paymentContainer > .content> .paymentTitle > h1{
+    font-size: 52px;
+}
+
+.paymentContainer > .content > .paymentcontent {
+    width: 1320px;
+    
+}
+.paymentContainer > .content > .paymentcontent > .dataTable1{
+    width: 1320px;
+    border: 1px solid #F0B95E;
+    margin-bottom: 30px;
+}
+.paymentContainer > .content > .paymentcontent > .dataTable1 > table{
+    background: #FBFEE1;
+}
+
+.paymentContainer > .content > .paymentcontent > .dataTable1 > table > thead > tr > th:nth-of-type(1){
+    width: 200px;
+    height: 70px;
+}
+.paymentContainer > .content > .paymentcontent > .dataTable1 > table > thead > tr > th:nth-of-type(2){
+    width: 600px;
+    height: 70px;
+}
+.paymentContainer > .content > .paymentcontent > .dataTable1 > table > thead > tr > th:nth-of-type(3){
+    width: 200px;
+    height: 70px;
+}
+.paymentContainer > .content > .paymentcontent > .dataTable1 > table > thead > tr > th:nth-of-type(4){
+    width: 320px;
+    height: 70px;
+}
+.paymentContainer > .content > .paymentcontent > .dataTable1 > table > tbody{
+    background: white;
+    height: 150px;
+    text-align: center;
+    
+}
+
+.paymentContainer > .content > .paymentcontent > .dataTable2{
+    width: 1320px;
+    border: 1px solid #F0B95E;
+    margin-bottom: 80px;
+}
+.paymentContainer > .content > .paymentcontent > .dataTable2 > table{
+    background: #FBFEE1;
+    font-weight: 500;
+    font-size: 36px;
+}
+.paymentContainer > .content > .paymentcontent > .dataTable2 > table > thead > tr > th{
+    width: 1320px;
+    height: 80px;
+    
+}
+.paymentContainer > .content > .paymentcontent > .dataTable2 > table > tbody{
+    background: white;
+    height: 120px;
+    text-align: center;
+    
+}
+.paymentContainer > .content > .paymentcontent > .paymentBtnArea{
+    width: 1320px;
+    height: 80px;
+    text-align: center;
+}
+.paymentContainer > .content > .paymentcontent > .paymentBtnArea > input[type=submit]{
+    background-color: #EA9155;
+    color: white;
+    font-weight: 500;
+    font-size: 36px;
+    width: 220px;
+    height: 80px;
+}
