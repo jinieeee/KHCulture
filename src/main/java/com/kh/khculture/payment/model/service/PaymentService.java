@@ -14,6 +14,8 @@ public interface PaymentService {
 
 	int insertLectureBuy(int rNo, int lr);
 
+	int updateLrCount(int lr);
+
 
 
 }
