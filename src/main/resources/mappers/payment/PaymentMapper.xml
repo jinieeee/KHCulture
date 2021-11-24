@@ -55,4 +55,38 @@
 
 </select>
 
+<select id="selectLectureOpenList" parameterType="list" resultMap="lectureDetailResultMap">
+	SELECT
+	       LR_NO
+	     , L_THUMBNAIL
+	     , L_TITLE
+	     , L_CONTENT
+	     , LC_NAME
+	     , LT_NAME
+	     , LR_CAPACITY
+	     , LR_COUNT
+	     , LR_START_DATE
+	     , LR_END_DATE
+	     , LR_NUMBER
+	     , LR_DAY
+	     , LR_START_TIME
+	     , LR_END_TIME
+	     , LR_FEE
+	     , INSTRUCTOR_NAME
+	     , PROFILE_PHOTO
+	     , BIRTH_DATE
+	     , INSTRUCTOR_PHONE
+	     , CAREER
+	  FROM LECTURE_REGISTRATION O
+	  JOIN LECTURE C1 ON(O.L_NO = C1.L_NO)
+	  JOIN LECTURE_CLASSIFICATION C2 ON(C1.LC_NO = C2.LC_NO)
+	  JOIN LECTURE_TARGET C3 ON(C1.LT_NO = C3.LT_NO)
+	  JOIN INSTRUCTOR C4 ON(O.INSTRUCTOR_NO = C4.INSTRUCTOR_NO)
+	 WHERE LR_NO IN
+	 <foreach collection='list' index='i' item='lrNo' open='(' close=')' separator=','>
+	 	#{lrNo}
+	 </foreach>
+</select>
+
+
 </mapper>

@@ -1,14 +1,14 @@
 package com.kh.khculture.payment.controller;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.khculture.payment.model.service.PaymentService;
 import com.kh.khculture.payment.model.vo.LectureDetail;
@@ -42,14 +42,30 @@ public class PaymentController {
 		model.addAttribute("receiptDate", receiptDate);
 		model.addAttribute("today", today);
 		
-		return "management/lecturedetail";
+		return "payment/lecturedetail";
 	}
 	
 	
-	@GetMapping("/payment/approval")
-	public String postLecturePayment(@RequestParam String[] lrNo) {
-		log.info("{}", Arrays.toString(lrNo));
-		return "";
+	@GetMapping("/payment/procedure")
+//	public String postLecturePayment(@RequestParam String[] lrNo) {
+	public String postLecturePayment(Model model) {
+		
+		String[] lrNo = {"111", "115"};
+		
+		List<Integer> lrNoList = new ArrayList<Integer>();
+		
+		for(int i=0; i< lrNo.length; i++) {
+			
+			lrNoList.add(Integer.parseInt(lrNo[i]));
+			
+		}
+		
+		List<LectureDetail> lectureList = paymentservice.selectLectureOpenList(lrNoList);
+		
+		model.addAttribute("lectureList", lectureList);
+		
+		
+		return "payment/procedure";
 	}
 	
 	

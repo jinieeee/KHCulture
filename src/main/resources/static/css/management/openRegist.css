@@ -2,7 +2,7 @@
 
 .listContainer{
     display: flex;
-    margin: 100px auto;
+    margin: 0px auto;
     max-width: 1320px;
     min-height: 500px;
     flex-wrap: nowrap;
@@ -15,7 +15,7 @@
 .listContainer > .content > .titleArea{
     width: 1320px;
     height: 150px;
-    
+    margin-top : 100px;
     text-align: center;
     align-items: center;
     display: flex;

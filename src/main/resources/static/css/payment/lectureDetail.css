@@ -1,7 +1,7 @@
 @charset "UTF-8";
 .detailContainer{
     display: flex;
-    margin: 100px auto;
+    margin: 0px auto;
     max-width: 1320px;
     min-height: 500px;
     flex-wrap: nowrap;
@@ -12,6 +12,7 @@
     min-width: 1320px;
 }
 .detailContainer > .content > .tagArea{
+	margin-top : 100px;
     max-width: 1320px;
     height: 40px;
     font-style: normal;
