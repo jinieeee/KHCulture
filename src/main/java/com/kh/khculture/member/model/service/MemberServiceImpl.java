@@ -130,6 +130,7 @@ public class MemberServiceImpl implements MemberService{
 	}
 	
 	// 로그인 실패 횟수 카운트
+	@Transactional
 	@Override
 	public void loginFailureCount(String userId) {
 		memberMapper.loginFailureCount(userId);
@@ -142,6 +143,7 @@ public class MemberServiceImpl implements MemberService{
 	}
 	
 	// 계정 잠금
+	@Transactional
 	@Override
 	public void lockUserId(String userId) {
 		memberMapper.lockUserId(userId);
@@ -149,6 +151,7 @@ public class MemberServiceImpl implements MemberService{
 	}
 	
 	// 로그인 실패 횟수 초기화
+	@Transactional
 	@Override
 	public void initializeFailureCount(String userId) {
 		memberMapper.initializeFailureCount(userId);
@@ -166,6 +169,7 @@ public class MemberServiceImpl implements MemberService{
 	}
 	
 	// 비밀번호 재설정
+	@Transactional
 	@Override
 	public int resetPwd(Member member) {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();

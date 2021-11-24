@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>회원관리</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href="/css/admin/memberList.css">
+</head>
+<body>
+<header th:include="fragments/header.html"></header>
+    <div class="titleArea">
+		<h1>회원관리</h1>
+    </div>
+	<article class="memberList">
+	    <div class="memberContainer">
+	    	<div class="total">총 사용자수 : <span th:text="${listCount}"></span>명</div>
+	    	<div class="searchForm">
+	    		<select class="memberRoleSel">
+	    			<option value="전체" th:selected="${authorityCode == 0}">전체</option>
+	    			<option value="일반회원" th:selected="${authorityCode == 1}">일반회원</option>
+	    			<option value="관리자" th:selected="${authorityCode == 2}">관리자</option>
+	    		</select>
+	    		<form th:action="@{/admin/memberList}" method="get">
+	    			<input type="hidden" name="memberRole">
+	    			<input type="hidden" name="page">
+	    		</form>
+	    	</div>
+	    </div>
+    	<div class="memberBtnContainer">
+    		<button type="button" class="memberUpdateBtn"  th:if="${authorityCode == 1 || authorityCode == 2}">권한변경</button>
+    		<button type="button" class="memberPwdBtn">비밀번호 초기화</button>
+    	</div>
+    	<div class="memberTblContainer">
+	    	<table class="memberListTbl">
+	    		<tr>
+	    			<th>회원No.</th>
+	    			<th><input type="checkbox"></th>
+	    			<th id="id">아이디</th>
+	    			<th id="name">이름</th>
+	    			<th id="email">이메일</th>
+	    			<th id="phone">연락처</th>
+	    			<th id="enrollDate">가입일</th>
+	    			<th id="accLockYN">계정잠금</th>
+	    			<th id="accSecessionYN">계정탈퇴</th>
+	    		</tr>
+	    		<tr th:each="member : ${memberList}">
+	    			<td>[[${member.mno}]]</td>
+	    			<td><input type="checkbox"></td>
+	    			<td>[[${member.id}]]</td>
+	    			<td>[[${member.name}]]</td>
+	    			<td>[[${member.email}]]</td>
+	    			<td>[[${member.phone}]]</td>
+	    			<td th:text="${#dates.format(member.enrollDate, 'yyyy-MM-dd')}"></td>
+	    			<td>[[${member.accLockYN}]]</td>
+	    			<td>[[${member.accSecessionYN}]]</td>
+	    		</tr>
+	    	</table>
+    	</div>
+    	<div class="pagingDiv">
+    		<ul class="member_paging">
+    		</ul>
+    	</div>
+	</article>
+<footer th:include="fragments/footer.html"></footer>
+</body>
+<script>
+	var startPage = "[[${pi.startPage}]]";
+	var endPage = "[[${pi.endPage}]]";
+	var maxPage = "[[${pi.maxPage}]]";
+	var currentPage = "[[${pi.page}]]";
+	
+	console.log(startPage);
+	console.log(endPage);
+	console.log(maxPage);
+	console.log(currentPage);
+</script>
+<script type="text/javascript" src="/js/admin/memberList.js"></script>
+</html>
