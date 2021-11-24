@@ -10,6 +10,10 @@ public interface PaymentService {
 
 	List<LectureDetail> selectLectureOpenList(List<Integer> lrNoList);
 
+	int insertReceipt(int rNo, int mNo);
+
+	int insertLectureBuy(int rNo, int lr);
+
 
 
 }
