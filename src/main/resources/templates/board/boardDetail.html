@@ -1,38 +1,60 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>boardDetail</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link href="../../static/css/mypage/board.css" rel="stylesheet">
+<link href="/css/mypage/board.css" rel="stylesheet">
 </head>
-<header id="inputHeader"></header>
+<header th:include="fragments/header.html"></header>
 <body>
     
     <div class="board_detail_title">
         <div id="board_category2">비누공방</div>
-        <div id="board_comment2">비누향기가 너무 좋았던 수업이었어요~ </div>
-        <div id="board_date2">2021-11-10</div>
+        <div id="board_comment2" th:text="${Board.b_title}"></div>
+        <div id="board_date2" th:text="${Board.b_enroll_date}"></div>
     </div>
     <div class="board_detail_boundary">
+    	<!-- b_star의 합산을 여기에 뿌려줌  -->
         <div>
-            <span><img src="../../static/images/mypage/star.png" id="board_star"></span>
-            <span><img src="../../static/images/mypage/star.png" id="board_star"></span>
-            <span><img src="../../static/images/mypage/star.png" id="board_star"></span>
-            <span><img src="../../static/images/mypage/star.png" id="board_star"></span>
-            <span><img src="../../static/images/mypage/star.png" id="board_star"></span>
+            <span><img src="/images/mypage/star.png" id="board_star"></span>
+            <span><img src="/images/mypage/star.png" id="board_star"></span>
+            <span><img src="/images/mypage/star.png" id="board_star"></span>
+            <span><img src="/images/mypage/star.png" id="board_star"></span>
+            <span><img src="/images/mypage/star.png" id="board_star"></span>
         </div>
-        <div id="board_detail_comment">후기 내용 적는 곳 </div>
+        <div id="board_detail_comment">
+        <span th:utext="${Board.b_content}" ></span><br>
+        
+        </div>
         <div>
-            <div>조회수</div>
-            <div><img src="../../static/images/mypage/heart2.png" id="board_heart"></div>
+            <div>좋아요</div>
+            
+            <!-- #{Lovit.b_no} == Board.b_no -->
+            <th:block th:if="!${Lovit}">
+            
+             <!--    	Lovit.b_no와 Board.b_no 가 같으면  Lovit테이블에 담겼다는 의미 -> 빨간 -> 흰색으로 바꿔주는 ajax  -->
+             
+            <div><img src="/images/mypage/heart2.png" id="board_heart"  th:attr="onclick=|like('${Board.b_no}')|" ></div>
+             </th:block>
+           
+             <th:block th:if="${Lovit}">
+          	 <!-- Lovit.b_no와 Board.b_no 가 다르면  Lovit테이블에 없다는 의미 -> 흰 -> 빨으로 바꿔주는 ajax -->
+          	<div><img src="/images/mypage/heart.png" id="board_heart"  th:attr="onclick=|like2('${Board.b_no}')|" ></div>  	
+          	</th:block>
+          	 
         </div>
     </div>
-    <!-- 관리자에게만 수정하기 버튼이 활성화됨 -->
-    <div align="right" class="board_detail_button">
-        <input type="button"  id="board_button"  value="수정하기" class="button"> 
-    </div>
-
+    <th:block th:if="${ Board.m_no }  
+    <form method="get" action="/board/updateView">
+	    <div align="right" class="board_detail_button">
+	    	<input type="hidden" name="b_no" th:value="${Board.b_no}">
+	        <button type="submit" id="board_update" class="button">수정하기</button>
+	    </div>
+	</form> 
+	
+	
+<!-- 댓글  -->
     <div class="board_detail_reply">
         <div class="board_reply_select">
             <div id="reply_name">양*하</div> 
@@ -53,12 +75,72 @@
             <input type="button" value="댓글작성" class="button"> 
         </div>
     </div>
-    <footer id="inputFooter"></footer>
+   <footer th:include="fragments/footer.html"></footer>
     <script>
         $(document).ready(function(){
             $("#inputHeader").load("../common/header.html");
             $("#inputFooter").load("../common/footer.html");
         });
+    </script>
+    <script>
+    function like(bno){
+    	alert("좋아요 누른 게시글 번호 : " + bno)
+    	 console.log(event.target);
+    	 console.log(event.target.id);
+    	 if(event.target.id == 'board_heart') {
+	  	    	$.ajax({
+	    			url : "/board/likeinsert",
+	    			data : {bno:bno},  
+	    			type : "post", 
+	     			datatype : "json",
+	    			success : function(data){
+	  				// 성공 시 호출 된는  함수에 서버에서 돌아온 응답 데이터가 넘어옴
+	  				alert(data); //success
+	  				console.log('위시리스트에 담았습니다.');
+	  				$("#board_heart").attr("src", "/images/mypage/heart.png"); //빨간하트
+	  				/* $("."+rno).attr("alt", "wish1");
+	  				$("."+rno).attr("id", "wish1"); */
+	  				location.href="/board/detail.do?b_no="+bno;
+	  				
+	  			},
+	    			error : function(){
+	  				console.log('위시리스트에 담기 실패하였습니다.');
+	  			},
+	  			
+	    		}); 
+    	
+   		 }
+    }
+    
+    function like2(bno){
+    	alert("좋아요 누른 게시글 번호 : " + bno)
+    	 console.log(event.target);
+    	 console.log(event.target.id);
+    	 if(event.target.id == 'board_heart') {
+	  	    	$.ajax({
+	    			url : "/board/likedelete",
+	    			data : {bno:bno},  
+	    			type : "post", 
+	     			datatype : "json",
+	    			success : function(data){
+	  				// 성공 시 호출 된는  함수에 서버에서 돌아온 응답 데이터가 넘어옴
+	  				alert(data); //success
+	  				console.log('위시리스트에 제거했습니다.');
+	  				$("#board_heart").attr("src", "/images/mypage/heart2.png"); //빨간하트
+	  				/* $("."+rno).attr("alt", "wish1");
+	  				$("."+rno).attr("id", "wish1"); */
+	  				location.href="/board/detail.do?b_no="+bno;
+	  				
+	  			},
+	    			error : function(){
+	  				console.log('위시리스트에 담기 실패하였습니다.');
+	  			},
+	  			
+	    		}); 
+    	
+   		 }
+    }
+    
     </script>
 </body>
 </html>

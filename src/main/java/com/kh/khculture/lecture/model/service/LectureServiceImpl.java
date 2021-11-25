@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.khculture.common.PageInfo;
 import com.kh.khculture.lecture.model.dao.LectureMapper;
+import com.kh.khculture.lecture.model.vo.Lecture;
 import com.kh.khculture.lecture.model.vo.LectureOpen;
 import com.kh.khculture.lecture.model.vo.Search;
 
@@ -99,6 +100,4 @@ public class LectureServiceImpl implements LectureService{
 
 	
 	
-
-
 }

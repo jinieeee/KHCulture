@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kh.khculture.board.model.dao.UserLectureListMapper">
+
+<resultMap type="com.kh.khculture.board.model.vo.Receipt" id="receiptResultMap" >
+	<id property="r_no" column="R_NO"/>
+	<result property="m_no" column="M_NO"/>
+	<result property="payment_date" column="PAYMENT_NO"/>
+	<collection property="lectureBuy" resultMap="lectureBuyResultMap"/>
+</resultMap>
+<!-- lectureBuy -->
+<resultMap type="com.kh.khculture.board.model.vo.LectureBuy" id="lectureBuyResultMap">
+	<id property="r_no" column="R_NO"/>
+	<id property="lr_no" column="LR_NO"/>
+	<result property="lb_status" column="LB_STATUS"/>	
+	<collection property="lectureOpen" resultMap="selectListResultMap"/>
+</resultMap>
+<!-- lectureOpen -->
+<resultMap type="com.kh.khculture.lecture.model.vo.LectureOpen" id="selectListResultMap">
+		<id property="lrNo" column="lr_no"></id>
+		<result property="lrCapacity" column="lr_capacity"></result>
+		<result property="lrCount" column="LR_COUNT"></result>
+		<result property="lrFee" column="LR_FEE"></result>
+		<result property="lrStartDate" column="LR_START_DATE"></result>
+		<result property="lrEndDate" column="LR_END_DATE"></result>
+		<result property="lrNumber" column="LR_NUMBER"></result>
+		<result property="lrDay" column="LR_DAY"></result>
+		<result property="lrStartTime" column="LR_START_TIME"></result>
+		<result property="lrEndTime" column="LR_END_TIME"></result>
+		<association property="lecture" resultMap="lectureResultMap"/>
+</resultMap>
+<resultMap type="com.kh.khculture.lecture.model.vo.Lecture" id="lectureResultMap">
+		<id property="lNo" column="l_no"></id>
+		<result property="lTitle" column="l_title"></result>
+		<result property="lContent" column="l_content"></result>
+		<result property="lThumbnail" column="l_thumbnail"></result>
+		<result property="lcNo" column="LC_NO"></result>
+		<result property="ltNo" column="lT_NO"></result>
+</resultMap>
+
+
+<select id="userLectureList" resultMap="selectListResultMap">
+<!--   SELECT
+     *
+	 FROM RECEIPT
+	     JOIN LECTURE_BUY USING (R_NO)
+	     JOIN LECTURE_REGISTRATION USING(LR_NO)
+	     JOIN LECTURE USING(L_NO) 
+	 WHERE M_NO= #{ mno } -->
+	 SELECT
+    L_NO
+    ,LR_NO
+      , L_TITLE
+     , L_THUMBNAIL
+	 FROM RECEIPT
+	     JOIN LECTURE_BUY USING (R_NO)
+	     JOIN LECTURE_REGISTRATION USING(LR_NO)
+	     JOIN LECTURE USING(L_NO) 
+	 WHERE M_NO=#{ mno }
+</select>
+
+</mapper>

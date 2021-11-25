@@ -1,20 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kh.khculture.board.model.dao.BoardMapper">
+<resultMap id="boardResultMap" type="com.kh.khculture.board.model.vo.Board">
+	<id property="b_no" column="B_NO"/>
+	<result property="b_title" column="B_TITLE"/>
+	<result property="b_content" column="B_CONTENT"/>
+	<result property="m_no" column="M_NO"/>
+	<result property="lr_no" column="LR_NO"/>
+	<result property="b_enroll_date" column="B_ENROLL_DATE"/>
+	<result property="b_status" column="B_STATUS"/>
+	<result property="b_count" column="B_COUNT"/>
+	<result property="b_star" column="B_STAR"/>
+	<result property="sum_b_star" column="SUM_B_STAR"/>
+	<association property="lectureOpen" resultMap="selectListResultMap"/>
+</resultMap>
 
+<!-- lectureOpen -->
+<resultMap type="com.kh.khculture.lecture.model.vo.LectureOpen" id="selectListResultMap">
+		<id property="lrNo" column="lr_no"></id>
+		<result property="lrCapacity" column="lr_capacity"></result>
+		<result property="lrCount" column="LR_COUNT"></result>
+		<result property="lrFee" column="LR_FEE"></result>
+		<result property="lrStartDate" column="LR_START_DATE"></result>
+		<result property="lrEndDate" column="LR_END_DATE"></result>
+		<result property="lrNumber" column="LR_NUMBER"></result>
+		<result property="lrDay" column="LR_DAY"></result>
+		<result property="lrStartTime" column="LR_START_TIME"></result>
+		<result property="lrEndTime" column="LR_END_TIME"></result>
+		<association property="lecture" resultMap="lectureResultMap"/>
+</resultMap>
+<resultMap type="com.kh.khculture.lecture.model.vo.Lecture" id="lectureResultMap">
+		<id property="lNo" column="l_no"></id>
+		<result property="lTitle" column="l_title"></result>
+		<result property="lContent" column="l_content"></result>
+		<result property="lThumbnail" column="l_thumbnail"></result>
+		<result property="lcNo" column="LC_NO"></result>
+		<result property="ltNo" column="lT_NO"></result>
+</resultMap>
 
-
+<resultMap id="lovitResultMap" type="com.kh.khculture.board.model.vo.Lovit">
+	<id property="b_no" column="B_NO"/>
+	<id property="m_no" column="M_NO"/>
+</resultMap>
+<!-- 총 게시물 수 -->
 <select id="getListCount" resultType="_int" >
 select count(*) from board where b_status='Y'
 
 </select>
-<select id="selectList" resultType="com.kh.khculture.board.model.vo.board">
+
+<!-- 페이징할 게시글 수 -->
+<select id="selectList" resultType="com.kh.khculture.board.model.vo.Board">
 SELECT
     B_NO
     , B_TITLE
     , B_CONTENT
+    <!--
     , TO_CHAR(B_ENROLL_DATE,'YYYY-MM-DD') B_ENROLL_DATE
     , TO_CHAR(B_MODIFY_DATE,'YYYY-MM-DD') B_MODIFY_DATE
+    -->
+    , B_ENROLL_DATE
+    , B_MODIFY_DATE
     , M_NO
 FROM ( SELECT 
                ROWNUM RNUM, NLIST.*
@@ -26,4 +71,132 @@ FROM ( SELECT
                             ORDER BY B_NO DESC) NLIST )
 WHERE RNUM BETWEEN #{ startRow } AND #{ endRow }  
 </select>
+
+
+<!-- 후기 상세보기 -->
+<select id="selectBoard" resultMap="boardResultMap">
+	SELECT
+		B_NO
+		, B_TITLE
+		, B_CONTENT
+		<!-- 
+		, TO_CHAR(B_ENROLL_DATE,'YYYY-MM-DD') B_ENROLL_DATE
+		 -->
+		, B_ENROLL_DATE
+		, B_COUNT
+		, B_STAR
+		, B_STATUS
+		, M_NO
+	FROM BOARD
+   WHERE B_STATUS='Y'
+     AND B_NO = #{ b_no }
+   ORDER BY B_NO DESC 
+
+</select>
+ 
+ <!-- 후기 작성  -->
+<insert id="boardInsert" parameterType="com.kh.khculture.board.model.vo.Board">
+    INSERT
+    INTO BOARD
+    (
+     B_NO
+    ,B_TITLE
+    ,B_CONTENT
+    ,M_NO
+    ,LR_NO
+    ,B_ENROLL_DATE
+    ,B_STATUS
+    ,B_COUNT
+    ,B_STAR
+    )
+    VALUES
+    (
+      
+      SEQ_BOARD_NO.NEXTVAL
+    , #{ b_title }
+    , #{ b_content }
+    , #{ m_no }
+    , #{ lr_no }
+    , SYSDATE
+    , DEFAULT
+    , #{ b_count }
+    , #{ b_star }
+
+ )
+
+</insert>
+
+<!-- 후기 Lovit테이블에 추가  -->
+<insert id="insertlovit" parameterType="com.kh.khculture.board.model.vo.Lovit">
+INSERT
+INTO LOVIT
+(
+	M_NO
+	,B_NO
+ )
+VALUES
+(
+	 #{ mno }
+	 ,#{ bno }
+ )
+
+</insert>
+
+<!-- 후기 Lovit테이블에 삭제 -->
+<delete id="likedelete" parameterType="com.kh.khculture.board.model.vo.Lovit">
+DELETE FROM LOVIT
+ WHERE B_NO = #{ bno }  AND  M_NO = #{ mno }
+
+</delete>
+
+<!--  후기 좋아요를 눌렀는지 확인 -->
+<select id="selectLovit" resultMap="lovitResultMap">
+SELECT
+*
+FROM LOVIT
+WHERE M_NO = #{ mno } and B_NO = #{ b_no } 
+</select>
+ 
+<select id="rankList" resultMap="boardResultMap">
+<!-- 30일 사이에 끝난 강좌중, 최근 2일동안 후기로 작성된 강좌의 랭킹  -->
+SELECT
+ LR_NO
+ ,L_TITLE
+ ,L_THUMBNAIL
+ ,LR_END_DATE
+ , SUM_B_STAR
+FROM  (
+	SELECT                                 
+		LR_NO
+		,SUM(B_STAR) SUM_B_STAR
+		FROM BOARD 
+		JOIN LECTURE_REGISTRATION USING(LR_NO)
+		JOIN LECTURE USING (L_NO)
+		<![CDATA[ where B_ENROLL_DATE  between sysdate-2 and sysdate ]]>
+	GROUP BY LR_NO  )
+JOIN LECTURE_REGISTRATION USING(LR_NO)
+JOIN LECTURE USING(L_NO)
+<![CDATA[ where (LR_END_DATE  between sysdate-4 and sysdate) 
+AND  ROWNUM  <=3 ]]>
+ORDER BY 5 DESC
+
+</select>
+<select id="updateBoardView" resultMap="boardResultMap">
+SELECT
+ B_NO
+ ,B_TITLE
+ ,B_CONTENT
+ ,B_STAR
+ ,M_NO
+ ,LR_NO
+ ,L_TITLE
+ ,B_STATUS
+ FROM BOARD
+ JOIN LECTURE_REGISTRATION  USING(LR_NO)
+ JOIN LECTURE USING (L_NO)
+ WHERE B_NO= #{ b_no }
+ AND M_NO = #{ mno }
+</select>
+
+
 </mapper>

@@ -10,4 +10,6 @@ public class Lecture {
 	private String lThumbnail; //강의 대표 이미지
 	private int lcNo; //카테고리
 	private int ltNo; //강좌 대상
+	
+	public Lecture() {}
 }
