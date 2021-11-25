@@ -38,7 +38,7 @@ public class NoticeController {
 		int	listCount = noticeService.getListCount(searchValue);
 		System.out.println(listCount);
 		
-		PageInfo pi = new PageInfo( page , listCount, 10,3);
+		PageInfo pi = new PageInfo( page , listCount, 10,10);
 		List<Notice> noticeList = noticeService.selectList(pi,searchValue); 
 		
 		model.addAttribute("noticeList", noticeList);
@@ -68,7 +68,7 @@ public class NoticeController {
 	}
 	@PostMapping("insert")
 	public String noticeInsert(Notice Newnotice) {
-	//	System.out.println("Newnotice = " + Newnotice);
+		System.out.println("Newnotice = " + Newnotice);
 		noticeService.noticeInsert(Newnotice);
 		return "redirect:/notice/noticeList";
 	}

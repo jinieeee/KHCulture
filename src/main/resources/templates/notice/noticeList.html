@@ -14,7 +14,7 @@
 
 .notice_search {
     display: flex;
-    width: 890px;
+    width: 1320px;
     margin: 0 auto;
     margin-bottom: 10px;
     padding: 20px 10px;
@@ -27,15 +27,15 @@ form#notice_form {
 
 #notice_choice{
     width: 160px;
-    height: 30px;
+    height: 40px;
 }
 #notice_searchText{
     width: 400px;
-    height: 30px;
+    height: 40px;
 }
 #notice_button{
-    width: 60px;
-    height: 30px;
+    width: 80px;
+    height: 40px;
 }
 
 .notice_list > .notice_select{
@@ -46,7 +46,7 @@ form#notice_form {
     display: flex;
     padding-bottom: 15px;
     border-bottom: 1px solid #F0B95E;
-    height: 40px;
+    height: 60px;
 }
 .notice_select > span{
     padding: 8px 10px;
@@ -68,26 +68,24 @@ span#notice_comment {
     text-align: left;
 }
 .notice_paging_area{
-	display: flex;
-    width: 890px;
+	width: 890px;
     margin: 0 auto;
+    justify-content:space-around;
+    display: flex;
 }
 .notice_paging {
-	
-	line-height: 50px;
-	display: flex;
-	justify-content: center;
 	list-style: none;
+	display:flex;
+	line-height: 50px;
 	width: 480px;
 }
 .notice_paging li{
-	    margin-right: -57px;
+	 margin-right:51px;
 }
 .notice_paging a {
 	text-decoration: none;
 	color: #282A35;
 	width: 40px;
-	display: block;
 	text-align: center;
 }
 .notice_paging a.current_page {
@@ -119,7 +117,7 @@ span#notice_comment {
             <button type="submit" id="notice_button" class="button">검색하기</button>
             <!-- 관리자에게만 활성화 -->
             <th:block sec:authorize="hasRole('ADMIN')">  </th:block>
-            <span><button type="button" id="notice_regist" class="button" onclick="location.href='/notice/insert'">작성하기</button></span>
+            <span><button type="button" id="notice_button" class="button" onclick="location.href='/notice/insert'">작성하기</button></span>
           
         </form>
         

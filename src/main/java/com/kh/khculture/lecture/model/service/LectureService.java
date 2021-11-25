@@ -12,7 +12,6 @@ public interface LectureService {
 
 	List<Integer> findYear();
 
-	
 
 	
 

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>boardUpdate</title>
-<link href="../../static/css/mypage/board.css" rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link href="/css/mypage/board.css" rel="stylesheet">
 </head>
-<header id="inputHeader"></header>
+<header th:include="fragments/header.html"></header>
 <body>
    <div class="titleArea">
     <h1 align="center">등록하기</h1>
@@ -17,11 +17,7 @@
                 <span id="Lname2">강좌명 : </span>
                 <input type="text" name="Lname" id="board_Update3">
 
-                <span><img src="../../static/images/mypage/star.png" id="board_star"></span>
-                <span><img src="../../static/images/mypage/star.png" id="board_star"></span>
-                <span><img src="../../static/images/mypage/star.png" id="board_star"></span>
-                <span><img src="../../static/images/mypage/star.png" id="board_star"></span>
-                <span><img src="../../static/images/mypage/star.png" id="board_star"></span>
+              
             </div>
             
             <div id="Ltitle">
@@ -42,7 +38,7 @@
             </div>
         </form>
     </div>
-    <footer id="inputFooter"></footer>
+   <footer th:include="fragments/footer.html"></footer>
     <script>
         $(document).ready(function(){
             $("#inputHeader").load("../common/header.html");

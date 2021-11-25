@@ -10,4 +10,6 @@ public class Instructor {
 	private String birthDate; //생년월일
 	private String instructorPhone; //강사연락처
 	private String career; //경력
+	
+	public Instructor() {}
 }
