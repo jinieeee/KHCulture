@@ -50,10 +50,16 @@ public class PaymentController {
 	
 	
 	@GetMapping("/lecture/detail/{lrNo}")
-	public String lectureDetail(Model model, @PathVariable int lrNo) {
+	public String lectureDetail(Model model, @PathVariable int lrNo, Principal principal) {
 		
 		
 		LectureDetail lectureDetail = paymentService.selectOneLectureOpen(lrNo);
+		
+		if(principal != null) {
+			UserImpl user = (UserImpl)((Authentication)principal).getPrincipal();
+			model.addAttribute("mno", user.getMno());
+			
+		}
 		
 		Date receiptDate = new Date(lectureDetail.getLrStartDate().getYear(),
 				lectureDetail.getLrStartDate().getMonth()-1, lectureDetail.getLrStartDate().getDate());
@@ -69,8 +75,7 @@ public class PaymentController {
 	
 	
 	@GetMapping("/payment/procedure")
-//	public String postLecturePayment(@RequestParam String[] lrNo) {
-	public String postLecturePayment(Model model, Principal principal) {
+	public String postLecturePayment(Model model, Principal principal, @RequestParam String[] lrNo) {
 		
 		
 		if(principal != null) {
@@ -82,9 +87,6 @@ public class PaymentController {
 			model.addAttribute("email", user.getEmail());
 		}
 		
-		
-		
-		String[] lrNo = {"3"};		
 		
 		List<Integer> lrNoList = new ArrayList<Integer>();
 		
