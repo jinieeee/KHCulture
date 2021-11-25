@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>1:1문의 답변 [관리자]</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
 .outer {
 	width: 1920px;
@@ -31,6 +32,7 @@
 	padding: 10px 10px 14px 10px;
 	background: white;
 	font-size: 20px;
+	width: 150px;
 }
 
 .input_area select {
@@ -112,12 +114,11 @@ h2 {
 					<h1 align="center">1:1 문의</h1>
 				</div>
 				<div class="answer_content">
-					<form method="post" action="${ contextPath }/gallery/insert"
-					enctype="multipart/form-data">
+					<form method="post">
+					    <input type="hidden" name="questionnaire_no" th:value="${questionnaire.questionnaire_no}">
 						<div class="content">
-							
 							<h2><span class="title_span">&nbsp;</span> 문의사항 </h2>
-							<span class="input_area"> 내년에도 비누공예 개강하나요? </span>
+							<span class="input_area" th:text="${questionnaire.questionnaire_content}"></span>
 							
 							<h2><span class="title_span">&nbsp;</span> 답변 </h2>
 							<textarea class="textarea" rows="20" cols="100" name="content" required></textarea>
