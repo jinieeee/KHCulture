@@ -135,6 +135,7 @@
 	     , LB_MODIFY_DATE = SYSDATE
 	 WHERE R_NO = #{rNo}
 	   AND LR_NO = #{lrNo}
+	   AND LB_STATUS = 'Y'
 </update>
 
 <update id="updateDecreaseLrCount" parameterType="_int">

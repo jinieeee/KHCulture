@@ -18,6 +18,8 @@ public interface PaymentService {
 
 	int cancelLectureBuy(int rNo, int lrNo);
 
+	int updateDecreaseLrCount(int lrNo);
+
 
 
 }
