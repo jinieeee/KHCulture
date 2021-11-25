@@ -21,4 +21,6 @@ public interface PaymentMapper {
 
 	int cancelLectureBuy(int rNo, int lrNo);
 
+	int updateDecreaseLrCount(int lrNo);
+
 }

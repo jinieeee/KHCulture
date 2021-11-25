@@ -140,57 +140,58 @@
 <script>
 //결제 취소
 $('.cancleBtn').on('click', function(){
-	let parent = this.closest("table");
-	let select = parent.querySelectorAll(".select:checked");
-	if(select.length == 0) {
-		alert("구매 취소할 강좌를 선택해주세요.");
-		return;
-	}
-	let today = new Date();
-	today.setHours(0);
-	today.setMinutes(0);
-	today.setSeconds(0);
-	today.setMilliseconds(0);
-	
-	let standard = 'possible';
-	select.forEach(select => {
-		let startDateString = select.parentElement.lastElementChild.value;
-		
-		let startDate = new Date();
-		startDate.setHours(0);
-		startDate.setMinutes(0);
-		startDate.setSeconds(0);
-		startDate.setMilliseconds(0);
-		
-		startDate.setFullYear(startDateString.substr(0, 4));
-		startDate.setMonth(startDateString.substr(5, 2)-1);
-		startDate.setDate(startDateString.substr(8, 2));
-		if(today.getTime() >= startDate.getTime()) {
-			standard = 'impossible';
-		}
-	})
-	if(standard == 'impossible') {
-		alert("이미 개강이 된 강좌는 구매 취소할 수 없습니다. 강좌를 다시 확인해주시기 바랍니다.");
-		return;
-	}
-	let lectureArr = [];
-	select.forEach(select => {
-		lectureArr.push(select.nextElementSibling.value);
-	})
-	
-	//console.log(lectureArr);
-	$.ajax({
-		url : "/payment/cancel",
-		data : {arr : lectureArr},
-		type : "put",
-		success : function(data) {
-			console.log(data);
-		},
-		error : function(e) {
-			console.log(e);
-		}
-	});
-	
+   let parent = this.closest("table");
+   let select = parent.querySelectorAll(".select:checked");
+   let rNo = parent.querySelector("#selectedClass").innerHTML;
+   if(select.length == 0) {
+      alert("구매 취소할 강좌를 선택해주세요.");
+      return;
+   }
+   let today = new Date();
+   today.setHours(0);
+   today.setMinutes(0);
+   today.setSeconds(0);
+   today.setMilliseconds(0);
+   
+   let standard = 'possible';
+   select.forEach(select => {
+      let startDateString = select.parentElement.lastElementChild.value;
+      
+      let startDate = new Date();
+      startDate.setHours(0);
+      startDate.setMinutes(0);
+      startDate.setSeconds(0);
+      startDate.setMilliseconds(0);
+      
+      startDate.setFullYear(startDateString.substr(0, 4));
+      startDate.setMonth(startDateString.substr(5, 2)-1);
+      startDate.setDate(startDateString.substr(8, 2));
+      if(today.getTime() >= startDate.getTime()) {
+         standard = 'impossible';
+      }
+   })
+   if(standard == 'impossible') {
+      alert("이미 개강이 된 강좌는 구매 취소할 수 없습니다. 강좌를 다시 확인해주시기 바랍니다.");
+      return;
+   }
+   let lectureArr = [];
+   select.forEach(select => {
+      lectureArr.push(select.nextElementSibling.value);
+   })
+   
+   //console.log(lectureArr);
+   $.ajax({
+      url : "/payment/cancel",
+      data : {arr : lectureArr, rNo : rNo},
+      type : "put",
+      success : function(data) {
+         console.log(data);
+      },
+      error : function(e) {
+         console.log(e);
+      }
+   });
+   
 })
 
 
