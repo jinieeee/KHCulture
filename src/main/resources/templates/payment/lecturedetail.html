@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <meta charset="UTF-8">
 <title>강좌 상세페이지</title>
@@ -13,149 +13,209 @@
 <body>
 <header th:include="fragments/header.html"></header>
 <div class="detailContainer">
-        <div class="content">
-            <div class="tagArea">
+	
+    <div class="content">
+        <div class="tagArea">
+        
+            <span id="status" th:if="${today < receiptDate}">접수예정</span>
+            <span id="status" th:if="${today >= receiptDate and lectureDetail.lrCount < lectureDetail.lrCapacity}">접수중</span>
+            <span id="status" th:if="${lectureDetail.lrCount == lectureDetail.lrCapacity or today >= lectureDetail.lrStartDate}">접수마감</span>
             
-                <span id="status" th:if="${today < receiptDate}">접수예정</span>
-                <span id="status" th:if="${today >= receiptDate and lectureDetail.lrCount < lectureDetail.lrCapacity}">접수중</span>
-                <span id="status" th:if="${lectureDetail.lrCount == lectureDetail.lrCapacity or today >= lectureDetail.lrStartDate}">접수마감</span>
-                
-                <span id="target" th:text="${lectureDetail.ltName}"></span>
-                <span id="classification" th:text="${lectureDetail.lcName}"></span>
-            </div>
-            <div class="titleAreaYJ">
-                <p th:text="${lectureDetail.lTitle}"></p>
-                <div class="btnArea">
-                    <a href="#" th:if="${receiptDate <= today and today <= lectureDetail.lrStartDate
-                     and lectureDetail.lrCount < lectureDetail.lrCapacity}"><img src="/images/detail/btn_cart_big.png"><span>장바구니담기</span></a>
-                    <a href="#" th:if="${receiptDate <= today and today <= lectureDetail.lrStartDate
-                     and lectureDetail.lrCount < lectureDetail.lrCapacity}"><img src="/images/detail/btn_pay_big.png"><span>신청하기</span></a>
-                </div>
-            </div>
-            <div class="detailArea">
-                <div class="leftArea">
-                    <p class="">강좌소개</p><br><br>
-                    <div class="lectureContent" th:utext="${lectureDetail.lContent}"></div>
-                </div>
-                <div class="rightArea">
-                    <div class="lectureThumbnailImg">
-                        <img th:src="@{/images/upload/{filename}(filename=${lectureDetail.lThumbnail})}">
-                    </div>
-                    <div class="infoList">
-                        <ul>
-                            <li>
-                                <dl>
-                                    <dt>지점</dt>
-                                    <dd>본점</dd>
-                                </dl>
-                            </li>
-                            <li>
-                                <dl>
-                                    <dt>강좌구분</dt>
-                                    <dd><span th:text="${lectureDetail.lcName}"></span></dd>
-                                </dl>
-                            </li>
-                            <li>
-                                <dl>
-                                    <dt>강사명</dt>
-                                    <dd><span th:text="${lectureDetail.instructorName}"></span><button type="button" id="modalInstructorBtn">강사소개</button></dd>
-                                </dl>
-                            </li>
-                            <li>
-                                <dl>
-                                    <dt>수강기간</dt>
-                                    <dd><span th:text="|${#dates.format(lectureDetail.lrStartDate, 'yyyy-MM-dd')} ~ ${#dates.format(lectureDetail.lrEndDate, 'yyyy-MM-dd')}|"></span></dd>
-                                </dl>
-                            </li>
-                            <li>
-                                <dl>
-                                    <dt>수강시간</dt>
-                                    <dd><span th:text="|${lectureDetail.lrStartTime} ~ ${lectureDetail.lrEndTime}|"></span></dd>
-                                </dl>
-                            </li>
-                            <li>
-                                <dl>
-                                    <dt>강의횟수</dt>
-                                    <dd><span th:text="|${lectureDetail.lrNumber}회|"></span></dd>
-                                </dl>
-                            </li>
-                            <li>
-                                <dl>
-                                    <dt>접수인원/정원</dt>
-                                    <dd><span th:text="|${lectureDetail.lrCount}명 / ${lectureDetail.lrCapacity}명|"></span></dd>
-                                </dl>
-                            </li>
-                            <li>
-                                <dl>
-                                    <dt>수강료</dt>
-                                    <dd><span th:text="|${lectureDetail.lrFee}원|"></span></dd>
-                                </dl>
-                            </li>
-                            <li>
-                                <dl>
-                                    <dt>대상구분</dt>
-                                    <dd><span th:text="${lectureDetail.ltName}"></span></dd>
-                                </dl>
-                            </li>
-                            <li>
-                                <dl>
-                                    <dt>접수기간</dt>
-                                    <dd><span th:text="|${#dates.format(receiptDate, 'yyyy-MM-dd')} ~ ${#dates.format(lectureDetail.lrStartDate, 'yyyy-MM-dd')}|"></span></dd>
-                                </dl>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="stateTextArea">
-                    	<span th:if="${today < receiptDate}"><em>접수예정</em> 입니다.</span>
-                        <span th:if="${today >= receiptDate and lectureDetail.lrCount < lectureDetail.lrCapacity}"><em>접수중</em> 입니다.</span>
-                        <span th:if="${lectureDetail.lrCount == lectureDetail.lrCapacity}"><em>정원</em> 접수 완료.</span>
-                        <span th:if="${today >= lectureDetail.lrStartDate}"><em>접수마감</em> 되었습니다.</span>
-                    </div>
-                </div>
-            </div>
-            <div class="listBtnArea">
-                <div class="leftArea">
-                    <button id="listBtn" onclick="location.href='/lecture/search'">목록</button>
-                </div>
-                <div class="rightArea">
-                    <a href="#" id="leftA" th:if="${receiptDate <= today and today <= lectureDetail.lrStartDate and lectureDetail.lrCount < lectureDetail.lrCapacity}"><span>장바구니 담기</span></a>
-                    <a href="#" id="rightA" th:if="${receiptDate <= today and today <= lectureDetail.lrStartDate and lectureDetail.lrCount < lectureDetail.lrCapacity}"><span>신청하기</span></a>
-                </div>
-                
+            <span id="target" th:text="${lectureDetail.ltName}"></span>
+            <span id="classification" th:text="${lectureDetail.lcName}"></span>
+        </div>
+        <div class="titleAreaYJ">
+            <p th:text="${lectureDetail.lTitle}"></p>
+            <div class="btnArea">
+                <a th:href="@{#}" class="cart" th:if="${receiptDate <= today and today <= lectureDetail.lrStartDate
+                 and lectureDetail.lrCount < lectureDetail.lrCapacity}"><img src="/images/detail/btn_cart_big.png"><span>장바구니담기</span></a>
+                <a th:href="@{#}" class="payment" th:if="${receiptDate <= today and today <= lectureDetail.lrStartDate
+                 and lectureDetail.lrCount < lectureDetail.lrCapacity}"><img src="/images/detail/btn_pay_big.png"><span>신청하기</span></a>
             </div>
         </div>
-    </div>
-    <div class="modal">
-        <div class="modalWindow">
-            <div class="miTitle">
-                <div class="textTitle">
-                    <span id="lectureTitle" th:text="${lectureDetail.lTitle}"></span><br>
-                    <span id="instructorName" th:text="${lectureDetail.instructorName}"></span>
+        <div class="detailArea">
+            <div class="leftArea">
+                <p class="">강좌소개</p><br><br>
+                <div class="lectureContent" th:utext="${lectureDetail.lContent}"></div>
+            </div>
+            <div class="rightArea">
+                <div class="lectureThumbnailImg">
+                    <img th:src="@{/images/upload/{filename}(filename=${lectureDetail.lThumbnail})}">
                 </div>
-                <div class="imgTitle">
-                    <img th:src="@{/images/upload/{filename}(filename=${lectureDetail.profilePhoto})}">
+                <div class="infoList">
+                    <ul>
+                        <li>
+                            <dl>
+                                <dt>지점</dt>
+                                <dd>본점</dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>강좌구분</dt>
+                                <dd><span th:text="${lectureDetail.lcName}"></span></dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>강사명</dt>
+                                <dd><span th:text="${lectureDetail.instructorName}"></span><button type="button" id="modalInstructorBtn">강사소개</button></dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>수강기간</dt>
+                                <dd><span th:text="|${#dates.format(lectureDetail.lrStartDate, 'yyyy-MM-dd')} ~ ${#dates.format(lectureDetail.lrEndDate, 'yyyy-MM-dd')}|"></span></dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>수강시간</dt>
+                                <dd><span th:text="|${lectureDetail.lrStartTime} ~ ${lectureDetail.lrEndTime}|"></span></dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>강의횟수</dt>
+                                <dd><span th:text="|${lectureDetail.lrNumber}회|"></span></dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>접수인원/정원</dt>
+                                <dd><span th:text="|${lectureDetail.lrCount}명 / ${lectureDetail.lrCapacity}명|"></span></dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>수강료</dt>
+                                <dd><span th:text="|${lectureDetail.lrFee}원|"></span></dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>대상구분</dt>
+                                <dd><span th:text="${lectureDetail.ltName}"></span></dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <dl>
+                                <dt>접수기간</dt>
+                                <dd><span th:text="|${#dates.format(receiptDate, 'yyyy-MM-dd')} ~ ${#dates.format(lectureDetail.lrStartDate, 'yyyy-MM-dd')}|"></span></dd>
+                            </dl>
+                        </li>
+                    </ul>
+                </div>
+                <div class="stateTextArea">
+                	<span th:if="${today < receiptDate}"><em>접수예정</em> 입니다.</span>
+                    <span th:if="${today >= receiptDate and lectureDetail.lrCount < lectureDetail.lrCapacity}"><em>접수중</em> 입니다.</span>
+                    <span th:if="${lectureDetail.lrCount == lectureDetail.lrCapacity}"><em>정원</em> 접수 완료.</span>
+                    <span th:if="${today >= lectureDetail.lrStartDate}"><em>접수마감</em> 되었습니다.</span>
                 </div>
             </div>
-            <div class="miContent">
-                <div class="introduceTitle">강사소개</div>
-                <div class="instructorHistory">
-                    <span>강사이력</span>
-                    <div id="historyArea" th:text="${lectureDetail.career}">
-                    </div>
+        </div>
+        <div class="listBtnArea">
+            <div class="leftArea">
+                <button id="listBtn" onclick="location.href='/lecture/search'">목록</button>
+            </div>
+            <div class="rightArea">
+                <a th:href="@{#}" id="leftA" class="cart" th:if="${receiptDate <= today and today <= lectureDetail.lrStartDate and lectureDetail.lrCount < lectureDetail.lrCapacity}"><span>장바구니 담기</span></a>
+                <a th:href="@{#}" id="rightA" class="payment" th:if="${receiptDate <= today and today <= lectureDetail.lrStartDate and lectureDetail.lrCount < lectureDetail.lrCapacity}"><span>신청하기</span></a>
+            </div>
+            
+        </div>
+    </div>
+</div>
+<div class="modal">
+    <div class="modalWindow">
+        <div class="miTitle">
+            <div class="textTitle">
+                <span id="lectureTitle" th:text="${lectureDetail.lTitle}"></span><br>
+                <span id="instructorName" th:text="${lectureDetail.instructorName}"></span>
+            </div>
+            <div class="imgTitle">
+                <img th:src="@{/images/upload/{filename}(filename=${lectureDetail.profilePhoto})}">
+            </div>
+        </div>
+        <div class="miContent">
+            <div class="introduceTitle">강사소개</div>
+            <div class="instructorHistory">
+                <span>강사이력</span>
+                <div id="historyArea" th:text="${lectureDetail.career}">
                 </div>
-                <div class="birthAndContact">
-                    <span>생년월일<br>연락처</span>
-                    <div id="birthContactArea" th:utext="|${lectureDetail.birthDate} <br> ${lectureDetail.instructorPhone}|">
-                    </div>
+            </div>
+            <div class="birthAndContact">
+                <span>생년월일<br>연락처</span>
+                <div id="birthContactArea" th:utext="|${lectureDetail.birthDate} <br> ${lectureDetail.instructorPhone}|">
                 </div>
             </div>
         </div>
     </div>
+</div>
 <footer th:include="fragments/footer.html"></footer>
 <script>
     var body = document.body,
     html = document.documentElement;
-
+	
+    
+    let mno = '[[${mno}]]';
+    let lrNo = '[[${lectureDetail.lrNo}]]';
+    
+    console.log("mno : " + mno);
+    console.log("lrNo : " + lrNo);
+    
+    
+    $(".cart, .payment").on("click", function(e){
+    	
+    	if (mno == "") { //로그인안했을 경우
+            if(confirm('로그인이 필요합니다. 로그인창으로 이동하시겠습니까?')) {
+				location.href = "/member/login";
+				return;
+            } else {
+                return;
+            }
+        } else{
+        	
+        	if(e.currentTarget.getAttribute('class') == "cart"){
+        		
+        		putCart(mno, lrNo);
+        		
+        	} else if(e.currentTarget.getAttribute('class') == "payment"){
+        		
+        		buyLecture(lrNo);
+        		
+        	}
+        	
+        }
+    	
+    });
+    
+    function buyLecture(lrNo){
+    	
+    	location.href="/payment/procedure?lrNo=" + lrNo;
+    }
+    
+     function putCart(mno, lrNo) {
+		 $.ajax({
+			 url : "/mypage/cart/post",
+			 type : "post",
+			 data : {mno : mno, lrNo : lrNo},
+			 success : function(data) {
+					if(data == '성공') {
+						if(confirm('장바구니에 저장이 완료되었습니다. 장바구니 페이지로 이동하시겠습니까?')) {
+							location.href = "/mypage/cart";
+						}
+					} else if (data == '보류') {
+						alert('이미 장바구니에 저장된 강좌입니다.');
+					} else {
+						alert("장바구니 저장에 실패하였습니다.");
+					}
+			 },
+			 error : function(e) {
+				 console.log(e);
+			 }
+		 })
+	 }
     
     $("#modalInstructorBtn").click(function(){
         var height = Math.max( body.scrollHeight, body.offsetHeight, 
