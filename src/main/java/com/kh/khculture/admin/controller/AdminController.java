@@ -1,5 +1,8 @@
 package com.kh.khculture.admin.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.khculture.admin.model.service.AdminService;
 import com.kh.khculture.admin.model.vo.Search;
+import com.kh.khculture.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,24 +32,38 @@ public class AdminController {
 	
 	// 전체회원 조회
 	@GetMapping("memberList")
-	public String memberList(@RequestParam(value="memberRole", required=false) String memberRole,
-							 @RequestParam(value="page", required=false) Integer page, Model model) {
+	public String memberList(@RequestParam(value="memberRole", required=false) Integer memberRole,
+							 @RequestParam(value="accLockYN", required=false) String accLockYN,
+							 @RequestParam(value="accSecessionYN", required=false) String accSecessionYN,
+							 @RequestParam(value="searchDate", required=false) String searchDate,
+							 @RequestParam(value="searchKeyword", required=false) String searchKeyword,
+							 @RequestParam(value="page", required=false) Integer page,
+							 Model model) throws ParseException {
 		// log.info("{}", memberList);
-		// log.info("{}", memberRole); 일반요청 : null, 전체 : 0, 일반회원 : member, 관리자 : admin
-
-		// 검색조건
+		// log.info("{}", memberRole + accLockYN + accSecessionYN + searchDate + searchKeyword + page);
+		// log.info("{}", page);
+		int authorityCode = (memberRole == null || memberRole == 0 || memberRole.toString().equals("")) ? 0 : memberRole == 1 ? 1 : 2;
+		page = (page == null || page.toString().equals("") || page == 0) ? 1: page;
+		accLockYN =  accLockYN == null || accLockYN.equals("전체")? null: accLockYN;
+		accSecessionYN = accSecessionYN == null || accSecessionYN.equals("전체")? null: accSecessionYN;
+		Date date = searchDate == null || searchDate.equals("")? new Date(): (new SimpleDateFormat("yyyy-MM-dd")).parse(searchDate);
+		
 		Search search = new Search();
-		int authorityCode = (memberRole == null || memberRole.equals("전체") || memberRole.equals("")) ? 0 : memberRole.equals("일반회원") ? 1 : 2;
-		page = (page == null || page.toString().equals("")) ? 1: page;
+		
 		search.setAuthorityCode(authorityCode);
+		search.setAccLockYN(accLockYN);
+		search.setAccSecessionYN(accSecessionYN);
+		search.setSearchKeyword(searchKeyword);
 		search.setPage(page);
-
+		
 		Map<String, Object> result = adminService.getAllMemberList(search);
-
-		model.addAttribute("memberList", result.get("memberList"));
+		
+		model.addAttribute("search", search);
 		model.addAttribute("pi", result.get("pi"));
-		model.addAttribute("authorityCode", authorityCode);
+		model.addAttribute("memberList", result.get("memberList"));
+		model.addAttribute("searchListCount", result.get("searchListcount"));
 		model.addAttribute("listCount", result.get("listCount"));
+		
 		return "/admin/memberList";
 	}
 }

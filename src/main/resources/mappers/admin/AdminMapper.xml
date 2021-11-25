@@ -34,6 +34,59 @@
 		<result property="authorityDesc" column="AUTHORITY_DESC"/>
 	</resultMap>
  -->	
+	<select id="getPageMemberList" resultMap="memberResultMap" parameterType="com.kh.khculture.admin.model.vo.Search">
+		SELECT *
+		  FROM (
+			SELECT
+					ROWNUM RNUM, A.*
+			  FROM (
+					SELECT
+							M_NO
+						  , ID
+						  , NAME
+						  , PHONE
+						  , EMAIL
+						  , ADDRESS
+						  , M_ENROLL_DATE
+						  , ACC_LOCK_YN
+						  , ACC_SECESSION_YN
+						  , AUTHORITY_CODE
+					  FROM MEMBER
+					  JOIN MEMBER_ROLE USING(M_NO)
+					<where>
+					<choose>
+					<when test="authorityCode == 0">
+					 	AUTHORITY_CODE = 1
+					</when>
+					<when test="authorityCode == 1">
+						ID NOT IN (SELECT ID
+									 FROM MEMBER
+									 JOIN MEMBER_ROLE USING(M_NO)
+									WHERE AUTHORITY_CODE IN (2, 3))
+					</when>
+					<when test="authorityCode == 2">
+						AUTHORITY_CODE = 2
+					</when>
+					</choose>
+					<if test="accLockYN != null">
+						AND ACC_LOCK_YN = #{accLockYN}
+					</if>
+					<if test="accSecessionYN != null">
+						AND ACC_SECESSION_YN = #{accSecessionYN}
+					</if>
+					<if test="searchDate != null and accSecession == 'Y'">
+						AND ACC_SECESSION_DATE &lt; #{searchDate}
+					</if>
+					<if test="searchKeyword != null">
+						AND ID LIKE '%' || #{searchKeyword} || '%'
+					</if>
+					</where>
+					 ORDER BY M_NO DESC
+					 ) A
+				)
+ 		 WHERE RNUM BETWEEN #{startRow} and #{endRow}
+	</select>
+	
 	<select id="getAllMemberList" resultMap="memberResultMap" parameterType="com.kh.khculture.admin.model.vo.Search">
 		SELECT *
 		  FROM (
@@ -54,32 +107,78 @@
 						  , AUTHORITY_CODE REF_AUTHORITY_CODE
 					  FROM MEMBER
 					  JOIN MEMBER_ROLE USING(M_NO)
-					<if test="authorityCode == 1">
-					 WHERE ID NOT IN (SELECT ID
-					 					FROM MEMBER
-					 					JOIN MEMBER_ROLE USING(M_NO)
-					 				   WHERE AUTHORITY_CODE IN (2, 3))
+					<where>
+					<choose>
+					<when test="authorityCode == 0">
+					 	AUTHORITY_CODE = 1
+					</when>
+					<when test="authorityCode == 1">
+						ID NOT IN (SELECT ID
+									 FROM MEMBER
+									 JOIN MEMBER_ROLE USING(M_NO)
+									WHERE AUTHORITY_CODE IN (2, 3))
+					</when>
+					<when test="authorityCode == 2">
+						AUTHORITY_CODE = 2
+					</when>
+					</choose>
+					<if test="accLockYN != null">
+						AND ACC_LOCK_YN = #{accLockYN}
 					</if>
-					<if test="authorityCode == 2">
-					 WHERE AUTHORITY_CODE = 2
+					<if test="accSecessionYN != null">
+						AND ACC_SECESSION_YN = #{accSecessionYN}
 					</if>
+					<if test="searchDate != null and accSecession == 'Y'">
+						AND ACC_SECESSION_DATE &lt; #{searchDate}
+					</if>
+					<if test="searchKeyword != null">
+						AND ID LIKE '%' || #{searchKeyword} || '%'
+					</if>
+					</where>
 					 ORDER BY M_NO DESC
 					 ) A
 				)
-		 WHERE RNUM BETWEEN #{startRow} and #{endRow}
 	</select>
-	<select id="getListCount" resultType="_int" parameterType="com.kh.khculture.admin.model.vo.Search">
+	
+	<select id="getSearchListCount" resultType="_int" parameterType="com.kh.khculture.admin.model.vo.Search">
 		SELECT COUNT(*)
 		  FROM MEMBER
 		  JOIN MEMBER_ROLE USING(M_NO)
-		<if test="authorityCode == 1">
-		 WHERE ID NOT IN (SELECT ID
-		 					FROM MEMBER
-		 					JOIN MEMBER_ROLE USING(M_NO)
-		 				   WHERE AUTHORITY_CODE IN (2, 3))
-		</if>
-		<if test="authorityCode == 2">
-		 WHERE AUTHORITY_CODE = 2
-		</if>
+		<where>
+			<choose>
+			<when test="authorityCode == 0">
+			 	AUTHORITY_CODE = 1
+			</when>
+			<when test="authorityCode == 1">
+				ID NOT IN (SELECT ID
+							 FROM MEMBER
+							 JOIN MEMBER_ROLE USING(M_NO)
+							 WHERE AUTHORITY_CODE IN (2, 3))
+			</when>
+			<when test="authorityCode == 2">
+				AUTHORITY_CODE = 2
+			</when>
+			</choose>
+			<if test="accLockYN != null">
+				AND ACC_LOCK_YN = #{accLockYN}
+			</if>
+			<if test="accSecessionYN != null">
+				AND ACC_SECESSION_YN = #{accSecessionYN}
+			</if>
+			<if test="searchDate != null">
+				AND ACC_SECESSION_DATE &lt; #{searchDate}
+			</if>
+			<if test="searchKeyword != null">
+				AND ID LIKE '%' || #{searchKeyword} || '%'
+			</if>
+		</where>
+	</select>
+	
+	<!-- 전체 회원 수 -->
+	<select id="getListCount" resultType="_int" parameterType="com.kh.khculture.admin.model.vo.Search">
+		SELECT COUNT(*)
+		  FROM MEMBER A
+		  JOIN MEMBER_ROLE B ON(A.M_NO = B.M_NO)
+		 WHERE B.AUTHORITY_CODE = 1
 	</select>
 </mapper>
