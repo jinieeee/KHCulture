@@ -102,6 +102,24 @@ public class PaymentController {
 	}
 	
 	
+	@GetMapping("/test/cancel")
+	public String cancelPayment() {
+
+		
+		// 임시 저장
+		int rNo = 1;
+		int lrNo = 1;
+		
+		int result = paymentService.cancelLectureBuy(rNo, lrNo);
+		
+
+		return "";
+	}
+	
+	
+	
+	
+	
 	@ResponseBody
 	@RequestMapping(value="/verification/{imp_uid}")
 	public IamportResponse<Payment> paymentByImpUid(
