@@ -55,7 +55,6 @@ public class ManagementController {
 		
 		List<LectureOpen3> openList = managementService.selectOpenList(startRow, endRow);
 		
-		log.info("check123 : {}", openList);
 		
 		model.addAttribute("openList", openList);
 		model.addAttribute("pi", pi);
@@ -80,8 +79,6 @@ public class ManagementController {
 		
 		model.addAttribute("lectureList", lectureList);
 		
-		log.info("lectureList : {}", lectureList);
-		log.info("pi : {}", pi);
 		
 		model.addAttribute("pi", pi);
 		
@@ -105,7 +102,6 @@ public class ManagementController {
 	@GetMapping("/lecturedelete/{lNo}")
 	public String lectureDelete(@PathVariable int lNo, RedirectAttributes rttr) {
 		
-		log.info("lNo : {}", lNo);
 		
 		String msg = "";
 		
@@ -133,8 +129,6 @@ public class ManagementController {
 	@ResponseBody
 	public List<Instructor> modalInstructor(@RequestBody SearchInstructor searchInstructor) {
 				
-		log.info("searchCondition : {}", searchInstructor);
-		
 		return managementService.selectInstructor(searchInstructor);
 	}
 	
@@ -158,7 +152,6 @@ public class ManagementController {
 		
 		String msg = "";
 		
-		log.info("lecture : {}", lecture);
 		
 		int result = managementService.updateLecture(lecture);
 		
@@ -178,7 +171,6 @@ public class ManagementController {
 		
 		String msg = "";
 		
-		log.info("lectureInfo : {}", lectureOpen);
 		
 		int result = managementService.registLectureOpen(lectureOpen);
 		

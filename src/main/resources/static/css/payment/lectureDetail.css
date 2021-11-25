@@ -1,7 +1,7 @@
 @charset "UTF-8";
 .detailContainer{
     display: flex;
-    margin: 100px auto;
+    margin: 0px auto;
     max-width: 1320px;
     min-height: 500px;
     flex-wrap: nowrap;
@@ -12,6 +12,7 @@
     min-width: 1320px;
 }
 .detailContainer > .content > .tagArea{
+	margin-top : 100px;
     max-width: 1320px;
     height: 40px;
     font-style: normal;
@@ -25,7 +26,7 @@
     justify-content: center;
     width: 100px;
     height: 40px;
-    background-color: #EEC37F;
+    background-color: red;
     color: white;
     align-items: center;
 }
@@ -34,7 +35,7 @@
     justify-content: center;
     width: 100px;
     height: 40px;
-    background-color: #000000;
+    background-color: #F0B95E;
     color: white;
     align-items: center;
 }
@@ -43,18 +44,18 @@
     justify-content: center;
     width: 100px;
     height: 40px;
-    background-color: #FBFEE1;
-    color: #000000;
+    background-color: gray;
+    color: white;
     align-items: center;
 }
-.detailContainer > .content > .titleArea{
+.detailContainer > .content > .titleAreaYJ{
     position: relative;
     padding-right: 220px;
     border-bottom: 3px solid black;
     width: 1320px;
     height: 168px;
 }
-.detailContainer > .content > .titleArea > p{
+.detailContainer > .content > .titleAreaYJ > p{
 
     font-style: normal;
     font-weight: 500;
@@ -65,10 +66,17 @@
     letter-spacing: 0.04em;
     word-break: keep-all;
 }
-.detailContainer > .content > .titleArea > .btnArea{
+.detailContainer > .content > .titleAreaYJ > .btnArea{
     position: absolute;
     right: 0;
     top: 0;
+}
+.detailContainer > .content > .titleAreaYJ > .btnArea > a{
+	display: inline-block;
+	width: 92px;
+    text-decoration: none;
+    color: black;
+    text-align: center;
 }
 .detailContainer > .content > .detailArea{
     width: 1320px;
@@ -150,7 +158,7 @@
     font-size: 26px;
     text-align: center;
 }
-.detailContainer > .content > .detailArea > .rightArea > .stateTextArea > em{
+.detailContainer > .content > .detailArea > .rightArea > .stateTextArea > span > em{
     color: red;
 }
 .detailContainer > .content > .listBtnArea{
@@ -158,6 +166,7 @@
     table-layout: fixed;
     width: 1320px;
     height: 70px;
+    margin-bottom: 100px;
 }
 .detailContainer > .content > .listBtnArea > .leftArea{
     float: left;
@@ -219,7 +228,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
+	z-index: 999;
     background: rgba(0,0,0,0.8);
     font-family: 'Noto Sans KR', sans-serif;
 }

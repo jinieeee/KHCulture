@@ -136,6 +136,13 @@
 	
 }
 
-a{
+.listContainer > .content > .pagingArea > .list_paging > li> a{
+	
 	text-decoration: none;
+	
+	color: #282A35;
+    width: 40px;
+    display: block;
+    text-align: center;
+
 }
