@@ -15,6 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -161,5 +162,24 @@ public class PaymentController {
 			
 	}
 	
-	
+	@PutMapping(value="cancel")
+	@ResponseBody
+	public String Cancel(@RequestParam(value="arr[]") List<Integer> arr, Principal principal){
+		String resultData = "";
+		UserImpl user = (UserImpl)((Authentication)principal).getPrincipal();
+		log.info("{}", arr); //강좌오픈번호
+		log.info("{}", user.getMno()); //유저번호
+//		int result = 0;
+//		for(Integer lrNo : arr) {
+//			//log.info("{}", lrNo);
+//			result += mypageService.deleteCart(lrNo, user.getMno());
+//		}
+//		
+//		if(result == arr.size()) {
+//			resultData = "성공";
+//		} else {
+//			resultData = "실패";
+//		}
+		return "성공";
+	}
 }

@@ -6,16 +6,25 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.kh.khculture.common.PageInfo;
 import com.kh.khculture.lecture.model.vo.LectureOpen;
+import com.kh.khculture.payment.model.vo.Payment;
 
 @Mapper
 public interface MypageMapper {
 	/* 김현주 */
 	List<LectureOpen> getCartList(int mno);
-	/* 김현주 */
-
+	
 	int getcartCount(int mno);
-//	int putCart(int mno, int lrNo);
 
 	int putCart(@Param("mno") int mno, @Param("lrNo") int lrNo);
+
+	int deleteCart(@Param("lrNo") Integer lrNo, @Param("mno") int mno);
+
+	int checkCart(@Param("mno") int mno, @Param("lrNo") int lrNo);
+
+	int getPaymentDetailsCount(int mno);
+
+	List<Payment> getPaymentDetails(Map<String, Object> map);
+	/* 김현주 */
 }

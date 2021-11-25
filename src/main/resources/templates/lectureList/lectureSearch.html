@@ -172,7 +172,7 @@
           </div>
         </div>
         <div class="lectureDiv">
-          <div class="lectureDesc">
+<!--           <div class="lectureDesc">
             <div class="lectureImg">
               <img
                 src="/images/upload/20181129114054.jpg"
@@ -201,7 +201,7 @@
                 <p>접수 중</p>
               </div>
           </div>
-          </div>
+          </div> -->
           
         
         </div>
@@ -653,7 +653,7 @@
 	 
 	 function putCart(mno, lrNo) {
 		 $.ajax({
-			 url : "/mypage/cart/put",
+			 url : "/mypage/cart/post",
 			 type : "post",
 			 data : {mno : mno, lrNo : lrNo},
 			 success : function(data) {
@@ -661,6 +661,10 @@
 						if(confirm('장바구니에 저장이 완료되었습니다. 장바구니 페이지로 이동하시겠습니까?')) {
 							location.href = "/mypage/cart";
 						}
+					} else if (data == '보류') {
+						alert('이미 장바구니에 저장된 강좌입니다.');
+					} else {
+						alert("장바구니 저장에 실패하였습니다.");
 					}
 			 },
 			 error : function(e) {

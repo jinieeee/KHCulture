@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>결제내역</title>
+    <title>구매내역</title>
     <link
       rel="stylesheet"
       href="/css/mypage/paymentDetailsStyle.css"
@@ -28,17 +28,19 @@
       rel="stylesheet"
     />
   </head>
+  <header th:include="fragments/header.html"></header>
   <body class="mypagePaymentDetails">
     <div class="titleArea">
-        <h1>결제내역</h1>
+        <h1>구매내역</h1>
     </div>
     <div class="paymentList">
         <div class="paymentWrap">
-        <table>
+        <table th:each="payment : ${paymentList}">
             <colgroup>
-                <col style="width: 5%;">
+                <col style="width: 15%;">
                 <col style="width: 15%;">
                 <col style="width: 45%;">
+                <col style="width: 15%;">
                 <col style="width: 15%;">
                 <col style="width: 15%;">
             </colgroup>
@@ -46,117 +48,175 @@
                 <tr>
                     <th scope="col">
                         <span class="bxCheck">
-                            <input type="checkbox">
+                            <input type="checkbox" class="selectAll">
                         </span>
                     </th>
                     <th scope="col" colspan="2">강좌정보</th>
                     <th scope="col">강사</th>
                     <th scope="col">수강료</th>
+                    <th scope="col">결제상태</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
+                <tr th:each="purchase : ${payment.purchaseList}">
                    <td> <span class="bxCheck">
-                    <input type="checkbox">
+                    <input type="checkbox" class="select">
+                    <input type="hidden" th:value="${purchase.lectureOpen.lrNo}">
+                    <input type="hidden" th:value="${#dates.format(purchase.lectureOpen.lrStartDate, 'yyyy-MM-dd')}">
                 </span></td>
                 <td>
                     <div class="imgBox">
-                        <img src="/images/lectureList/20181129114054.jpg" alt="">
+                        <img th:src="@{/images/upload/{img}(img=${purchase.lectureOpen.lecture.lThumbnail})}" alt="">
                     </div>
                 </td>
                 <td>
                     <div class="classInfo">
-                        <a href="#">
-                            *11/21* 예쁜 고양이 케이크
+                        <a href="#" th:text="|${#strings.substring(#dates.format(purchase.lectureOpen.lrStartDate, 'MM-dd'),0, 2)} / ${#strings.substring(#dates.format(purchase.lectureOpen.lrStartDate, 'MM-dd'),3, 5)} ${purchase.lectureOpen.lecture.lTitle}|">
+                            
                             </a>
-                        <p class="time">(일) 11:00 ~ 12:00</p>
+                        <p class="time" th:text="|(${#strings.substring(purchase.lectureOpen.lrDay,0,1)}) ${purchase.lectureOpen.lrStartTime} ~ ${purchase.lectureOpen.lrEndTime}|"></p>
                     </div>
                 </td>
-                <td>백종수</td>
-                <td>25,000dnjs</td>
-               
+                <td th:text="${purchase.lectureOpen.instructor.instructorName}"></td>
+                <td th:if="${purchase.lbStatus == 'N'}">0원</td>
+                <td th:if="${purchase.lbStatus == 'Y'}" th:text="|${purchase.lectureOpen.lrFee}원|"></td>
+               	 <td th:if="${purchase.lbStatus == 'N'}" >
+               	 	취소 완료 <br>
+               	 	<span th:text="${#dates.format(purchase.lbModifyDate, 'yyyy-MM-dd')}"></span>
+               	 </td>
+               	 <td th:if="${purchase.lbStatus == 'Y'}">구매 완료</td>
                 </tr>
             </tbody>
             <tfoot>
                 <tr>
                     <td colspan="2">
                         <div class="btnArea">
-                            <a href="#" class="btn btnType04 btnWhite"><span>선택 강좌 결제 취소</span></a>
+                            <a href="#" class="btn btnType04 btnWhite cancleBtn"><span>선택 강좌 결제 취소</span></a>
                         </div>
                     </td>
-                    <td colspan="3">
+                    <td colspan="4">
                         <div class="total">
-                            <span class="selNum">주문번호<em id="selectedClass">12-34</em></span>
-                            <span class="price">총 결제금액<em id="totalAmount">0</em>원</span>
+                            <span class="selNum">주문번호<em id="selectedClass" th:text="${payment.rNo}"></em>&nbsp;<span th:text="|(결제일 : ${#dates.format(payment.paymentDate, 'yyyy-MM-dd')})|"> </span></span>
+                            <span class="price">총 결제금액<em id="totalAmount" th:text="${#numbers.formatInteger(payment.total, 0, 'COMMA')}">0</em>원</span>
                         </div>
                     </td>
                     
                 </tr>
             </tfoot>
         </table>
-        <table>
-            <colgroup>
-                <col style="width: 5%;">
-                <col style="width: 15%;">
-                <col style="width: 45%;">
-                <col style="width: 15%;">
-                <col style="width: 15%;">
-            </colgroup>
-            <thead>
-                <tr>
-                    <th scope="col">
-                        <span class="bxCheck">
-                            <input type="checkbox">
-                        </span>
-                    </th>
-                    <th scope="col" colspan="2">강좌정보</th>
-                    <th scope="col">강사</th>
-                    <th scope="col">수강료</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                   <td> <span class="bxCheck">
-                    <input type="checkbox">
-                </span></td>
-                <td>
-                    <div class="imgBox">
-                        <img src="/images/lectureList/20181129114054.jpg" alt="">
-                    </div>
-                </td>
-                <td>
-                    <div class="classInfo">
-                        <a href="#">
-                            *11/21* 예쁜 고양이 케이크
-                            </a>
-                        <p class="time">(일) 11:00 ~ 12:00</p>
-                    </div>
-                </td>
-                <td>백종수</td>
-                <td>25,000dnjs</td>
-               
-                </tr>
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td colspan="2">
-                        <div class="btnArea">
-                            <a href="#" class="btn btnType04 btnWhite"><span>선택 강좌 결제 취소</span></a>
-                        </div>
-                    </td>
-                    <td colspan="3">
-                        <div class="total">
-                            <span class="selNum">주문번호<em id="selectedClass">12-34</em></span>
-                            <span class="price">총 결제금액<em id="totalAmount">0</em>원</span>
-                        </div>
-                    </td>
-                    
-                </tr>
-            </tfoot>
-        </table>
+<!--         	 페이징 처리 -->
+      <ul class="paymentPaging">
+        	<li><a th:href="@{?page=1}">&lt;&lt;</a></li>
+		    
+		       	<li th:if="${ pi.page > 1 }">
+		       		<a th:href="@{?page={page}(page =  ${pi.page-1})}">&lt;</a>
+		       	</li>
+		       	<li th:if="${ pi.page == 1 }">
+		       		<a href="#">&lt;</a>
+		       	</li>
+	       	
+	
+	        	<th:block th:with="start=${pi.startPage}, end=${pi.endPage}">
+	        		<li th:with="start=${pi.startPage}, end=${pi.endPage}" th:each="pageNum : ${#numbers.sequence(start,end)}">
+	        			<a th:if="${pi.page == pageNum}" th:href="@{/mypage/paymentDetails/?page={page}(page = ${pageNum})}" th:text=${pageNum} class="current_page"></a>
+	        			<a th:if="${pi.page != pageNum}" th:href="@{/mypage/paymentDetails/?page={page}(page = ${pageNum})}" th:text=${pageNum}></a>
+	        		</li>
+	        	</th:block>
+	        		
+		        <li th:if="${ pi.page < pi.maxPage }">
+		       		<a th:href="@{?page={page}(page =  ${pi.page+1})}">&gt;</a>
+		       	</li>
+		       	<li th:if="${ pi.page == pi.maxPage }">
+		       		<a href="#">&gt;</a>
+		       	</li>
+	        
+	        	<li><a th:href="@{?page={page} (page = ${pi.maxPage})}">&gt;&gt;</a></li>
+	        	
+        </ul>
     </div>
 </div>
 
 <script src="/js/lectureList/paymentDetailsjs.js"></script>
+<script>
+//결제 취소
+$('.cancleBtn').on('click', function(){
+	let parent = this.closest("table");
+	let select = parent.querySelectorAll(".select:checked");
+	if(select.length == 0) {
+		alert("구매 취소할 강좌를 선택해주세요.");
+		return;
+	}
+	let today = new Date();
+	today.setHours(0);
+	today.setMinutes(0);
+	today.setSeconds(0);
+	today.setMilliseconds(0);
+	
+	let standard = 'possible';
+	select.forEach(select => {
+		let startDateString = select.parentElement.lastElementChild.value;
+		
+		let startDate = new Date();
+		startDate.setHours(0);
+		startDate.setMinutes(0);
+		startDate.setSeconds(0);
+		startDate.setMilliseconds(0);
+		
+		startDate.setFullYear(startDateString.substr(0, 4));
+		startDate.setMonth(startDateString.substr(5, 2)-1);
+		startDate.setDate(startDateString.substr(8, 2));
+		if(today.getTime() >= startDate.getTime()) {
+			standard = 'impossible';
+		}
+	})
+	if(standard == 'impossible') {
+		alert("이미 개강이 된 강좌는 구매 취소할 수 없습니다. 강좌를 다시 확인해주시기 바랍니다.");
+		return;
+	}
+	let lectureArr = [];
+	select.forEach(select => {
+		lectureArr.push(select.nextElementSibling.value);
+	})
+	
+	//console.log(lectureArr);
+	$.ajax({
+		url : "/payment/cancel",
+		data : {arr : lectureArr},
+		type : "put",
+		success : function(data) {
+			console.log(data);
+		},
+		error : function(e) {
+			console.log(e);
+		}
+	});
+	
+})
+
+
+$('.paymentList .selectAll').change(function(){
+	let parent = this.closest("table");
+	let select = parent.querySelectorAll(".select");
+    if($(this).is(":checked")) {
+        $(select).prop('checked', true);
+    } else {
+        $(select).prop('checked', false);
+    }
+    
+})
+
+$('.paymentList .select').change(function(){
+	let parent = this.closest("table");
+    let inputCnt = parent.querySelectorAll('.select').length;
+    let checkedCnt = parent.querySelectorAll('.select:checked').length;
+    if(inputCnt == checkedCnt) {
+        $(parent.querySelector('.selectAll')).prop('checked', true);
+    } else {
+    	$(parent.querySelector('.selectAll')).prop('checked', false);
+    }
+})
+</script>
   </body>
+    <footer th:include="fragments/footer.html"></footer>
+  
 </html>
