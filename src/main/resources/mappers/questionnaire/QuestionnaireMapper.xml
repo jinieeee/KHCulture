@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kh.khculture.questionnaire.model.dao.QuestionnaireMapper">
+
+<resultMap type="com.kh.khculture.questionnaire.model.vo.Questionnaire" id="qResultMap">
+    <id property="questionnaire_no" column="QUESETIONNAIRE_NO"/>
+    <result property="questionnaire_title" column="QUESTIONNAIRE_TITLE"/>
+    <result property="questionnaire_content" column="QUESTIONNAIRE_CONTENT"/>
+    <result property="q_enroll_date" column="Q_ENROLL_DATE"/>
+    <result property="q_status" column="Q_STATUS"/>
+    <result property="m_no" column="M_NO"/>
+</resultMap>
+<resultMap type="com.kh.khculture.questionnaire.model.vo.QuestionnaireAnswer" id="aResultMap">
+    <id property="answer_no" column="ANSWER_NO"/>
+    <result property="enroll_enswer" column="ENROLL_ANSWER"/>
+    <result property="a_enroll_date" column="A_ENROLL_DATE"/>
+    <result property="a_status" column="A_STATUS"/>
+    <result property="questionnaire_no" column="QUESTIONNAIRE_NO"/>
+    <result property="m_no" column="M_NO"/>
+</resultMap>
+
+    <select id="getList" resultType="com.kh.khculture.questionnaire.model.vo.Questionnaire">
+         select questionnaire_no, questionnaire_title, questionnaire_content, to_char(q_enroll_date, 'YYYY-MM-DD') q_enroll_date, q_status 
+           from questionnaire
+           order by questionnaire_no DESC
+    </select>
+    <select id="questionnaireDetail" parameterType="int" resultType="com.kh.khculture.questionnaire.model.vo.Questionnaire">
+         select questionnaire_no, questionnaire_title, questionnaire_content, 
+                to_char(q_enroll_date, 'YYYY-MM-DD') q_enroll_date, q_status 
+           from questionnaire
+          where q_status='Y'
+            and questionnaire_no = #{questionnaire_no}
+       order by questionnaire_no DESC
+    </select>
+    <insert id="questionnaireInsert" parameterType="com.kh.khculture.questionnaire.model.vo.Questionnaire">
+         insert into questionnaire
+         (questionnaire_no, questionnaire_title, questionnaire_content, q_enroll_date, q_status, m_no)
+         values(SEQ_QNO.NEXTVAL, DEFAULT, #{ questionnaire_content }, SYSDATE, DEFAULT, #{ m_no })
+    </insert>
+    <delete id="questionnaireDelete" parameterType="com.kh.khculture.questionnaire.model.vo.Questionnaire"> 
+         delete from questionnaire  where questionnaire_no=#{questionnaire_no}
+    </delete>
+    
+    
+    <!-- 관리자 기능 -->
+    <insert id="answerInsert" parameterType="com.kh.khculture.questionnaire.model.vo.QuestionnaireAnswer">
+          insert into questionnaire_answer
+          (answer_no, enroll_answer, a_enroll_date, a_status, questionnaire_no, m_no)
+          values(seq_answer_no.nextval, SYSDATE, DEFAULT, #{ questionnaire_no }, #{ m_no })
+    </insert>
+    <delete id="answerDelete" parameterType="com.kh.khculture.questionnaire.model.vo.QuestionnaireAnswer">
+          delete from questionnaire_answer where answer_no=#{ answer_no}
+    </delete>
+    
+</mapper>

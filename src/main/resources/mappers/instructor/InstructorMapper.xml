@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kh.khculture.instructor.model.dao.InstructorMapper">
+     <select id="getList" resultType="com.kh.khculture.instructor.model.vo.Instructor">
+         SELECT
+                INSTRUCTOR_NO
+              , INSTRUCTOR_NAME
+              , PROFILE_PHOTO
+              , BIRTH_DATE
+              , INSTRUCTOR_PHONE
+              , CAREER
+           FROM INSTRUCTOR
+     </select>
+</mapper>
