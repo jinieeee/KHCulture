@@ -35,7 +35,6 @@ public class AdminServiceImpl implements AdminService{
 		int listCount = adminMapper.getListCount();
 		
 		// 검색조건에 맞는 회원수
-		int searchListCount = 0;
 		List<Member> allSearchList = adminMapper.getAllMemberList(search);
 		
 		// 페이징 처리
