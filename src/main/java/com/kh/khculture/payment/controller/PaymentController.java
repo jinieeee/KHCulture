@@ -15,6 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,10 +50,16 @@ public class PaymentController {
 	
 	
 	@GetMapping("/lecture/detail/{lrNo}")
-	public String lectureDetail(Model model, @PathVariable int lrNo) {
+	public String lectureDetail(Model model, @PathVariable int lrNo, Principal principal) {
 		
 		
 		LectureDetail lectureDetail = paymentService.selectOneLectureOpen(lrNo);
+		
+		if(principal != null) {
+			UserImpl user = (UserImpl)((Authentication)principal).getPrincipal();
+			model.addAttribute("mno", user.getMno());
+			
+		}
 		
 		Date receiptDate = new Date(lectureDetail.getLrStartDate().getYear(),
 				lectureDetail.getLrStartDate().getMonth()-1, lectureDetail.getLrStartDate().getDate());
@@ -68,8 +75,7 @@ public class PaymentController {
 	
 	
 	@GetMapping("/payment/procedure")
-//	public String postLecturePayment(@RequestParam String[] lrNo) {
-	public String postLecturePayment(Model model, Principal principal) {
+	public String postLecturePayment(Model model, Principal principal, @RequestParam String[] lrNo) {
 		
 		
 		if(principal != null) {
@@ -81,9 +87,6 @@ public class PaymentController {
 			model.addAttribute("email", user.getEmail());
 		}
 		
-		
-		
-		String[] lrNo = {"3"};		
 		
 		List<Integer> lrNoList = new ArrayList<Integer>();
 		
@@ -160,6 +163,33 @@ public class PaymentController {
 		
 			
 	}
+	
+	@PutMapping(value="/payment/cancel")
+	@ResponseBody
+	public String Cancel(@RequestParam(value="arr[]") List<Integer> arr, Principal principal, @RequestParam int rNo){
+		
+		int result1 = 0;
+		int result2 = 0;
+		int result1Old = 0;
+		for(int lrNo : arr) {
+			
+			result1 += paymentService.cancelLectureBuy(rNo, lrNo);
+			if(result1 == result1Old) {return "실패";}
+			
+			result2 += paymentService.updateDecreaseLrCount(lrNo);
+			
+			result1Old = result1;
+		}
+		
+		if(result1 == arr.size() && result2 ==arr.size()) {
+			
+			return "성공";
+			
+		}
+		
+		return "실패";
+	}
+	
 	
 	
 }

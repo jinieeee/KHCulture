@@ -12,6 +12,8 @@ import com.kh.khculture.admin.model.vo.Search;
 import com.kh.khculture.common.PageInfo;
 import com.kh.khculture.member.model.vo.Member;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Service
 public class AdminServiceImpl implements AdminService{
 
@@ -27,22 +29,27 @@ public class AdminServiceImpl implements AdminService{
 	public Map<String, Object> getAllMemberList(Search search) {
 		Map<String, Object> map = new HashMap<>();
 		PageInfo pi = null;
-		int listCount = 0;
+		// 전체 회원수
+		int listCount = adminMapper.getListCount();
+		
+		// 검색조건에 맞는 회원수
+		int searchListCount = 0;
 		
 		// 페이징 처리
 		if((Integer)search.getPage() != null) {
-			listCount = adminMapper.getListCount(search);
-			pi = new PageInfo(search.getPage(), listCount, 10, 10);
+			searchListCount = adminMapper.getSearchListCount();
+			pi = new PageInfo(search.getPage(), searchListCount, 10, 10);
 			search.setStartRow((pi.getPage() - 1) * pi.getBoardLimit() + 1);
 			search.setEndRow(search.getStartRow() + pi.getBoardLimit() - 1);
 		}
-		
-		List<Member> memberList = adminMapper.getAllMemberList(search);
 
+		List<Member> memberList = adminMapper.getPageMemberList(search);
+		List<Member> allSearchList = adminMapper.getAllMemberList(search);
+	
 		map.put("pi", pi);
 		map.put("memberList", memberList);
+		map.put("searchListcount", allSearchList.size());
 		map.put("listCount", listCount);
 		return map;
 	}
-
 }

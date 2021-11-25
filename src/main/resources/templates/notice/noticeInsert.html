@@ -22,10 +22,46 @@
 <script src="/summernote/summernote-ko-KR.js"></script>
 <link rel="stylesheet" href="/css/summernote/summernote-lite.css">
 
-<!-- notice CSS 폴더 -->
+<!-- notice CSS 폴더
 <link href="/css/mypage/notice.css" rel="stylesheet">
+ -->
+<style>
+.notice_insert_boundary{
+    width: 1000px; /* 이 폭을 줄이면 세부폭은 알아서 따라옴 */
+    margin: 0 auto;
+    margin-bottom: 10px;
+    background-color: antiquewhite;
+}
+#Lname , #Ltitle ,#Limage ,#Lcomment{
+    padding: 8px 10px;
+    border-bottom: 1px solid black;
+}
+#Lname2 , #Ltitle2 ,#Limage2 ,#Lcomment2{
+    padding: 10px;
+}
+#notice_insert{
+    width: 800px;
+    height:50px;
+}
+#notice_insert2{
+    width: 99%;
+    height: 645px;
+}
+.btn_area {
+text-align :center;
+margin-top: 20px;
+margin-bottom: 20px;
+padding-bottom: 20px;
 
-
+}
+.button {
+    width: 100px;
+    height: 50px;
+    font-size: 20px;
+    border: 1px solid;
+    background-color: burlywood;
+}
+</style>
 </head>
 <header th:include="fragments/header.html"></header>
 <body>
@@ -51,8 +87,8 @@
             
             	<input type="hidden" name="m_no" value=1>
             </div>
-            <div align="center" style="margin-top: 20px;margin-bottom: 20px;padding-bottom: 20px;">
-                <span><button type="submit" class="button">등록하기</button></span>
+            <div class="btn_area" >
+                <span><button type="submit" class="button" style="margin-right: 32px;">등록하기</button></span>
 		        <button type="button" class="button" onclick="location.href='/notice/noticeList'">취소하기</button>
             </div>
         </form>

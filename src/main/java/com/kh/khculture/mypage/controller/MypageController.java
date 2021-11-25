@@ -2,6 +2,7 @@ package com.kh.khculture.mypage.controller;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -9,9 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.kh.khculture.lecture.model.vo.LectureOpen;
 import com.kh.khculture.member.model.vo.UserImpl;
 import com.kh.khculture.mypage.model.service.MypageService;
+import com.kh.khculture.payment.model.vo.Payment;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -50,27 +52,38 @@ public class MypageController {
 		return lecturelist;
 	}
 	
-	@PostMapping(value="cart/put")
+	@PostMapping(value="cart/post")
 	@ResponseBody
 	public String putCart(@RequestParam int mno, @RequestParam int lrNo){
-		String resultData = "";
 		
-		int result = mypageService.putCart(mno, lrNo);
-		if(result > 0) {
-			resultData = "성공";
+		int check = mypageService.checkCart(mno, lrNo);
+		String resultData = "";
+		if (check == 0) {
+			int result = mypageService.putCart(mno, lrNo);
+			if(result > 0) {
+				resultData = "성공";
+			} else {
+				resultData = "실패";
+			}
 		} else {
-			resultData = "실패";
+			resultData = "보류";
 		}
+		
 		return resultData;
 	}
 	
-	@DeleteMapping(value="cart/delete")
+	@PutMapping(value="cart/put")
 	@ResponseBody
-	public String deleteCart(@RequestParam int mno, @RequestParam int lrNo){
+	public String deleteCart(@RequestParam(value="arr[]") List<Integer> arr, Principal principal){
 		String resultData = "";
+		UserImpl user = (UserImpl)((Authentication)principal).getPrincipal();
+		int result = 0;
+		for(Integer lrNo : arr) {
+			//log.info("{}", lrNo);
+			result += mypageService.deleteCart(lrNo, user.getMno());
+		}
 		
-		int result = mypageService.putCart(mno, lrNo);
-		if(result > 0) {
+		if(result == arr.size()) {
 			resultData = "성공";
 		} else {
 			resultData = "실패";
@@ -79,9 +92,15 @@ public class MypageController {
 	}
 	
 	@GetMapping("paymentDetails")
-	public String getPaymentDetails() {
+	public String getPaymentDetails(Model model, Principal principal, @RequestParam(value="page", defaultValue="1") int page) {
+		UserImpl user = (UserImpl)((Authentication)principal).getPrincipal();
+		Map<String, Object> returnMap = mypageService.getPaymentDetails(user.getMno(), page);
+		log.info("{}", returnMap);
+		model.addAttribute("pi", returnMap.get("pi"));
+		model.addAttribute("paymentList", returnMap.get("paymentList"));
 		return "mypage/paymentDetails";
 	}
+	
 	/* 김현주 */
 	
 }

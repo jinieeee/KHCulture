@@ -4,13 +4,107 @@
 <meta charset="UTF-8">
 <title>noticeDetail</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link href="/css/mypage/notice.css" rel="stylesheet">
+<!-- <link href="/css/mypage/notice.css" rel="stylesheet"> -->
+<style>
+.notice_detail_title{
+    width: 1200px; /* 이 폭을 줄이면 세부폭은 알아서 따라옴 */
+    height: 60px;
+    margin: 0 auto;
+    background-color: #F0B95E;
+    display: flex;
+    margin-top: 100px;
+    font-size: 20px;
+}
+#notice_category2{
+    width: 150px;
+    padding: 16px 10px 10px;
+    border-right: 3px solid black;
+   /* background-color: aquamarine;*/
+    
+}
+#notice_comment2{
+    width: 830px;
+    padding: 16px 10px 10px;
+    border-right: 3px solid black;
+   /* background-color: aquamarine;*/
+    
+}
+#notice_date2{
+    width: 150px;
+    padding: 16px 10px 10px;
+   /* background-color: aquamarine;*/
+}
+
+.notice_detail_comment{
+    width: 1200px; /* 이 폭을 줄이면 세부폭은 알아서 따라옴 */
+    height: 645px;
+    margin: 0 auto;
+    margin-bottom: 10px;
+   background-color: antiquewhite;
+    text-align: center; /*이미지 가운데 정렬*/
+    font-size: 10px;
+}
+
+.notice_detail_button{
+    width: 1200px; /* 이 폭을 줄이면 세부폭은 알아서 따라옴 */
+    margin: 0 auto;
+    margin-bottom: 10px;
+    /*background-color: cadetblue;*/
+}
+.button{
+    width: 90px;
+    height: 30px;
+    background-color: #F0B95E;
+    border: none;
+}
+
+.notice_detail_reply{
+    width: 1007px; /* 이 폭을 줄이면 세부폭은 알아서 따라옴 */
+    margin: 0 auto;
+    margin-bottom: 10px;
+    /*background-color: cadetblue;*/
+}
+.notice_reply_select{
+    display: flex;
+    padding: 8px 10px;
+    border-bottom: 1px solid #F0B95E;
+}
+#reply_name{ 
+    border-right: 2px solid black;
+    padding: 8px 20px;
+}
+#reply_comment2{
+    width: 700px;
+    border-right: 2px solid black;
+    padding: 8px 10px;
+    background-color: antiquewhite;
+}
+#reply_date{
+    padding: 8px 10px;
+    margin-right: 15px;
+}
+
+.notice_detail_reply_insert{
+    display: flex;
+    justify-content: space-evenly;
+    padding: 8px 10px;
+
+}
+#notice_reply_insert{
+    width: 770px;
+    border: 1px solid orangered;
+    margin-right: 15px;
+}    
+
+</style>
 </head>
 <header th:include="fragments/header.html"></header>
 <body>
    <form method="get" action="/notice/updateView">
+   
 		<input type="hidden" name="n_no" th:value="${notice.n_no}">
 	    <div class="notice_detail_title">
+	    
 	        <div id="notice_category2">공지사항</div>
 	        <div id="notice_comment2" th:text="${notice.n_title}"></div>
 	        <div id="notice_date2" th:text="${notice.n_enroll_date}"></div>
@@ -28,13 +122,14 @@
 	    </div>
    
    </form> 
+   
     <div class="notice_detail_reply">
         <div class="notice_reply_select">
             <div id="reply_name">양*하</div> 
             <div id="reply_comment2">언제나 좋은 강의 개설해주셔서 감사합니다. ^__^</div> 
             <div id="reply_date">2021-11-15</div>
             <!-- 본인이 쓴 댓글에만 활성화됨-->
-            <button type="button" id="reply_update" class="button">수정</button>
+            <button type="button" class="button">수정</button>
    		</div>
    </div>  
    

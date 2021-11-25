@@ -37,7 +37,8 @@
       display: flex;
       justify-content: center;
       flex-direction: column;
-      width: 900px;
+      width: 1000px;
+      min-height : 572px;
     }
     .mypagePaymentDetails .paymentList .paymentWrap table{
     width: 100%;
@@ -163,6 +164,30 @@
     word-break: break-all;
   }
 
+.mypagePaymentDetails .paymentPaging{
+    line-height: 50px;
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    margin: 0 auto;
+    padding: 0;
+    
+    margin-bottom : 50px;
+}
+
+.mypagePaymentDetails .paymentPaging a{
+    text-decoration: none;
+    color: #282A35;
+    width: 40px;
+    display: block;
+    text-align: center;
+}
+
+
+.mypagePaymentDetails .paymentPaging a.current_page{
+border-bottom: 2px solid #282A35;
+    font-weight: bold;
+}
 a:link, a:visited, a:hover, a:active, a:focus {
     text-decoration: none;
 }
