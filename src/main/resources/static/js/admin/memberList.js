@@ -88,3 +88,53 @@ $(".oneChecked").change(function(){
 	}
 });
 
+// 선택된 회원번호 리스트
+function confirmChk(){
+	var arr = [];
+	document.querySelectorAll(".oneChecked:checked").forEach((e) => {
+		arr.push(e.value);
+	});
+	return arr;
+}
+
+// 비밀번호 초기화
+function pwdReset(){
+	var arr = confirmChk();
+	// console.log(arr.length);
+	if(arr.length > 0){
+		$(".editForm").attr("action", pwdResetUrl);
+		$(".editForm input[type=hidden]").val(arr);
+		$(".editForm").submit();
+	} else {
+		alert("비밀번호를 초기화할 회원을 선택하세요");
+	}
+}
+
+// 계정삭제
+function deleteAcc(){
+	var count = 0;
+	var arr = [];
+	document.querySelectorAll(".oneChecked:checked").forEach((e) => {
+		var accSecessionYN = e.parentNode.parentNode.lastElementChild.textContent;
+		if(accSecessionYN == 'N') {
+			count++;
+		} else {
+			arr = confirmChk();
+		}
+	});
+	if(count > 0) {
+		alert("탈퇴하지 않은 회원은 계정을 삭제할 수 없습니다");
+	} else {
+		$(".editForm").attr("action", deleteAccUrl);
+		$(".editForm input[type=hidden]").val(arr);
+		$(".editForm").submit();
+	}
+}
+
+// 등급 변경
+function roleUpate(){
+	var arr = confirmChk();
+	$(".editForm").attr("action", roleUpateUrl);
+	$(".editForm input[type=hidden]").val(arr);
+	$(".editForm").submit();
+}

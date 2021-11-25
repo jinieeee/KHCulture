@@ -61,12 +61,9 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                 <ul class="depth2 submenu">
                     <li><a href="#">강의관리</a></li>
                     <li><a href="/instructor/list">강사관리</a></li>
-                    <li><a href="#">회원관리</a>
+                    <li><a href="/admin/memberList">회원관리</a>
                     <li><a href="/questionnarire/list">1:1 문의</a></li>
                     <li><a href="/statistics/graph">현황 통계</a></li>
-                    <th:block sec:authorize="hasRole('HEAD')">
-                    <li><a href="#">관리자목록</a>
-                    </th:block>
                 </ul>
             </li>
             </th:block>
