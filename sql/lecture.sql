@@ -129,21 +129,21 @@ REFERENCES "LECTURE" (
 
 
 insert into lecture_registration values (
-1 
+120
 ,20
-, 2
-, '2021-11-19'
+, 5
 , '2021-11-26'
-, 2
-, '월'
-, '13:00'
-, '15:00'
+, '2021-11-26'
+, 1
+, '금요일'
+, '16:00'
+, '16:500'
 , sysdate
 , sysdate
 , DEFAULT
-, 1
-, 2
-, to_char(77000, '99,999')
+, 10
+, 120
+, to_char(22000, '99,999')
 );
 
 
@@ -173,3 +173,83 @@ commit;
 --alter table lecture_registration drop column LR_FEE;
 --alter table lecture_registration modify LR_FEE not null;
 --update lecture_registration set LR_FEE = null;
+
+insert into lecture values (
+120
+, '글렌도만 영재교실'
+, '20211027113114.jpg'
+, sysdate
+, sysdate
+, default
+, 2
+, 3
+, '테스트'
+);
+
+
+select 
+		count(*) 
+        from receipt
+        join lecture_buy using (r_no)
+		join lecture_registration using (lr_no)
+		join lecture using (l_no)
+		join instructor using (instructor_no)
+		where lr_status = 'N' and m_no = 20;
+        
+select 
+				* 
+		        from receipt
+		        join lecture_buy using (r_no)
+				join lecture_registration using (lr_no)
+				join lecture using (l_no)
+				join instructor using (instructor_no)
+				where lr_status = 'N' and m_no = 20;
+                
+insert into lecture_buy values (
+1
+, 2
+, default
+, sysdate
+, sysdate
+);
+
+commit;
+
+select *
+		from(
+		select
+		rownum rnum, A.*
+		from(
+		select 
+				* 
+		        from receipt
+		        join lecture_buy using (r_no)
+				join lecture_registration using (lr_no)
+				join lecture using (l_no)
+				join instructor using (instructor_no)
+				where lr_status = 'N' and m_no = 20
+		) A
+		) where rnum between 1 and 10;
+        
+select
+*
+from (
+select
+*
+from (
+select 
+rownum rnum, A.*
+from ( 
+select
+*
+from receipt
+where m_no = 20
+order by r_no desc
+) A
+) where rnum between 1 and 10
+)
+ join lecture_buy using (r_no)
+				join lecture_registration using (lr_no)
+				join lecture using (l_no)
+				join instructor using (instructor_no);
+                

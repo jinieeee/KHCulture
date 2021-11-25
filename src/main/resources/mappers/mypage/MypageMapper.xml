@@ -42,7 +42,7 @@
 			        and m_no = #{mno}
 			        order by lr_start_date asc
 	</select>
-	<select id="getcartCount" parameterType="_int" resultType="_int">
+	<select id="checkCart" parameterType="_int" resultType="_int">
 		select 
 		count(*) 
         from cart
@@ -50,7 +50,8 @@
 		join lecture using (l_no)
 		join instructor using (instructor_no)
 		where lr_status = 'N' and c_status = 'N'
-        and m_no = #{mno}
+        and m_no = #{mno} 
+        and lr_no = #{lrNo}
 	</select>
 	<insert id="putCart" parameterType="_int">
 		insert into cart
@@ -61,6 +62,53 @@
 		, default
 		)
 	</insert>
-
-
+	<update id="deleteCart" parameterType="_int">
+		update cart
+		set c_status = 'Y'
+		where m_no = #{mno}
+		and lr_no = #{lrNo}
+	</update>
+	<resultMap type="com.kh.khculture.payment.model.vo.Payment" id="selectPaymentResultMap">
+		<id property="rNo" column="r_no"></id>
+		<result property="paymentDate" column="payment_date"></result>
+		<result property="mNo" column="m_no"></result>
+		<collection property="purchaseList" resultMap="purchaseListResultMap"/>
+	</resultMap>
+	<resultMap type="com.kh.khculture.payment.model.vo.Purchase" id="purchaseListResultMap">
+		<id property="rNo" column="r_no"></id>
+		<id property="lrNo" column="lr_no"></id>
+		<result property="lbStatus" column="lb_status"/>
+		<result property="lbEnrollDate" column="lb_enroll_date"/>
+		<result property="lbModifyDate" column="lb_modify_date"/>
+		<association property="lectureOpen" resultMap="selectListResultMap"></association>
+	</resultMap>
+	<select id="getPaymentDetails" parameterType="hashmap" resultMap="selectPaymentResultMap">
+		select
+			*
+			from (
+			select
+			*
+			from (
+			select 
+			rownum rnum, A.*
+			from ( 
+			select
+			*
+			from receipt
+			where m_no = #{mno}
+			order by r_no desc
+			) A
+			) where rnum between #{startrow} and #{endrow}
+			)
+			join lecture_buy using (r_no)
+			join lecture_registration using (lr_no)
+			join lecture using (l_no)
+			join instructor using (instructor_no)
+	</select>
+	<select id="getPaymentDetailsCount" parameterType="_int" resultType="_int">
+	select
+			count(*)
+			from receipt
+			where m_no = #{mno}
+	</select>
 </mapper>

@@ -64,7 +64,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
+                <!-- <tr>
                    <td> <span class="bxCheck">
                     <input type="checkbox" class="select">
                 </span></td>
@@ -86,7 +86,7 @@
                 <td>
                     <span>접수 중</span>
                 </td>
-                </tr>
+                </tr> -->
                 
             </tbody>
             <tfoot>
@@ -116,20 +116,33 @@
 	
 	function deleteCart() {
 		
+		let selectLecture = document.querySelectorAll(".cartList .select:checked");
+		let arr = [];
+		selectLecture.forEach(select => {
+			arr.push(select.value);
+		});
 		
-		
-		
-		/* $.ajax({
-			url : "/mypage/cart/delete",
-			data : {},
-			type : "delete",
+		let deleteCnt = $('.cartList .select:checked').length;
+		if(!confirm(deleteCnt + "개의 강좌를 장바구니에서 삭제하시겠습니까?")) {
+			return;
+		}
+		 $.ajax({
+			url : "/mypage/cart/put",
+			data : {arr : arr},
+			type : "put",
 			success : function(data) {
 				console.log(data);
+				if(data == '성공') {
+					alert(deleteCnt + "개의 장바구니에서 삭제되었습니다.");
+					location.href = "/mypage/cart"
+				} else {
+					alert("장바구니에서 강좌 삭제에 실패하였습니다.");
+				}
 			},
 			error : function(e) {
 				console.log(e);
 			}
-		}); */
+		});
 	}
 
 	 $(function() {
@@ -141,70 +154,74 @@
 	  				tbodyDiv.innerHTML = ``;
 	  				
 	  				let html = ``;
-	  				for(let key in data) {
-	  					
-		  				let lectureStatus = ``;	
-		  				let nowDate = new Date(); //오늘
-			        	let lecDate = new Date(); //강의시작날짜
-			        	
-			        	nowDate.setHours(0);
-			        	nowDate.setMinutes(0);
-			        	nowDate.setSeconds(0);
-			        	nowDate.setMilliseconds(0);
-			        	
-			        	lecDate.setHours(0);
-			        	lecDate.setMinutes(0);
-			        	lecDate.setSeconds(0);
-			        	lecDate.setMilliseconds(0);
-			        	
-			        	lecDate.setFullYear(data[key].lrStartDate.substr(0, 4));
-			        	lecDate.setMonth(data[key].lrStartDate.substr(5, 2)-1);
-			        	lecDate.setDate(data[key].lrStartDate.substr(8, 2));
-			        	
-			        	let openDate = new Date(); //접수 오픈 날짜
-			        	openDate.setFullYear(lecDate.getFullYear());
-			        	openDate.setMonth(lecDate.getMonth());
-			        	openDate.setDate(lecDate.getDate());
-			        	openDate.setDate(openDate.getDate() - 30);
-			        	openDate.setHours(0);
-			        	openDate.setMinutes(0);
-			        	openDate.setSeconds(0);
-			        	openDate.setMilliseconds(0);
-			        	
-		  				if(lecDate <= nowDate) {
-		  					lectureStatus = `<span class="applyImpossible">접수 마감</span>`;	
-		  				} else if (data[key].lrCount == data[key].lrCapacity) {
-		  					lectureStatus = `<span class="applyFull">정원 마감</span>`;	
-		  				} else if (openDate > nowDate) {
-		  					lectureStatus = `<span class="applyPlan">접수 예정</span>`;
-		  				} else {
-		  					lectureStatus = `<span class="applyPossible">접수 중</span>`;
-		  				}
-	  					
-	  					html += `
-	  						<tr>
-	  	                   <td> <span class="bxCheck">
-	  	                    <input type="checkbox" name="lrNo" class="select" value="` + data[key].lrNo + `"><input type="hidden" value="` + data[key].lrFee + `">
-	  	                </span></td>
-	  	                <td>
-	  	                    <div class="imgBox">
-	  	                        <img src="/images/upload/` + data[key].lecture.lthumbnail + `" alt="">
-	  	                    </div>
-	  	                </td>
-	  	                <td>
-	  	                    <div class="classInfo">
-	  	                        <a href="#">` + data[key].lrStartDate.substr(5, 2) + `/` + data[key].lrStartDate.substr(8, 2) + ` ` + data[key].lecture.ltitle + 
-	  	                            `</a>
-	  	                        <p class="time">(` + data[key].lrDay.substr(0, 1) + `) ` + data[key].lrStartTime + ` ~ ` + data[key].lrEndTime + `</p>
-	  	                    </div>
-	  	                </td>
-	  	                <td>` + data[key].instructor.instructorName +`</td>
-	  	                <td>` + data[key].lrFee + `원</td>
-	  	                <td>` +
-	  	                    lectureStatus
-	  	                + `</td>
-	  	                </tr>
-	  					`;
+	  				if(data.length > 0) {
+	  					for(let key in data) {
+		  					
+			  				let lectureStatus = ``;	
+			  				let nowDate = new Date(); //오늘
+				        	let lecDate = new Date(); //강의시작날짜
+				        	
+				        	nowDate.setHours(0);
+				        	nowDate.setMinutes(0);
+				        	nowDate.setSeconds(0);
+				        	nowDate.setMilliseconds(0);
+				        	
+				        	lecDate.setHours(0);
+				        	lecDate.setMinutes(0);
+				        	lecDate.setSeconds(0);
+				        	lecDate.setMilliseconds(0);
+				        	
+				        	lecDate.setFullYear(data[key].lrStartDate.substr(0, 4));
+				        	lecDate.setMonth(data[key].lrStartDate.substr(5, 2)-1);
+				        	lecDate.setDate(data[key].lrStartDate.substr(8, 2));
+				        	
+				        	let openDate = new Date(); //접수 오픈 날짜
+				        	openDate.setFullYear(lecDate.getFullYear());
+				        	openDate.setMonth(lecDate.getMonth());
+				        	openDate.setDate(lecDate.getDate());
+				        	openDate.setDate(openDate.getDate() - 30);
+				        	openDate.setHours(0);
+				        	openDate.setMinutes(0);
+				        	openDate.setSeconds(0);
+				        	openDate.setMilliseconds(0);
+				        	
+			  				if(lecDate <= nowDate) {
+			  					lectureStatus = `<span class="applyImpossible">접수 마감</span>`;	
+			  				} else if (data[key].lrCount == data[key].lrCapacity) {
+			  					lectureStatus = `<span class="applyFull">정원 마감</span>`;	
+			  				} else if (openDate > nowDate) {
+			  					lectureStatus = `<span class="applyPlan">접수 예정</span>`;
+			  				} else {
+			  					lectureStatus = `<span class="applyPossible">접수 중</span>`;
+			  				}
+		  					
+		  					html += `
+		  						<tr>
+		  	                   <td> <span class="bxCheck">
+		  	                    <input type="checkbox" name="lrNo" class="select" value="` + data[key].lrNo + `"><input type="hidden" value="` + data[key].lrFee + `">
+		  	                </span></td>
+		  	                <td>
+		  	                    <div class="imgBox">
+		  	                        <img src="/images/upload/` + data[key].lecture.lthumbnail + `" alt="">
+		  	                    </div>
+		  	                </td>
+		  	                <td>
+		  	                    <div class="classInfo">
+		  	                        <a href="#">` + data[key].lrStartDate.substr(5, 2) + `/` + data[key].lrStartDate.substr(8, 2) + ` ` + data[key].lecture.ltitle + 
+		  	                            `</a>
+		  	                        <p class="time">(` + data[key].lrDay.substr(0, 1) + `) ` + data[key].lrStartTime + ` ~ ` + data[key].lrEndTime + `</p>
+		  	                    </div>
+		  	                </td>
+		  	                <td>` + data[key].instructor.instructorName +`</td>
+		  	                <td>` + data[key].lrFee + `원</td>
+		  	                <td>` +
+		  	                    lectureStatus
+		  	                + `</td>
+		  	                </tr>
+		  					`;
+		  				} 
+	  				} else {
+	  					html += `<tr><td colspan="6"><h1>조회되는 강좌가 없습니다.</h1></td></tr>`;
 	  				}
 	  				
 	  				tbodyDiv.insertAdjacentHTML('beforeend', html);
