@@ -10,9 +10,16 @@ import com.kh.khculture.member.model.vo.Member;
 @Mapper
 public interface AdminMapper {
 	
-	// 전체회원 조회
-	List<Member> getAllMemberList(Search search);
+	// 회원 조회
+	List<Member> getPageMemberList(Search search);
+	
 	// 전체 회원수 조회
-	int getListCount(Search search);
+	int getListCount();
+	
+	// 페이징 처리 회원수
+	int getSearchListCount();
+	
+	// 검색 조건에 맞는 회원수
+	List<Member> getAllMemberList(Search search);
 
 }
