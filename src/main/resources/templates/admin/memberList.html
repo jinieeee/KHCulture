@@ -61,17 +61,22 @@
 	    <div class="memberContainer">
 	    	<div class="total">검색결과 : <span th:text="${searchListCount}"></span> / <span th:text="${listCount}"></span> 명</div>
 	    	<div class="editBtnBox">
+		    	<form class="editForm" method="post">
+		    		<input type="hidden" name="arr" value="">
+		    	</form>
 	    		<span style="color: red; font-size: 12px;">* 체크한 회원만 처리됩니다. </span>
 	    		<span>회원 일괄처리</span>
-	    		<button type="button" id="roleUpdate">등급변경</button>
-	    		<button type="button" id="secessionUpdate">탈퇴처리</button>
-	    		<button type="button" id="deleteAcc">계정삭제</button>
-	    	</div>	
+	    		<button type="button" onclick="pwdReset();">비밀번호 초기화</button>
+	    		<th:block sec:authorize="hasRole('HEAD')">
+	    		<button type="button" onclick="roleUpate();">등급변경</button>
+	    		<button type="button" onclick="deleteAcc();">계정삭제</button>
+	    		</th:block>
+	    	</div>
 	    </div>
     	<div class="memberTblContainer">
 	    	<table class="memberListTbl">
 	    		<tr>
-	    			<th>회원No.</th>
+	    			<th id="mno">회원No.</th>
 	    			<th><input type="checkbox" class="allChecked"></th>
 	    			<th id="id">아이디</th>
 	    			<th id="name">이름</th>
@@ -83,14 +88,14 @@
 	    		</tr>
 	    		<tr th:each="member : ${memberList}">
 	    			<td>[[${member.mno}]]</td>
-	    			<td><input type="checkbox" class="oneChecked"></td>
+	    			<td><input type="checkbox" class="oneChecked" th:value="${member.mno}"></td>
 	    			<td>[[${member.id}]]</td>
 	    			<td>[[${member.name}]]</td>
 	    			<td>[[${member.email}]]</td>
 	    			<td>[[${member.phone}]]</td>
 	    			<td th:text="${#dates.format(member.enrollDate, 'yyyy-MM-dd')}"></td>
 	    			<td>[[${member.accLockYN}]]</td>
-	    			<td>[[${member.accSecessionYN}]]</td>
+	    			<td id="accSecessionYN">[[${member.accSecessionYN}]]</td>
 	    		</tr>
 	    	</table>
     	</div>
@@ -102,6 +107,12 @@
 <footer th:include="fragments/footer.html"></footer>
 </body>
 <script>
+	var msg = '[[${msg}]]';
+	if(msg) {
+		alert(msg);
+	}
+</script>
+<script>
 	var startPage = "[[${pi.startPage}]]";
 	var endPage = "[[${pi.endPage}]]";
 	var maxPage = "[[${pi.maxPage}]]";
@@ -111,6 +122,10 @@
 	console.log(endPage);
 	console.log(maxPage);
 	console.log(currentPage);
+	
+	var pwdResetUrl = "[[@{/admin/memberList/pwdReset}]]";
+	var deleteAccUrl = "[[@{/admin/memberList/deleteAcc}]]";
+	var roleUpateUrl = "[[@{/admin/memberList/roleUpdate}]]";
 </script>
 <script type="text/javascript" src="/js/admin/memberList.js"></script>
 </html>

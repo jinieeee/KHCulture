@@ -88,7 +88,7 @@
 	</select>
 	
 	<select id="getAllMemberList" resultMap="memberResultMap" parameterType="com.kh.khculture.admin.model.vo.Search">
-		SELECT *
+		SELECT count(*)
 		  FROM (
 			SELECT
 					ROWNUM RNUM, A.*
@@ -181,4 +181,44 @@
 		  JOIN MEMBER_ROLE B ON(A.M_NO = B.M_NO)
 		 WHERE B.AUTHORITY_CODE = 1
 	</select>
+	
+	<update id="pwdReset" parameterType="hashMap">
+		UPDATE MEMBER
+		   SET PWD = #{newPwd}
+		 WHERE M_NO = #{mno}
+	</update>
+	
+	<delete id="deleteAcc" parameterType="hashMap">
+		DELETE FROM MEMBER
+		 WHERE M_NO = #{mno}
+	</delete>
+	
+	<delete id="deleteRole" parameterType="hashMap">
+		DELETE FROM MEMBER_ROLE
+		 WHERE M_NO = #{mno}
+	</delete>
+	<insert id="insertRole1" parameterType="hashMap">
+		INSERT INTO MEMBER_ROLE
+			(
+				M_NO
+			  , AUTHORITY_CODE
+			)
+		VALUES
+			(
+				#{mno}
+			  , 1
+			)
+	</insert>
+	<insert id="insertRole2" parameterType="hashMap">
+		INSERT INTO MEMBER_ROLE
+			(
+				M_NO
+			  , AUTHORITY_CODE
+			)
+		VALUES
+			(
+				#{mno}
+			  , 2
+			)
+	</insert>
 </mapper>

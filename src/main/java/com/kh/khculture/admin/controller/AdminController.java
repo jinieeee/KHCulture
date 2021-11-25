@@ -2,19 +2,22 @@ package com.kh.khculture.admin.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.khculture.admin.model.service.AdminService;
 import com.kh.khculture.admin.model.vo.Search;
-import com.kh.khculture.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -60,10 +63,64 @@ public class AdminController {
 		
 		model.addAttribute("search", search);
 		model.addAttribute("pi", result.get("pi"));
+		log.info("{}", result.get("pi"));
 		model.addAttribute("memberList", result.get("memberList"));
 		model.addAttribute("searchListCount", result.get("searchListcount"));
 		model.addAttribute("listCount", result.get("listCount"));
 		
 		return "/admin/memberList";
+	}
+	
+	@PostMapping("memberList/pwdReset")
+	public String pwdReset(@RequestParam(value="arr") String arr, RedirectAttributes rttr) {
+		String[] sArr = arr.split(",");
+		List<Integer> mnoList = new ArrayList<>();
+		
+		for(String s : sArr) {
+			mnoList.add(Integer.parseInt(s));
+		}
+		int result = adminService.pwdReset(mnoList);
+		if(result > 0) {
+			rttr.addFlashAttribute("msg", "비밀번호 초기화 성공!");
+		} else {
+			rttr.addFlashAttribute("msg", "비밀번호 초기화 실패!");			
+		}
+		return "redirect:/admin/memberList";
+	}
+	
+	@PostMapping("memberList/deleteAcc")
+	public String deleteAcc(@RequestParam(value="arr") String arr, RedirectAttributes rttr) {
+		String[] sArr = arr.split(",");
+		List<Integer> mnoList = new ArrayList<>();
+		
+		for(String s : sArr) {
+			mnoList.add(Integer.parseInt(s));
+		}
+		int result = adminService.deleteAcc(mnoList);
+		if(result > 0) {
+			rttr.addFlashAttribute("msg", mnoList.size() + "개 계정 삭제 성공!");
+		} else {
+			rttr.addFlashAttribute("msg", mnoList.size() + "개 계정 삭제 실패!");			
+		}
+		
+		
+		return "redirect:/admin/memberList";
+	}
+	
+	@PostMapping("memberList/roleUpdate")
+	public String roleUpdate(@RequestParam(value="arr") String arr, RedirectAttributes rttr) {
+		String[] sArr = arr.split(",");
+		List<Integer> mnoList = new ArrayList<>();
+		
+		for(String s : sArr) {
+			mnoList.add(Integer.parseInt(s));
+		}
+		int result = adminService.roleUpdate(mnoList);
+		if(result > 0) {
+			rttr.addFlashAttribute("msg", mnoList.size() + "개 계정을 관리자 등급으로 변경했습니다");
+		} else {
+			rttr.addFlashAttribute("msg", mnoList.size() + "개 계정을 관리자 등급으로 변경하는데 실패했습니다");			
+		}
+		return "redirect:/admin/memberList";
 	}
 }
