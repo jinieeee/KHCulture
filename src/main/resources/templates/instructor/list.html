@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>강사 목록</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
 .outer {
 	width: 1920px;
@@ -55,7 +56,8 @@ ul, li {
 
 .instructor_list .lecture {
 	color : #979797;
-	font-size : 0.8rem;
+	text-align: center;
+	font-size : 20px;
 }
 
 .instructor_list img {
@@ -85,14 +87,15 @@ ul, li {
 		<div class="wrap">
 			<div class="instructor_area">
 				<div class="titleArea">
-					<h1 align="center">강사 관리</h1>
+					<h1 align="center">강사 정보</h1>
 				</div>
 				<div class="list_div">
 					<ul class="instructor_list">
-					<li>
+					<li th:each=" i : ${ instructorList }">
 					<div class="box" onclick="location.href='/instructor/detail'">
-					    <img src="/images/instructor/instructor01.jpg">
-					    <p class="title">조인성 <a class="category">강사님</a><br><a class="lecture">[담당 강의 : 스케이트]</a></p>
+					    <img src="/images/instructor/pikachu2.png">
+					    <p class="title" th:text="${ i.instructor_name }"></p>
+					    <p class="lecture">강사님</p>
 					</div>
 					</li>
 					</ul>
@@ -105,4 +108,22 @@ ul, li {
 	</div>
 <footer th:include="fragments/footer.html"></footer>
 </body>	
+<script>
+function readURL(input) {
+	 if (input.files && input.files[0]) {
+	  var reader = new FileReader();
+	  
+	  reader.onload = function (e) {
+	   $('#image_section').attr('src', e.target.result);  
+	  }
+	  
+	  reader.readAsDataURL(input.files[0]);
+	  }
+	}
+	 
+	// 이벤트를 바인딩해서 input에 파일이 올라올때 위의 함수를 this context로 실행합니다.
+	$("#imgInput").change(function(){
+	   readURL(this);
+	});
+</script>
 </html>

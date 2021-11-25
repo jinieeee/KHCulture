@@ -21,7 +21,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                 <ul class="depth2 submenu">
                     <li><a href="/lecture/search">강좌검색</a></li>
                     <li><a href="/lecture/schedule">강좌스케줄</a></li>
-                    <li><a href="#">강사정보</a></li>
+                    <li><a href="/instructor/list">강사정보</a></li>
                 </ul>
             </li>
             <li class="depth1 comunity">커뮤니티
@@ -40,7 +40,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                     <li><a href="/mypage/paymentDetails">구매내역</a></li>
                     <li><a href="/mypage/myhistory">수강내역</a></li>
                     <li><a href="/mypage/myRiew">내가 쓴 수강후기</a></li>
-                    <li><a href="#">1:1 문의내역</a></li>
+                    <li><a href="/questionnaire/list">1:1 문의내역</a></li>
                 </ul>
             </li>
             </th:block>
@@ -52,7 +52,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                     <li><a href="#">구매내역</a></li>
                     <li><a href="/mypage/myhistory">수강내역</a></li>
                     <li><a href="/mypage/myRiew">내가 쓴 수강후기</a></li>
-                    <li><a href="#">1:1 문의내역</a></li>
+                    <li><a href="/questionnaire/list">1:1 문의내역</a></li>
                 </ul>
             </li>
             <th:block sec:authorize="hasRole('ADMIN')">
@@ -60,9 +60,10 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                 text-decoration: none;">관리자페이지</a>
                 <ul class="depth2 submenu">
                     <li><a href="#">강의관리</a></li>
-                    <li><a href="#">강사관리</a></li>
+                    <li><a href="/instructor/list">강사관리</a></li>
                     <li><a href="#">회원관리</a>
-                    <li><a href="#">1:1 문의</a></li>
+                    <li><a href="/questionnarire/list">1:1 문의</a></li>
+                    <li><a href="/statistics/graph">현황 통계</a></li>
                     <th:block sec:authorize="hasRole('HEAD')">
                     <li><a href="#">관리자목록</a>
                     </th:block>
