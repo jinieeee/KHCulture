@@ -25,6 +25,7 @@
 	<resultMap type="com.kh.khculture.member.model.vo.MemberRole" id="memberRoleResultMap">
 		<id property="mno" column="REF_M_NO"/>
 		<id property="authorityCode" column="REF_AUTHORITY_CODE"/>
+		<result property="authorityKRName" column="AUTHORITY_NAME"/>
 		<!-- <association property="authority" resultMap="authorityResultMap"/> -->
 	</resultMap>
 	
@@ -34,6 +35,65 @@
 		<result property="authorityDesc" column="AUTHORITY_DESC"/>
 	</resultMap>
  -->	
+	<select id="getPageMemberList" resultMap="memberResultMap" parameterType="com.kh.khculture.admin.model.vo.Search">
+		SELECT *
+		  FROM (
+			SELECT
+					ROWNUM RNUM, A.*, DECODE(A.REF_AUTHORITY_CODE, 1, '일반회원', 2, '관리자', 3, '대표') AUTHORITY_NAME
+			  FROM (
+					SELECT
+							B.M_NO
+						  , B.ID
+						  , B.NAME
+						  , B.PHONE
+						  , B.EMAIL
+						  , B.ADDRESS
+						  , B.M_ENROLL_DATE
+						  , B.ACC_LOCK_YN
+						  , B.ACC_SECESSION_YN
+						  , B.ACC_SECESSION_DATE
+						  , C.M_NO REF_M_NO
+						  , ( SELECT COUNT(AUTHORITY_CODE)
+                             	FROM MEMBER E
+                             	JOIN MEMBER_ROLE F ON(E.M_NO = F.M_NO)
+                               GROUP BY E.M_NO
+                              HAVING E.M_NO = B.M_NO ) REF_AUTHORITY_CODE
+					  FROM MEMBER B
+					  JOIN MEMBER_ROLE C ON(B.M_NO = C.M_NO)
+					<where>
+					<choose>
+   					<when test="authorityCode == 0">
+					 	C.AUTHORITY_CODE = 1
+					</when>
+					<when test="authorityCode == 1">
+						B.ID NOT IN (SELECT ID
+									 FROM MEMBER
+									 JOIN MEMBER_ROLE USING(M_NO)
+									WHERE AUTHORITY_CODE IN (2, 3))
+					</when>
+					<when test="authorityCode == 2">
+						C.AUTHORITY_CODE = 2
+					</when>
+					</choose>
+					<if test="accLockYN != null">
+						AND B.ACC_LOCK_YN = #{accLockYN}
+					</if>
+					<if test="accSecessionYN != null">
+						AND B.ACC_SECESSION_YN = #{accSecessionYN}
+					</if>
+					<if test='searchDate != null and accSecessionYN != null and accSecessionYN == "Y"'>
+						AND B.ACC_SECESSION_DATE &lt; #{searchDate}
+					</if>
+					<if test="searchKeyword != null">
+						AND B.ID LIKE '%' || #{searchKeyword} || '%'
+					</if>
+					</where>
+					 ORDER BY B.M_NO DESC, C.AUTHORITY_CODE DESC
+					 ) A
+				)
+ 		 WHERE RNUM BETWEEN #{startRow} and #{endRow}
+	</select>
+	
 	<select id="getAllMemberList" resultMap="memberResultMap" parameterType="com.kh.khculture.admin.model.vo.Search">
 		SELECT *
 		  FROM (
@@ -41,45 +101,131 @@
 					ROWNUM RNUM, A.*
 			  FROM (
 					SELECT
-							M_NO
-						  , ID
-						  , NAME
-						  , PHONE
-						  , EMAIL
-						  , ADDRESS
-						  , M_ENROLL_DATE
-						  , ACC_LOCK_YN
-						  , ACC_SECESSION_YN
-						  , AUTHORITY_CODE
-						  , AUTHORITY_CODE REF_AUTHORITY_CODE
-					  FROM MEMBER
-					  JOIN MEMBER_ROLE USING(M_NO)
-					<if test="authorityCode == 1">
-					 WHERE ID NOT IN (SELECT ID
-					 					FROM MEMBER
-					 					JOIN MEMBER_ROLE USING(M_NO)
-					 				   WHERE AUTHORITY_CODE IN (2, 3))
+							B.M_NO
+						  , B.ID
+						  , B.NAME
+						  , B.PHONE
+						  , B.EMAIL
+						  , B.ADDRESS
+						  , B.M_ENROLL_DATE
+						  , B.ACC_LOCK_YN
+						  , B.ACC_SECESSION_YN
+						  , C.M_NO REF_M_NO
+						  , C.AUTHORITY_CODE REF_AUTHORITY_CODE
+					  FROM MEMBER B
+					  JOIN MEMBER_ROLE C ON(B.M_NO = C.M_NO)
+					<where>
+					<choose>
+  					<when test="authorityCode == 0">
+					 	AUTHORITY_CODE = 1
+					</when>
+					<when test="authorityCode == 1">
+						ID NOT IN (SELECT ID
+									 FROM MEMBER
+									 JOIN MEMBER_ROLE USING(M_NO)
+									WHERE AUTHORITY_CODE IN (2, 3))
+					</when>
+					<when test="authorityCode == 2">
+						C.AUTHORITY_CODE = 2
+					</when>
+					</choose>
+					<if test="accLockYN != null">
+						AND B.ACC_LOCK_YN = #{accLockYN}
 					</if>
-					<if test="authorityCode == 2">
-					 WHERE AUTHORITY_CODE = 2
+					<if test="accSecessionYN != null">
+						AND B.ACC_SECESSION_YN = #{accSecessionYN}
 					</if>
-					 ORDER BY M_NO DESC
+					<if test='searchDate != null and accSecessionYN != null and accSecessionYN == "Y"'>
+						AND B.ACC_SECESSION_DATE &lt; #{searchDate}
+					</if>
+					<if test="searchKeyword != null">
+						AND B.ID LIKE '%' || #{searchKeyword} || '%'
+					</if>
+					</where>
+					 ORDER BY B.M_NO DESC
 					 ) A
 				)
-		 WHERE RNUM BETWEEN #{startRow} and #{endRow}
 	</select>
-	<select id="getListCount" resultType="_int" parameterType="com.kh.khculture.admin.model.vo.Search">
+	
+	<select id="getSearchListCount" resultType="_int" parameterType="com.kh.khculture.admin.model.vo.Search">
 		SELECT COUNT(*)
 		  FROM MEMBER
 		  JOIN MEMBER_ROLE USING(M_NO)
-		<if test="authorityCode == 1">
-		 WHERE ID NOT IN (SELECT ID
-		 					FROM MEMBER
-		 					JOIN MEMBER_ROLE USING(M_NO)
-		 				   WHERE AUTHORITY_CODE IN (2, 3))
-		</if>
-		<if test="authorityCode == 2">
-		 WHERE AUTHORITY_CODE = 2
-		</if>
+		<where>
+			<choose>
+ 			<when test="authorityCode == 0">
+			 	AUTHORITY_CODE = 1
+			</when>
+			<when test="authorityCode == 1">
+				ID NOT IN (SELECT ID
+							 FROM MEMBER
+							 JOIN MEMBER_ROLE USING(M_NO)
+							 WHERE AUTHORITY_CODE IN (2, 3))
+			</when>
+			<when test="authorityCode == 2">
+				AUTHORITY_CODE = 2
+			</when>
+			</choose>
+			<if test="accLockYN != null">
+				AND ACC_LOCK_YN = #{accLockYN}
+			</if>
+			<if test="accSecessionYN != null">
+				AND ACC_SECESSION_YN = #{accSecessionYN}
+			</if>
+			<if test="searchDate != null">
+				AND ACC_SECESSION_DATE &lt; #{searchDate}
+			</if>
+			<if test="searchKeyword != null">
+				AND ID LIKE '%' || #{searchKeyword} || '%'
+			</if>
+		</where>
 	</select>
+	
+	<!-- 전체 회원 수 -->
+	<select id="getListCount" resultType="_int" parameterType="com.kh.khculture.admin.model.vo.Search">
+		SELECT COUNT(*)
+		  FROM MEMBER A
+		  JOIN MEMBER_ROLE B ON(A.M_NO = B.M_NO)
+		 WHERE B.AUTHORITY_CODE = 1
+	</select>
+	
+	<update id="pwdReset" parameterType="hashMap">
+		UPDATE MEMBER
+		   SET PWD = #{newPwd}
+		 WHERE M_NO = #{mno}
+	</update>
+	
+	<delete id="deleteAcc" parameterType="hashMap">
+		DELETE FROM MEMBER
+		 WHERE M_NO = #{mno}
+	</delete>
+	
+	<delete id="deleteRole" parameterType="hashMap">
+		DELETE FROM MEMBER_ROLE
+		 WHERE M_NO = #{mno}
+	</delete>
+	<insert id="insertRole1" parameterType="hashMap">
+		INSERT INTO MEMBER_ROLE
+			(
+				M_NO
+			  , AUTHORITY_CODE
+			)
+		VALUES
+			(
+				#{mno}
+			  , 1
+			)
+	</insert>
+	<insert id="insertRole2" parameterType="hashMap">
+		INSERT INTO MEMBER_ROLE
+			(
+				M_NO
+			  , AUTHORITY_CODE
+			)
+		VALUES
+			(
+				#{mno}
+			  , 2
+			)
+	</insert>
 </mapper>

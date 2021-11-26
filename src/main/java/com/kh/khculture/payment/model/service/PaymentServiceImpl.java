@@ -52,5 +52,17 @@ public class PaymentServiceImpl implements PaymentService{
 		return paymentMapper.updateLrCount(lr);
 	}
 
+	@Override
+	public int cancelLectureBuy(int rNo, int lrNo) {
+		
+		return paymentMapper.cancelLectureBuy(rNo, lrNo);
+	}
+
+	@Override
+	public int updateDecreaseLrCount(int lrNo) {
+		
+		return paymentMapper.updateDecreaseLrCount(lrNo);
+	}
+
 
 }

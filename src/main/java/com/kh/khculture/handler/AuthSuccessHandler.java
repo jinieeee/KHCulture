@@ -31,7 +31,8 @@ public class AuthSuccessHandler implements AuthenticationSuccessHandler{
 		System.out.println(username);
 		
 		memberService.initializeFailureCount(username);
-		request.getRequestDispatcher("/").forward(request, response);
+		// request.getRequestDispatcher("/").forward(request, response);
+		response.sendRedirect("/");
 	}
 
 }

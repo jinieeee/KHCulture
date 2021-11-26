@@ -129,4 +129,20 @@
 	 WHERE LR_NO = #{lr}
 </update>
 
+<update id="cancelLectureBuy" parameterType="_int">
+	UPDATE LECTURE_BUY
+	   SET LB_STATUS = 'N'
+	     , LB_MODIFY_DATE = SYSDATE
+	 WHERE R_NO = #{rNo}
+	   AND LR_NO = #{lrNo}
+	   AND LB_STATUS = 'Y'
+</update>
+
+<update id="updateDecreaseLrCount" parameterType="_int">
+	UPDATE LECTURE_REGISTRATION
+	   SET LR_COUNT = LR_COUNT - 1
+	 WHERE LR_NO = #{lr}
+</update>
+
+
 </mapper>

@@ -12,47 +12,94 @@
 		<h1>회원관리</h1>
     </div>
 	<article class="memberList">
+	    <div class="searchContainer">
+	   		<form th:action="@{/admin/memberList}" method="get" class="searchForm">
+	   			<table class="searchTbl">
+	   				<tr>
+	   					<th>회원등급</th>
+	   					<td>
+				   			<input type="checkbox" name="memberRole" value="0" th:checked="${search.authorityCode == 0}"><label>전체</label>
+				   			<input type="checkbox" name="memberRole" value="1" th:checked="${search.authorityCode == 1}"><label>일반회원</label>
+				   			<input type="checkbox" name="memberRole" value="2" th:checked="${search.authorityCode == 2}"><label>관리자</label>   					
+	   					</td>
+	   				</tr>
+	   				<tr>
+	   					<th>계정잠금</th>
+	   					<td>
+				   			<select class="accLockYN" name="accLockYN">
+				   				<option value="전체">전체</option>
+				   				<option value="Y" th:selected="${search.accLockYN} eq 'Y'">Y</option>
+				   				<option value="N" th:selected="${search.accLockYN} eq 'N'">N</option>
+				   			</select>   					
+	   					</td>
+	   				</tr>
+	   				<tr>
+	   					<th>계정탈퇴</th>
+	   					<td>
+				   			<select class="accSecessionYN" name="accSecessionYN">
+				   				<option value="전체">전체</option>
+				   				<option value="Y" th:selected="${search.accSecessionYN} eq 'Y'">Y</option>
+				   				<option value="N" th:selected="${search.accSecessionYN} eq 'N'">N</option>
+				   			</select>
+	   					</td>
+						<th>탈퇴기준일</th>	
+				   		<td><input type="date" name="searchDate" th:value="${#dates.format(search.searchDate, 'yyyy-MM-dd')}"></td>
+	   				</tr>
+	   				<tr>
+						<th colspan="3"></th>
+						<td colspan="2"><span style="color: red">* 기준일 입력일자 이전의 탈퇴 계정이 조회됩니다.</span></td>
+	   				</tr>
+	   				<tr class="btnBox">
+	   					<td colspan="4"><img src="/images/instructor/search.png">
+	   					<input type="text" placeholder="아이디를 일부/전체를 입력하세요" name="searchKeyword" th:value="${search.searchKeyword}"></td>
+	   					<td rowspan="2"><input type="submit" value="검색"></td>
+	   				</tr>
+	   			</table>
+	   			<input type="hidden" name="page" value="">
+	   		</form>    	
+	    </div>
 	    <div class="memberContainer">
-	    	<div class="total">총 사용자수 : <span th:text="${listCount}"></span>명</div>
-	    	<div class="searchForm">
-	    		<select class="memberRoleSel">
-	    			<option value="전체" th:selected="${authorityCode == 0}">전체</option>
-	    			<option value="일반회원" th:selected="${authorityCode == 1}">일반회원</option>
-	    			<option value="관리자" th:selected="${authorityCode == 2}">관리자</option>
-	    		</select>
-	    		<form th:action="@{/admin/memberList}" method="get">
-	    			<input type="hidden" name="memberRole">
-	    			<input type="hidden" name="page">
-	    		</form>
+	    	<div class="total">검색결과 : <span th:text="${searchListCount}"></span> / <span th:text="${listCount}"></span> 명</div>
+	    	<div class="editBtnBox">
+		    	<form class="editForm" method="post">
+		    		<input type="hidden" name="arr" value="">
+		    	</form>
+	    		<span style="color: red; font-size: 12px;">* 체크한 회원만 처리됩니다. </span>
+	    		<span>회원 일괄처리</span>
+	    		<button type="button" onclick="pwdReset();">비밀번호 초기화</button>
+	    		<th:block sec:authorize="hasRole('HEAD')">
+	    		<button type="button" onclick="roleUpate();">등급변경</button>
+	    		<button type="button" onclick="deleteAcc();">계정삭제</button>
+	    		</th:block>
 	    	</div>
 	    </div>
-    	<div class="memberBtnContainer">
-    		<button type="button" class="memberUpdateBtn"  th:if="${authorityCode == 1 || authorityCode == 2}">권한변경</button>
-    		<button type="button" class="memberPwdBtn">비밀번호 초기화</button>
-    	</div>
     	<div class="memberTblContainer">
 	    	<table class="memberListTbl">
 	    		<tr>
-	    			<th>회원No.</th>
-	    			<th><input type="checkbox"></th>
+	    			<th id="mno">회원No.</th>
+	    			<th><input type="checkbox" class="allChecked"></th>
 	    			<th id="id">아이디</th>
 	    			<th id="name">이름</th>
+	    			<th id="authority">등급</th>
 	    			<th id="email">이메일</th>
 	    			<th id="phone">연락처</th>
 	    			<th id="enrollDate">가입일</th>
 	    			<th id="accLockYN">계정잠금</th>
 	    			<th id="accSecessionYN">계정탈퇴</th>
+	    			<th id="accSecessionDate">탈퇴일</th>
 	    		</tr>
 	    		<tr th:each="member : ${memberList}">
 	    			<td>[[${member.mno}]]</td>
-	    			<td><input type="checkbox"></td>
+	    			<td><input type="checkbox" class="oneChecked" th:value="${member.mno}"></td>
 	    			<td>[[${member.id}]]</td>
 	    			<td>[[${member.name}]]</td>
+	    			<td th:text="${member.memberRoleList[0].authorityKRName}"></td>
 	    			<td>[[${member.email}]]</td>
 	    			<td>[[${member.phone}]]</td>
 	    			<td th:text="${#dates.format(member.enrollDate, 'yyyy-MM-dd')}"></td>
 	    			<td>[[${member.accLockYN}]]</td>
-	    			<td>[[${member.accSecessionYN}]]</td>
+	    			<td id="accSecessionYN">[[${member.accSecessionYN}]]</td>
+	    			<td th:text="${#dates.format(member.accSecessionDate, 'yyyy-MM-dd')}"></td>
 	    		</tr>
 	    	</table>
     	</div>
@@ -64,6 +111,12 @@
 <footer th:include="fragments/footer.html"></footer>
 </body>
 <script>
+	var msg = '[[${msg}]]';
+	if(msg) {
+		alert(msg);
+	}
+</script>
+<script>
 	var startPage = "[[${pi.startPage}]]";
 	var endPage = "[[${pi.endPage}]]";
 	var maxPage = "[[${pi.maxPage}]]";
@@ -73,6 +126,10 @@
 	console.log(endPage);
 	console.log(maxPage);
 	console.log(currentPage);
+	
+	var pwdResetUrl = "[[@{/admin/memberList/pwdReset}]]";
+	var deleteAccUrl = "[[@{/admin/memberList/deleteAcc}]]";
+	var roleUpateUrl = "[[@{/admin/memberList/roleUpdate}]]";
 </script>
 <script type="text/javascript" src="/js/admin/memberList.js"></script>
 </html>

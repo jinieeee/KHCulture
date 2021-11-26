@@ -176,8 +176,10 @@
     
     $("#modalLectureBtn").click(function(){
     	
-    	
+    	// input 태그에 lNo 값 입력
+    	 
     	$("input[name='lNo']").val($("input[name='lecture']:checked").val());
+    	
     	
     	$("#lectureBtn").val($("input[name='lecture']:checked").next().next().text());    	
     	$("#lectureBtn").css("background-color", "red");
@@ -231,8 +233,7 @@
 				for(let index in data){
 					
 					html += "<li><input type='radio' name='instructor' value='" + data[index].instructorNo + "'>"
-						  /* + "<img src='images/upload/" + data[index].profilePhoto + "' alt='thumbnail'>" */
-						  + "<img src='#' alt='thumbnail'>"
+						  + "<img src='/images/lecture/" + data[index].profilePhoto + "' alt='instructor'>"
 						  + "<span>" + data[index].instructorName + "</span></li>"
 				}
 				
@@ -279,7 +280,7 @@
 				for(let index in data){
 					
 					html += "<li><input type='radio' name='lecture' value='" + data[index].lno + "'>"
-						  + "<img src='images/upload/" + data[index].lthumbnail + "' alt='thumbnail'>"
+						  + "<img src='/images/upload/" + data[index].lthumbnail + "' alt='thumbnail'>"
 						  + "<span>" + data[index].ltitle + "</span></li>"
 				}
 				

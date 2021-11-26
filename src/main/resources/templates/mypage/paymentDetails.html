@@ -152,6 +152,7 @@
 <script>
 //결제 취소
 $('.cancleBtn').on('click', function(){
+
 	let parent = this.closest("table");
 	let select = parent.querySelectorAll(".select:checked");
 	let rNo = parent.querySelector("#selectedClass").innerHTML;
@@ -203,7 +204,6 @@ $('.cancleBtn').on('click', function(){
 			console.log(e);
 		}
 	});
-	
 })
 
 

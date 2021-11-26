@@ -3,47 +3,55 @@
 	min-height: 875px;
 	margin: auto;
 }
-
+.searchContainer {
+	background-color: #E4E7EB;
+}
+.searchContainer .searchTbl {
+	width: 100%;
+	padding: 20px;
+}
+.searchContainer .searchTbl [type=text] {
+	line-height: 37px;
+	width: 40%;
+	background-color: #E4E7EB;
+	border: none;
+	border-bottom: 2px solid var(--main-color);
+}
+.searchContainer img {
+	width: 20px;
+}
+.searchContainer tr:last-child td:first-child {
+	padding-left: 20px;
+}
+.searchContainer tr:last-child td:last-child {
+	display: flex;
+	justify-content: right;	
+}
+.searchContainer [type=submit]{
+	width: 120px;
+	height: 50px;
+	font-size: 20px;
+	background-color: var(--main-color);
+	color: white;
+	border: none;
+} 
 .memberList .memberContainer {
 	width : 100%;
-	background-color: #FEF0A7;
-	padding : 20px 30px;
-	border-radius: 10px 10px 0 0;
+	padding : 40px 30px 0 30px;
 	display: flex;
 	justify-content: space-between;
 }
-.memberContainer .total {
-	font-size: 20px;
-}
+
 .searchForm .memberRoleSel {
 	width: 120px;
 	height: 29px;
 	font-size: 15px;
 	border: 1px solid var(--main-color);
 }
-.memberList .memberBtnContainer {
-	width: 100%;
-	background-color: #FEF0A7;
-	padding : 20px 30px;
-	display: flex;
-	justify-content: right;
-}
-.memberBtnContainer button {
-	width:120px;
-	line-height: 30px;
-	background-color: var(--main-color);
-	color: white;
-	border: none;
-	font-size: 15px;
-	margin-left: 15px;
-	box-shadow: 3px 3px 10px 1px rgb(0, 0, 0, 0.1);
-}
+
 .memberList .memberTblContainer {
 	width: 100%;
-	height: 535px;
-	padding: 20px;
-	border-right: 2px solid #FEF0A7;
-	border-left: 2px solid #FEF0A7;
+	padding: 10px 0 20px 0;
 }
 
 .memberListTbl {
@@ -52,20 +60,25 @@
 .memberListTbl #id,
 .memberListTbl #name,
 .memberListTbl #accLockYN,
-.memberListTbl #accSecessionYN {
-	width: 10%;
+.memberListTbl #accSecessionYN,
+.memberListTbl #authority {
+	width: 7%;
 }
 .memberListTbl #email {
-	width: 20%;
+	width: 16%;
 }
 .memberListTbl #phone,
-.memberListTbl #enrollDate {
-	width: 15%;
+.memberListTbl #enrollDate,
+.memberListTbl #accSecessionDate {
+	width: 12%;
 }
 
 .memberListTbl th,
 .memberListTbl td {
 	padding: 10px 10px;
+}
+.memberListTbl th {
+	background-color: #FEF0A7;
 }
 .memberListTbl {
     background: #fff;
@@ -100,7 +113,6 @@
     list-style: none;
     margin: 0 auto;
     padding-bottom: 20px;
-	border: 2px solid #FEF0A7;
 	border-top: none;
 	    
     margin-bottom : 100px;

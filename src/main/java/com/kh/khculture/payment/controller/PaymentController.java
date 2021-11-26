@@ -50,10 +50,16 @@ public class PaymentController {
 	
 	
 	@GetMapping("/lecture/detail/{lrNo}")
-	public String lectureDetail(Model model, @PathVariable int lrNo) {
+	public String lectureDetail(Model model, @PathVariable int lrNo, Principal principal) {
 		
 		
 		LectureDetail lectureDetail = paymentService.selectOneLectureOpen(lrNo);
+		
+		if(principal != null) {
+			UserImpl user = (UserImpl)((Authentication)principal).getPrincipal();
+			model.addAttribute("mno", user.getMno());
+			
+		}
 		
 		Date receiptDate = new Date(lectureDetail.getLrStartDate().getYear(),
 				lectureDetail.getLrStartDate().getMonth()-1, lectureDetail.getLrStartDate().getDate());
@@ -69,8 +75,7 @@ public class PaymentController {
 	
 	
 	@GetMapping("/payment/procedure")
-//	public String postLecturePayment(@RequestParam String[] lrNo) {
-	public String postLecturePayment(Model model, Principal principal) {
+	public String postLecturePayment(Model model, Principal principal, @RequestParam String[] lrNo) {
 		
 		
 		if(principal != null) {
@@ -82,9 +87,6 @@ public class PaymentController {
 			model.addAttribute("email", user.getEmail());
 		}
 		
-		
-		
-		String[] lrNo = {"3"};		
 		
 		List<Integer> lrNoList = new ArrayList<Integer>();
 		
@@ -164,23 +166,30 @@ public class PaymentController {
 	
 	@PutMapping(value="/payment/cancel")
 	@ResponseBody
-	public String Cancel(@RequestParam(value="arr[]") List<Integer> arr, Principal principal, @RequestParam int rNo){
-		String resultData = "";
-		UserImpl user = (UserImpl)((Authentication)principal).getPrincipal();
-		log.info("{}", arr); //강좌오픈번호
-		log.info("{}", user.getMno()); //유저번호
-		log.info("{}", rNo); //주문번호
-//		int result = 0;
-//		for(Integer lrNo : arr) {
-//			//log.info("{}", lrNo);
-//			result += mypageService.deleteCart(lrNo, user.getMno());
-//		}
-//		
-//		if(result == arr.size()) {
-//			resultData = "성공";
-//		} else {
-//			resultData = "실패";
-//		}
-		return "성공";
+	public String Cancel(@RequestParam(value="arr[]") List<Integer> arr, @RequestParam int rNo){
+		
+		int result1 = 0;
+		int result2 = 0;
+		int result1Old = 0;
+		for(int lrNo : arr) {
+			
+			result1 += paymentService.cancelLectureBuy(rNo, lrNo);
+			if(result1 == result1Old) {return "실패";}
+			
+			result2 += paymentService.updateDecreaseLrCount(lrNo);
+			
+			result1Old = result1;
+		}
+		
+		if(result1 == arr.size() && result2 ==arr.size()) {
+			
+			return "성공";
+			
+		}
+		
+		return "실패";
 	}
+	
+	
+	
 }

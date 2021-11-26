@@ -47,4 +47,8 @@ public class LectureOpen implements Comparable<LectureOpen>{
 		// TODO Auto-generated method stub
 		return lrParDate.compareTo(o.getLrParDate());
 	}
+	
+	public LectureOpen() {}
+	
+	
 }

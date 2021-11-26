@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.kh.khculture.lecture.model.vo.Lecture;
 import com.kh.khculture.lecture.model.vo.LectureOpen;
 import com.kh.khculture.lecture.model.vo.Search;
 
@@ -15,5 +16,6 @@ public interface LectureMapper {
 	List<Integer> findYear();
 
 	int getListCount(Search search);
+
 	
 }

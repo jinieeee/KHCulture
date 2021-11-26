@@ -250,6 +250,8 @@ ul, li{
 #board_insert3{
     width: 710px;
     margin-right: 10px;
+    height: 50px;
+    font-size: 20px
 }
 #board_insert{
     width: 800px;

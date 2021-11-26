@@ -35,4 +35,14 @@ public interface ManagementMapper {
 	int getOpenListCount();
 
 	List<LectureOpen3> selectOpenList(int startRow, int endRow);
+
+	LectureOpen2 selectOneOpen(int lrNo);
+
+	int updateOpen(LectureOpen2 lectureOpen);
+
+	int deleteProcedure(int lNo);
+
+	int deleteOpenProcedure(int lrNo);
+
+	int deleteOpen(int lrNo);
 }

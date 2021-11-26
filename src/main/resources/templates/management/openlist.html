@@ -47,8 +47,8 @@ if(msg){
                             <td th:text="${open.lTitle}"></td>
                             <td th:text="${open.instructorName}"></td>
                             <td th:text="${#dates.format(open.lrModifyDate, 'yyyy-MM-dd')}"></td>
-                            <td><a href="#" th:onclick="|editLecture('${open.lNo}')|"><img src="images/management/edit.png"></a></td>
-                            <td><a href="#" th:onclick="|deleteLecture('${open.lNo}')|"><img src="images/management/delete.png"></a></td>
+                            <td><a href="#" th:onclick="|editOpen('${open.lrNo}')|"><img src="images/management/edit.png"></a></td>
+                            <td><a href="#" th:onclick="|deleteOpen('${open.lrNo}')|"><img src="images/management/delete.png"></a></td>
                         </tr>
                     </tbody>
                 </table>
@@ -90,5 +90,24 @@ if(msg){
         </div>
     </div>
 <footer th:include="fragments/footer.html"></footer>
+
+<script type="text/javascript" th:inline="javascript">
+    	
+    	function editOpen(lrNo){
+    		
+    		location.href="openupdate/" + lrNo;	
+    	}
+    	
+    	function deleteOpen(lrNo){
+    		
+    		if(confirm("정말삭제하시겠습니까?")){
+    			
+    			location.href="opendelete/" + lrNo;
+    			
+    		} else{
+    			console.log("삭제취소");
+    		}
+    	}
+    </script>
 </body>
 </html>

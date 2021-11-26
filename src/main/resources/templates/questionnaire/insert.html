@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/htmml; charset=UTF-8">
 <title>1:1문의 작성</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
 .outer {
 	width: 1920px;
@@ -86,7 +87,7 @@
 .questionnaire_area #goList{
 	background: #6A6A6A;
 }
-.questionnaire_area #regist{
+.questionnaire_area #insert{
 	background: #F0B95E;
 }
 
@@ -110,16 +111,14 @@ h2 {
 					<h1 align="center">1:1 문의</h1>
 				</div>
 				<div class="questionnaire_content">
-					<form method="post" action="${ contextPath }/gallery/insert"
-					enctype="multipart/form-data">
-						<div class="content">
-							
+					<form method="post" action="/questionnaire/insert">
+						<div class="questionnaire_content">
 							<h2><span class="title_span">&nbsp;</span> 문의 사항 </h2>
-							<textarea class="textarea" rows="20" cols="100" name="content" required></textarea>
-
+							<textarea id="questionnaire_content" class="textarea" rows="20" cols="100" name="questionnaire_content" 
+							        placeholder="문의사항을 작성해주세요." required></textarea>
 						</div>
 						<div class="btn_area">
-						<button type="submit" id="regist">작성하기</button>
+						    <button type="submit" id="insert">작성하기</button>
 							<button type="button" id="goList" onclick="location.href='/questionnaire/list'">목록으로</button>
 						</div>
 					</form>

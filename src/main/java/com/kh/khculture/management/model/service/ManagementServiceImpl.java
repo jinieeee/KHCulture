@@ -88,5 +88,35 @@ public class ManagementServiceImpl implements ManagementService {
 		return managementMapper.selectOpenList(startRow, endRow);
 	}
 
+	@Override
+	public LectureOpen2 selectOneOpen(int lrNo) {
+		
+		return managementMapper.selectOneOpen(lrNo);
+	}
+
+	@Override
+	public int updateOpen(LectureOpen2 lectureOpen) {
+		
+		return managementMapper.updateOpen(lectureOpen);
+	}
+
+	@Override
+	public int deleteProcedure(int lNo) {
+		
+		return managementMapper.deleteProcedure(lNo);
+	}
+
+	@Override
+	public int deleteOpenProcedure(int lrNo) {
+		
+		return managementMapper.deleteOpenProcedure(lrNo);
+	}
+
+	@Override
+	public int deleteOpen(int lrNo) {
+		
+		return managementMapper.deleteOpen(lrNo);
+	}
+
 	
 }
