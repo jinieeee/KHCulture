@@ -3,6 +3,25 @@
 <mapper namespace="com.kh.khculture.management.model.dao.ManagementMapper">
 
 
+<resultMap type="com.kh.khculture.management.model.vo.LectureOpen2" id="oneOpenResultMap">
+	<id property="lrNo" column="LR_NO"></id>
+	<result property="lrCapacity" column="LR_CAPACITY"></result>
+	<result property="lrCount" column="LR_COUNT"></result>
+	<result property="lrStartDate" column="LR_START_DATE"></result>
+	<result property="lrEndDate" column="LR_END_DATE"></result>
+	<result property="lrNumber" column="LR_NUMBER"></result>
+	<result property="lrDay" column="LR_DAY"></result>
+	<result property="lrStartTime" column="LR_START_TIME"></result>
+	<result property="lrEndTime" column="LR_END_TIME"></result>
+	<result property="lrStatus" column="LR_STATUS"></result>
+	<result property="instructorNo" column="INSTRUCTOR_NO"></result>
+	<result property="lNo" column="L_NO"></result>
+	<result property="lrFee" column="LR_FEE"></result>
+	<result property="lTitle" column="L_TITLE"></result>
+	<result property="instructorName" column="INSTRUCTOR_NAME"></result>
+</resultMap>
+
+
 <resultMap type="com.kh.khculture.management.model.vo.LectureOpen3" id="openLectureResultMap">
 	<id property="lrNo" column="LR_NO"></id>
 	<result property="lrCapacity" column="LR_CAPACITY"></result>
@@ -247,6 +266,85 @@ SELECT
         )
 	WHERE RNUM BETWEEN #{startRow} AND #{endRow}
 </select>
+
+<select id="selectOneOpen" parameterType="_int" resultMap="oneOpenResultMap">
+	SELECT
+       LR_NO
+     , LR_CAPACITY
+     , LR_COUNT
+     , LR_START_DATE
+     , LR_END_DATE
+     , LR_NUMBER
+     , LR_DAY
+     , LR_START_TIME
+     , LR_END_TIME
+     , LR_STATUS
+     , INSTRUCTOR_NO
+     , L_NO
+     , LR_FEE
+     , L_TITLE
+     , INSTRUCTOR_NAME
+  FROM (SELECT 
+               LR_NO
+             , LR_CAPACITY
+             , LR_COUNT
+             , TO_CHAR(LR_START_DATE, 'YYYY-MM-DD') LR_START_DATE
+             , TO_CHAR(LR_END_DATE, 'YYYY-MM-DD') LR_END_DATE
+             , LR_NUMBER
+             , LR_DAY
+             , LR_START_TIME
+             , LR_END_TIME
+             , LR_STATUS
+             , C2.INSTRUCTOR_NO
+             , O.L_NO
+             , TO_NUMBER(LR_FEE, '999,999,999') LR_FEE
+             , L_TITLE
+     		 , INSTRUCTOR_NAME
+          FROM LECTURE O
+          JOIN LECTURE_REGISTRATION C1 ON(O.L_NO = C1.L_NO)
+          JOIN INSTRUCTOR C2 ON(C1.INSTRUCTOR_NO = C2.INSTRUCTOR_NO)
+         WHERE LR_STATUS = 'N'
+           AND LR_NO = #{lrNo}
+       )
+</select>
+
+<update id="updateOpen" parameterType="com.kh.khculture.management.model.vo.LectureOpen2">
+	UPDATE LECTURE_REGISTRATION
+	   SET 
+	   	   LR_CAPACITY = #{lrCapacity}
+	     , LR_START_DATE = TO_DATE(#{lrStartDate}, 'YYYY-MM-DD')
+	     , LR_END_DATE = TO_DATE(#{lrEndDate}, 'YYYY-MM-DD')
+	     , LR_NUMBER = #{lrNumber}
+	     , LR_DAY = #{lrDay}
+	     , LR_START_TIME = #{lrStartTime}
+	     , LR_END_TIME = #{lrEndTime}
+	     , LR_MODIFY_DATE = SYSDATE
+	     , INSTRUCTOR_NO = #{instructorNo}
+	     , L_NO = #{lNo}
+	     , LR_FEE = TO_CHAR(#{lrFee}, '99,999')
+	 WHERE LR_NO = #{lrNo}
+</update>
+
+<select id="deleteProcedure" parameterType="_int" resultType="_int">
+	SELECT COUNT(*)
+	  FROM LECTURE_REGISTRATION
+	 WHERE L_NO = #{lNo}
+	   AND LR_STATUS = 'N'
+</select>
+
+<select id="deleteOpenProcedure" parameterType="_int" resultType="_int">
+	SELECT COUNT(*)
+	  FROM LECTURE_REGISTRATION
+	 WHERE (LR_COUNT = 0
+	    OR SYSDATE > LR_END_DATE)
+	   AND LR_NO = #{lrNo} 
+</select>
+
+<update id="deleteOpen" parameterType="_int">
+	UPDATE LECTURE_REGISTRATION
+	   SET LR_STATUS = 'Y'
+	 WHERE LR_NO = #{lrNo}
+</update>
 
 </mapper>
 

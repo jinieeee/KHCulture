@@ -16,17 +16,14 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
-
-    <link rel="stylesheet" href="js/openRegist/jqx.base.css" type="text/css" />
-    <script type="text/javascript" src="js/openRegist/jqxcore.js"></script>
-    <script type="text/javascript" src="js/openRegist/jqxdraw.js"></script>
-    <script type="text/javascript" src="js/openRegist/jqxtimepicker.js"></script>
+    <link rel="stylesheet" href="/js/openRegist/jqx.base.css" type="text/css" />
+    <script type="text/javascript" src="/js/openRegist/jqxcore.js"></script>
+    <script type="text/javascript" src="/js/openRegist/jqxdraw.js"></script>
+    <script type="text/javascript" src="/js/openRegist/jqxtimepicker.js"></script>
 
 
     <script type="text/javascript">
         
-        
-
 
         $(document).ready(function ()
         {
@@ -87,51 +84,52 @@
     <div class="listContainer">
         <div class="content">
             <div class="titleArea">
-                <h1>강의 오픈</h1>
+                <h1>강의 오픈 업데이트</h1>
             </div>
             <div class="contentArea">
-            <form th:action="@{/openserver}" method="post">
-            <input type="hidden" name="lNo">
-            <input type="hidden" name="instructorNo">
+            <form th:action="@{/updateOpenserver}" method="post">
+            <input type="hidden" name="lNo" th:value="${open.lNo}">
+            <input type="hidden" name="lrNo" th:value="${open.lrNo}">
+            <input type="hidden" name="instructorNo" th:value="${open.instructorNo}">
             	<div class="selectArea1">
                     <input type="text" value="본사" readonly>
                     <input type="button" id="lectureBtn" value="강의를 선택해 주세요">
                     <div class="timePickerArea"><div id="jqxTimePicker"></div></div>
                 </div>
                 <div class="selectArea1">
-                    <input type="number" name="lrCapacity" min="1" placeholder="정원을 입력해 주세요" required>
-                    <input type="number" name="lrFee" min="0" placeholder="수강료를 입력해 주세요" required>
+                    <label>정원 : </label><input type="number" name="lrCapacity" min="1" placeholder="정원을 입력해 주세요" th:value="${open.lrCapacity}" required>
+                    <label>수강료 : </label><input type="number" name="lrFee" min="0" placeholder="수강료를 입력해 주세요" th:value="${open.lrFee}" required>
                 </div>
                 <div class="selectArea1">
-                    <input type="text" class="lectureDate dateSelector" id="lrStartDate" name="lrStartDate" placeholder="수강기간 시작일을 선택해 주세요" required>
-                    <input type="text" class="lectureDate dateSelector" id="lrEndDate" name="lrEndDate" placeholder="수강기간 종료일을 선택해 주세요" required>
+                    <label>시작일 : </label><input type="text" class="lectureDate dateSelector" id="lrStartDate" name="lrStartDate" placeholder="수강기간 시작일을 선택해 주세요" th:value="${open.lrStartDate}" required>
+                    <label>종료일 : </label><input type="text" class="lectureDate dateSelector" id="lrEndDate" name="lrEndDate" placeholder="수강기간 종료일을 선택해 주세요" th:value="${open.lrEndDate}" required>
                 </div>
                 <div class="selectArea1">
-                    <input type="text" class="lectureTime" id="lrStartTime" name="lrStartTime" placeholder="수강 시작 시간" required>
+                    <label>시작시간 : </label><input type="text" class="lectureTime" id="lrStartTime" name="lrStartTime" placeholder="수강 시작 시간" th:value="${open.lrStartTime}" required>
                     <button type="button" id="startBtn">시간설정</button>
-                    <input type="text" class="lectureTime" id="lrEndTime" name="lrEndTime" placeholder="수강 종료 시간" required>
+                    <label>종료시간 : </label><input type="text" class="lectureTime" id="lrEndTime" name="lrEndTime" placeholder="수강 종료 시간" th:value="${open.lrEndTime}" required>
                     <button type="button" id="endBtn">시간설정</button>
                     <input type="hidden" id="hiddenTime">
                 </div>
                 <div class="selectArea1">
                     <select name="lrDay" id="lrDay">
-                        <option value="" selected>요일을 선택해 주세요</option>
-                        <option value="월요일">매주 월요일</option>
-                        <option value="화요일">매주 화요일</option>
-                        <option value="수요일">매주 수요일</option>
-                        <option value="목요일">매주 목요일</option>
-                        <option value="금요일">매주 금요일</option>
-                        <option value="토요일">매주 토요일</option>
-                        <option value="일요일">매주 일요일</option>
+                        <option value="">요일을 선택해 주세요</option>
+                        <option value="월요일" th:selected="${open.lrDay == '월요일'}">매주 월요일</option>
+                        <option value="화요일" th:selected="${open.lrDay == '화요일'}">매주 화요일</option>
+                        <option value="수요일" th:selected="${open.lrDay == '수요일'}">매주 수요일</option>
+                        <option value="목요일" th:selected="${open.lrDay == '목요일'}">매주 목요일</option>
+                        <option value="금요일" th:selected="${open.lrDay == '금요일'}">매주 금요일</option>
+                        <option value="토요일" th:selected="${open.lrDay == '토요일'}">매주 토요일</option>
+                        <option value="일요일" th:selected="${open.lrDay == '일요일'}">매주 일요일</option>
                     </select>
-                    <input type="number" name="lrNumber" placeholder="강의 횟수를 입력해 주세요" required>
+                    <label>강의횟수 : </label><input type="number" name="lrNumber" placeholder="강의 횟수를 입력해 주세요" th:value="${open.lrNumber}" required>
                 </div>
                 <div class="selectArea1">
                     <input type="button" id="instructorBtn" value="강사를 선택해 주세요">
                 </div>
                 
                 <div class="btnArea">
-                    <input type="submit" value="오픈하기">
+                    <input type="submit" value="업데이트">
                 </div>
             </form>
                 
@@ -168,18 +166,25 @@
         maxDate: new Date().fp_incr(120)
 
         });
-
-
-
+    
+    
     var body = document.body,
     html = document.documentElement;
     
+    
+    $("#lectureBtn").css("background-color", "red");
+	$("#lectureBtn").css("color", "white");
+	$("#lectureBtn").val('[[${open.lTitle}]]');
+    
+	
+	$("#instructorBtn").css("background-color", "red");
+	$("#instructorBtn").css("color", "white");
+	$("#instructorBtn").val('[[${open.instructorName}]]');
+    
     $("#modalLectureBtn").click(function(){
     	
-    	// input 태그에 lNo 값 입력
-    	 
-    	$("input[name='lNo']").val($("input[name='lecture']:checked").val());
     	
+    	$("input[name='lNo']").val($("input[name='lecture']:checked").val());
     	
     	$("#lectureBtn").val($("input[name='lecture']:checked").next().next().text());    	
     	$("#lectureBtn").css("background-color", "red");
@@ -197,8 +202,6 @@
     	$("#instructorBtn").css("color", "white");
     	$(".modal").fadeOut();
     });
-    
-    
     
     
     $("#instructorBtn").click(function(){
