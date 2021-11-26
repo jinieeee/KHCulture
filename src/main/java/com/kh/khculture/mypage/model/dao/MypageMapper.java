@@ -23,7 +23,7 @@ public interface MypageMapper {
 
 	int checkCart(@Param("mno") int mno, @Param("lrNo") int lrNo);
 
-	int getPaymentDetailsCount(int mno);
+	int getPaymentDetailsCount(@Param("mno") int mno, @Param("startDate") String startDate, @Param("endDate") String endDate);
 
 	List<Payment> getPaymentDetails(Map<String, Object> map);
 	/* 김현주 */

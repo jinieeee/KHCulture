@@ -498,7 +498,7 @@
 			                             <div>` + targetEle + categoryEle + `
 			                             </div>
 			                             <div class="lectureContent">
-			                               <h3><a href="#">` + data.lecturelist[key].lrStartDate.substr(5, 2) + `/` + data.lecturelist[key].lrStartDate.substr(8, 2) + ` ` + data.lecturelist[key].lecture.ltitle + openNotice + `</a></h3>
+			                               <h3><a href="/lecture/detail/` + data.lecturelist[key].lrNo + `">` + data.lecturelist[key].lrStartDate.substr(5, 2) + `/` + data.lecturelist[key].lrStartDate.substr(8, 2) + ` ` + data.lecturelist[key].lecture.ltitle + openNotice + `</a></h3>
 			                               <p>` + data.lecturelist[key].instructor.instructorName + ` | (` + data.lecturelist[key].lrDay.substr(0, 1) + `) ` + data.lecturelist[key].lrStartTime + ` ~ ` + data.lecturelist[key].lrEndTime + `</p>
 			                               <p>` + data.lecturelist[key].lrFee + `원(총` + data.lecturelist[key].lrNumber + `회)</p>
 			                               <input type="hidden" value="` + data.lecturelist[key].lrNo + `">

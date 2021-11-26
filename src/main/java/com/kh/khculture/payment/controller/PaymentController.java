@@ -162,13 +162,14 @@ public class PaymentController {
 			
 	}
 	
-	@PutMapping(value="cancel")
+	@PutMapping(value="/payment/cancel")
 	@ResponseBody
-	public String Cancel(@RequestParam(value="arr[]") List<Integer> arr, Principal principal){
+	public String Cancel(@RequestParam(value="arr[]") List<Integer> arr, Principal principal, @RequestParam int rNo){
 		String resultData = "";
 		UserImpl user = (UserImpl)((Authentication)principal).getPrincipal();
 		log.info("{}", arr); //강좌오픈번호
 		log.info("{}", user.getMno()); //유저번호
+		log.info("{}", rNo); //주문번호
 //		int result = 0;
 //		for(Integer lrNo : arr) {
 //			//log.info("{}", lrNo);

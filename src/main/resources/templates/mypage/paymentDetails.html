@@ -33,9 +33,21 @@
     <div class="titleArea">
         <h1>구매내역</h1>
     </div>
+    <div class="searchDiv">
+    <form method="get" action="/mypage/paymentDetails" id="paymentForm">
+    	<p>결제일 : </p>
+    	&nbsp;&nbsp;<input th:if="${startDate != ''}" type="date" name="startDate" th:value="${startDate}" id="startDate"><input th:if="${startDate == ''}" type="date" name="startDate" id="startDate">
+    	<p>&nbsp;&nbsp; ~ &nbsp;&nbsp;</p>
+    	<input th:if="${endDate != ''}" type="date" name="endDate" th:value="${endDate}" id="endDate"><input th:if="${endDate == ''}" type="date" name="endDate" id="endDate">
+    	<button type="button" id="paymentSearchBtn">검색 <i class="fas fa-search"></i></button>
+    </form>
+    </div>
     <div class="paymentList">
         <div class="paymentWrap">
-        <table th:each="payment : ${paymentList}">
+        <div th:if="${paymentList.size == 0}">
+        	<h1 class="noDetails"><i class="fas fa-comment-dots"></i> 회원님의 구매내역이 존재하지 않습니다.</h1>
+        </div>
+        <table th:if="${paymentList.size != 0}" th:each="payment : ${paymentList}">
             <colgroup>
                 <col style="width: 15%;">
                 <col style="width: 15%;">
@@ -71,7 +83,7 @@
                 </td>
                 <td>
                     <div class="classInfo">
-                        <a href="#" th:text="|${#strings.substring(#dates.format(purchase.lectureOpen.lrStartDate, 'MM-dd'),0, 2)} / ${#strings.substring(#dates.format(purchase.lectureOpen.lrStartDate, 'MM-dd'),3, 5)} ${purchase.lectureOpen.lecture.lTitle}|">
+                        <a th:href="@{/lecture/detail/{lrNo}(lrNo=${purchase.lectureOpen.lrNo})}" th:text="|${#strings.substring(#dates.format(purchase.lectureOpen.lrStartDate, 'MM-dd'),0, 2)} / ${#strings.substring(#dates.format(purchase.lectureOpen.lrStartDate, 'MM-dd'),3, 5)} ${purchase.lectureOpen.lecture.lTitle}|">
                             
                             </a>
                         <p class="time" th:text="|(${#strings.substring(purchase.lectureOpen.lrDay,0,1)}) ${purchase.lectureOpen.lrStartTime} ~ ${purchase.lectureOpen.lrEndTime}|"></p>
@@ -105,7 +117,7 @@
             </tfoot>
         </table>
 <!--         	 페이징 처리 -->
-      <ul class="paymentPaging">
+      <ul class="paymentPaging" th:if="${paymentList.size != 0}">
         	<li><a th:href="@{?page=1}">&lt;&lt;</a></li>
 		    
 		       	<li th:if="${ pi.page > 1 }">
@@ -118,8 +130,8 @@
 	
 	        	<th:block th:with="start=${pi.startPage}, end=${pi.endPage}">
 	        		<li th:with="start=${pi.startPage}, end=${pi.endPage}" th:each="pageNum : ${#numbers.sequence(start,end)}">
-	        			<a th:if="${pi.page == pageNum}" th:href="@{/mypage/paymentDetails/?page={page}(page = ${pageNum})}" th:text=${pageNum} class="current_page"></a>
-	        			<a th:if="${pi.page != pageNum}" th:href="@{/mypage/paymentDetails/?page={page}(page = ${pageNum})}" th:text=${pageNum}></a>
+	        			<a th:if="${pi.page == pageNum}" th:href="@{/mypage/paymentDetails/?page={page}&startDate={startDate}&endDate={endDate}(page = ${pageNum}, startDate=${startDate}, endDate=${endDate})}" th:text=${pageNum} class="current_page"></a>
+	        			<a th:if="${pi.page != pageNum}" th:href="@{/mypage/paymentDetails/?page={page}&startDate={startDate}&endDate={endDate}(page = ${pageNum}, startDate=${startDate}, endDate=${endDate})}" th:text=${pageNum}></a>
 	        		</li>
 	        	</th:block>
 	        		
@@ -142,6 +154,7 @@
 $('.cancleBtn').on('click', function(){
 	let parent = this.closest("table");
 	let select = parent.querySelectorAll(".select:checked");
+	let rNo = parent.querySelector("#selectedClass").innerHTML;
 	if(select.length == 0) {
 		alert("구매 취소할 강좌를 선택해주세요.");
 		return;
@@ -181,7 +194,7 @@ $('.cancleBtn').on('click', function(){
 	//console.log(lectureArr);
 	$.ajax({
 		url : "/payment/cancel",
-		data : {arr : lectureArr},
+		data : {arr : lectureArr, rNo : rNo},
 		type : "put",
 		success : function(data) {
 			console.log(data);
@@ -215,6 +228,17 @@ $('.paymentList .select').change(function(){
     	$(parent.querySelector('.selectAll')).prop('checked', false);
     }
 })
+
+paymentSearchBtn.onclick=function(){
+	if(startDate.value != '' && endDate.value != '') {
+		if(startDate.value > endDate.value) {
+			alert('검색 종료일을 다시 확인해주시기 바랍니다.');
+			return;
+		}
+	}
+	
+	paymentForm.submit();
+}
 </script>
   </body>
     <footer th:include="fragments/footer.html"></footer>

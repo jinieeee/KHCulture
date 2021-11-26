@@ -36,20 +36,20 @@ public class MypageController {
 	}
 	
 	/* 김현주 */
-	@GetMapping("cart")
-	public void getCartList() {
-	}
+//	@GetMapping("cart")
+//	public void getCartList() {
+//	}
 	
-	@GetMapping(value="cart/list", produces="application/json; charset=UTF-8")
-	@ResponseBody
-	public List<LectureOpen> selectCartLists(Model model, HttpServletRequest request, Principal principal){
+	@GetMapping("cart")
+	public String selectCartLists(Model model, HttpServletRequest request){
 //		int page = 1;
 //		if(request.getParameter("page") != null) {
 //			page = Integer.parseInt(request.getParameter("page"));
 //		};
-		UserImpl user = (UserImpl)((Authentication)principal).getPrincipal();
-		List<LectureOpen> lecturelist = mypageService.getCartList(user.getMno());
-		return lecturelist;
+		//UserImpl user = (UserImpl)((Authentication)principal).getPrincipal();
+		List<LectureOpen> lecturelist = mypageService.getCartList(20);
+		model.addAttribute("lecturelist", lecturelist);
+		return "mypage/cart";
 	}
 	
 	@PostMapping(value="cart/post")
@@ -92,10 +92,11 @@ public class MypageController {
 	}
 	
 	@GetMapping("paymentDetails")
-	public String getPaymentDetails(Model model, Principal principal, @RequestParam(value="page", defaultValue="1") int page) {
-		UserImpl user = (UserImpl)((Authentication)principal).getPrincipal();
-		Map<String, Object> returnMap = mypageService.getPaymentDetails(user.getMno(), page);
-		log.info("{}", returnMap);
+	public String getPaymentDetails(Model model, @RequestParam(value="page", defaultValue="1") int page, @RequestParam(value="startDate", defaultValue="") String startDate, @RequestParam(value="endDate", defaultValue="") String endDate) {
+		//UserImpl user = (UserImpl)((Authentication)principal).getPrincipal();
+		Map<String, Object> returnMap = mypageService.getPaymentDetails(20, page, startDate, endDate);
+		model.addAttribute("startDate", startDate);
+		model.addAttribute("endDate", endDate);
 		model.addAttribute("pi", returnMap.get("pi"));
 		model.addAttribute("paymentList", returnMap.get("paymentList"));
 		return "mypage/paymentDetails";

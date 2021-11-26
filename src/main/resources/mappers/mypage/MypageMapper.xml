@@ -96,6 +96,16 @@
 			*
 			from receipt
 			where m_no = #{mno}
+			<if test="startDate != '' and endDate ==''">
+            and to_char(payment_date, 'YYYY-MM-DD') = #{startDate}
+			</if>
+			<if test="startDate == '' and endDate !=''">
+            and to_char(payment_date, 'YYYY-MM-DD') = #{endDate}
+			</if>
+			<if test="startDate != '' and endDate != ''">
+            and to_char(payment_date, 'YYYY-MM-DD') >= #{startDate}
+            and #{endDate} >= to_char(payment_date, 'YYYY-MM-DD')
+			</if>
 			order by r_no desc
 			) A
 			) where rnum between #{startrow} and #{endrow}
@@ -104,11 +114,18 @@
 			join lecture_registration using (lr_no)
 			join lecture using (l_no)
 			join instructor using (instructor_no)
+			order by r_no desc
 	</select>
 	<select id="getPaymentDetailsCount" parameterType="_int" resultType="_int">
 	select
 			count(*)
 			from receipt
 			where m_no = #{mno}
+			<if test="startDate != ''">
+            and to_char(payment_date, 'YYYY-MM-DD') >= #{startDate}
+			</if>
+			<if test="endDate != ''">
+			 and #{endDate} >= to_char(payment_date, 'YYYY-MM-DD')
+			</if>
 	</select>
 </mapper>

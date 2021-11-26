@@ -444,7 +444,7 @@
 				             if( date.getFullYear() == data.newlectureList[key].lrParDate.substr(0, 4) && calMonth == data.newlectureList[key].lrParDate.substr(5, 2) && calDate == data.newlectureList[key].lrParDate.substr(8, 2)) {
 				            	 
 				                 var html = '';
-			                         html += `<a href="#"><p>` + data.newlectureList[key].lrStartTime +  ` ~ ` +  data.newlectureList[key].lrEndTime + 
+			                         html += `<a href="/lecture/detail/` + data.newlectureList[key].lrNo + `"><p>` + data.newlectureList[key].lrStartTime +  ` ~ ` +  data.newlectureList[key].lrEndTime + 
 			                         `</p><p>` + data.newlectureList[key].lecture.ltitle + `</p>
 			                         <input type="hidden" value="` + data.newlectureList[key].lecture.lthumbnail + `">
 			                         <input type="hidden" value="` + data.newlectureList[key].instructor.instructorName + `">
