@@ -119,7 +119,6 @@
 		let selectLecture = document.querySelectorAll(".cartList .select:checked");
 		let arr = [];
 		selectLecture.forEach(select => {
-			console.log(select.value);
 			arr.push(select.value);
 		});
 		
@@ -152,6 +151,7 @@
 	 
 	  	submitBtn.onclick=function(){
 		 let over = false;
+		 let arr = [];
 		 if($('.cartList .select:checked').length == 0) {
 			 alert("선택된 강좌가 없습니다.");
 			 return;
@@ -162,12 +162,14 @@
 					alert(select.parentElement.parentElement.parentElement.children[2].children[0].children[0].innerHTML + '는 ' + select.parentElement.parentElement.parentElement.children[5].children[0].innerHTML + '된 강좌입니다. 다시 확인하여 주시기 바랍니다.');
 					over = true;
 				} 
-				
+				arr.push(select.value);
 			 })
 			 if(over) {
 					return;
 				}
-			cartForm.submit();
+			 
+			 location.href = "/payment/procedure?lrNo=" + arr;
+			//cartForm.submit();
 		 }
 	 };
 </script>

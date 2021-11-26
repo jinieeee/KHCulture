@@ -1,12 +1,12 @@
 package com.kh.khculture.board.model.vo;
 
-public class Like {
+public class Star {
 	
 	private int m_no;
 	private int b_no;
 	private String enroll_date;
 	
-	public Like() {}
+	public Star() {}
 
 	public int getM_no() {
 		return m_no;
