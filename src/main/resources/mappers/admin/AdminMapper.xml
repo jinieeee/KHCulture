@@ -81,7 +81,7 @@
 					<if test="accSecessionYN != null">
 						AND B.ACC_SECESSION_YN = #{accSecessionYN}
 					</if>
-					<if test="searchDate != null and accSecession == 'Y'">
+					<if test='searchDate != null and accSecessionYN != null and accSecessionYN == "Y"'>
 						AND B.ACC_SECESSION_DATE &lt; #{searchDate}
 					</if>
 					<if test="searchKeyword != null">
@@ -135,7 +135,7 @@
 					<if test="accSecessionYN != null">
 						AND B.ACC_SECESSION_YN = #{accSecessionYN}
 					</if>
-					<if test="searchDate != null and accSecession == 'Y'">
+					<if test='searchDate != null and accSecessionYN != null and accSecessionYN == "Y"'>
 						AND B.ACC_SECESSION_DATE &lt; #{searchDate}
 					</if>
 					<if test="searchKeyword != null">

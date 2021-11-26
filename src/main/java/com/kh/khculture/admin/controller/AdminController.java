@@ -59,6 +59,7 @@ public class AdminController {
 		search.setAccSecessionYN(accSecessionYN);
 		search.setSearchKeyword(searchKeyword);
 		search.setPage(page);
+		search.setSearchDate(date);
 		
 		Map<String, Object> result = adminService.getAllMemberList(search);
 	

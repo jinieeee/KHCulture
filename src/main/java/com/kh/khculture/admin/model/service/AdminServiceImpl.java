@@ -40,7 +40,7 @@ public class AdminServiceImpl implements AdminService{
 		// 페이징 처리
 		if((Integer)search.getPage() != null) {
 			// searchListCount = adminMapper.getSearchListCount();
-			pi = new PageInfo(search.getPage(), allSearchList.size(), 10, 10);
+			pi = new PageInfo(search.getPage(), allSearchList.size(), 10, 30);
 			search.setStartRow((pi.getPage() - 1) * pi.getBoardLimit() + 1);
 			search.setEndRow(search.getStartRow() + pi.getBoardLimit() - 1);
 		}
