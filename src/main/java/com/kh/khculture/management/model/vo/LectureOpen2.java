@@ -21,4 +21,6 @@ public class LectureOpen2 {
 	private int instructorNo;
 	private int lNo;
 	private int lrFee;
+	private String lTitle;
+	private String instructorName;
 }
