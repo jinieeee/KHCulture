@@ -53,12 +53,15 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http
 			.csrf().disable()
 			.authorizeRequests()
+				.antMatchers("/admin/memberList/**").hasRole("ADMIN")
+				.antMatchers(HttpMethod.POST, "/admin/memberService/deleteAcc").hasRole("HEAD")
+				.antMatchers(HttpMethod.POST, "/admin/memberList/roleUpdate").hasRole("HEAD")
 				.anyRequest().permitAll()
 		.and()
 			.formLogin()	// 로그인 설정
 			.loginPage("/member/login")	// 로그인 페이지 설정
+			//.successForwardUrl("/")	// 로그인 성공 시 랜딩 페이지 설정
 			.successHandler(authSuccessHandler) // 로그인 성공 시 핸들러
-			// .successForwardUrl("/")	// 로그인 성공 시 랜딩 페이지 설정
 			.failureHandler(authFailureHandler) // 로그인 실패 시 핸들러
 		.and()
 			.logout()	// 로그아웃 설정
@@ -69,8 +72,8 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.logoutSuccessUrl("/")			// 로그아웃 성공 시 랜딩 페이지
 		.and()
 			.exceptionHandling()
-			.authenticationEntryPoint(authEntryPoint)
-			.accessDeniedPage("/common/denied");
+			.accessDeniedPage("/common/denied")
+			.authenticationEntryPoint(authEntryPoint);
 
 	}
 

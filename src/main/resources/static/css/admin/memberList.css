@@ -61,15 +61,17 @@
 .memberListTbl #id,
 .memberListTbl #name,
 .memberListTbl #accLockYN,
-.memberListTbl #accSecessionYN {
-	width: 10%;
+.memberListTbl #accSecessionYN,
+.memberListTbl #authority {
+	width: 7%;
 }
 .memberListTbl #email {
-	width: 20%;
+	width: 16%;
 }
 .memberListTbl #phone,
-.memberListTbl #enrollDate {
-	width: 15%;
+.memberListTbl #enrollDate,
+.memberListTbl #accSecessionDate {
+	width: 12%;
 }
 
 .memberListTbl th,

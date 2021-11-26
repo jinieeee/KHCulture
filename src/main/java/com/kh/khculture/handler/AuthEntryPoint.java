@@ -17,7 +17,8 @@ public class AuthEntryPoint implements AuthenticationEntryPoint {
 	public void commence(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException authException) throws IOException, ServletException {
 		request.setAttribute("msg", "로그인이 필요합니다.");
-		request.getRequestDispatcher("/member/login").forward(request, response);
+		request.getRequestDispatcher("/common/authEntry").forward(request, response);
+		// response.sendRedirect("/member/login");
 	}
 
 	

@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.khculture.admin.model.service.AdminService;
 import com.kh.khculture.admin.model.vo.Search;
+import com.kh.khculture.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -60,10 +61,10 @@ public class AdminController {
 		search.setPage(page);
 		
 		Map<String, Object> result = adminService.getAllMemberList(search);
-		
+	
 		model.addAttribute("search", search);
 		model.addAttribute("pi", result.get("pi"));
-		log.info("{}", result.get("pi"));
+		log.info("{}", result.get("memberList"));
 		model.addAttribute("memberList", result.get("memberList"));
 		model.addAttribute("searchListCount", result.get("searchListcount"));
 		model.addAttribute("listCount", result.get("listCount"));
