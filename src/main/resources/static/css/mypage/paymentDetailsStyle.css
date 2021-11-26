@@ -1,10 +1,6 @@
 
 /* 나중에 header에 일괄적용 */
-.titleArea {
-    text-align: center;
-  }
-  
-  
+ 
   :root {
     --lecturebackground-color: #F0B95E;
     --lightgray-color : #E4E7EB;
@@ -33,9 +29,57 @@
     justify-content: center;
 }
 
+.mypagePaymentDetails .noDetails {
+	text-align : center;
+	color : gray;
+}
+
+.mypagePaymentDetails .searchDiv form{
+	display : flex;
+	justify-content : center;
+	align-items : center;
+	color : gray;
+	margin : 0 auto;
+	margin-bottom : 20px;
+	border-bottom : 2px solid gray;
+	width : 1000px;
+	background-color : var( --lecturebackground-color);
+	padding-top : 20px;
+	padding-bottom : 20px;
+}
+.mypagePaymentDetails .searchDiv p{
+	margin : 0;
+	font-size : 20px;
+	color : white;
+}
+.mypagePaymentDetails .searchDiv input{
+	height : 30px;
+	border : 1px solid var( --lecturebackground-color);
+	border-radius : 5px;
+	color : gray;
+	padding : 10px;
+}
+
+.mypagePaymentDetails .searchDiv input:focus{
+	outline : none;
+}
+
+.mypagePaymentDetails .searchDiv button{
+	margin : 0;
+	font-size : 20px;
+	height : 30px;
+	background-color : var( --lecturebackground-color);
+	color : white;
+	border : 1px solid white;
+	margin-left : 20px;
+	border-radius : 5px;
+	display: table-cell;
+    vertical-align: middle;
+}
+
   .mypagePaymentDetails .paymentList .paymentWrap {
       display: flex;
-      justify-content: center;
+      justify-content: flex-start;
       flex-direction: column;
       width: 1000px;
       min-height : 572px;

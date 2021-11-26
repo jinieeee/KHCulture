@@ -18,5 +18,5 @@ public interface MypageService {
 	int checkCart(int mno, int lrNo);
 	/* 김현주 */
 
-	Map<String, Object> getPaymentDetails(int mno, int page);
+	Map<String, Object> getPaymentDetails(int mno, int page, String startDate, String endDate);
 }

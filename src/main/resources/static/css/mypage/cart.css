@@ -45,6 +45,7 @@
       justify-content: center;
       flex-direction: column;
       width: 1320px;
+      margin-bottom : 30px;
     }
     .mypageCart .cartList .cartWrap table{
     width: 100%;

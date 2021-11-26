@@ -1,6 +1,8 @@
 package com.kh.khculture.mypage.model.service;
 
 import java.text.DecimalFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +41,12 @@ public class MypageServiceImpl implements MypageService{
 		 */
 		
 		List<LectureOpen> lecturelist = mypageMapper.getCartList(mno);
+		for(LectureOpen l : lecturelist) {
+			Calendar cal = new GregorianCalendar();
+			cal.setTime(l.getLrStartDate());
+			cal.add(Calendar.DATE, -30);
+			l.setLrOpenDate(cal.getTime());
+		}
 		//returnMap.put("pi", pi);
 		//returnMap.put("lecturelist", lecturelist);
 		return lecturelist;
@@ -64,9 +72,9 @@ public class MypageServiceImpl implements MypageService{
 	}
 
 	@Override
-	public Map<String, Object> getPaymentDetails(int mno, int page) {
+	public Map<String, Object> getPaymentDetails(int mno, int page, String startDate, String endDate) {
 		Map<String, Object> returnMap = new HashMap<>();
-		int listCount = mypageMapper.getPaymentDetailsCount(mno);
+		int listCount = mypageMapper.getPaymentDetailsCount(mno, startDate, endDate);
 		PageInfo pi = new PageInfo(page, listCount, 10, 10);
 		
 		int startrow = (pi.getPage() - 1)*pi.getBoardLimit() + 1;
@@ -75,6 +83,8 @@ public class MypageServiceImpl implements MypageService{
 		Map<String, Object> map = new HashMap<>();
 		map.put("startrow", startrow);
 		map.put("endrow", endrow);
+		map.put("startDate", startDate);
+		map.put("endDate", endDate);
 		map.put("mno", mno);
 		DecimalFormat formatter = new DecimalFormat("#,###");
 		List<Payment> paymentList = mypageMapper.getPaymentDetails(map);

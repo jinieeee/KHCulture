@@ -24,6 +24,8 @@ public class LectureOpen implements Comparable<LectureOpen>{
 	private String lrEndTime; //수강종료시간
 	private Lecture lecture; //강의
 	private Instructor instructor;
+	private Date lrOpenDate;
+	
 //
 //	public LectureOpen(LectureOpen lc) {
 //		this.lrNo = lc.getLrNo();

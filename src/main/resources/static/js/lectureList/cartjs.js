@@ -33,5 +33,27 @@ $('.cartList .selectAll').change(function(){
 	 })
 	 totalAmount.innerHTML = String(totalPrice).replace(/(.)(?=(\d{3})+$)/g,'$1,');
 })
+
+$('.cartList .select').change(function(){
+		    let inputCnt = $('.cartList .select').length;
+		    let checkedCnt = $('.cartList .select:checked').length;
+		    
+		    if(inputCnt == checkedCnt) {
+		        $('.cartList .selectAll').prop('checked', true);
+		    } else {
+		        $('.cartList .selectAll').prop('checked', false);
+		    }
+		    
+		   selectedClass.innerHTML = $('.cartList .select:checked').length;
+		   
+		   let totalPrice = 0;
+		   
+		   let checkedSelect = document.querySelectorAll('.cartList .select:checked');
+		 checkedSelect.forEach( select => {
+			totalPrice += Number(select.parentElement.children[1].value.replace(",", ''));
+		 })
+		 totalAmount.innerHTML = String(totalPrice).replace(/(.)(?=(\d{3})+$)/g,'$1,');
+		    
+		});
     
 

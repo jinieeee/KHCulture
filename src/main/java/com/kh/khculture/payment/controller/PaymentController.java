@@ -166,7 +166,7 @@ public class PaymentController {
 	
 	@PutMapping(value="/payment/cancel")
 	@ResponseBody
-	public String Cancel(@RequestParam(value="arr[]") List<Integer> arr, Principal principal, @RequestParam int rNo){
+	public String Cancel(@RequestParam(value="arr[]") List<Integer> arr, @RequestParam int rNo){
 		
 		int result1 = 0;
 		int result2 = 0;
