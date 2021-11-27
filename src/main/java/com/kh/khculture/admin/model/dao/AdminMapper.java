@@ -5,8 +5,10 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.kh.khculture.admin.model.vo.Notice;
 import com.kh.khculture.admin.model.vo.Search;
 import com.kh.khculture.member.model.vo.Member;
+
 
 @Mapper
 public interface AdminMapper {
@@ -37,5 +39,11 @@ public interface AdminMapper {
 	
 	// 관리자 권한 부여
 	int insertRole2(Map<String, Object> map);
+	
+	// 공지사항 게시글수
+	int getNoticeListCount(Search search);
+	
+	// 페이징 처리된 공지사항
+	List<Notice> getPageNoticeList(Search search);
 	
 }

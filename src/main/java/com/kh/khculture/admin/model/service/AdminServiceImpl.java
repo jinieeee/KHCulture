@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.khculture.admin.model.dao.AdminMapper;
+import com.kh.khculture.admin.model.vo.Notice;
 import com.kh.khculture.admin.model.vo.Search;
 import com.kh.khculture.common.PageInfo;
 import com.kh.khculture.member.model.vo.Member;
@@ -78,7 +79,7 @@ public class AdminServiceImpl implements AdminService{
 	public int deleteAcc(List<Integer> mnoList) {
 		int result = 0;
 		for(Integer mno : mnoList) {
-			Map<String, Object> map = new HashMap();
+			Map<String, Object> map = new HashMap<>();
 			map.put("mno", mno);
 			result += adminMapper.deleteAcc(map);
 		}
@@ -93,12 +94,33 @@ public class AdminServiceImpl implements AdminService{
 		int result2 = 0;
 		int result3 = 0;
 		for(Integer mno : mnoList) {
-			Map<String, Object> map = new HashMap();
+			Map<String, Object> map = new HashMap<>();
 			map.put("mno", mno);
 			result1 += adminMapper.deleteRole(map);
 			result2 += adminMapper.insertRole1(map);
 			result3 += adminMapper.insertRole2(map);
 		}
 		return (result2 == result3)? 1: 0;
+	}
+
+	@Override
+	public Map<String, Object> getNoticeList(Search search) {
+		Map<String, Object> map = new HashMap<>();
+		PageInfo pi = null;
+		int noticeListCount = 0;
+		
+		// 페이징 처리
+		if((Integer)search.getPage() != null) {
+			noticeListCount = adminMapper.getNoticeListCount(search);
+			pi = new PageInfo(search.getPage(), noticeListCount, 10, 30);
+			search.setStartRow((pi.getPage() - 1) * pi.getBoardLimit() + 1);
+			search.setEndRow(search.getStartRow() + pi.getBoardLimit() - 1);
+		}
+
+		List<Notice> noticeList = adminMapper.getPageNoticeList(search);
+
+		map.put("pi", pi);
+		map.put("noticeList", noticeList);
+		return map;
 	}
 }

@@ -17,5 +17,8 @@ public interface AdminService {
 	
 	// 등급 변경
 	int roleUpdate(List<Integer> mnoList);
+
+	// 공지사항 목록
+	Map<String, Object> getNoticeList(Search search);
 	
 }

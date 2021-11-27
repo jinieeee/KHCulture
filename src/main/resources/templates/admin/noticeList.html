@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>공지사항관리</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href="/css/admin/noticeList.css">
+</head>
+<body>
+<header th:include="fragments/header.html"></header>
+	<div class="titleArea">
+		<h1>회원관리</h1>
+    </div>
+    <article class="noticeList">
+    	<div class="searchContainer">
+	   		<form th:action="@{/admin/noticeList}" method="get" class="searchForm">
+	   			<select class="searchOptSel" name="searchOpt">
+	   				<option value="N_TITLE">제목</option>
+	   				<option value="N_CONTENT">내용</option>
+	   			</select>
+	   			<input type="text" name="searchKeyword" placeholder="검색 키워드">
+	   			<button type="submit">검색</button>
+	   			<input type="checkbox" name="myNotice" id="myNotice" value="1"><label for="myNotice">내가 작성한 공지사항</label>
+	   			<input type="hidden" name="page" value="">
+	   		</form>
+   		</div>
+   		<div class="noticeTblContainer">
+   			<table class="noticeListTbl">
+   				<colgroup>
+   					<col style="width: 10%">
+   					<col style="width: 30%">
+   					<col style="width: 10%">
+   					<col style="width: 10%">
+   					<col style="width: 10%">
+   					<col style="width: 30%">
+   				</colgroup>
+   				<tr>
+   					<th>공지사항No.</th>
+   					<th>제목</th>
+   					<th>작성자</th>
+   					<th>작성일</th>
+   					<th>조회수</th>
+   					<th>공지사항 관리</th>
+   				</tr>
+   				<tr th:each="notice : ${noticeList}">
+   					<td>[[${notice.n_no}]]</td>
+   					<td>[[${notice.n_title}]]</td>
+   					<td>[[${notice.id}]]</td>
+   					<td>[[${notice.n_enroll_date}]]</td>
+   					<td>[[${notice.n_count}]]</td>
+   					<td><input type="button" value="삭제" id="deleteNotice">
+   						<input type="button" value="수정" id="updateNotice">
+   						<input type="button" value="메인등록" id="enrollMain" th:disabled="${notice.refYN eq 'N'}">
+   						<th:block th:if="${notice.refYN eq 'N'}">
+   						<input type="button" value="등록해제" id="deleteMain">
+   						</th:block>
+   						<input type="hidden" th:value="${notice.n_no}" id="nno"></td>
+   				</tr>
+   			</table>
+   		</div>
+   		<div class="pagingDiv">
+    		<ul class="notice_paging">
+    		</ul>
+    	</div>
+    </article>
+     <form class="frm" method="GET">
+    	<input type="hidden" name="n_no" value="">
+     	<input type="file" name="mainImage" style="display: none;" accept="image/gif,image/jpeg,image/png">
+    </form>
+<footer th:include="fragments/footer.html"></footer>
+</body>
+<script>
+	var startPage = "[[${pi.startPage}]]";
+	var endPage = "[[${pi.endPage}]]";
+	var maxPage = "[[${pi.maxPage}]]";
+	var currentPage = "[[${pi.page}]]";
+	
+	var deleteNoticeUrl = '[[@{/notice/delete}]]';
+	var enrollMainUrl = '[[@{/admin/enrollMain}]]';
+</script>
+<script type="text/javascript" src="/js/admin/noticeList.js"></script>
+</html>

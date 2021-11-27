@@ -1,0 +1,97 @@
+.noticeList {
+	width: 1320px;
+	min-height: 875px;
+	margin: auto;
+}
+.searchContainer {
+	background-color: #E4E7EB;
+	margin-bottom: 76px;
+}
+.searchContainer .searchForm {
+	width: 100%;
+	padding: 20px;
+	text-align: center;
+}
+.searchContainer [type=text] {
+	line-height: 37px;
+	width: 40%;
+	background-color: #E4E7EB;
+	border: none;
+	border-bottom: 2px solid var(--main-color);
+	font-size: 16px;
+}
+.searchContainer [type=submit]{
+	width: 120px;
+	height: 50px;
+	font-size: 20px;
+	background-color: var(--main-color);
+	color: white;
+	border: none;
+} 
+.searchForm .searchOptSel {
+	width: 120px;
+	height: 37px;
+	font-size: 15px;
+	border: 1px solid var(--main-color);
+}
+.noticeList .noticeListTbl {
+	width: 100%;
+}
+.noticeList .noticeTblContainer {
+	width: 100%;
+	padding: 10px 0 20px 0;
+}
+.noticeListTbl th,
+.noticeListTbl td {
+	padding: 10px 10px;
+}
+.noticeListTbl th {
+	background-color: #FEF0A7;
+}
+.noticeListTbl {
+    background: #fff;
+    border-collapse: collapse;
+}
+.noticeListTbl tr {
+	border-bottom: 1px solid lightgray;
+}
+.noticeListTbl tr:nth-child(1) {
+	border-bottom: 2px solid gray;	
+}
+
+.noticeListTbl td {
+	text-align: center;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+/* 페이징바 */
+
+.pagingDiv a {
+    word-break: break-all;
+}
+
+.pagingDiv .notice_paging {
+    line-height: 50px;
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    margin: 0 auto;
+    padding-bottom: 20px;
+	border-top: none;
+	    
+    margin-bottom : 100px;
+}
+
+.pagingDiv .notice_paging a{
+    text-decoration: none;
+    color: #282A35;
+    width: 40px;
+    display: block;
+    text-align: center;
+}
+
+.pagingDiv .notice_paging a.current_page{
+border-bottom: 2px solid #282A35;
+    font-weight: bold;
+}

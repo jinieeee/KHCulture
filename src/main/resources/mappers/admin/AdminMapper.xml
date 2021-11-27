@@ -29,12 +29,19 @@
 		<!-- <association property="authority" resultMap="authorityResultMap"/> -->
 	</resultMap>
 	
-	<!-- <resultMap type="com.kh.khculture.member.model.vo.Authority" id="authorityResultMap">
-		<id property="authorityCode" column="REF_AUTHORITY_CODE2"/>
-		<result property="authorityName" column="AUTHORITY_NAME"/>
-		<result property="authorityDesc" column="AUTHORITY_DESC"/>
+	<resultMap id="noticeResultMap" type="com.kh.khculture.admin.model.vo.Notice">
+		<id property="n_no" column="N_NO"/>
+		<result property="n_title" column="N_TITLE"/>
+		<result property="n_content" column="N_CONTENT"/>
+		<result property="n_enroll_date" column="N_ENROLL_DATE"/>
+		<result property="n_count" column="N_COUNT"/>
+		<result property="n_modify_date" column="N_MODIFY_DATE"/>
+		<result property="n_status" column="N_STATUS"/>
+		<result property="m_no" column="M_NO"/>
+		<result property="id" column="ID"/>
+		<result property="refYN" column="REF_YN"/>
 	</resultMap>
- -->	
+	
 	<select id="getPageMemberList" resultMap="memberResultMap" parameterType="com.kh.khculture.admin.model.vo.Search">
 		SELECT *
 		  FROM (
@@ -228,4 +235,58 @@
 			  , 2
 			)
 	</insert>
+	
+	<select id="getNoticeListCount" parameterType="com.kh.khculture.admin.model.vo.Search" resultType="_int">
+		SELECT COUNT(*)
+		  FROM NOTICE
+		<where>
+			N_STATUS = 'Y'
+		<if test="searchOpt != null and searchKeyword != null">
+		   AND #{searchOpt} LIKE '%' || #{searchKeyword} || '%'
+		</if>
+		<if test="mno != 0">
+		   AND M_NO = #{mno}
+		</if>
+		</where>
+	</select>
+	
+	<select id="getPageNoticeList" parameterType="com.kh.khculture.admin.model.vo.Search" resultMap="noticeResultMap">
+		SELECT
+				N_NO
+			  , N_TITLE
+			  , N_CONTENT
+			  , N_COUNT
+			  , TO_CHAR(N_ENROLL_DATE, 'YYYY-MM-DD') N_ENROLL_DATE
+			  , M_NO
+			  , ID
+			  , NVL2(REF_NO, 'N', 'Y') REF_YN
+		  FROM (SELECT ROWNUM RNUM, A.*
+		  		  FROM ( SELECT N.N_NO
+		  		  			  , N.N_TITLE
+		  		  			  , N.N_CONTENT
+		  		  			  , N.N_COUNT
+		  		  			  , N.N_ENROLL_DATE
+		  		  			  , N.M_NO
+		  		  			  , M.ID
+		  		  			  , I.REF_NO
+		  		  		   FROM NOTICE N
+		  		  		   JOIN MEMBER M ON (N.M_NO = M.M_NO)
+		  		  		   LEFT JOIN MAIN_IMAGE I ON(N.N_NO = I.REF_NO)
+		  		  		<where>
+		  		  		  N.N_STATUS = 'Y'
+						<if test="searchOpt == 'N_TITLE' and searchKeyword != null">
+						   AND N.N_TITLE LIKE '%' || #{searchKeyword} || '%'
+						</if>
+						<if test="searchOpt == 'N_CONTENT' and searchKeyword != null">
+						   AND N.N_CONTENT LIKE '%' || #{searchKeyword} || '%'
+						</if>
+						<if test="mno != 0">
+						   AND N.M_NO = #{mno}
+						</if>
+						</where>
+						 ORDER BY N.N_NO DESC
+		  		  		) A
+		  		)
+		  WHERE RNUM BETWEEN #{startRow} AND #{endRow}
+	</select>
 </mapper>
