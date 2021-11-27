@@ -60,6 +60,7 @@ article .leftDiv p {
 	box-shadow: 2px 2px 12px -5px gray;
 	margin: 3px 10px 0 10px;
 	overflow: hidden;
+	cursor: pointer;
 }
 .proItem {
 	position: relative;
@@ -101,7 +102,11 @@ article .leftDiv p {
 .txtBox {
 	padding: 3% 5%;
 }
-.txtBox span.subject {
+.txtBox a.subject {
+	text-decoration: none;
+	color: black;	
+}
+.txtBox a.subject {
 	width: 200px;
 	height: 50px;
 	font-size: 18px;
@@ -135,4 +140,7 @@ article .leftDiv p {
 }
 span.blind{
 	display: none;
+}
+#mainArea .toggle-box img {
+	cursor: pointer
 }

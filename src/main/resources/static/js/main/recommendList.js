@@ -3,7 +3,7 @@ $(function(){
 	$.ajax({
 		url: "/main/recommendList",
 		success: function(data) {
-			// console.log(data);
+			console.log(data);
 			var html = '';
 			var recommendClassArea = $(".recommendClassArea");
 			var dataSize = 0;
@@ -28,7 +28,7 @@ $(function(){
 					html += `<span class="categoryTag" style="background-color: #70562C">무료강좌</span>`;
 				}
 				
-				html += `</div><div class="txtBox"><span class="subject">[ ` + lecture.lrStartDate.substr(5,2) + `/` + lecture.lrStartDate.substr(8, 2) + ` ] ` + lecture.lecture.ltitle + `</span>`
+				html += `</div><div class="txtBox"><a href="/lecture/detail/` + lecture.lrNo + `" class="subject">[ ` + lecture.lrStartDate.substr(5,2) + `/` + lecture.lrStartDate.substr(8, 2) + ` ] ` + lecture.lecture.ltitle + `</a>`
 					  + `<div class="info"><div class="subTxt"><span class="name">` + lecture.instructor.instructorName + `</span>`
 					  + `<span class="time">(` + lecture.lrDay.substr(0,1) + `) ` + lecture.lrStartTime + ` ~ ` + lecture.lrEndTime + `</span></div>`
 					  + `<div class="price"><span class="blind">판매가</span><b>` + lecture.lrFee + `</b>원<span> ( 정원 ` + lecture.lrCount + `명 )</span></div></div></div></div></div></li>`
@@ -64,6 +64,10 @@ function addEvent(){
 				$(this).stop().animate({top: "0"}, 200);
 			}
 		});
+	});
+	
+	$(".recommendClassArea li").on('click', function(){
+		$(this).find(".subject").get(0).click();
 	});
 }
 

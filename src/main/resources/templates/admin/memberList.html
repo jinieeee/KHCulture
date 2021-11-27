@@ -18,9 +18,9 @@
 	   				<tr>
 	   					<th>회원등급</th>
 	   					<td>
-				   			<input type="checkbox" name="memberRole" value="0" th:checked="${search.authorityCode == 0}"><label>전체</label>
-				   			<input type="checkbox" name="memberRole" value="1" th:checked="${search.authorityCode == 1}"><label>일반회원</label>
-				   			<input type="checkbox" name="memberRole" value="2" th:checked="${search.authorityCode == 2}"><label>관리자</label>   					
+				   			<input type="checkbox" name="memberRole" id="allChk" value="0" th:checked="${search.authorityCode == 0}"><label for="allChk">전체</label>
+				   			<input type="checkbox" name="memberRole" id="memberChk" value="1" th:checked="${search.authorityCode == 1}"><label for="memberChk">일반회원</label>
+				   			<input type="checkbox" name="memberRole" id="adminChk" value="2" th:checked="${search.authorityCode == 2}"><label for="adminChk">관리자</label>   					
 	   					</td>
 	   				</tr>
 	   				<tr>
