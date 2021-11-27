@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.kh.khculture.admin.model.vo.Search;
+import com.kh.khculture.main.model.vo.MainImage;
 
 public interface AdminService {
 	// 회원 조회
@@ -20,5 +21,11 @@ public interface AdminService {
 
 	// 공지사항 목록
 	Map<String, Object> getNoticeList(Search search);
+	
+	// 메인페이지 이미지 등록
+	int enrollMainImage(MainImage mi);
+	
+	// 메인페이지 이미지 삭제
+	int deleteMain(int nno);
 	
 }

@@ -163,6 +163,7 @@ public class AdminController {
 							 @AuthenticationPrincipal UserImpl user,
 							 RedirectAttributes rttr) {
 		String msg = "";
+		int result = 0;
 		MainImage mi = new MainImage();
 		mi.setMno(user.getMno());
 		mi.setRefNo(nno);
@@ -178,20 +179,30 @@ public class AdminController {
 		
 		String originFileName = singleFile.getOriginalFilename();
 		String ext = originFileName.substring(originFileName.lastIndexOf("."));
-		String savedName = UUID.randomUUID().toString().replace("-", "");
+		String savedName = UUID.randomUUID().toString().replace("-", "") + ext;
 		
 		try {
 			singleFile.transferTo(new File(filePath + "\\" + savedName));
 			mi.setMiRename(savedName);
+			result = adminService.enrollMainImage(mi);
+			msg = result > 0? "메인페이지 이미지 등록에 성공하였습니다": "메인페이지 이미지 등록에 실패하였습니다";
 		} catch (IllegalStateException | IOException e) {
-			msg = "등록 실패";
+			msg = "메인페이지 이미지 등록에 실패하였습니다";
 			rttr.addFlashAttribute("msg", msg);
 			return "redirect:/admin/noticeList";
 		}
 		
 		log.info("{}", mi);
-		
-		msg = "등록 성공";
+
+		rttr.addFlashAttribute("msg", msg);
+		return "redirect:/admin/noticeList";
+	}
+	
+	@GetMapping("deleteMain")
+	public String deleteMain(@RequestParam(value="n_no") int nno,
+							 RedirectAttributes rttr) {
+		int result = adminService.deleteMain(nno);
+		String msg = result > 0? "메인페이지의 이미지에서 삭제 완료되었습니다": "메인페이지의 이미지에서 삭제 실패했습니다";
 		rttr.addFlashAttribute("msg", msg);
 		return "redirect:/admin/noticeList";
 	}

@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.kh.khculture.admin.model.vo.Notice;
 import com.kh.khculture.admin.model.vo.Search;
+import com.kh.khculture.main.model.vo.MainImage;
 import com.kh.khculture.member.model.vo.Member;
 
 
@@ -45,5 +46,11 @@ public interface AdminMapper {
 	
 	// 페이징 처리된 공지사항
 	List<Notice> getPageNoticeList(Search search);
+	
+	// 메인페이지 이미지 등록
+	int enrollMainImage(MainImage mi);
+	
+	// 메인페이지 이미지 삭제
+	int deleteMain(int nno);
 	
 }

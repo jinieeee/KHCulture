@@ -63,12 +63,21 @@
     		</ul>
     	</div>
     </article>
-     <form class="frm" method="GET">
+    <form class="frm" method="GET">
     	<input type="hidden" name="n_no" value="">
-     	<input type="file" name="mainImage" style="display: none;" accept="image/gif,image/jpeg,image/png">
+    </form>
+    <form class="enrollForm" th:action="@{/admin/enrollMain}" method="POST" enctype="multipart/form-data">
+    	<input type="hidden" name="n_no" value="">
+     	<input type="file" name="singleFile" style="display: none;" accept="image/gif,image/jpeg,image/png" required>
     </form>
 <footer th:include="fragments/footer.html"></footer>
 </body>
+<script>
+	var msg = '[[${msg}]]';
+	if(msg) {
+		alert(msg);
+	}
+</script>
 <script>
 	var startPage = "[[${pi.startPage}]]";
 	var endPage = "[[${pi.endPage}]]";
@@ -76,7 +85,7 @@
 	var currentPage = "[[${pi.page}]]";
 	
 	var deleteNoticeUrl = '[[@{/notice/delete}]]';
-	var enrollMainUrl = '[[@{/admin/enrollMain}]]';
+	var deleteMainUrl = '[[@{/admin/deleteMain}]]';
 </script>
 <script type="text/javascript" src="/js/admin/noticeList.js"></script>
 </html>

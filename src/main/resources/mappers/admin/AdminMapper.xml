@@ -289,4 +289,28 @@
 		  		)
 		  WHERE RNUM BETWEEN #{startRow} AND #{endRow}
 	</select>
+	
+	<insert id="enrollMainImage" parameterType="com.kh.khculture.main.model.vo.MainImage">
+		INSERT INTO MAIN_IMAGE
+		    (
+		    	MI_NO
+		      , M_NO
+		      , MI_RENAME
+		      , REF_NO
+		      , MI_STATUS
+		    )
+		VALUES
+			(
+				SEQ_MI_NO.NEXTVAL
+			  , #{mno}
+			  , #{miRename}
+			  , #{refNo}
+			  , 'Y'
+			)
+	</insert>
+	
+	<delete id="deleteMain" parameterType="_int">
+		DELETE FROM MAIN_IMAGE
+		 WHERE REF_NO = #{nno}
+	</delete>
 </mapper>
