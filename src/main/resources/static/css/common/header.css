@@ -29,6 +29,9 @@ body {
     border-bottom: solid 1px #6A6A6A;
     /* background-color: lightpink; test */
 }
+#header h1 {
+	cursor: pointer;
+}
 #header a {
 	color: black;
 }
