@@ -13,6 +13,7 @@ import com.kh.khculture.admin.model.dao.AdminMapper;
 import com.kh.khculture.admin.model.vo.Notice;
 import com.kh.khculture.admin.model.vo.Search;
 import com.kh.khculture.common.PageInfo;
+import com.kh.khculture.main.model.vo.MainImage;
 import com.kh.khculture.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
@@ -102,7 +103,8 @@ public class AdminServiceImpl implements AdminService{
 		}
 		return (result2 == result3)? 1: 0;
 	}
-
+	
+	// 공지사항 관리 목록
 	@Override
 	public Map<String, Object> getNoticeList(Search search) {
 		Map<String, Object> map = new HashMap<>();
@@ -122,5 +124,18 @@ public class AdminServiceImpl implements AdminService{
 		map.put("pi", pi);
 		map.put("noticeList", noticeList);
 		return map;
+	}
+	
+	// 메인이미지 등록
+	@Override
+	public int enrollMainImage(MainImage mi) {
+		int result = adminMapper.enrollMainImage(mi);
+		return result;
+	}
+	
+	// 메인이미지 삭제
+	@Override
+	public int deleteMain(int nno) {
+		return adminMapper.deleteMain(nno);
 	}
 }

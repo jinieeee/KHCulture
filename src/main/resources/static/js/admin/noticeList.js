@@ -73,13 +73,21 @@ $(".noticeListTbl #deleteNotice").on('click', function(){
 
 $(".noticeListTbl #enrollMain").on('click', function(){
 	var nno = $(this).siblings().last().val();
-	$(".frm [name=n_no]").val(nno);
-	$(".frm [type=file]").click();
+	$(".enrollForm [name=n_no]").val(nno);
+	$(".enrollForm [type=file]").click();
 });
 
-$(".frm [type=file]").on('change', function(){
-	$(".frm").attr('action', enrollMainUrl);
-	$(".frm").attr('method', 'POST');
-	$(".frm").attr('encType', 'multipart/form-data');
+$(".enrollForm [type=file]").on('change', function(){
+	console.log($(this).val());
+	$(".enrollForm").submit();
+});
+
+$(".noticeListTbl #deleteMain").on('click', function(){
+	var nno = $(this).siblings().last().val();
+	if(!confirm(nno + "번 공지사항을 메인화면에서 삭제하시겠습니까?")) {
+		return;
+	}
+	$(".frm [name=n_no]").val(nno);
+	$(".frm").attr('action', deleteMainUrl);
 	$(".frm").submit();
 });
