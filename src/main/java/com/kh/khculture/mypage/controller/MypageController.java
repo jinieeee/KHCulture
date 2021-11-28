@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +21,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.kh.khculture.lecture.model.vo.LectureOpen;
 import com.kh.khculture.member.model.vo.UserImpl;
 import com.kh.khculture.mypage.model.service.MypageService;
-import com.kh.khculture.payment.model.vo.Payment;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -110,7 +110,8 @@ public class MypageController {
 		return "mypage/mypagemain";
 	}
 	@GetMapping("/memberModify")
-	public String memberModiy(Model model) {
+	public String memberModiy(Model model, @AuthenticationPrincipal UserImpl user) {
+		model.addAttribute("member", user);
 		return "mypage/memberModify";
 	}
 	
