@@ -48,7 +48,7 @@ public class LectureOpen implements Comparable<LectureOpen>{
 		return lrParDate.compareTo(o.getLrParDate());
 	}
 	
-	public LectureOpen() {}
+	
 	
 	
 }

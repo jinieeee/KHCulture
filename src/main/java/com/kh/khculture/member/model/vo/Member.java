@@ -26,6 +26,8 @@ public class Member {
 	private Date accSecessionDate;				// 회원탈퇴일
 	private List<MemberRole> memberRoleList;	// 회원권한목록
 	
+	
+	
 	public Member() {}
 
 }

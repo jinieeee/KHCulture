@@ -12,16 +12,29 @@
     <div class="board_detail_title">
         <div id="board_category2">비누공방</div>
         <div id="board_comment2" th:text="${Board.b_title}"></div>
-        <div id="board_date2" th:text="${Board.b_enroll_date}"></div>
+        <div id="board_date2" th:text="${#dates.format(Board.b_enroll_date,'yyyy-MM-dd')}"></div>
     </div>
     <div class="board_detail_boundary">
-    	<!-- b_star의 합산을 여기에 뿌려줌  -->
         <div>
-            <span><img src="/images/mypage/star.png" id="board_star"></span>
-            <span><img src="/images/mypage/star.png" id="board_star"></span>
-            <span><img src="/images/mypage/star.png" id="board_star"></span>
-            <span><img src="/images/mypage/star.png" id="board_star"></span>
-            <span><img src="/images/mypage/star.png" id="board_star"></span>
+     		<th:block th:if="${Board.b_star} == 1">
+        	<span><img th:each="star:${#numbers.sequence(1,1)}" th:src="@{/images/mypage/star.png}" id="board_star"></span>
+        	<span><img th:each="star:${#numbers.sequence(1,4)}" th:src="@{/images/mypage/star2.png}" id="board_star"></span>
+      		</th:block>
+     		<th:block th:if="${Board.b_star} == 2">
+        	<span><img th:each="star:${#numbers.sequence(1,2)}" th:src="@{/images/mypage/star.png}" id="board_star"></span>
+        	<span><img th:each="star:${#numbers.sequence(1,3)}" th:src="@{/images/mypage/star.png}" id="board_star"></span>
+      		</th:block>
+        	<th:block th:if="${Board.b_star} == 3">
+        	<span><img th:each="star:${#numbers.sequence(1,3)}" th:src="@{/images/mypage/star.png}" id="board_star"></span>
+        	<span><img th:each="star:${#numbers.sequence(1,2)}" th:src="@{/images/mypage/star2.png}" id="board_star"></span>
+      		</th:block>
+      		<th:block th:if="${Board.b_star} == 4">
+        	<span><img th:each="star:${#numbers.sequence(1,4)}" th:src="@{/images/mypage/star.png}" id="board_star"></span>
+        	<span><img th:each="star:${#numbers.sequence(1,1)}" th:src="@{/images/mypage/star2.png}" id="board_star"></span>
+      		</th:block>
+      		<th:block th:if="${Board.b_star} == 5">
+        	<span><img th:each="star:${#numbers.sequence(1,5)}" th:src="@{/images/mypage/star.png}" id="board_star"></span>
+      		</th:block>
         </div>
         <div id="board_detail_comment">
         <span th:utext="${Board.b_content}" ></span><br>
@@ -30,63 +43,189 @@
         <div>
             <div>좋아요</div>
             
-            <!-- #{Lovit.b_no} == Board.b_no -->
-            <th:block th:if="!${Lovit}">
+            <span th:text="${Lovit}"></span>
             
-             <!--    	Lovit.b_no와 Board.b_no 가 같으면  Lovit테이블에 담겼다는 의미 -> 빨간 -> 흰색으로 바꿔주는 ajax  -->
-             
+            <!-- #{Lovit.b_no} == Board.b_no -->
+            <th:block th:if="${Lovit} == 0 ">
+             <!-- Lovit.b_no와 Board.b_no 가 같으면  Lovit테이블에 담겼다는 의미 -> 빨간 -> 흰색으로 바꿔주는 ajax  -->
             <div><img src="/images/mypage/heart2.png" id="board_heart"  th:attr="onclick=|like('${Board.b_no}')|" ></div>
-             </th:block>
+            </th:block>
            
-             <th:block th:if="${Lovit}">
+            <th:block th:if="${Lovit} == 1">
           	 <!-- Lovit.b_no와 Board.b_no 가 다르면  Lovit테이블에 없다는 의미 -> 흰 -> 빨으로 바꿔주는 ajax -->
-          	<div><img src="/images/mypage/heart.png" id="board_heart"  th:attr="onclick=|like2('${Board.b_no}')|" ></div>  	
+          	<div><img src="/images/mypage/heart.png" id="board_heart2"  th:attr="onclick=|like('${Board.b_no}')|" ></div>  	
           	</th:block>
           	 
         </div>
     </div>
-    <th:block th:if="${ Board.m_no }  
-    <form method="get" action="/board/updateView">
-	    <div align="right" class="board_detail_button">
-	    	<input type="hidden" name="b_no" th:value="${Board.b_no}">
-	        <button type="submit" id="board_update" class="button">수정하기</button>
-	    </div>
-	</form> 
+
 	
-	
-<!-- 댓글  -->
-    <div class="board_detail_reply">
-        <div class="board_reply_select">
-            <div id="reply_name">양*하</div> 
-            <div id="reply_comment2">언제나 좋은 강의 개설해주셔서 감사합니다. ^__^</div> 
-            <div id="reply_date">2021-11-15</div>
-            <!-- 본인이 쓴 댓글에만 활성화됨-->
-            <input type="button" value="수정" class="button">
-        </div>
-        <div class="board_reply_select">
-            <div id="reply_name">양*하</div> 
-            <div id="reply_comment2">언제나 좋은 강의 개설해주셔서 감사합니다. ^__^</div> 
-            <div id="reply_date">2021-11-15</div>
-            <!-- 본인이 쓴 댓글에만 활성화됨-->
-            <input type="button" value="수정" class="button">
-        </div>
-        <div class="board_detail_reply_insert">
-            <input type="text" id="board_reply_insert">
-            <input type="button" value="댓글작성" class="button"> 
-        </div>
+	 <div align="right" class="board_detail_button">
+	 	<form method="get" action="/board/updateView">
+		 	<span th:if="${#authentication.principal.mno} == ${Board.m_no}">
+		     	  <input type="hidden" name="bno" th:value ="${Board.b_no}"/>
+			    <button type="submit" id="board_update" class="button">수정하기</button>
+		    </span>
+		 </form>
+ 			<button id="board_update" class="button" th:onclick="|location.href='@{/board/boardList}'|"> 목록으로 이동 </button>
+	 </div>
+	 
+ 
+    <div class="board_detail_reply_insert">
+         	<input type="hidden" name="b_no" th:value="${Board.b_no}">
+         	 <textarea type="text" id="board_reply_insert" name="content" ></textarea>
+         		<span class="input-group-btn">
+                    <button class="button" name="replyInsertBtn" th:attr="onclick=|reply('${Board.b_no}')|">등록</button>
+               </span>
     </div>
-   <footer th:include="fragments/footer.html"></footer>
-    <script>
-        $(document).ready(function(){
-            $("#inputHeader").load("../common/header.html");
-            $("#inputFooter").load("../common/footer.html");
-        });
-    </script>
-    <script>
+    
+ 
+ 
+ <div class="board_detail_reply">
+        <div class="board_reply_select" th:each="Reply : ${ Reply }"> 
+	 		<th:block th:if="${Reply.r_no != 0}">
+	       		<input type="hidden" name="rno" th:value="${Reply.r_no}">
+	       		<input type="hidden" name="mno" th:value="${Reply.m_no}">
+	            <div id="reply_name"><span th:text="${Reply.name}"></span></div> 
+	            <div id="reply_comment2"><span th:text="${Reply.r_content}"></span></div> 
+	          	<div id="reply_date"><span th:text="${#dates.format(Reply.r_enroll_date,'yyyy-MM-dd')}"></span></div>
+	           <span th:if="${#authentication.principal.mno} == ${Reply.m_no}">
+		             <button type="submit" class="button cmt_btn" th:attr="onclick=|replyDelete('${Reply.r_no}')|">삭제</button>
+	       	   </span>	
+	     	</th:block>
+	     	<th:block th:if="${Reply.r_no == 0 }">
+	     		<div> 댓글이 없습니다. </div>
+	     	</th:block>
+        </div>
+     
+</div>
+
+<script>
+function reply(bno){
+	var bno = $("[name=b_no]").val();
+	var content=$("[name=content]").val();
+	
+//	console.log(bno);
+//	console.log(content);
+	
+//	var obj ={bno:bno , rcontent:content};  (X)
+	var obj ={b_no:bno , r_content:content}; 
+	$.ajax({
+		url:'/board/replyInsert',
+		type:'post',
+		data:JSON.stringify(obj),
+		contentType : "application/json; charset=utf-8",
+		success : function(list){
+		//	console.log(list);
+			
+			var html='';
+			for(var key in list){
+				html +='<div class="board_reply_select">'
+					
+	       	+'<input type="hidden" name="rno" th:value="${Reply.n_no}">'
+	       	+'<input type="hidden" name="mno" th:value="${Reply.m_no}">'
+	        +'<div id="reply_name"><span>'+ list[key].name +'</span></div> '
+	        +'<div id="reply_comment2"><span>'+ list[key].r_content + '</span></div> '
+	        +'<div id="reply_date"><span>'+ list[key].r_enroll_date+ '</span></div>'
+	        +'<button type="submit" class="button cmt_btn" th:attr="onclick=|replyDelete('+list[key].r_no+')|">삭제</button>'
+       		+' </div>'
+	          	
+       		
+	       
+			}
+	          	$(".board_detail_reply").html(html);
+				$(".reply_content").val("");
+			},
+		error : function(e){
+			console.log(e)
+		}
+			
+			
+		
+		
+	});
+	
+	
+}
+		
+		var editOuter = document.createElement('div');
+		var editCmt = document.createElement('textarea');
+		var editBtn = document.createElement('button');
+		var editResult;
+		var originCmt;
+		
+		editOuter.id = 'edit_outer';
+		editCmt.id = 'editCmt';
+		editBtn.id = 'editBtn';
+		
+		editBtn.type = 'button';
+		editBtn.textContent = '수정완료';
+		
+		editOuter.append(editCmt);
+		editOuter.append(editBtn);
+		var originBtn;
+		
+		function replyDelete(rno){
+			var bno = $("[name=b_no]").val();
+			var obj ={b_no:bno , r_no:rno}; 
+			console.log(bno);
+			console.log(rno);
+			$.ajax({
+				url : '/board/replydelete',
+				type : 'post',
+				data:JSON.stringify(obj),
+				contentType : "application/json; charset=utf-8",
+				success : function(list){
+					if(list != null){
+						alert('댓글 삭제 완료');
+						console.log('----')
+						console.log(list);
+						replyLoad(list);
+					}else{
+						alert('댓글 삭제 실패');
+					}
+				},
+				error: function(e){
+					console.log(e)
+				}
+				});
+		}	
+		
+		
+		function replyLoad(list){
+			var html='';
+			for(var key in list){
+				html +='<div class="board_reply_select">'
+					
+		       	+'<input type="hidden" name="rno" th:value="${Reply.n_no}">'
+		       	+'<input type="hidden" name="mno" th:value="${Reply.m_no}">'
+		        +'<div id="reply_name"><span>'+ list[key].name +'</span></div> '
+		        +'<div id="reply_comment2"><span>'+ list[key].r_content + '</span></div> '
+		        +'<div id="reply_date"><span>'+ list[key].r_enroll_date+ '</span></div>'
+		        +'<button type="submit" class="button cmt_btn" onclick=replyDelete('+list[key].r_no+')>삭제</button>'
+	       		+' </div>'
+			}
+      	$(".board_detail_reply").html(html);
+		$(".reply_content").val("");
+		}
+
+
+
+</script>
+
+    
+    
+    
+ <!-- ********************** 좋아요 ******************************* -->   
+
+ 
+<script>
+
     function like(bno){
     	alert("좋아요 누른 게시글 번호 : " + bno)
-    	 console.log(event.target);
     	 console.log(event.target.id);
+    	 
+    	 
     	 if(event.target.id == 'board_heart') {
 	  	    	$.ajax({
 	    			url : "/board/likeinsert",
@@ -98,10 +237,7 @@
 	  				alert(data); //success
 	  				console.log('위시리스트에 담았습니다.');
 	  				$("#board_heart").attr("src", "/images/mypage/heart.png"); //빨간하트
-	  				/* $("."+rno).attr("alt", "wish1");
-	  				$("."+rno).attr("id", "wish1"); */
-	  				location.href="/board/detail.do?b_no="+bno;
-	  				
+	  				$("#board_heart").attr("id","board_heart2");
 	  			},
 	    			error : function(){
 	  				console.log('위시리스트에 담기 실패하였습니다.');
@@ -109,38 +245,37 @@
 	  			
 	    		}); 
     	
+   		 }else if(event.target.id == 'board_heart2'){
+   			 
+   			
+ 	  	    	$.ajax({
+ 	    			url : "/board/likedelete",
+ 	    			data : {bno:bno},  
+ 	    			type : "post", 
+ 	     			datatype : "json",
+ 	    			success : function(data){
+ 	  				// 성공 시 호출 된는  함수에 서버에서 돌아온 응답 데이터가 넘어옴
+ 	  				alert("위시리스트에 제거했습니다."); //success
+ 	  				console.log('위시리스트에 제거했습니다.');
+ 	  				$("#board_heart2").attr("src", "/images/mypage/heart2.png"); // 하얀하트
+ 	  				$("#board_heart2").attr("id","board_heart");
+ 	  			},
+ 	    			error : function(){
+ 	  				console.log('위시리스트에 담기 실패하였습니다.');
+ 	  			},
+ 	  			
+ 	    		}); 
+     	
+    		 
+   			 
    		 }
     }
+</script>
     
-    function like2(bno){
-    	alert("좋아요 누른 게시글 번호 : " + bno)
-    	 console.log(event.target);
-    	 console.log(event.target.id);
-    	 if(event.target.id == 'board_heart') {
-	  	    	$.ajax({
-	    			url : "/board/likedelete",
-	    			data : {bno:bno},  
-	    			type : "post", 
-	     			datatype : "json",
-	    			success : function(data){
-	  				// 성공 시 호출 된는  함수에 서버에서 돌아온 응답 데이터가 넘어옴
-	  				alert(data); //success
-	  				console.log('위시리스트에 제거했습니다.');
-	  				$("#board_heart").attr("src", "/images/mypage/heart2.png"); //빨간하트
-	  				/* $("."+rno).attr("alt", "wish1");
-	  				$("."+rno).attr("id", "wish1"); */
-	  				location.href="/board/detail.do?b_no="+bno;
-	  				
-	  			},
-	    			error : function(){
-	  				console.log('위시리스트에 담기 실패하였습니다.');
-	  			},
-	  			
-	    		}); 
-    	
-   		 }
-    }
-    
-    </script>
+ 
 </body>
+
+
+   <footer th:include="fragments/footer.html"></footer>
+
 </html>

@@ -3,8 +3,62 @@
 <head>
 <meta charset="UTF-8">
 <title>boardUpdate</title>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link href="/css/mypage/board.css" rel="stylesheet">
+<!-- include libraries(jQuery, bootstrap) -->
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> 
+ 
+ <!-- KHCultuer에서 쓰는 폰트  -->
+<link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+ 
+ <!-- 서머노트를 위해 추가해야할 부분 -->
+<!-- include summernote css/js-->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-bs4.js"></script>
+
+<!-- include summernote-ko-KR -->
+<script src="/summernote/summernote-lite.js"></script>
+<script src="/summernote/summernote-ko-KR.js"></script>
+<link rel="stylesheet" href="/css/summernote/summernote-lite.css">
+
+<style>
+.board_Update_boundary{
+    width: 1000px; /* 이 폭을 줄이면 세부폭은 알아서 따라옴 */
+    margin: 0 auto;
+    margin-bottom: 10px;
+    background-color: antiquewhite;
+}
+#Lname , #Ltitle ,#Limage ,#Lcomment{
+    padding: 8px 10px;
+    border-bottom: 1px solid black;
+}
+#Lname2 , #Ltitle2 ,#Limage2 ,#Lcomment2{
+    padding: 10px;
+}
+div#Limage {
+    margin-top: 13px;
+}
+div#Limage {
+    display: grid;
+    justify-content: space-evenly;
+}
+#board_star{
+    height: 23px;
+}
+#board_Update3{
+    width: 710px;
+    margin-right: 10px;
+}
+#board_Update{
+    width: 800px;
+}
+#board_Update2{
+    width: 99%;
+}
+
+
+</style>
 </head>
 <header th:include="fragments/header.html"></header>
 <body>
@@ -12,30 +66,34 @@
     <h1 align="center">등록하기</h1>
     </div>
     <div class="board_Update_boundary">
-        <form>
+        <form name="boardUpdateForm"  method="post">
             <div id="Lname"> 
                 <span id="Lname2">강좌명 : </span>
-                <input type="text" name="Lname" id="board_Update3">
-
-              
+                <input type="text" name="Lname" id="board_Update3" th:value="${Board.LectureOpen.Lecture.lTitle}" disabled >
             </div>
             
             <div id="Ltitle">
                 <span id="Ltitle2">제목 : </span>
-                <input type="text" name="Ltitle" id="board_Update3">
+                <input type="text" name="b_title" id="update_Update" th:value="${Board.b_title}">
             </div>
             <div id="Limage">
-                <span id="Limage2">이미지첨부 : </span>
-                <input type="file" name="Limage" id="board_Update">
+                <img id="board_Update"  name="Limage" th:src="@{/images/lecture/{img}(img=${Board.LectureOpen.Lecture.lThumbnail})}">
             </div>
             <div id="Lcomment">
                 <div id="Lcomment2">내용 : </div>
-                <input type="text" name="Lcomment" id="board_Update2">
+                <textarea id="summernote" name="b_content" style='background-color:orange;' th:utext="${Board.b_content}"></textarea>
             </div>
+            
+             <div>
+            	<input type="hidden" name="m_no" value=1>
+            	<input type="hidden" name="b_no" th:value="${Board.b_no}">
+            </div>
+            
             <div align="center" style="margin-top: 20px;margin-bottom: 20px;padding-bottom: 20px;">
-                <span><input type="button" value="등록하기" class="button"></span>
-                <input type="button" value="취소하기" class="button" style="background-color: darkolivegreen;">
+                <span><button type="button" class="button" onclick="updateBoard()">수정하기</button></span>
+                <button type="button"  class="button" onclick="deleteBoard()">삭제하기</button>
             </div>
+            
         </form>
     </div>
    <footer th:include="fragments/footer.html"></footer>
@@ -44,6 +102,27 @@
             $("#inputHeader").load("../common/header.html");
             $("#inputFooter").load("../common/footer.html");
         });
+    </script>
+    <script>
+    	$('#summernote').summernote({
+    		height: 300,
+    		lang:"ko-KR",
+    		placeholder: '최대 2000자까지 쓸 수 있습니다',
+    		focus: true
+    	})
+    	
+    </script>
+    <script>
+    	function updateBoard(){
+    		document.forms.boardUpdateForm.action="update";
+    		document.forms.boardUpdateForm.submit();
+    	}
+    	
+    	function deleteBoard(){
+    		document.forms.boardUpdateForm.action="delete";
+    		document.forms.boardUpdateForm.submit();
+    	}
+    	
     </script>
 </body>
 </html>

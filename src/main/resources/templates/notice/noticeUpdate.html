@@ -33,7 +33,9 @@
     </div>
     <div class="notice_update_boundary">
          <form name="noticeUpdateForm"  method="post">
+            
             <input type="hidden" name="n_no" th:value="${notice.n_no}">
+           
             <div id="Ltitle">
                 <span id="Ltitle2">제목 : </span>
                 <input type="text" name="n_title" id="notice_update" th:value="${notice.n_title}">
