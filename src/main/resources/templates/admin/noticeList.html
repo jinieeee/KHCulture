@@ -9,7 +9,7 @@
 <body>
 <header th:include="fragments/header.html"></header>
 	<div class="titleArea">
-		<h1>회원관리</h1>
+		<h1>공지사항 관리</h1>
     </div>
     <article class="noticeList">
     	<div class="searchContainer">
@@ -32,7 +32,8 @@
    					<col style="width: 10%">
    					<col style="width: 10%">
    					<col style="width: 10%">
-   					<col style="width: 30%">
+   					<col style="width: 15%">
+   					<col style="width: 15%">
    				</colgroup>
    				<tr>
    					<th>공지사항No.</th>
@@ -40,7 +41,7 @@
    					<th>작성자</th>
    					<th>작성일</th>
    					<th>조회수</th>
-   					<th>공지사항 관리</th>
+   					<th colspan="2">공지사항 관리</th>
    				</tr>
    				<tr th:each="notice : ${noticeList}">
    					<td>[[${notice.n_no}]]</td>
@@ -49,8 +50,8 @@
    					<td>[[${notice.n_enroll_date}]]</td>
    					<td>[[${notice.n_count}]]</td>
    					<td><input type="button" value="삭제" id="deleteNotice">
-   						<input type="button" value="수정" id="updateNotice">
-   						<input type="button" value="메인등록" id="enrollMain" th:disabled="${notice.refYN eq 'N'}">
+   						<input type="button" value="수정" id="updateNotice"></td>
+ 					<td><input type="button" value="메인등록" id="enrollMain" th:disabled="${notice.refYN eq 'N'}">
    						<th:block th:if="${notice.refYN eq 'N'}">
    						<input type="button" value="등록해제" id="deleteMain">
    						</th:block>
