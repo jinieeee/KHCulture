@@ -1,50 +1,67 @@
 /* =================================================== memberModify =========================== */
-.Modify_boundery{
-    width: 1320px; /* 이 폭을 줄이면 세부폭은 알아서 따라옴 */
+/* .Modify_boundery {
+    width: 1320px; 이 폭을 줄이면 세부폭은 알아서 따라옴
     margin: 0 auto;
     margin-bottom: 10px;
     padding: 20px 10px 20px;
     display: flex;
-   /*  background-color: bisque; */
+    background-color: bisque;
+} */
+.modifyForm {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
 }
 .ModifyTable{
-    width: 800px; 
-    margin: 0 auto;
+    width: 650px;
+    background: #fff;
+    border: solid 1px #AEAEAE;
     border-collapse: collapse;
-    border: solid 1px #AEAEAE
 }
-.ModifyTable tr, 
-.ModifyTable th,
+.ModifyTable tr,
 .ModifyTable td{
-    border: 1px solid black;
-    height:70px;
+    border: 1px solid #AEAEAE;
+    padding : 10px 0 10px 10px;
 }
 .ModifyTable th{
     background-color: lightgray;
 }
-input[type="text"] {
-    height: 55px;
-    width: 400px;
-    margin-left: 20px;
+input[type=text],
+input[type=password] {
+    width: 350px;
+    line-height: 30px;
+    border: none;
+    font-size: 14px;
 }
-.Modify_button{
-    width: 700px;
+.ModifyTable span {
+    display: flex;
+    align-items: center;
+    padding: 5px 0;
+}
+.ModifyTable button,
+.ModifyTable input[type=button] {
+	height: 35px;
+    width: 120px;
+    border-style: none;
+    margin-right: 15px;
+    color: #fff;
+    background-color: var(--inactive-btn-color);
+}
+.Modify_button {
+    width: 648px;
     margin: 0 auto;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     border-style: none;
-    
-}
-input.modifyBtn {
-    width: 100px;
-    margin-left: 30px;
-    height: 50px;
 }
 #postcodify_search_button ,
 #sendAuth {
-    width: 100px;
-    margin-left: 30px;
-    height: 50px;
+    width: 120px;
+    height: 35px;
+}
+select#hintNo {
+	width: 300px;
+	height: 30px;
 }
 
 .Modify_button [type=button] {
@@ -52,19 +69,20 @@ input.modifyBtn {
     width: 200px;
     height: 50px;
     margin-bottom: 56px;
+    cursor: pointer;
 }
 
-.button1{
+.Modify_button .cancel{
     font-size: 20px;
     color: white;
     background-color: #6A6A6A;
 }
-.button2{
+.Modify_button .accUpdate{
     font-size: 20px;
     color: #fff;
     background-color: #F0B95E;
 }
-.button3{
+.Modify_button .accSecession{
     font-size: 20px;
     color: white;
     background-color:crimson;

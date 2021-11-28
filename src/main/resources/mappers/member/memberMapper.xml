@@ -199,4 +199,22 @@
 		   AND EMAIL = #{email}
 		   AND ACC_SECESSION_YN = 'N'
 	</select>
+	
+	<update id="memberModify" parameterType="com.kh.khculture.member.model.vo.Member">
+		UPDATE MEMBER
+		   SET PHONE = #{phone}
+		   	 , EMAIL = #{email}
+		   	 , ADDRESS = #{address}
+		   	 , M_MODIFY_DATE = SYSDATE
+		   	 , HINT_NO = #{hintNo}
+		   	 , HINT_A = #{hintA}
+		 WHERE M_NO = #{mno}
+	</update>
+	<update id="accSecession" parameterType="_int">
+		UPDATE MEMBER
+		   SET ACC_SECESSION_DATE = SYSDATE
+		     , ACC_SECESSION_YN = 'Y'
+		WHERE M_NO = #{mno}
+		  AND ACC_SECESSION_YN = 'N'
+	</update>
 </mapper>

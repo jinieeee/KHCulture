@@ -41,4 +41,10 @@ public interface MemberService extends UserDetailsService{
 
 	// 아이디 찾기용 계정 조회
 	Member findId(Member member);
+	
+	// 회원정보 수정
+	int memberModify(Member member);
+
+	// 회원탈퇴
+	int accSecession(int mno);
 }

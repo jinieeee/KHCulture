@@ -1,8 +1,17 @@
 package com.kh.khculture.member.controller;
 
+import java.net.http.HttpRequest;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +25,7 @@ import com.kh.khculture.member.model.service.MemberService;
 import com.kh.khculture.member.model.vo.Member;
 import com.kh.khculture.member.model.vo.PwdHint;
 import com.kh.khculture.member.model.vo.RandomNum;
+import com.kh.khculture.member.model.vo.UserImpl;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,7 +38,8 @@ public class MemberController {
 	private RandomNum randomNum;
 	
 	@Autowired
-	public MemberController(MemberService memberService, RandomNum randomNum) {
+	public MemberController(MemberService memberService,
+							RandomNum randomNum) {
 		this.memberService = memberService;
 		this.randomNum = randomNum;
 	}
@@ -130,5 +141,31 @@ public class MemberController {
 			returnUrl = "redirect:/member/findId";
 		}
 		return returnUrl;
+	}
+	
+	@PostMapping("modify")
+	public String memberModify(Member member, @AuthenticationPrincipal UserImpl user, RedirectAttributes rttr) {
+		member.setMno(user.getMno());
+		member.setId(user.getId());
+		int result = memberService.memberModify(member);
+		String msg = result > 0? "회원정보가 변경되었습니다" : "회원정보변경에 실패하였습니다";
+		rttr.addFlashAttribute("msg", msg);
+		return "redirect:/mypage/memberModify";
+	}
+	
+	@RequestMapping("accSecession")
+	public String accSecession(@AuthenticationPrincipal UserImpl user, RedirectAttributes rttr, HttpSession session) {
+		int result = memberService.accSecession(user.getMno());
+		String msg = "";
+		String redirectUrl = "";
+		if(result > 0) {
+			msg = "탈퇴 처리되었습니다";
+			session.invalidate();
+			redirectUrl = "redirect:/";
+		} else {
+			msg = "탈퇴가 처리되지 않았습니다. 다시 확인 후 시도하시기 바랍니다";
+			redirectUrl = "/member/memberModify";
+		}
+		return redirectUrl;
 	}
 }
