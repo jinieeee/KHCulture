@@ -28,18 +28,7 @@
             </tr>
             <tr>
                 <th>전화번호</th>
-                <td><input type="text" maxlength="11" name="phone" placeholder="' - ' 제외한 전화번호를 입력해주세요" th:value="${member.phone}" required>
-                    <button id="sendAuth" type="button" class="sendAuth">인증코드 전송</button></td>
-            </tr>
-            <tr>
-                <th rowspan="2">인증번호 입력</th>
-                <td colspan="2"><input type="text" name="authCode" id="inputAuthCode" maxlength="10" disabled>
-                    <button onclick="authCodeCheck()" id="authCodeCheckBtn" type="button" disabled class="btnChk">인증코드 확인</button>
-                    <input type="hidden" name="authPass" id="authPass" value="false"></td>
-            </tr>
-            <tr>                
-                <td>* 인증번호가 도착하는데 1~2분 정도 소요될 수 있습니다.</td>                	
-            </tr>
+                <td><input type="text" maxlength="11" name="phone" placeholder="' - ' 제외한 전화번호를 입력해주세요" th:value="${member.phone}" required></tr>
             <tr>
             	<th>이메일</th>
             	<td><input type="text" maxlength="50" name="email" id="inputEmail" placeholder="kh@khculture.kr 형식으로 입력해주세요" th:value="${member.email}" >
@@ -48,7 +37,7 @@
             <tr>
                 <th>우편번호</th>
                 <td><input type="text" name="address" class="postcodify_postcode5" readonly>
-                    <button id="postcodify_search_button" type="button">우편번호 검색</button></td>
+                    <button id="postcodify_search_button" type="button" style="background-color: var(--main-color);">우편번호 검색</button></td>
             </tr>
             <tr>
                 <th>도로명주소</th>
@@ -62,7 +51,7 @@
                 <th>비밀번호 힌트</th>
                 <td>
                     <select aria-placeholder="비밀번호 힌트에 대한 질문을 선택하세요" name="hintNo" id="hintNo">
-                        <!-- 옵션은 DB에서 가져오기 -->
+                    	<option th:each="hintNo : ${hintNo}" th:value="${hintNo.hintNo}" th:selected="${hintNo.hintNo eq member.hintNo}">[[${hintNo.hintQ}]]</option>
                     </select>
                 </td>
             </tr>
@@ -76,12 +65,23 @@
     <div class="Modify_button">
         <span><input type="button" value="취소" class="cancel" onclick="location.href='/mypage/mypagemain'"></span>
         <span><input type="button" value="수정" class="accUpdate" onclick="accUpdate();"></span>
-        <span><input type="button" value="탈퇴" class="accSecession" onclick="accSecession();"></span>
+        <span><input type="button" value="탈퇴" class="accSecession"></span>
     </div>
-        
-
+    <form class="confirmPwd" th:action="@{/member/accSecession}" method="delete"  style="display: none;">
+    	<table class="confirmPwdTbl">
+    		<tr>
+    			<td colspan="2" style="color: red;">* 비밀번호 확인 후 탈퇴를 진행합니다</td>
+    		</tr>
+    		<tr>
+    			<th>비밀번호 확인</th>
+    			<td><input type="password" name="password" placeholder="현재 비밀번호 확인 후 탈퇴 가능합니다">
+    				<input type="button" class="modifyBtn" value="비밀번호 확인"></td>
+    		</tr>
+    	</table>
+    </form>
 <footer th:include="fragments/footer.html"></footer>
 <script type="text/javascript" src="/js/mypage/memberModify.js"></script>
+<script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
 <script>
 	var msg = '[[${msg}]]';
 	if(msg) {
@@ -94,7 +94,12 @@
     	$("[name=address]").each((index) => {
     		$("[name=address]").eq(index).val(address[index]);
     	});
+    	
     });
+    
+	$(function() {
+		$("#postcodify_search_button").postcodifyPopUp();
+	});
 </script>
 </body>
 </html>

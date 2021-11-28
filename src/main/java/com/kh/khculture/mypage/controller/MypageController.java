@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.khculture.lecture.model.vo.LectureOpen;
 import com.kh.khculture.member.model.service.MemberService;
+import com.kh.khculture.member.model.vo.PwdHint;
 import com.kh.khculture.member.model.vo.UserImpl;
 import com.kh.khculture.mypage.model.service.MypageService;
 
@@ -115,7 +116,9 @@ public class MypageController {
 	@GetMapping("/memberModify")
 	public String memberModiy(Model model, @AuthenticationPrincipal UserImpl user) {
 		UserImpl member = (UserImpl) memberService.loadUserByUsername(user.getId());
+		List<PwdHint> hintNo = memberService.findAllHint();
 		model.addAttribute("member", member);
+		model.addAttribute("hintNo", hintNo);
 		return "mypage/memberModify";
 	}
 	
