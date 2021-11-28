@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.khculture.lecture.model.vo.LectureOpen;
+import com.kh.khculture.member.model.service.MemberService;
 import com.kh.khculture.member.model.vo.UserImpl;
 import com.kh.khculture.mypage.model.service.MypageService;
 
@@ -29,10 +30,12 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/mypage")
 public class MypageController {
 	private MypageService mypageService;
+	private MemberService memberService;
 	
 	@Autowired
-	public MypageController(MypageService mypageService) {
+	public MypageController(MypageService mypageService, MemberService memberService) {
 		this.mypageService = mypageService;
+		this.memberService = memberService;
 	}
 	
 	/* 김현주 */
@@ -111,7 +114,8 @@ public class MypageController {
 	}
 	@GetMapping("/memberModify")
 	public String memberModiy(Model model, @AuthenticationPrincipal UserImpl user) {
-		model.addAttribute("member", user);
+		UserImpl member = (UserImpl) memberService.loadUserByUsername(user.getId());
+		model.addAttribute("member", member);
 		return "mypage/memberModify";
 	}
 	
