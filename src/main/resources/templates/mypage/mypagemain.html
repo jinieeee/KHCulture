@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>mypageMain</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link href="../../static/css/mypage/mypage.css" rel="stylesheet">
+<link href="/css/mypage/mypage.css" rel="stylesheet"> 
 </head>
-<header id="inputHeader"></header>
+<header th:include="fragments/header.html"></header>
+
 <body>
     <div class="titleArea">
         <h1 align="center">양정하 님</h1>
@@ -14,29 +15,32 @@
     
     <div class="my_category_boundery">
         <div id="a" align="center">
-            <a href=""><img src="../../static/images/mypage/Bag.png" ></a>
+            <a href=""><img src="/images/mypage/Bag.png" ></a>
             <h3>장바구니</h3>
             <h3 >수량</h3>
         </div>
         <div id="a" align="center">
-            <a href=""><img src="../../static/images/mypage/Paper.png" ></a>
+            <a href=""><img src="/images/mypage/Paper.png" ></a>
             <h3>구매내역</h3>
             <h3>수량</h3>
         </div>
         <div id="a" align="center">
-            <a href="../mypage/myRiew.html"><img src="../../static/images/mypage/Chat2.png" ></a>
+            <a href="../mypage/myRiew.html"><img src="/images/mypage/Chat2.png" ></a>
             <h3>수강후기</h3>
             <h3>수량</h3>
         </div>
         <div id="a" align="center">
-            <a href="../mypage/myhistory.html"><img src="../../static/images/mypage/star3.png" ></a>
+            <a href="../mypage/myhistory.html"><img src="/images/mypage/star3.png" ></a>
             <h3>수강내역</h3>
             <h3>수량</h3>
         </div>
     </div>
+    <form method="get" action="/mypage/memberModify">
     <div align="right" class="my_detail_button">
-        <input type="button"  id="my_button"  value="수정하기" class="button" onclick="modify()"> 
+    	<input type="hidden" name="mno" value="${principal.Mno}">
+        <button type="submit"  id="my_button"  class="button" > 수정하기 </button> 
     </div>
+    </form>
 
     <div align="center">
         <div style="width: 1200px; margin: 0 auto;">
@@ -68,14 +72,14 @@
     <form action="" method="" >
         <div class="my_history">
             <div id="my_history1">
-                <img src="../../static/images/mypage/043.png">
+                <img src="/images/mypage/043.png">
                 <div>dd</div>
                 <div>dd</div>
                 <div>dd</div>
             </div>
             
             <div id="my_history1">
-                <img src="../../static/images/mypage/043.png">
+                <img src="/images/mypage/043.png">
                 <div>dd</div>
                 <div>dd</div>
                 <div>dd</div>
@@ -83,22 +87,22 @@
             </div>
             
             <div id="my_history1">
-                <img src="../../static/images/mypage/043.png">
+                <img src="/images/mypage/043.png">
                 <div>dd</div>
             </div>
             
             <div id="my_history1">
-                <img src="../../static/images/mypage/043.png">
+                <img src="/images/mypage/043.png">
                 <div>dd</div>
                 <div>dd</div>
             </div>
             
             <div id="my_history1">
-                <img src="../../static/images/mypage/star.png">
+                <img src="/images/mypage/043.png">
                 <div>dd</div>
             </div>
             <div id="my_history1">
-                <img src="../../static/images/mypage/043.png">
+                <img src="/images/mypage/043.png">
                 <div>dd</div>
                 <div>dd</div>
                 <div>dd</div>
@@ -109,7 +113,7 @@
 
     <div class="my_paging">페이징처리 구간</div>
 
-    <footer id="inputFooter"></footer>
+<footer th:include="fragments/footer.html"></footer>
     <script>
         $(document).ready(function(){
             $("#inputHeader").load("../common/header.html");

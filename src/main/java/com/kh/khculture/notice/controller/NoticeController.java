@@ -75,6 +75,8 @@ public class NoticeController {
 	
 	
 	
+	
+	
 	//게시글 수정하기
 	@GetMapping("updateView")
 	public String noticeUpdatePage(Model model,@RequestParam("n_no") int n_no) {
@@ -84,6 +86,7 @@ public class NoticeController {
 		model.addAttribute("notice", n);
 		return "notice/noticeUpdate";
 	}
+		
 	//?n_no=22
 	@PostMapping("update")
 	public String noticeUpdate(Notice uptNotice) {
@@ -91,6 +94,10 @@ public class NoticeController {
 	//	System.out.println("uptNotice = "+uptNotice);
 		return "redirect:/notice/detail.do?n_no="+ uptNotice.getN_no();
 	}
+	
+	
+	
+	
 	
 	@PostMapping("delete")
 	public String noticeDelete(Notice deleteNotice, @RequestParam("n_no") int n_no) {

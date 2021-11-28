@@ -42,6 +42,8 @@ public class LectureServiceImpl implements LectureService{
 		}
 		
 		List<LectureOpen> lecturelist = lectureMapper.selectLectureList(search);
+		
+		
 		if(search.getArrayStand().equals("time")) {
 			List<LectureOpen> newlectureList = new ArrayList<>();
 			for(LectureOpen lc : lecturelist) {
@@ -91,6 +93,8 @@ public class LectureServiceImpl implements LectureService{
 			returnMap.put("lecturelist", lecturelist);
 			return returnMap;
 		}
+		
+		
 	}
 
 	@Override

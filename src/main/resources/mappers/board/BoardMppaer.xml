@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kh.khculture.board.model.dao.BoardMapper">
+
+
+
 <resultMap id="boardResultMap" type="com.kh.khculture.board.model.vo.Board">
 	<id property="b_no" column="B_NO"/>
 	<result property="b_title" column="B_TITLE"/>
@@ -8,11 +11,13 @@
 	<result property="m_no" column="M_NO"/>
 	<result property="lr_no" column="LR_NO"/>
 	<result property="b_enroll_date" column="B_ENROLL_DATE"/>
+	<result property="b_modify_date" column="B_MODIFY_DATE"/>
 	<result property="b_status" column="B_STATUS"/>
 	<result property="b_count" column="B_COUNT"/>
 	<result property="b_star" column="B_STAR"/>
 	<result property="sum_b_star" column="SUM_B_STAR"/>
 	<association property="lectureOpen" resultMap="selectListResultMap"/>
+	<collection property="replyList" resultMap="ReplyListResultMap"/>
 </resultMap>
 
 <!-- lectureOpen -->
@@ -38,34 +43,47 @@
 		<result property="ltNo" column="lT_NO"></result>
 </resultMap>
 
+<!-- Reply -->
+<resultMap  type="com.kh.khculture.board.model.vo.Reply" id="ReplyListResultMap" >
+	<id property="r_no" column="R_NO"/> 
+	<result property="r_content" column="R_CONTENT"/>
+	<result property="r_enroll_date" column="R_ENROLL_DATE"/>
+	<result property="r_modify_date" column="R_MODIFY_DATE"/>
+	<result property="n_no" column="N_NO"/>
+	<result property="b_no" column="B_NO"/>
+	<result property="r_status" column="R_STATUS"/>
+	<result property="m_no" column="REF_M_NO"/>
+	<result property="name" column="REF_M_NAME"/>
+</resultMap>
+
+<!-- 좋아요  -->
 <resultMap id="lovitResultMap" type="com.kh.khculture.board.model.vo.Lovit">
 	<id property="b_no" column="B_NO"/>
 	<id property="m_no" column="M_NO"/>
 </resultMap>
+
+
 <!-- 총 게시물 수 -->
 <select id="getListCount" resultType="_int" >
 select count(*) from board where b_status='Y'
-
 </select>
-
+ 
 <!-- 페이징할 게시글 수 -->
 <select id="selectList" resultType="com.kh.khculture.board.model.vo.Board">
+
 SELECT
     B_NO
     , B_TITLE
     , B_CONTENT
-    <!--
-    , TO_CHAR(B_ENROLL_DATE,'YYYY-MM-DD') B_ENROLL_DATE
-    , TO_CHAR(B_MODIFY_DATE,'YYYY-MM-DD') B_MODIFY_DATE
-    -->
     , B_ENROLL_DATE
     , B_MODIFY_DATE
+    , B_STAR
     , M_NO
 FROM ( SELECT 
                ROWNUM RNUM, NLIST.*
              FROM(  SELECT 
                             *
-                         FROM BOARD
+                         FROM BOARD 	
                          JOIN MEMBER_ROLE USING(M_NO)
                          WHERE B_STATUS='Y' 
                             ORDER BY B_NO DESC) NLIST )
@@ -73,24 +91,75 @@ WHERE RNUM BETWEEN #{ startRow } AND #{ endRow }
 </select>
 
 
+<!-- ******************************************************************************************************************** 
+
+<select id="getListCount2" resultType="_int" parameterType ="com.kh.khculture.lecture.model.vo.Search">
+select 
+ count(*)
+from board
+where b_status='Y'
+<if test="searchCondition == title ">
+	and b_title = #{ searchValue }
+</if>
+<if test="searchCondition == content ">
+	and to_char(b_content) = #{ searchValue }
+</if>
+
+</select>
+
+<select id="selectBoardList"  parameterType="com.kh.khculture.lecture.model.vo.Search"  resultMap="boardResultMap">
+
+SELECT
+    B_NO
+    , B_TITLE
+    , B_CONTENT
+    , B_ENROLL_DATE
+    , B_MODIFY_DATE
+    , B_STAR
+    , M_NO
+FROM ( SELECT 
+               ROWNUM RNUM, NLIST.*
+             FROM(  SELECT 
+                            *
+                         FROM BOARD 	
+                         JOIN MEMBER_ROLE USING(M_NO)
+                         WHERE B_STATUS='Y' 
+                         <if test="searchCondition == title ">
+                         	and b_title like '%' || #{ searchValue }  || '%'
+                         </if>
+                         <if test ="searchCondition == content">
+                         	and b_content like '%' || #{ searchValue } || '%'
+                         </if>
+                            ORDER BY B_NO DESC) NLIST )
+WHERE RNUM BETWEEN #{ startRow } AND #{ endRow }  
+</select>
+
+ ******************************************************************************************************************** -->
+
 <!-- 후기 상세보기 -->
 <select id="selectBoard" resultMap="boardResultMap">
-	SELECT
-		B_NO
-		, B_TITLE
-		, B_CONTENT
-		<!-- 
-		, TO_CHAR(B_ENROLL_DATE,'YYYY-MM-DD') B_ENROLL_DATE
-		 -->
-		, B_ENROLL_DATE
-		, B_COUNT
-		, B_STAR
-		, B_STATUS
-		, M_NO
-	FROM BOARD
-   WHERE B_STATUS='Y'
-     AND B_NO = #{ b_no }
-   ORDER BY B_NO DESC 
+	
+   SELECT
+		B.B_NO
+		, B.B_TITLE
+		, B.B_CONTENT
+		, B.M_NO
+		, B.B_ENROLL_DATE
+		, B.B_COUNT
+		, B.B_STAR
+		, B.B_STATUS
+        , A.R_NO
+        , A.R_ENROLL_DATE
+		, A.M_NO REF_M_NO
+		, concat(   SUBSTR (   (SELECT NAME FROM MEMBER WHERE M_NO = A.M_NO)  ,  1  ,  1  )  ,'*')  
+		                   || SUBSTR (   (SELECT NAME FROM MEMBER WHERE M_NO = A.M_NO)  ,  3 ,  2  )REF_M_NAME
+        , A.R_CONTENT
+        , A.R_STATUS
+	FROM BOARD B
+	LEFT JOIN REPLY A ON(A.B_NO = B.B_NO)
+   WHERE B.B_STATUS='Y'
+     AND B.B_NO = #{ b_no }
+   ORDER BY A.R_NO DESC
 
 </select>
  
@@ -136,8 +205,8 @@ INTO LOVIT
  )
 VALUES
 (
-	 #{ mno }
-	 ,#{ bno }
+	 #{ m_no }
+	 ,#{ b_no }
  )
 
 </insert>
@@ -145,16 +214,16 @@ VALUES
 <!-- 후기 Lovit테이블에 삭제 -->
 <delete id="likedelete" parameterType="com.kh.khculture.board.model.vo.Lovit">
 DELETE FROM LOVIT
- WHERE B_NO = #{ bno }  AND  M_NO = #{ mno }
+ WHERE B_NO = #{ b_no }  AND  M_NO = #{ m_no }
 
 </delete>
 
 <!--  후기 좋아요를 눌렀는지 확인 -->
-<select id="selectLovit" resultMap="lovitResultMap">
+<select id="selectLovit" resultType="_int">
 SELECT
-*
+count(*)
 FROM LOVIT
-WHERE M_NO = #{ mno } and B_NO = #{ b_no } 
+WHERE M_NO = #{ mno } and B_NO = #{ b_no }   <!-- 리턴타입을 맞춰야됨... 리턴타입..? vo에 넣어준다는.. -->
 </select>
  
 <select id="rankList" resultMap="boardResultMap">
@@ -172,11 +241,11 @@ FROM  (
 		FROM BOARD 
 		JOIN LECTURE_REGISTRATION USING(LR_NO)
 		JOIN LECTURE USING (L_NO)
-		<![CDATA[ where B_ENROLL_DATE  between sysdate-2 and sysdate ]]>
+		<![CDATA[ where B_ENROLL_DATE  between sysdate-7 and sysdate ]]>
 	GROUP BY LR_NO  )
 JOIN LECTURE_REGISTRATION USING(LR_NO)
 JOIN LECTURE USING(L_NO)
-<![CDATA[ where (LR_END_DATE  between sysdate-4 and sysdate) 
+<![CDATA[ where (LR_END_DATE  between sysdate-30 and sysdate) 
 AND  ROWNUM  <=3 ]]>
 ORDER BY 5 DESC
 
@@ -190,13 +259,84 @@ SELECT
  ,M_NO
  ,LR_NO
  ,L_TITLE
+ ,L_THUMBNAIL
  ,B_STATUS
  FROM BOARD
  JOIN LECTURE_REGISTRATION  USING(LR_NO)
  JOIN LECTURE USING (L_NO)
  WHERE B_NO= #{ b_no }
- AND M_NO = #{ mno }
 </select>
 
+<update id="boardUpdate"  parameterType="com.kh.khculture.board.model.vo.Board" >
+ UPDATE 
+ BOARD
+ SET B_TITLE = #{ b_title } , B_CONTENT = #{ b_content }
+ where B_NO = #{ b_no }
 
+</update>
+<delete id="boardDelete" parameterType="com.kh.khculture.board.model.vo.Board">
+UPDATE
+BOARD
+SET B_STATUS ='N'
+WHERE B_NO = #{ b_no }
+
+</delete>
+
+<insert id="replyInsert" parameterType="com.kh.khculture.board.model.vo.Reply">
+ INSERT
+    INTO REPLY
+    (
+    R_NO
+    ,R_CONTENT
+    ,R_ENROLL_DATE
+    ,R_MODIFY_DATE
+    ,N_NO
+    ,B_NO
+    ,R_STATUS
+    ,M_NO
+    )
+    VALUES(
+    SEQ_R_NO.nextval
+    , #{ r_content }
+    , SYSDATE
+    ,''
+    ,''
+    , #{ b_no }
+    , DEFAULT
+    , #{ m_no } 
+	)
+</insert>
+<select id="selectReplyList" resultMap="ReplyListResultMap">
+SELECT
+		B.B_NO
+		, B.B_TITLE
+		, B.B_CONTENT
+		, B.M_NO
+		, B.B_ENROLL_DATE
+		, B.B_COUNT
+		, B.B_STAR
+		, B.B_STATUS
+        , A.R_NO
+        , A.R_ENROLL_DATE
+		, A.M_NO REF_M_NO
+		,concat(   SUBSTR (   (SELECT NAME FROM MEMBER WHERE M_NO = A.M_NO)  ,  1  ,  1  )  ,'*')  || SUBSTR (   (SELECT NAME FROM MEMBER WHERE M_NO = A.M_NO)  ,  3 ,  2  ) REF_M_NAME
+        , A.R_CONTENT
+        , A.R_STATUS
+	FROM BOARD B
+	LEFT JOIN REPLY A ON(A.B_NO = B.B_NO)
+   WHERE B.B_STATUS='Y'
+     AND A.R_STATUS='Y'
+     AND B.B_NO = #{ b_no }
+   ORDER BY A.R_NO DESC
+
+</select>
+
+<update id="replyDelete" parameterType="com.kh.khculture.board.model.vo.Reply" >
+update
+Reply
+set r_status = 'N'
+where r_no = #{ rno }
+
+
+</update>
 </mapper>

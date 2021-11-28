@@ -12,6 +12,7 @@ public class Search {
 	}
 
 
+
 	public String getSearchValue() {
 		return searchValue;
 	}

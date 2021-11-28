@@ -27,6 +27,14 @@ public class PageInfo {
 			endPage = maxPage;
 		}
 	}
+	
+	
+
+	public PageInfo(int startPage, int endPage) {
+		super();
+		this.startPage = startPage;
+		this.endPage = endPage;
+	}
 
 	public int getPage() {
 		return page;

@@ -103,4 +103,15 @@ public class MypageController {
 	
 	/* 김현주 */
 	
+	@GetMapping("/mypagemain")
+	public String mypageMainView(Model model) {
+		
+		return "mypage/mypagemain";
+	}
+	@GetMapping("/memberModify")
+	public String memberModiy(Model model) {
+		return "mypage/memberModify";
+	}
+	
+	
 }

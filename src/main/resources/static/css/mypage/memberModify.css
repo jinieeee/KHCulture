@@ -1,14 +1,14 @@
 /* =================================================== memberModify =========================== */
 .Modify_boundery{
-    width: 600px; /* 이 폭을 줄이면 세부폭은 알아서 따라옴 */
+    width: 1320px; /* 이 폭을 줄이면 세부폭은 알아서 따라옴 */
     margin: 0 auto;
     margin-bottom: 10px;
     padding: 20px 10px 20px;
     display: flex;
-    /*background-color: bisque;*/
+   /*  background-color: bisque; */
 }
 .ModifyTable{
-    width: 600px; 
+    width: 800px; 
     margin: 0 auto;
     border-collapse: collapse;
     border: solid 1px #AEAEAE
@@ -17,22 +17,41 @@
 .ModifyTable th,
 .ModifyTable td{
     border: 1px solid black;
+    height:70px;
 }
 .ModifyTable th{
     background-color: lightgray;
+}
+input[type="text"] {
+    height: 55px;
+    width: 400px;
+    margin-left: 20px;
 }
 .Modify_button{
     width: 700px;
     margin: 0 auto;
     display: flex;
     justify-content: space-around;
+    border-style: none;
     
+}
+input.modifyBtn {
+    width: 100px;
+    margin-left: 30px;
+    height: 50px;
+}
+#postcodify_search_button ,
+#sendAuth {
+    width: 100px;
+    margin-left: 30px;
+    height: 50px;
 }
 
 .Modify_button [type=button] {
     border-style: none;
     width: 200px;
     height: 50px;
+    margin-bottom: 56px;
 }
 
 .button1{
