@@ -8,8 +8,12 @@ import java.util.List;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -32,6 +36,7 @@ import net.nurigo.java_sdk.exceptions.CoolsmsException;
 public class MemberServiceImpl implements MemberService{
 
 	private MemberMapper memberMapper;
+	private AuthenticationManager authenticationManager;
 	
 	@Autowired
 	public MemberServiceImpl(MemberMapper memberMapper) {
@@ -186,5 +191,24 @@ public class MemberServiceImpl implements MemberService{
 			findMember = new Member();
 		}
 		return findMember;
+	}
+	
+	// 회원정보수정
+	@Transactional
+	@Override
+	public int memberModify(Member member) {
+		int result = memberMapper.memberModify(member);
+		
+		UserImpl user = (UserImpl) loadUserByUsername(member.getId());
+		// log.info("{}", user);
+		
+		return result;
+	}
+	
+	// 회원탈퇴
+	@Transactional
+	@Override
+	public int accSecession(int mno) {
+		return memberMapper.accSecession(mno);
 	}
 }

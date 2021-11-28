@@ -45,4 +45,10 @@ public interface MemberMapper {
 
 	// 아이디 찾기용 계정 조회
 	Member findId(Member member);
+
+	// 회원정보수정
+	int memberModify(Member member);
+	
+	// 회원탈퇴
+	int accSecession(int mno);
 }
