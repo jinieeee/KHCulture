@@ -199,9 +199,6 @@ public class MemberServiceImpl implements MemberService{
 	public int memberModify(Member member) {
 		int result = memberMapper.memberModify(member);
 		
-		UserImpl user = (UserImpl) loadUserByUsername(member.getId());
-		// log.info("{}", user);
-		
 		return result;
 	}
 	

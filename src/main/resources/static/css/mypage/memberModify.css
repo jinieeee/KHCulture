@@ -7,19 +7,23 @@
     display: flex;
     background-color: bisque;
 } */
-.modifyForm {
+.modifyForm,
+.confirmPwd {
     display: flex;
     justify-content: center;
     margin-bottom: 20px;
 }
-.ModifyTable{
+.ModifyTable,
+.confirmPwdTbl {
     width: 650px;
     background: #fff;
     border: solid 1px #AEAEAE;
     border-collapse: collapse;
 }
 .ModifyTable tr,
-.ModifyTable td{
+.ModifyTable td,
+.confirmPwdTbl tr,
+.confirmPwdTbl td {
     border: 1px solid #AEAEAE;
     padding : 10px 0 10px 10px;
 }
@@ -39,13 +43,15 @@ input[type=password] {
     padding: 5px 0;
 }
 .ModifyTable button,
-.ModifyTable input[type=button] {
+.ModifyTable input[type=button],
+.confirmPwdTbl input[type=button] {
 	height: 35px;
     width: 120px;
     border-style: none;
     margin-right: 15px;
     color: #fff;
     background-color: var(--inactive-btn-color);
+    cursor: pointer;
 }
 .Modify_button {
     width: 648px;
