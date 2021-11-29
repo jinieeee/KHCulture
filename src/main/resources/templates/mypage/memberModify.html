@@ -20,8 +20,9 @@
             </tr>
             <tr>
                 <th>비밀번호</th>
-                <td><input type="password" name="password" placeholder="현재 비밀번호 확인 후 수정 가능합니다">
+                <td><input type="password" name="password" placeholder="현재 비밀번호 확인 후 변경 가능합니다">
                 	<input type="button" class="modifyBtn" value="비밀번호 확인"></td>
+            </tr>
             <tr>
                 <th>이름</th>
                 <td><span th:text="${member.name}"></span></td>
@@ -67,7 +68,7 @@
         <span><input type="button" value="수정" class="accUpdate" onclick="accUpdate();"></span>
         <span><input type="button" value="탈퇴" class="accSecession"></span>
     </div>
-    <form class="confirmPwd" th:action="@{/member/accSecession}" method="delete"  style="display: none;">
+    <form class="confirmPwd" th:action="@{/member/accSecession}" method="post"  style="display: none;">
     	<table class="confirmPwdTbl">
     		<tr>
     			<td colspan="2" style="color: red;">* 비밀번호 확인 후 탈퇴를 진행합니다</td>
@@ -75,7 +76,7 @@
     		<tr>
     			<th>비밀번호 확인</th>
     			<td><input type="password" name="password" placeholder="현재 비밀번호 확인 후 탈퇴 가능합니다">
-    				<input type="button" class="modifyBtn" value="비밀번호 확인"></td>
+    				<input type="submit" class="accSecessionBtn" value="탈퇴하기"></td>
     		</tr>
     	</table>
     </form>
@@ -100,6 +101,8 @@
 	$(function() {
 		$("#postcodify_search_button").postcodifyPopUp();
 	});
+	
+	var confirmPwdUrl = '[[@{/member/confirmPwd}]]';
 </script>
 </body>
 </html>
