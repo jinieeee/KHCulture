@@ -14,13 +14,13 @@ import com.kh.khculture.board.model.vo.Search;
 
 @Mapper
 public interface BoardMapper {
-	
+	/*
 	//총 게시물 수
 	int getListCount();
 	
 	//페이징할 게시글 수
 	List<Board> selectList(@Param("startRow") int startRow, @Param("endRow") int endRow);
-	
+	*/	
 
 	// 후기 작성
 	int boardInsert(Board newBoard);
@@ -41,7 +41,7 @@ public interface BoardMapper {
 	int likedelete(Lovit lovit);
 	
 	// 랭킹 정보 가지고 오기
-	List<Board> rankList();
+//	List<Board> rankList();
 
 	//후기 수정페이지에 기본적으로 넣어주는 값 select
 	Board updateBoardView(int b_no);
@@ -61,6 +61,7 @@ public interface BoardMapper {
 	//댓글 삭제
 	int replyDelete(int rno);
 
+
 	//****************************
 
 /*
@@ -71,8 +72,12 @@ public interface BoardMapper {
 	
 */
 
-	
 
+	int getListCount(Search search);
+
+	List<Board> selectList(Map<String, Object> map);
+
+	List<Board> rankList();
 
 
 	
