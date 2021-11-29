@@ -87,7 +87,7 @@
 	)
 	VALUES
 	(
-		12
+		SEQ_L_NO
 	  , #{lTitle}
 	  , #{lThumbnail}
 	  , SYSDATE
@@ -100,14 +100,44 @@
 </insert>
 
 <!-- 페이지개수 -->
-<select id="getListCount" resultType="_int">
+<select id="getListCount" parameterType="com.kh.khculture.management.model.vo.SearchBoard" resultType="_int">
 	SELECT
 		   COUNT(*)
 	  FROM LECTURE
 	 WHERE L_STATUS = 'N'
+<if test="searchValue != ''">
+<choose>
+<when test="searchCondition == 'title'">
+	   AND L_TITLE LIKE '%' || #{searchValue} || '%'
+</when>
+<when test="searchCondition == 'classification'">
+	<if test="searchValue == '정기강좌'">
+		AND LC_NO = 1
+	</if>
+	<if test="searchValue == '단기강좌'">
+		AND LC_NO = 2
+	</if>
+	<if test="searchValue == '무료강좌'">
+		AND LC_NO = 3
+	</if>    
+</when>
+<when test="searchCondition == 'target'">
+	<if test="searchValue == '성인강좌'">
+		AND LT_NO = 1
+	</if>
+	<if test="searchValue == '아동강좌'">
+		AND LT_NO = 2
+	</if>
+	<if test="searchValue == '영유아강좌'">
+		AND LT_NO = 3
+	</if>   
+</when>
+<otherwise></otherwise>
+</choose>
+</if>
 </select>
 
-<select id="selectLectureList" parameterType="com.kh.khculture.notice.model.vo.PageInfo" resultMap="lecture2ResultMap">
+<select id="selectLectureList" parameterType="com.kh.khculture.management.model.vo.SearchBoard" resultMap="lecture2ResultMap">
 SELECT
        L_NO
      , L_TITLE
@@ -123,9 +153,39 @@ SELECT
                  JOIN LECTURE_CLASSIFICATION C1 ON(O.LC_NO = C1.LC_NO)
                  JOIN LECTURE_TARGET C2 ON(O.LT_NO = C2.LT_NO)
                 WHERE L_STATUS = 'N'
+                <if test="searchValue != ''">
+                <choose>
+                <when test="searchCondition == 'title'">
+                	AND L_TITLE LIKE '%' || #{searchValue} || '%'
+                </when>
+                <when test="searchCondition == 'classification'">
+					<if test="searchValue == '정기강좌'">
+						AND O.LC_NO = 1
+					</if>
+					<if test="searchValue == '단기강좌'">
+						AND O.LC_NO = 2
+					</if>
+					<if test="searchValue == '무료강좌'">
+						AND O.LC_NO = 3
+					</if>    
+				</when>
+				<when test="searchCondition == 'target'">
+					<if test="searchValue == '성인강좌'">
+						AND O.LT_NO = 1
+					</if>
+					<if test="searchValue == '아동강좌'">
+						AND O.LT_NO = 2
+					</if>
+					<if test="searchValue == '영유아강좌'">
+						AND O.LT_NO = 3
+					</if>   
+				</when>
+				<otherwise></otherwise>
+                </choose>
+                </if>
                 ORDER BY L_NO DESC) L
         )
-	WHERE RNUM BETWEEN #{startRow} AND #{endRow}
+ WHERE RNUM BETWEEN #{startRow} AND #{endRow}
 </select>
 
 
@@ -226,14 +286,22 @@ SELECT
 </insert>
 
 
-<select id="getOpenListCount" resultType="_int">
+<select id="getOpenListCount" parameterType="com.kh.khculture.management.model.vo.SearchBoard" resultType="_int">
 	SELECT
 		   COUNT(*)
 	  FROM LECTURE_REGISTRATION
 	 WHERE LR_STATUS = 'N'
+<if test="searchValue != ''">
+<choose>
+<when test="searchCondition == 'title'">
+	AND L_TITLE LIKE '%' || #{searchValue} || '%'
+</when>
+<otherwise></otherwise>
+</choose>
+</if>
 </select>
 
-<select id="selectOpenList" parameterType="com.kh.khculture.notice.model.vo.PageInfo" resultMap="openLectureResultMap">
+<select id="selectOpenList" parameterType="com.kh.khculture.management.model.vo.SearchBoard" resultMap="openLectureResultMap">
 	SELECT
        LR_NO
      , LC_NAME
@@ -262,6 +330,14 @@ SELECT
          JOIN LECTURE_REGISTRATION C3 ON(O.L_NO = C3.L_NO)
          JOIN INSTRUCTOR C4 ON(C3.INSTRUCTOR_NO = C4.INSTRUCTOR_NO)
         WHERE C3.LR_STATUS = 'N'
+        <if test="searchValue != ''">
+        <choose>
+        <when test="searchCondition == 'title'">
+        	AND L_TITLE LIKE '%' || #{searchValue} || '%'
+        </when>
+		<otherwise></otherwise>
+        </choose>
+        </if>
         ORDER BY C3.LR_NO DESC) L
         )
 	WHERE RNUM BETWEEN #{startRow} AND #{endRow}

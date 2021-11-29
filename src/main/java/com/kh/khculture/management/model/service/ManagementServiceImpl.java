@@ -11,6 +11,7 @@ import com.kh.khculture.management.model.dao.ManagementMapper;
 import com.kh.khculture.management.model.vo.Lecture2;
 import com.kh.khculture.management.model.vo.LectureOpen2;
 import com.kh.khculture.management.model.vo.LectureOpen3;
+import com.kh.khculture.management.model.vo.SearchBoard;
 import com.kh.khculture.management.model.vo.SearchInstructor;
 
 @Service
@@ -30,16 +31,11 @@ public class ManagementServiceImpl implements ManagementService {
 	}
 
 	@Override
-	public int getListCount() {
-		
-		return managementMapper.getListCount();
-	}
+	public int getListCount(SearchBoard search) {
 
-	@Override
-	public List<Lecture2> selectLectureList(int startRow, int endRow) {
-		
-		return managementMapper.selectLectureList(startRow, endRow);
+		return managementMapper.getListCount(search);
 	}
+	
 
 	@Override
 	public int deleteLecture(int lNo) {
@@ -76,17 +72,6 @@ public class ManagementServiceImpl implements ManagementService {
 		return managementMapper.registLectureOpen(lectureOpen);
 	}
 
-	@Override
-	public int getOpenListCount() {
-		
-		return managementMapper.getOpenListCount();
-	}
-
-	@Override
-	public List<LectureOpen3> selectOpenList(int startRow, int endRow) {
-		
-		return managementMapper.selectOpenList(startRow, endRow);
-	}
 
 	@Override
 	public LectureOpen2 selectOneOpen(int lrNo) {
@@ -117,6 +102,28 @@ public class ManagementServiceImpl implements ManagementService {
 		
 		return managementMapper.deleteOpen(lrNo);
 	}
+
+	@Override
+	public List<Lecture2> selectLectureList(SearchBoard search) {
+		
+		return managementMapper.selectLectureList(search);
+	}
+
+	@Override
+	public int getOpenListCount(SearchBoard search) {
+		
+		return managementMapper.getOpenListCount(search);
+	}
+
+	@Override
+	public List<LectureOpen3> selectOpenList(SearchBoard search) {
+		
+		return managementMapper.selectOpenList(search);
+	}
+
+	
+
+	
 
 	
 }

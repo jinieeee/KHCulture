@@ -25,6 +25,7 @@ import com.kh.khculture.management.model.service.ManagementService;
 import com.kh.khculture.management.model.vo.Lecture2;
 import com.kh.khculture.management.model.vo.LectureOpen2;
 import com.kh.khculture.management.model.vo.LectureOpen3;
+import com.kh.khculture.management.model.vo.SearchBoard;
 import com.kh.khculture.management.model.vo.SearchInstructor;
 import com.kh.khculture.notice.model.vo.PageInfo;
 
@@ -44,23 +45,41 @@ public class ManagementController {
 	
 	// ================== 강의목록 요청처리 ================== //
 	@GetMapping("/lecturelist")
-	public String lectureList(Model model, @RequestParam(value="page" , defaultValue="1") int page) {
+	public String lectureList(Model model,
+			@RequestParam(value="page" , defaultValue="1") int page,
+			@RequestParam(required=false, defaultValue="title") String searchCondition,
+			@RequestParam(required=false, defaultValue="") String searchValue) {
+		
+		
+		SearchBoard search = new SearchBoard();
+		search.setSearchCondition(searchCondition);
+		search.setSearchValue(searchValue);
+		
+		log.info("searchBoard : {}", search);
 		
 		// 게시글 총 개수
-		int listCount = managementService.getListCount();
+		int listCount = managementService.getListCount(search);
+		
 		log.info("listCount : {}", listCount);
 		
-		PageInfo pi = new PageInfo( page , listCount, 10, 10);
+		PageInfo pi = new PageInfo(page , listCount, 5, 20);
 		
 		int startRow = (pi.getPage() -1)* pi.getBoardLimit() +1;
 		int endRow = startRow +pi.getBoardLimit() -1;
 		
-		List<Lecture2> lectureList = managementService.selectLectureList(startRow, endRow);
+		log.info("startRow : {}", startRow);
+		log.info("endRow : {}", endRow);
+		
+		
+		search.setStartRow(startRow);
+		search.setEndRow(endRow);
+		
+		List<Lecture2> lectureList = managementService.selectLectureList(search);
+		
 		
 		model.addAttribute("lectureList", lectureList);
-		
-		
 		model.addAttribute("pi", pi);
+		model.addAttribute("searchBoard", search);
 		
 		return "management/lecturelist";
 	}
@@ -191,24 +210,45 @@ public class ManagementController {
 		return "redirect:/lecturelist";
 	}
 	
-	
 	// ================== 강의오픈 목록 요청처리 ================== //
 	@GetMapping("/openlist")
-	public String openList(Model model, @RequestParam(value="page" , defaultValue="1") int page) {
+	public String openList(Model model,
+			@RequestParam(value="page" , defaultValue="1") int page,
+			@RequestParam(required=false, defaultValue="title") String searchCondition,
+			@RequestParam(required=false, defaultValue="") String searchValue) {
+		
+		
+		SearchBoard search = new SearchBoard();
+		search.setSearchCondition(searchCondition);
+		search.setSearchValue(searchValue);
+		
+		log.info("searchBoard : {}", search);
 		
 		// 게시글 총 개수
-		int listCount = managementService.getOpenListCount();
+		int listCount = managementService.getOpenListCount(search);
 		
-		PageInfo pi = new PageInfo( page , listCount, 10, 10);
+		log.info("listCount : {}", listCount);
+		
+		PageInfo pi = new PageInfo(page , listCount, 5, 20);
 		
 		int startRow = (pi.getPage() -1)* pi.getBoardLimit() +1;
 		int endRow = startRow +pi.getBoardLimit() -1;
 		
-		List<LectureOpen3> openList = managementService.selectOpenList(startRow, endRow);
+		log.info("startRow : {}", startRow);
+		log.info("endRow : {}", endRow);
 		
+		
+		search.setStartRow(startRow);
+		search.setEndRow(endRow);		
+		
+		
+		List<LectureOpen3> openList = managementService.selectOpenList(search);
+		
+		log.info("openList : {}", openList);
 		
 		model.addAttribute("openList", openList);
 		model.addAttribute("pi", pi);
+		model.addAttribute("searchBoard", search);
 		
 		return "management/openlist";
 	}

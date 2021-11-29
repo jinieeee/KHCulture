@@ -10,6 +10,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="/css/management/lectureList.css">
 	
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	
 <script>
 const msg = '[[${msg}]]';
 
@@ -29,13 +32,13 @@ if(msg){
                 <h1>강의목록</h1>
             </div>
             <div class="searchArea">
-                <select name="condition" id="condition">
-                    <option value="title" selected>강의명</option>
-                    <option value="classification">강좌분류</option>
-                    <option value="target">강좌대상</option>
+                <select id="condition">
+                    <option value="title" th:selected="${searchBoard.searchCondition} == title">강의명</option>
+                    <option value="classification" th:selected="${searchBoard.searchCondition} == classification">강좌분류</option>
+                    <option value="target" th:selected="${searchBoard.searchCondition} == target">강좌대상</option>
                 </select>
-                <input type="text" placeholder="검색할 내용을 입력해주세요.">
-                <a href="#" id="searchIcon"></a>
+                <input type="text" id="searchValue" placeholder="검색할 내용을 입력해주세요." th:value="${searchBoard.searchValue}">
+                <a th:href="@{#}" th:onclick="searchLecture()" id="searchIcon"></a>
                 <input type="button" value="강의등록" id="registBtn" onclick="location.href='/lectureregist'">
             </div>
             <div class="listArea">
@@ -55,33 +58,40 @@ if(msg){
             <div class="pagingArea">
 	           	<ul class="list_paging">
 				        <!--  맨 처음으로 (<<) /notice/noticeList/?-->
-		        	<li><a th:href="@{?page=1}">&lt;&lt;</a></li>
+		        	<li><a th:href="|@{?page=1}
+		        	&searchCondition=${searchBoard.searchCondition}&searchValue=${searchBoard.searchValue}|">&lt;&lt;</a></li>
 		        	
 		        <!--  이전 페이지(<) -->
 			       	<li th:if="${ pi.page > 1 }">
-			       		<a th:href="@{?page={page}(page =  ${pi.page-1})}">&lt;</a>
+			       		<a th:href="|@{?page={page}(page =  ${pi.page-1})}
+			       		&searchCondition=${searchBoard.searchCondition}&searchValue=${searchBoard.searchValue}|">&lt;</a>
 			       	</li>
 			       	<li th:unless="${ pi.page > 1 }">
-			       		<a th:href="@{?page={page}(page =  ${pi.page})}">&lt;</a>
+			       		<a th:href="|@{?page={page}(page =  ${pi.page})}
+			       		&searchCondition=${searchBoard.searchCondition}&searchValue=${searchBoard.searchValue}|">&lt;</a>
 			       	</li>
 		       	
 		        <!-- 페이지수 -->	
 		        	<th:block th:with="start=${pi.startPage}, end=${pi.endPage}">
 		        		<li th:with="start=${pi.startPage}, end=${pi.endPage}" th:each="pageNum : ${#numbers.sequence(start,end)}">
-		        			<a th:href="@{?page={page}(page = ${ pageNum})}" th:text=${pageNum}></a>
+		        			<a th:href="|@{?page={page}(page = ${ pageNum})}
+		        			&searchCondition=${searchBoard.searchCondition}&searchValue=${searchBoard.searchValue}|" th:text=${pageNum}></a>
 		        		</li>
 		        	</th:block>
 		        		
 		        <!-- 다음 페이지로(>) -->	
 			        <li th:if="${ pi.page <pi.maxPage }">
-			       		<a th:href="@{?page={page}(page=${pi.page + 1})}">&gt;</a>
+			       		<a th:href="|@{?page={page}(page=${pi.page + 1})}
+			       		&searchCondition=${searchBoard.searchCondition}&searchValue=${searchBoard.searchValue}|">&gt;</a>
 			       	</li>
 			       	<li th:if="${ pi.page == pi.maxPage }">
-			       		<a th:href="@{?page={page}(page =  ${pi.page})}">&gt;</a>
+			       		<a th:href="|@{?page={page}(page = ${pi.page})}
+			       		&searchCondition=${searchBoard.searchCondition}&searchValue=${searchBoard.searchValue}|">&gt;</a>
 			       	</li>
 		        
 		        <!-- 맨 뒤로(>>) --> 	
-		        	<li><a th:href="@{?page={page} (page = ${pi.maxPage})}">&gt;&gt;</a></li>
+		        	<li><a th:href="|@{?page={page}(page = ${pi.maxPage})}
+		        	&searchCondition=${searchBoard.searchCondition}&searchValue=${searchBoard.searchValue}|">&gt;&gt;</a></li>
 		        	
 		        </ul>
 		       
@@ -89,23 +99,45 @@ if(msg){
         </div>
     </div>
 <footer th:include="fragments/footer.html"></footer>
-    <script type="text/javascript" th:inline="javascript">
-    	
-    	function editLecture(lNo){
-    		
-    		location.href="lectureupdate/" + lNo;	
-    	}
-    	
-    	function deleteLecture(lNo){
-    		
-    		if(confirm("정말삭제하시겠습니까?")){
-    			
-    			location.href="lecturedelete/" + lNo;
-    			
-    		} else{
-    			console.log("삭제취소");
-    		}
-    	}
-    </script>
+<script type="text/javascript" th:inline="javascript">
+	
+	let searchParam;
+	
+	let sc = '[[${searchBoard.searchCondition}]]';
+	let sv = '[[${searchBoard.searchValue}]]';
+	
+	console.log("sc : " + sc);
+	console.log("sv : " + sv);
+	
+	function searchLecture(){
+		
+		let searchCondition = $("#condition option:selected").val();
+		let searchValue = $("#searchValue").val();
+		
+		searchParam = "&searchCondition=" + searchCondition + "&searchValue=" + searchValue;
+		
+		location.href = "/lecturelist?" + searchParam;
+		
+	}
+	
+	
+
+
+	function editLecture(lNo){
+		
+		location.href="lectureupdate/" + lNo;	
+	}
+	
+	function deleteLecture(lNo){
+		
+		if(confirm("정말삭제하시겠습니까?")){
+			
+			location.href="lecturedelete/" + lNo;
+			
+		} else{
+			console.log("삭제취소");
+		}
+	}
+</script>
 </body>
 </html>

@@ -9,7 +9,9 @@
     <link rel="stylesheet" href="css/management/openList.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
 
-
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	
+	
 <script>
 const msg = '[[${msg}]]';
 
@@ -28,13 +30,11 @@ if(msg){
                 <h1>강의 오픈 목록</h1>
             </div>
             <div class="searchArea">
-                <select name="condition" id="condition">
-                    <option value="title" selected>강의명</option>
-                    <option value="classification">강좌분류</option>
-                    <option value="target">강좌대상</option>
+<!--                 <select name="searchCondition" id="condition">
+                    <option value="title" th:selected="${searchBoard.searchCondition} == title">강의명</option>
                 </select>
-                <input type="text" placeholder="검색할 내용을 입력해주세요.">
-                <a href="#" id="searchIcon"></a>
+                <input type="text" id="searchValue" name="searchValue" placeholder="검색할 내용을 입력해주세요." th:value="${searchBoard.searchValue}">
+                <a th:href="@{#}" th:onclick="searchOpenList();" id="searchIcon"></a> -->
                 <input type="button" value="강의오픈" id="registBtn" onclick="location.href='/openregist'">
             </div>
             <div class="listArea">
@@ -78,11 +78,11 @@ if(msg){
 			       		<a th:href="@{?page={page}(page=${pi.page + 1})}">&gt;</a>
 			       	</li>
 			       	<li th:if="${ pi.page == pi.maxPage }">
-			       		<a th:href="@{?page={page}(page =  ${pi.page})}">&gt;</a>
+			       		<a th:href="@{?page={page}(page = ${pi.page})}">&gt;</a>
 			       	</li>
 		        
 		        <!-- 맨 뒤로(>>) --> 	
-		        	<li><a th:href="@{?page={page} (page = ${pi.maxPage})}">&gt;&gt;</a></li>
+		        	<li><a th:href="@{?page={page}(page = ${pi.maxPage})}">&gt;&gt;</a></li>
 		        	
 		        </ul>
 		       
@@ -92,22 +92,23 @@ if(msg){
 <footer th:include="fragments/footer.html"></footer>
 
 <script type="text/javascript" th:inline="javascript">
-    	
-    	function editOpen(lrNo){
-    		
-    		location.href="openupdate/" + lrNo;	
-    	}
-    	
-    	function deleteOpen(lrNo){
-    		
-    		if(confirm("정말삭제하시겠습니까?")){
-    			
-    			location.href="opendelete/" + lrNo;
-    			
-    		} else{
-    			console.log("삭제취소");
-    		}
-    	}
-    </script>
+
+
+   	function editOpen(lrNo){
+   		
+   		location.href="openupdate/" + lrNo;	
+   	}
+   	
+   	function deleteOpen(lrNo){
+   		
+   		if(confirm("정말삭제하시겠습니까?")){
+   			
+   			location.href="opendelete/" + lrNo;
+   			
+   		} else{
+   			console.log("삭제취소");
+   		}
+   	}
+</script>
 </body>
 </html>

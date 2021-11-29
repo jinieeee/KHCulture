@@ -9,6 +9,7 @@ import com.kh.khculture.lecture.model.vo.Lecture;
 import com.kh.khculture.management.model.vo.Lecture2;
 import com.kh.khculture.management.model.vo.LectureOpen2;
 import com.kh.khculture.management.model.vo.LectureOpen3;
+import com.kh.khculture.management.model.vo.SearchBoard;
 import com.kh.khculture.management.model.vo.SearchInstructor;
 
 @Mapper
@@ -16,9 +17,7 @@ public interface ManagementMapper {
 	
 	int registLecture(Lecture lecture);
 
-	int getListCount();
-
-	List<Lecture2> selectLectureList(int startRow, int endRow);
+	int getListCount(SearchBoard search);
 
 	int deleteLecture(int lNo);
 
@@ -32,8 +31,6 @@ public interface ManagementMapper {
 
 	int registLectureOpen(LectureOpen2 lectureOpen);
 
-	int getOpenListCount();
-
 	List<LectureOpen3> selectOpenList(int startRow, int endRow);
 
 	LectureOpen2 selectOneOpen(int lrNo);
@@ -45,4 +42,10 @@ public interface ManagementMapper {
 	int deleteOpenProcedure(int lrNo);
 
 	int deleteOpen(int lrNo);
+
+	List<Lecture2> selectLectureList(SearchBoard search);
+
+	int getOpenListCount(SearchBoard search);
+
+	List<LectureOpen3> selectOpenList(SearchBoard search);
 }
