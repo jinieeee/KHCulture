@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>강사 정보 수정</title>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> 
 <style>
 .outer {
 	width: 1920px;
@@ -26,13 +27,15 @@
 	margin-bottom: 30px;
 }
 
+
+
 .input_area {
-	border: solid 1px #F0B95E;
 	padding: 10px 10px 14px 10px;
 	background: none;
 	color: #000000;
 	font-weight: thin;
 	font-size: 20px;
+	border: solid 1px #F0B95E;
 }
 
 .input_area select {
@@ -68,6 +71,8 @@
 	font-size: 20px;
 }
 
+
+
 .image_area {
 	padding: 20px;
 	text-align: center;
@@ -93,6 +98,9 @@
 .instructor_area #update{
 	background: #F0B95E;
 }
+.instructor_area #delete{
+	background: #F0B95E;
+}
 
 .btn_area {
 	text-align: center;
@@ -114,36 +122,36 @@ h2 {
 					<h1 align="center">강사 관리</h1>
 				</div>
 				<div class="instructor_content">
-					<form method="post" action="${ contextPath }/gallery/insert"
-					enctype="multipart/form-data">
+					<form method="post" name="instructorInformation">
+						<input type="hidden" name="instructor_no" th:value="${instructor.instructor_no}">
 						<div class="content">
 							
 							<h2><span class="title_span">&nbsp;</span> 강사 이름 </h2>
-							<span class="input_area"> <input type="text" name="title" value="조인성" required>
+							<span class="input_area" >
+							<input type="text" name="instructor_name" th:value="${instructor.instructor_name}">
 							</span>
 							
 							<h2><span class="title_span">&nbsp;</span> 프로필 사진 </h2>
 							<div class="image_area">
-							<img src="/images/instructor/instructor01.jpg">
-							</div>
+							<img src="/images/instructor/pikachu2.png">
+							</div><input type="file" name="profile_photo" accept="image/gif,image/jpeg,image/png">
 
 							<h2><span class="title_span">&nbsp;</span> 생년월일 </h2>
-							<span class="input_area"> <input type="text" name="title" value="1981.00.00" required>
+							<span class="input_area">
+							<input type="text" name="birth_date" th:value="${instructor.birth_date}">
 							</span>
 
 							<h2><span class="title_span">&nbsp;</span> 전화번호 </h2>
-							<span class="input_area"> <input type="text" name="title" value="010-1234-5678" required>
-							</span>
-							
-							<h2><span class="title_span">&nbsp;</span> 담당 강의명 </h2>
-							<span class="input_area"> <input type="text" name="title" value="스케이트" required>
+							<span class="input_area">
+							<input type="text" name="instructor_phone" th:value="${instructor.instructor_phone}">
 							</span>
 							
 							<h2><span class="title_span">&nbsp;</span> 경력 사항 </h2>
-							<textarea class="textarea" rows="20" cols="100" name="content" required>OO 대학교 체육교육과 학사 졸업</textarea>
+							<textarea class="textarea" rows="20" cols="100" name="career" th:text="${instructor.career}" required></textarea>
 						</div>
 						<div class="btn_area">
-						<button type="submit" id="update">수정하기</button>
+						    <button type="button" id="update" onclick="updateInstructor()">수정하기</button>
+						    <button type="button" id="delete" onclick="deleteInstructor()">삭제하기</button>
 							<button type="button" id="goList" onclick="location.href='/instructor/list'">목록으로</button>
 						</div>
 					</form>
@@ -151,6 +159,16 @@ h2 {
 			</div>
 		</div>
 	</div>
+	<script>
+    	function deleteInstructor(){
+    		document.forms.instructorInformation.action="delete";
+    		document.forms.instructorInformation.submit();
+    	}
+    	function updateInstructor(){
+    		document.forms.instructorInformation.action="update";
+    		document.forms.instructorInformation.submit();
+    	}
+    </script>	
 </body>
 <footer th:include="fragments/footer.html"></footer>
 </html>

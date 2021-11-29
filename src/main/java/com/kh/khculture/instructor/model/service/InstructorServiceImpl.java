@@ -30,6 +30,30 @@ public class InstructorServiceImpl implements InstructorService{
 		return instructorMapper.getList();
 	}
 
+	@Override
+	public Instructor selectInstructor(int instructor_no) {
+		// TODO Auto-generated method stub
+		return instructorMapper.selectInstructor(instructor_no);
+	}
+
+	@Override
+	public int instructorRegist(Instructor instructor) {
+		// TODO Auto-generated method stub
+		return instructorMapper.instructorRegist(instructor);
+	}
+
+	@Override
+	public int insturctorUpdate(Instructor updateInstructor) {
+		// TODO Auto-generated method stub
+		return instructorMapper.instructorUpdate(updateInstructor);
+	}
+
+	@Override
+	public int deleteInstructor(Instructor deleteInstructor) {
+		// TODO Auto-generated method stub
+		return instructorMapper.instructorDelete(deleteInstructor);
+	}
+
 	
 
 }

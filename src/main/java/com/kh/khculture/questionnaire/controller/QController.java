@@ -2,8 +2,6 @@ package com.kh.khculture.questionnaire.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,9 +37,9 @@ public class QController {
 	}
 	
 	@GetMapping("detail.do")
-	public ModelAndView questionnaireDetail(ModelAndView mav, @RequestParam int questionnaire_no) {
+	public ModelAndView questionnaireDetail(ModelAndView mav, @RequestParam int questionnaire_no, String enroll_answer) {
 		
-		Questionnaire q = questionnaireService.questionnaireDetail(questionnaire_no);
+		Questionnaire q = questionnaireService.questionnaireDetail(questionnaire_no, enroll_answer);
 		
 		mav.addObject("questionnaire", q);
 		mav.setViewName("questionnaire/detail");
@@ -70,18 +68,19 @@ public class QController {
 	
 	/* ========== 관리자 기능 ========== */
 	@GetMapping("answer")
-	public String answerPage(Model model, @RequestParam("questionnaire_no") int questionnaire_no) {
+	public String answerPage(Model model, @RequestParam("questionnaire_no") int questionnaire_no, String enroll_answer) {
 		System.out.println("questionnaire_no : " + questionnaire_no);
-		Questionnaire question = questionnaireService.questionnaireDetail(questionnaire_no);
+		Questionnaire question = questionnaireService.questionnaireDetail(questionnaire_no, enroll_answer);
 		model.addAttribute("questionnaire", question);
 		return "questionnaire/answer";
 		
 	}
 	
-	@PostMapping("answerInsert")
+	@PostMapping("answer")
 	public String answerInsert(QuestionnaireAnswer answer) {
 		questionnaireService.answerInsert(answer);
-		return "redirect:/questionnaire/insert";
+		System.out.println("answer : " + answer);
+		return "redirect:/questionnaire/detail.do?questionnaire_no="+ answer.getAnswer_no();
 	}
 	
 	@PostMapping("answerDelete")

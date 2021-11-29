@@ -26,9 +26,9 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 	}
 
 	@Override
-	public Questionnaire questionnaireDetail(int questionnaire_no) {
+	public Questionnaire questionnaireDetail(int questionnaire_no, String enroll_answer) {
 		// TODO Auto-generated method stub
-		return questionnaireMapper.questionnaireDetail(questionnaire_no);
+		return questionnaireMapper.questionnaireDetail(questionnaire_no, enroll_answer);
 	}
 
 	@Override
@@ -57,5 +57,4 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 		// TODO Auto-generated method stub
 		return questionnaireMapper.answerDelete(deleteAnswer);
 	}
-
 }

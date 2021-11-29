@@ -119,13 +119,17 @@ h2 {
 						<div class="content">
 							<h2><span class="title_span">&nbsp;</span> 문의사항 </h2>
 							<span class="input_area" th:text="${questionnaire.questionnaire_content}"></span>
-							
+						</div>
+				     </form>
+				     <form method="post">		
+				        <div class="content">
 							<h2><span class="title_span">&nbsp;</span> 답변 </h2>
 							<textarea class="textarea" rows="20" cols="100" name="content" required></textarea>
-
-						</div>
+                        </div> 
 						<div class="btn_area">
-						<button type="submit" id="regist">등록하기</button>
+						
+						    <button type="submit" id="regist" >등록하기</button>
+						   
 							<button type="button" id="goList" onclick="location.href='/questionnaire/list'">목록으로</button>
 						</div>
 					</form>

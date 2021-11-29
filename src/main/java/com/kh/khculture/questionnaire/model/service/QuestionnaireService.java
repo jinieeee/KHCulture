@@ -9,7 +9,7 @@ public interface QuestionnaireService {
 	
 	List<Questionnaire> getList();
 	
-	Questionnaire questionnaireDetail(int questionnaire_no);
+	Questionnaire questionnaireDetail(int questionnaire_no, String enroll_answer);
 	
 	int questionnaireInsert(Questionnaire questionnaire);
 	
