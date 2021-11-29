@@ -9,5 +9,13 @@ public interface InstructorService {
 	int getListCount();
 	
 	List<Instructor> getList();
+	
+	Instructor selectInstructor(int instructor_no);
+	
+	int instructorRegist(Instructor instructor);
+	
+	int insturctorUpdate(Instructor updateInstructor);
+	
+	int deleteInstructor(Instructor deleteInstructor);
 
 }

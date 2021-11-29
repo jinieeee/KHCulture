@@ -1,14 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kh.khculture.instructor.model.dao.InstructorMapper">
+
+<resultMap type="com.kh.khculture.instructor.model.vo.Instructor" id="iResultMap">
+     <id property="instructor_no" column="INSTRUCTOR_NO"/>
+     <result property="instructor_name" column="INSTRUCTOR_NAME"/>
+     <result property="profile_photo" column="PROFILE_PHOTO"/>
+     <result property="birth_date" column="BIRTH_DATE"/>
+     <result property="instructor_phone" column="INSTRUCTOR_PHONE"/>
+     <result property="career" column="CAREER"/>
+</resultMap>
+
      <select id="getList" resultType="com.kh.khculture.instructor.model.vo.Instructor">
-         SELECT
-                INSTRUCTOR_NO
-              , INSTRUCTOR_NAME
-              , PROFILE_PHOTO
-              , BIRTH_DATE
-              , INSTRUCTOR_PHONE
-              , CAREER
-           FROM INSTRUCTOR
+         select *
+           from instructor
+          order by instructor_no DESC
      </select>
+     <select id="selectInstructor" parameterType="int" resultType="com.kh.khculture.instructor.model.vo.Instructor">
+         select *
+           from instructor
+          where instructor_no = #{insturctor_no}     
+     </select>
+     <insert id="instructorRegist" parameterType="com.kh.khculture.instructor.model.vo.Instructor">
+          insert into instructor
+          (instructor_no, instructor_name, profile_photo, birth_date, instructor_phone, career)
+          values(SEQ_INS_NO.NEXTVAL, #{ instructor_name }, #{ profile_photo }, #{ birth_date }, #{ instructor_phone }, #{ career })          
+     </insert>
+     <update id="instructorUpdate" parameterType="com.kh.khculture.instructor.model.vo.Instructor">
+          update instructor
+             set instructor_name = #{ instructor_name }, profile_photo = #{ profile_photo }, birth_date = #{ birth_date },
+                 instructor_phone = #{ instructor_phone }, career = #{ career }
+           where instructor_no = #{ instructor_no }     
+     </update>
+     <delete id="instructorDelete" parameterType="com.kh.khculture.instructor.model.vo.Instructor">
+          delete from instructor where instructor_no=#{ instructor_no }
+     </delete>
 </mapper>

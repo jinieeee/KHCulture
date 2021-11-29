@@ -12,5 +12,13 @@ public interface InstructorMapper {
 	int instructorCount();
 	
 	List<Instructor> getList();
+	
+	Instructor selectInstructor(int instructor_no);
+	
+	int instructorRegist(Instructor instructor);
+	
+	int instructorUpdate(Instructor updateInstructor);
+	
+	int instructorDelete(Instructor deleteInstructor);
 
 }
