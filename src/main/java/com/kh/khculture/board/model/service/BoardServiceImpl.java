@@ -11,11 +11,14 @@ import com.kh.khculture.board.model.dao.BoardMapper;
 import com.kh.khculture.board.model.dao.UserLectureListMapper;
 import com.kh.khculture.board.model.vo.Board;
 import com.kh.khculture.board.model.vo.Lovit;
-import com.kh.khculture.board.model.vo.PageInfo;
 import com.kh.khculture.board.model.vo.Reply;
 import com.kh.khculture.board.model.vo.Search;
+import com.kh.khculture.common.PageInfo;
 import com.kh.khculture.lecture.model.vo.LectureOpen;
+import com.kh.khculture.mypage.model.service.MypageServiceImpl;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Service("boardService")
 public class BoardServiceImpl implements BoardService {
 	
@@ -27,7 +30,7 @@ public class BoardServiceImpl implements BoardService {
 		this.boardMapper = boardMapper;
 		this.userLectureListMapper = userLectureListMapper;
 	}
-	
+/*	
 	//총 게시물 수
 	@Override
 	public int getListCount() {
@@ -46,7 +49,7 @@ public class BoardServiceImpl implements BoardService {
 		
 		return boardMapper.selectList(startRow, endRow);
 	}
-	
+*/	
 	//후기 작성할때 user가 듣고 있는 lecture의 List
 	@Override
 	public List<LectureOpen> userLectureList(int mno) {
@@ -85,13 +88,13 @@ public class BoardServiceImpl implements BoardService {
 	public int likedelete(Lovit lovit) {
 		return boardMapper.likedelete(lovit);
 	}
-	
+/*	 아래에 구현 
 	// 랭킹 정보 가지고 오기
 	@Override
 	public List<Board> ranktList() {
 		return boardMapper.rankList();
 	}
-	
+*/	
 	//후기 수정페이지에 기본적으로 넣어주는 값 select
 	@Override
 	public Board updateBoardView(int b_no) {
@@ -128,6 +131,7 @@ public class BoardServiceImpl implements BoardService {
 		System.out.println("serviceImplt = " + rno );
 		return boardMapper.replyDelete(rno);
 	}
+	
 
 /*	//********************
 
@@ -165,7 +169,31 @@ public class BoardServiceImpl implements BoardService {
 	
 	*/
 	
-	
+	@Override
+	public Map<String, Object> boardList(int page, Search search) {
+		Map<String,Object> returnMap = new HashMap<>();
+		
+		int listCount = boardMapper.getListCount(search);
+		
+		
+		PageInfo pi = new PageInfo(page, listCount, 10, 10);
+		int startRow = (pi.getPage() - 1)*pi.getBoardLimit() + 1;
+		int endRow = startRow + pi.getBoardLimit() - 1;
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("startRow", startRow);
+		map.put("endRow", endRow);
+		map.put("search", search);
+		List<Board> boardList = boardMapper.selectList(map);
+		
+		List<Board> rankList = boardMapper.rankList(); // 랭킹
+		
+		
+		returnMap.put("pi", pi);
+		returnMap.put("boardList", boardList);
+		returnMap.put("rankList", rankList);
+		return returnMap;
+	}
 	
 	
 

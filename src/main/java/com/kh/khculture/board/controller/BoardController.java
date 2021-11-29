@@ -46,35 +46,51 @@ public class BoardController {
 		this.boardService = boardService;
 		
 	}
-
+	
 	@GetMapping("boardList")
-	public String  boardList(Model model, @RequestParam(value="page", defaultValue="1") int page) {
+	public String boardList(Model model,@RequestParam(value="page", defaultValue="1") int page, Search search,Principal principal) {
+		Map<String,Object> returnMap = boardService.boardList(page,search);
+		model.addAttribute("search",search);
+		model.addAttribute("pi",returnMap.get("pi"));
+		model.addAttribute("boardList",returnMap.get("boardList"));
+		model.addAttribute("rankList",returnMap.get("rankList"));
+		model.addAttribute("principal",principal);
+		return "board/boardList";
+	}
+	
+	
+/*
+	@GetMapping("boardList")
+	public String  boardList(Model model, @RequestParam(value="page", defaultValue="1") int page, Principal principal) {
 
-	int listCount = boardService.getListCount();
-	//	System.out.println("총 게시글 개수 : " + listCount);
+		int listCount = boardService.getListCount();
+	
 		
 		PageInfo pi = new PageInfo(page, listCount, 10,3);
 		List<Board> boardList = boardService.selectList(pi);
-	//	System.out.println("후기게시판리스트 = " + boardList);
+		System.out.println("후기게시판리스트 = " + boardList);
 	
 		//랭킹 구현할 board image
 		List<Board> rankList = boardService.ranktList();
 		
-	//	log.info("rankList : {} ",rankList);
+		
 		
 		model.addAttribute("rankList",rankList);
 		model.addAttribute("boardList",boardList);
 		model.addAttribute("pi",pi);
+		model.addAttribute("principal",principal);
 	
 		return "board/boardList";
 	}
+*/
+	/*
+	 * @GetMapping("search") public Map<String, Object> searchBoardList(Search
+	 * search){ log.info("search:{}",search); //
+	 * search:Search(searchCondition=lectureTitle, searchValue=주부) //
+	 * search:Search(searchCondition=title, searchValue=하하하) return null; //
+	 * searchCondition, searchValue }
+	 */
 /************************************************************** search + 페이징 처리 ********************************
-	@GetMapping("search")
-	public Map<String, Object> searchBoardList(Model model, @ModelAttribute Search search){
-		log.info("search:{}",search); //search:Search(searchCondition=title, searchValue=엄마, title=null, content=null, page=0, startRow=0, endRow=0)
-		return boardService.searchBoardList(search); // searchCondition, searchValue
-	}
-	
 //*********************************************************************************************	*/
 
 	@GetMapping("detail.do")
@@ -103,10 +119,6 @@ public class BoardController {
 	// /board/insert?user_name=
 	@GetMapping("insertView")
 	public String boardInsertView(Model model,@AuthenticationPrincipal UserImpl userImpl){
-		// id의 값이 들어오면... memberMapper로 로그인한 유저인지 확인..?
-	//	 log.info("로그인 계정 : {}", member);
-	//	log.info("22로그인 계정 : {}",userImpl.getMno());
-		
 		//로그인한 user의 mNo를 가지고 강좌를 불러옴
 		//만약 mNo가 들은 강좌가 없으면 -> alert창으로 들은 강좌가 없다고 안내..
 		List<LectureOpen> userLectureList = boardService.userLectureList(userImpl.getMno());
@@ -115,10 +127,7 @@ public class BoardController {
 			
 			return "redirect:boardList";
 		}else {
-			//log.info("1userLectureList 두그두그 :{}" ,userLectureList.get(0).getLectureBuy().get(0).getLectureOpen().get(0).getLecture().getLThumbnail());
-			//log.info("2userLectureList 두그두그 :{}" ,userLectureList.get(1).getLectureBuy().get(0).getLectureOpen().get(0).getLecture().getLThumbnail());
-		//	log.info("3userLectureList 두그두그 :{}" ,userLectureList);
-			//model.addAttribute("userImpl",userImpl);
+			
 			model.addAttribute("lecture",userLectureList);
 			System.out.println("후기남길수있다유");
 			return "board/boardInsert";
@@ -152,10 +161,8 @@ public class BoardController {
 	//?n_no=22
 	@PostMapping("update")
 	public String boardUpdate(Board uptBoard) {
-	//	log.info("uptBoard: {}", uptBoard);
 		int result = boardService.boardUpdate(uptBoard);
 		
-	//	System.out.println("uptNotice = "+uptNotice);
 		return "redirect:/board/detail.do?b_no="+ uptBoard.getB_no();
 	}
 	
@@ -172,9 +179,6 @@ public class BoardController {
 	@PostMapping("likeinsert")
 	@ResponseBody 
 	public String likeinsert(@RequestParam int bno,@AuthenticationPrincipal UserImpl userImpl){
-		//bno와 mno를 LOVIT 테이블에 insert해주고, mno가 로그인했을때 좋아요 표시 유지,
-		//그렇다면 star은??? - 
-	//	log.info("bno : {}",bno); //12
 		Lovit lovit = new Lovit(userImpl.getMno(),bno);
 		int result = boardService.likeInsert(lovit); //1
 	
@@ -197,10 +201,6 @@ public class BoardController {
 	@PostMapping("likedelete")
 	@ResponseBody 
 	public String likedelete(@RequestParam int bno,Principal principal) {
-		//bno와 mno를 LOVIT 테이블에 insert해주고, mno가 로그인했을때 좋아요 표시 유지,
-		//그렇다면 star은??? - 
-	//	log.info("bno : {}",bno); //12
-		
 		UserImpl user = (UserImpl)((Authentication)principal).getPrincipal();
 		Lovit lovit = new Lovit(user.getMno(),bno);
 		int result = boardService.likedelete(lovit); //1
@@ -217,14 +217,6 @@ public class BoardController {
 		
 		return message;
 	}
-	/*
-	@PostMapping("replyInsert")
-	public @ResponseBody Map<String, Object> replyInsert(@RequestBody Reply reply) {
-		Map<String, Object> map = new HashMap<>();
-		 System.out.println("reply : " + reply.getB_no());
-		return map;
-	}
-	*/
 	@PostMapping("replyInsert")
 	@ResponseBody 
 	public List<Reply> replyInsert(@RequestBody Reply reply,Principal principal){

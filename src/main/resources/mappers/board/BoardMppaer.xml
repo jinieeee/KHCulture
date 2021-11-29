@@ -63,13 +63,13 @@
 </resultMap>
 
 
-<!-- 총 게시물 수 -->
+<!-- 총 게시물 수 
 <select id="getListCount" resultType="_int" >
 select count(*) from board where b_status='Y'
 </select>
- 
-<!-- 페이징할 게시글 수 -->
-<select id="selectList" resultType="com.kh.khculture.board.model.vo.Board">
+--> 
+<!-- 페이징할 게시글 수
+<select id="selectList" resultMap="boardResultMap">
 
 SELECT
     B_NO
@@ -88,53 +88,96 @@ FROM ( SELECT
                          WHERE B_STATUS='Y' 
                             ORDER BY B_NO DESC) NLIST )
 WHERE RNUM BETWEEN #{ startRow } AND #{ endRow }  
+
+SELECT
+    B_NO
+    , B_TITLE
+    , B_CONTENT
+    , B_ENROLL_DATE
+    , B_MODIFY_DATE
+    , B_STAR
+    , M_NO
+    , lr_no 
+    , l_title
+    
+FROM ( SELECT 
+               ROWNUM RNUM, NLIST.*
+             FROM(  SELECT 
+                            *
+                         FROM BOARD 
+                         join lecture_registration using (lr_no)
+                         join lecture using (l_no)
+                         WHERE B_STATUS='Y' 
+                            ORDER BY B_NO DESC) NLIST )
+WHERE RNUM BETWEEN #{ startRow } AND #{ endRow }  
+
+
 </select>
+ -->
+ <!-- ***********************************************  다시 시작 ********************************************************************* -->
 
-
-<!-- ******************************************************************************************************************** 
-
-<select id="getListCount2" resultType="_int" parameterType ="com.kh.khculture.lecture.model.vo.Search">
+<select id="getListCount" parameterType="_int" resultType="_int">
 select 
- count(*)
-from board
+	count(*) 
+from BOARD 
+join lecture_registration using (lr_no)
+join lecture using (l_no)
 where b_status='Y'
-<if test="searchCondition == title ">
-	and b_title = #{ searchValue }
+<if test="searchCondition == 'title'">
+and b_title like '%' || #{ searchValue } || '%'
 </if>
-<if test="searchCondition == content ">
-	and to_char(b_content) = #{ searchValue }
+<if test="searchCondition == 'lectureTitle'">
+and l_title like '%' || #{ searchValue } || '%'
 </if>
 
 </select>
-
-<select id="selectBoardList"  parameterType="com.kh.khculture.lecture.model.vo.Search"  resultMap="boardResultMap">
-
-SELECT
-    B_NO
-    , B_TITLE
-    , B_CONTENT
-    , B_ENROLL_DATE
-    , B_MODIFY_DATE
-    , B_STAR
-    , M_NO
-FROM ( SELECT 
+<select id="selectList" resultMap="boardResultMap">
+select
+    b_no
+    , b_title
+    , b_content
+    , b_enroll_date
+    , b_modify_date
+    , b_star
+    , m_no
+    , l_title
+from ( SELECT 
                ROWNUM RNUM, NLIST.*
              FROM(  SELECT 
                             *
-                         FROM BOARD 	
-                         JOIN MEMBER_ROLE USING(M_NO)
-                         WHERE B_STATUS='Y' 
-                         <if test="searchCondition == title ">
-                         	and b_title like '%' || #{ searchValue }  || '%'
-                         </if>
-                         <if test ="searchCondition == content">
-                         	and b_content like '%' || #{ searchValue } || '%'
-                         </if>
+                         FROM BOARD 
+                         join lecture_registration using (lr_no)
+                         join lecture using (l_no)
+                         WHERE B_STATUS='Y'
+                        <if test="searchCondition == 'title'">
+                             and  b_title like '%' || #{ searchValue } || '%'
+                        </if>
+                        <if test="searchCondition == 'lectureTitle'">
+                             and  l_title like '%' || #{ searchValue } || '%'
+                        </if>
                             ORDER BY B_NO DESC) NLIST )
 WHERE RNUM BETWEEN #{ startRow } AND #{ endRow }  
+           
 </select>
 
- ******************************************************************************************************************** -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ <!-- ******************************************************************************************************************** -->
 
 <!-- 후기 상세보기 -->
 <select id="selectBoard" resultMap="boardResultMap">
