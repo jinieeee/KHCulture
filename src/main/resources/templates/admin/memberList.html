@@ -88,7 +88,10 @@
 	    			<th id="accSecessionYN">계정탈퇴</th>
 	    			<th id="accSecessionDate">탈퇴일</th>
 	    		</tr>
-	    		<tr th:each="member : ${memberList}">
+	    		<tr th:if="${memberList.size == 0}">
+	    			<td colspan="11"><h1>조회된 회원이 없습니다</h1></td>
+	    		</tr>
+	    		<tr th:if="${memberList.size > 0}" th:each="member : ${memberList}">
 	    			<td>[[${member.mno}]]</td>
 	    			<td><input type="checkbox" class="oneChecked" th:value="${member.mno}"></td>
 	    			<td>[[${member.id}]]</td>
