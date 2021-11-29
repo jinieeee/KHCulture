@@ -60,9 +60,27 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http
 			.csrf().disable()
 			.authorizeRequests()
+				// 관리자페이지 전체 접근권한
 				.antMatchers("/admin/**").hasRole("ADMIN")
 				.antMatchers(HttpMethod.POST, "/admin/memberList/deleteAcc").hasRole("HEAD")
 				.antMatchers(HttpMethod.POST, "/admin/memberList/roleUpdate").hasRole("HEAD")
+				// 마이페이지 전체 접근권한
+				.antMatchers("/mypage/**").hasRole("MEMBER")
+				// 강좌등록 & 개설 & 결제 접근권한 (장영재)
+				.antMatchers("/lecturelist").hasRole("ADMIN")
+				.antMatchers("/lectureregist").hasRole("ADMIN")
+				.antMatchers("/registserver").hasRole("ADMIN")
+				.antMatchers("/lectureupdate/**").hasRole("ADMIN")
+				.antMatchers("/updateserver").hasRole("ADMIN")
+				.antMatchers("/lecturedelete/**").hasRole("ADMIN")
+				.antMatchers("/openlist").hasRole("ADMIN")
+				.antMatchers("/openregist").hasRole("ADMIN")
+				.antMatchers("/openserver").hasRole("ADMIN")
+				.antMatchers("/openupdate/**").hasRole("ADMIN")
+				.antMatchers("/updateOpenserver").hasRole("ADMIN")
+				.antMatchers("/opendelete/**").hasRole("ADMIN")
+				.antMatchers("/payment/**").hasRole("MEMBER")
+				.antMatchers("/verification/**").hasRole("MEMBER")
 				.anyRequest().permitAll()
 		.and()
 			.formLogin()	// 로그인 설정

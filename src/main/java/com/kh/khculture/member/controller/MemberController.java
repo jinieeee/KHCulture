@@ -1,21 +1,19 @@
 package com.kh.khculture.member.controller;
 
-import java.net.http.HttpRequest;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -61,6 +59,11 @@ public class MemberController {
 	
 	@GetMapping("findPwdResult")
 	public void findPwdResult() {}
+	
+	@GetMapping("pwdUpdate")
+	public String pwdUpdate() {
+		return "/mypage/pwdUpdate";
+	}
 	
 	@PostMapping("signUpMember")
 	public String signUpMember(Member member, RedirectAttributes rttr/*, HttpSession session */) {
@@ -120,7 +123,7 @@ public class MemberController {
 		int result = memberService.resetPwd(member);
 		String msg = result > 0? "비밀번호가 재설정되었습니다. 재설정한 비밀번호로 로그인하세요":
 								"비밀번호 재설정에 실패하였습니다. 재시도해주세요";
-		log.info("{}", msg);
+		// log.info("{}", msg);
 		
 		rttr.addFlashAttribute("msg", msg);
 		
@@ -154,18 +157,46 @@ public class MemberController {
 	}
 	
 	@RequestMapping("accSecession")
-	public String accSecession(@AuthenticationPrincipal UserImpl user, RedirectAttributes rttr, HttpSession session) {
-		int result = memberService.accSecession(user.getMno());
+	public String accSecession(@RequestParam String password, @AuthenticationPrincipal UserImpl user, RedirectAttributes rttr, HttpSession session) {
+
 		String msg = "";
 		String redirectUrl = "";
-		if(result > 0) {
-			msg = "탈퇴 처리되었습니다";
-			session.invalidate();
-			redirectUrl = "redirect:/";
+
+		// log.info("{}", new BCryptPasswordEncoder().encode(password).equals(user.getPwd()));
+		if(new BCryptPasswordEncoder().matches(password, user.getPwd())) {
+			int result = memberService.accSecession(user.getMno());
+			if(result > 0) {
+				msg = "탈퇴 처리되었습니다";
+				session.invalidate();
+				redirectUrl = "redirect:/";
+			} else {
+				msg = "탈퇴가 처리되지 않았습니다. 다시 확인 후 시도하시기 바랍니다";
+				redirectUrl = "redirect:/mypage/memberModify";
+			}			
 		} else {
-			msg = "탈퇴가 처리되지 않았습니다. 다시 확인 후 시도하시기 바랍니다";
-			redirectUrl = "/member/memberModify";
+			msg = "비밀번호가 일치하지 않습니다";
+			redirectUrl = "redirect:/mypage/memberModify";
 		}
+		rttr.addFlashAttribute("msg", msg);
 		return redirectUrl;
+	}
+	
+	@PostMapping(value="confirmPwd")
+	@ResponseBody
+	public String confirmPwd(@RequestParam String password, @AuthenticationPrincipal UserImpl user) {
+		return new BCryptPasswordEncoder().matches(password, user.getPwd())? "true": "false";
+	}
+	
+	@PostMapping("pwdUpdate")
+	public String pwdUpdate(@RequestParam String pwd, @AuthenticationPrincipal UserImpl user, RedirectAttributes rttr) {
+		Member member = new Member();
+		member.setId(user.getId());
+		member.setPwd(pwd);
+		int result = memberService.resetPwd(member);
+		String msg = result > 0? "비밀번호가 재설정되었습니다. 재설정한 비밀번호로 로그인하세요":
+			"비밀번호 재설정에 실패하였습니다. 재시도해주세요";
+
+		rttr.addFlashAttribute("msg", msg);
+		return "redirect:/member/pwdUpdate";
 	}
 }

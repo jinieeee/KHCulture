@@ -37,20 +37,29 @@ input[type=password] {
     border: none;
     font-size: 14px;
 }
-.ModifyTable span {
+.ModifyTable span,
+.confirmPwdTbl span {
     display: flex;
     align-items: center;
     padding: 5px 0;
 }
 .ModifyTable button,
-.ModifyTable input[type=button],
-.confirmPwdTbl input[type=button] {
+.ModifyTable input[type=button] {
 	height: 35px;
     width: 120px;
     border-style: none;
     margin-right: 15px;
     color: #fff;
     background-color: var(--inactive-btn-color);
+    cursor: pointer;
+}
+.confirmPwdTbl input[type=submit] {
+	height: 35px;
+    width: 120px;
+    border-style: none;
+    margin-right: 15px;
+    color: #fff;
+    background-color: var(--main-color);
     cursor: pointer;
 }
 .Modify_button {
@@ -92,4 +101,11 @@ select#hintNo {
     font-size: 20px;
     color: white;
     background-color:crimson;
+}
+
+#pwdVerify {
+	font-size: 12px;
+	display: block;
+	height: 15px;
+	padding: 0;
 }
