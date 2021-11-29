@@ -43,7 +43,10 @@
    					<th>조회수</th>
    					<th colspan="2">공지사항 관리</th>
    				</tr>
-   				<tr th:each="notice : ${noticeList}">
+   				<tr th:if="${noticeList.size == 0}">
+   					<td colspan="7"><h1>조회된 공지사항이 없습니다</h1></td>
+   				</tr>
+   				<tr th:if="${noticeList.size > 0}" th:each="notice : ${noticeList}">
    					<td>[[${notice.n_no}]]</td>
    					<td>[[${notice.n_title}]]</td>
    					<td>[[${notice.id}]]</td>

@@ -36,7 +36,10 @@
 <script type="text/javascript" src="/js/mypage/pwdUpdate.js"></script>
 <script>
 	var msg = '[[${msg}]]';
-	if(msg) {
+	
+	if(msg == "false") {
+		alert("기존 비밀번호와 동일하게 변경할 수 없습니다");
+	} else if (msg) {
 		alert(msg);
 		window.opener.location.href = "/member/logout";
 		self.close();

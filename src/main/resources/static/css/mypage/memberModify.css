@@ -27,7 +27,9 @@
     border: 1px solid #AEAEAE;
     padding : 10px 0 10px 10px;
 }
-.ModifyTable th{
+.ModifyTable th,
+.confirmPwdTbl th {
+	width: 120px;
     background-color: lightgray;
 }
 input[type=text],
@@ -50,7 +52,7 @@ input[type=password] {
     border-style: none;
     margin-right: 15px;
     color: #fff;
-    background-color: var(--inactive-btn-color);
+    background-color: var(--main-color);
     cursor: pointer;
 }
 .confirmPwdTbl input[type=submit] {

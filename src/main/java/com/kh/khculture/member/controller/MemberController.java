@@ -146,6 +146,7 @@ public class MemberController {
 		return returnUrl;
 	}
 	
+	// 회원정보 변경
 	@PostMapping("modify")
 	public String memberModify(Member member, @AuthenticationPrincipal UserImpl user, RedirectAttributes rttr) {
 		member.setMno(user.getMno());
@@ -156,6 +157,7 @@ public class MemberController {
 		return "redirect:/mypage/memberModify";
 	}
 	
+	// 회원탈퇴
 	@RequestMapping("accSecession")
 	public String accSecession(@RequestParam String password, @AuthenticationPrincipal UserImpl user, RedirectAttributes rttr, HttpSession session) {
 
@@ -181,22 +183,27 @@ public class MemberController {
 		return redirectUrl;
 	}
 	
+	// 비밀번호 확인
 	@PostMapping(value="confirmPwd")
 	@ResponseBody
 	public String confirmPwd(@RequestParam String password, @AuthenticationPrincipal UserImpl user) {
 		return new BCryptPasswordEncoder().matches(password, user.getPwd())? "true": "false";
 	}
 	
+	// 비밀번호 변경
 	@PostMapping("pwdUpdate")
 	public String pwdUpdate(@RequestParam String pwd, @AuthenticationPrincipal UserImpl user, RedirectAttributes rttr) {
-		Member member = new Member();
-		member.setId(user.getId());
-		member.setPwd(pwd);
-		int result = memberService.resetPwd(member);
-		String msg = result > 0? "비밀번호가 재설정되었습니다. 재설정한 비밀번호로 로그인하세요":
-			"비밀번호 재설정에 실패하였습니다. 재시도해주세요";
-
-		rttr.addFlashAttribute("msg", msg);
+		String msg = "";
+		if(!new BCryptPasswordEncoder().matches(pwd, user.getPwd())) {
+			Member member = new Member();
+			member.setId(user.getId());
+			member.setPwd(pwd);
+			int result = memberService.resetPwd(member);
+			msg = result > 0? "비밀번호가 재설정되었습니다. 재설정한 비밀번호로 로그인하세요":
+				"비밀번호 재설정에 실패하였습니다. 재시도해주세요";
+		}
+		msg = "false";
+		rttr.addFlashAttribute("msg", msg);	
 		return "redirect:/member/pwdUpdate";
 	}
 }

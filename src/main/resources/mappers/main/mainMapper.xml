@@ -63,5 +63,6 @@
 				*
 		  FROM MAIN_IMAGE
 		 WHERE MI_STATUS = 'Y'
+		 ORDER BY MI_NO DESC
 	</select>
 </mapper>
