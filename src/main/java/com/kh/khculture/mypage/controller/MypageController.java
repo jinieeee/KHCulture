@@ -45,13 +45,17 @@ public class MypageController {
 //	}
 	
 	@GetMapping("cart")
-	public String selectCartLists(Model model, HttpServletRequest request){
+	public String selectCartLists(Model model, HttpServletRequest request, Principal principal){
 //		int page = 1;
 //		if(request.getParameter("page") != null) {
 //			page = Integer.parseInt(request.getParameter("page"));
 //		};
-		//UserImpl user = (UserImpl)((Authentication)principal).getPrincipal();
-		List<LectureOpen> lecturelist = mypageService.getCartList(20);
+		UserImpl user = (UserImpl)((Authentication)principal).getPrincipal();
+		int mNo = user.getMno();
+		List<LectureOpen> lecturelist = mypageService.getCartList(mNo);
+		
+		log.info("lecturelist : {}", lecturelist);
+		
 		model.addAttribute("lecturelist", lecturelist);
 		return "mypage/cart";
 	}
@@ -96,9 +100,11 @@ public class MypageController {
 	}
 	
 	@GetMapping("paymentDetails")
-	public String getPaymentDetails(Model model, @RequestParam(value="page", defaultValue="1") int page, @RequestParam(value="startDate", defaultValue="") String startDate, @RequestParam(value="endDate", defaultValue="") String endDate) {
-		//UserImpl user = (UserImpl)((Authentication)principal).getPrincipal();
-		Map<String, Object> returnMap = mypageService.getPaymentDetails(20, page, startDate, endDate);
+	public String getPaymentDetails(Model model, @RequestParam(value="page", defaultValue="1") int page,
+			@RequestParam(value="startDate", defaultValue="") String startDate, @RequestParam(value="endDate", defaultValue="") String endDate, Principal principal) {
+		UserImpl user = (UserImpl)((Authentication)principal).getPrincipal();
+		int mNo = user.getMno();
+		Map<String, Object> returnMap = mypageService.getPaymentDetails(mNo, page, startDate, endDate);
 		model.addAttribute("startDate", startDate);
 		model.addAttribute("endDate", endDate);
 		model.addAttribute("pi", returnMap.get("pi"));
