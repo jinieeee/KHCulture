@@ -42,7 +42,7 @@ public class AdminServiceImpl implements AdminService{
 		// 페이징 처리
 		if((Integer)search.getPage() != null) {
 			// searchListCount = adminMapper.getSearchListCount();
-			pi = new PageInfo(search.getPage(), allSearchList.size(), 10, 30);
+			pi = new PageInfo(search.getPage(), allSearchList.size(), 10, 20);
 			search.setStartRow((pi.getPage() - 1) * pi.getBoardLimit() + 1);
 			search.setEndRow(search.getStartRow() + pi.getBoardLimit() - 1);
 		}
@@ -114,7 +114,7 @@ public class AdminServiceImpl implements AdminService{
 		// 페이징 처리
 		if((Integer)search.getPage() != null) {
 			noticeListCount = adminMapper.getNoticeListCount(search);
-			pi = new PageInfo(search.getPage(), noticeListCount, 10, 30);
+			pi = new PageInfo(search.getPage(), noticeListCount, 10, 20);
 			search.setStartRow((pi.getPage() - 1) * pi.getBoardLimit() + 1);
 			search.setEndRow(search.getStartRow() + pi.getBoardLimit() - 1);
 		}

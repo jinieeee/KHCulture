@@ -29,6 +29,9 @@ $(".accSecessionBtn").on('click', function(){
 	}
 });
 
+var x = (window.screen.width/2) - 600/2;
+var y = (window.screen.height/2) - 600/2;
+
 $(".modifyBtn").on('click', function(){
 	var password = $(".ModifyTable [name=password]").val();
 	console.log(password);
@@ -38,7 +41,7 @@ $(".modifyBtn").on('click', function(){
 		type: "post",
 		success: function(data) {
 			if(data == 'true') {
-				window.open('/member/pwdUpdate', '비밀번호 변경', 'width=600, height=600px, resizable=no');
+				window.open('/member/pwdUpdate', '비밀번호 변경', 'width=600, height=600px, left=' + x + ', top=' + y + ', resizable=no');
 			} else {
 				alert("비밀번호가 일치하지 않습니다");
 			}
