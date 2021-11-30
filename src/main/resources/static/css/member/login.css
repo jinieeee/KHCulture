@@ -59,6 +59,7 @@ div.find>a {
     color: black;
     font-size: 18px;
     padding: 0;
+    cursor: pointer;
 }
 div.find>a::after {
     content: "|";

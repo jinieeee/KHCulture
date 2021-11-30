@@ -27,8 +27,8 @@
             <button type="submit" name="loginBtn">로그인</button>
         </form>
         <div class="find">
-            <a href="/member/findId" onclick="window.open(this.href, '아이디찾기', 'width=600, height=600px, resizable=no'); return false;">아이디 찾기</a>
-            <a href="/member/findPwd" onclick="window.open(this.href, '비밀번호찾기', 'width=600, height=600px, resizable=no'); return false;">비밀번호 찾기</a>
+            <a class="findIdBtn">아이디 찾기</a>
+            <a class="findPwdBtn">비밀번호 찾기</a>
         </div>
         <table class="joinInfo">
             <tr>
@@ -51,5 +51,15 @@
 	if(msg) {
 		alert(msg);
 	}
+	
+	var x = (window.screen.width/2) - 600/2;
+	var y = (window.screen.height/2) - 600/2;
+	
+	$(".findIdBtn").on('click', function(){
+		window.open('/member/findId', '아이디찾기', 'width=600, height=600px, left=' + x + ', top=' + y + ', resizable=no');
+	});
+	$(".findPwdBtn").on('click', function(){
+		window.open('/member/findPwd', '비밀번호찾기', 'width=600, height=600px, left=' + x + ', top=' + y + ', resizable=no');
+	});
 </script>
 </html>
