@@ -18,7 +18,7 @@
         <div class="tagArea">
         
             <span id="status" th:if="${today < receiptDate}">접수예정</span>
-            <span id="status" th:if="${today >= receiptDate and lectureDetail.lrCount < lectureDetail.lrCapacity}">접수중</span>
+            <span id="status" th:if="${today >= receiptDate and lectureDetail.lrCount < lectureDetail.lrCapacity and today <= lectureDetail.lrStartDate}">접수중</span>
             <span id="status" th:if="${lectureDetail.lrCount == lectureDetail.lrCapacity or today >= lectureDetail.lrStartDate}">접수마감</span>
             
             <span id="target" th:text="${lectureDetail.ltName}"></span>
@@ -108,8 +108,8 @@
                 </div>
                 <div class="stateTextArea">
                 	<span th:if="${today < receiptDate}"><em>접수예정</em> 입니다.</span>
-                    <span th:if="${today >= receiptDate and lectureDetail.lrCount < lectureDetail.lrCapacity}"><em>접수중</em> 입니다.</span>
-                    <span th:if="${lectureDetail.lrCount == lectureDetail.lrCapacity}"><em>정원</em> 접수 완료.</span>
+                    <span th:if="${today >= receiptDate and lectureDetail.lrCount < lectureDetail.lrCapacity and today <= lectureDetail.lrStartDate}"><em>접수중</em> 입니다.</span>
+                    <span th:if="${lectureDetail.lrCount == lectureDetail.lrCapacity}"><em>정원</em> 접수 완료.<br></span>
                     <span th:if="${today >= lectureDetail.lrStartDate}"><em>접수마감</em> 되었습니다.</span>
                 </div>
             </div>
