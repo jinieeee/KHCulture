@@ -79,6 +79,9 @@ public interface BoardMapper {
 	List<Board> rankList();
 
 
+	Integer myRiewSelect(@Param("lr_no")int lr_no, @Param("mno")int mno);
+
+
 	
 
 

@@ -42,7 +42,7 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
     padding: 20px 10px;
     display: flex;
     justify-content: center;
-    background-color: antiquewhite;
+  /*  background-color: antiquewhite;*/
 }
 .board_detail_boundary > div{
    /* margin-right: 60px;
@@ -129,7 +129,11 @@ button.button:hover {
     border: 1px solid orangered;
     margin-right: 15px;
 } 
-
+input#textLengthCheck {
+    border: 0px;
+    width: 55px;
+    margin-right: 30px;
+}
 
 </style>
 </head>
@@ -209,6 +213,7 @@ button.button:hover {
  
     <div class="board_detail_reply_insert">
          	<input type="hidden" name="b_no" th:value="${Board.b_no}">
+         	<input type="text" id="textLengthCheck">
          	 <textarea type="text" id="board_reply_insert" name="content" ></textarea>
          		<span class="input-group-btn">
                     <button class="button" name="replyInsertBtn" th:attr="onclick=|reply('${Board.b_no}')|">등록</button>
@@ -240,10 +245,25 @@ button.button:hover {
      
 </div>
     
-    
+    <script>
+	  $("#board_reply_insert").keyup(function(e){
+		  console.log("키업!");
+		  var content = $(this).val();
+		  $("#textLengthCheck").val("(" + content.length + "/ 200)"); //실시간 글자수 카운팅
+		  if(content.length > 20){
+			  alert("최대 20자까지만 가능");
+			  $(this).val(content.substring(0,200));
+			  $("#textLengthCheck").html("(20 / 최대 20자)");
+		  }
+	  });
+    </script>
     
 
 <script>
+
+
+
+
 function reply(bno){
 	var bno = $("[name=b_no]").val();
 	var content=$("[name=content]").val();
@@ -382,7 +402,7 @@ function reply(bno){
 <script>
 
     function like(bno){
-    	alert("좋아요 누른 게시글 번호 : " + bno)
+    //	alert("좋아요 누른 게시글 번호 : " + bno)
     	 console.log(event.target.id);
     	 
     	 
@@ -394,8 +414,7 @@ function reply(bno){
 	     			datatype : "json",
 	    			success : function(data){
 	  				// 성공 시 호출 된는  함수에 서버에서 돌아온 응답 데이터가 넘어옴
-	  				alert(data); //success
-	  				console.log('위시리스트에 담았습니다.');
+	  				alert('너무 유익한 게시물이였습니다.^_^'); //success
 	  				$("#board_heart").attr("src", "/images/mypage/heart.png"); //빨간하트
 	  				$("#board_heart").attr("id","board_heart2");
 	  			},
@@ -415,7 +434,7 @@ function reply(bno){
  	     			datatype : "json",
  	    			success : function(data){
  	  				// 성공 시 호출 된는  함수에 서버에서 돌아온 응답 데이터가 넘어옴
- 	  				alert("위시리스트에 제거했습니다."); //success
+ 	  				alert("생각해보니 유익하지 않네요."); //success
  	  				console.log('위시리스트에 제거했습니다.');
  	  				$("#board_heart2").attr("src", "/images/mypage/heart2.png"); // 하얀하트
  	  				$("#board_heart2").attr("id","board_heart");

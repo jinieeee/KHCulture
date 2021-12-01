@@ -132,7 +132,7 @@ public class MypageController {
 		
 		List<LectureOpen> myLectureList = mypageService.mylectureList(user.getMno());
 		
-	//	log.info("myLectureList: {}", myLectureList);
+		log.info("myLectureList: {}", myLectureList);
 		model.addAttribute("mylecture",myLectureList);
 		return "mypage/mypagemain";
 	}

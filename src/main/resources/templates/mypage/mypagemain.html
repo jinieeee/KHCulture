@@ -6,9 +6,11 @@
 <title>mypageMain</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
+/*
 .history_list{
 height: 773px;
 }
+*/
 .myRiewPage{
 	cursor:pointer;
 }
@@ -81,6 +83,7 @@ button#my_button:hover {
     overflow:hidden;
     cursor:pointer;
     display: grid;
+    height: 400px;
    
  
 }
@@ -88,43 +91,40 @@ button#my_button:hover {
     width: 338px;
     height: auto;
 }
-#my_history1{
+.my_history1{
  position:relative;
      height: 400px;
+     margin-top: 50px;
      
 }
 #imageArea{
 width:100%;
     height: 100%;
 position: absolute;
- z-index: 100;
+z-index: 100;
 overflow:hidden;
 
 } 
-#my_history1:hover #imageArea {
+.my_history1:hover #imageArea {
 bottom:60px; 
 background-color: blanchedalmond;
 border-radius: 67px;
 }
 
-/*
-#imageArea:hover #my_history1 {
-background-color: blanchedalmond;
-border-radius: 67px;
+.my_history1:hover #ltitle {
+z-index: 105;
+top: 300px;
 }
-#imageArea:hover {
-bottom:60px; 
 
-}
-*/ 
+
 
 #ltitle {
-color:#F0B95E;
+color: #e3930f;
     width: 100%;
-    position: absolure;
-    z-index: 105;
+    position: absolute;
+    top: 200px;
+    z-index: 99;
     overflow: hidden;
-    margin-top: -119px;
     font-weight: bold;
     font-size: 24px;
  }
@@ -198,30 +198,20 @@ color:#F0B95E;
             </table>
         </form>
     </div>
-    
-<!-- 
-<div  th:each="mylecture:${mylecture}">
-<span th:text=${mylecture.lrStartTime}></span><br>
-<span th:text=${mylecture.lecture.lTitle}></span><br>
-<span th:text=${mylecture.lecture.lThumbnail}></span>
-</div>
 
- -->    
-</span>
+
 <div class="history_list">
     <h1 align="center" id="list">최근 3달간의 수강내역</h1>
-    <form action="" method="" >
         <div class="my_history">
-            <div id="my_history1" th:each="mylecture:${mylecture}">
-                <div id="imageArea" class="a"><img th:src="@{/images/lecture/{img}(img=${mylecture.lecture.lThumbnail})}"></div>
-                <div id="ltitle"class="a"><span th:text=${mylecture.lecture.lTitle}></span></div>
-                <div id="time" class="a"><span th:text=${mylecture.lrStartTime}></span></div>
+            <div class="my_history1" th:each="mylecture:${mylecture}">
+	     		 <th:block th:if="${mylecture}">
+	                <div id="imageArea" class="a"><img th:src="@{/images/lecture/{img}(img=${mylecture.lecture.lThumbnail})}"></div>
+	                <div id="ltitle"class="a"><span th:text=${mylecture.lecture.lTitle}></span></div>
+	                <div id="time" class="a"><span th:text=${mylecture.lrStartTime}></span></div>
+	         	</th:block> 
             </div>
-            
-           
-            
+          
         </div>
-    </form>
 </div>
 <footer th:include="fragments/footer.html"></footer>
     <script>

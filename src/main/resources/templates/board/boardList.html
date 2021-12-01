@@ -114,7 +114,7 @@ font-weight: bold;
     margin-left: 20px;
 }
 .board_select:hover {
-    background-color: #f09b5e;
+  /*  background-color: #f09b5e;*/
     cursor: pointer;
     font-weight: bold;
 }
@@ -180,7 +180,7 @@ font-weight: bold;
         </div>
     </div>
    <div class="board_search_area">
-	   	<form method="get" action="/board/boardList">
+	   	<form method="get" action="/board/boardList"> <!-- 검색을 위한 form -->
 			    	<span>
 			            <select id="searchType" name="searchCondition" >
 			            	<option value="title">제목</option>
@@ -188,12 +188,19 @@ font-weight: bold;
 			            </select>
 			        </span>
 			        <span>
-			            <input type="search" name="searchValue" id="board_searchText" placeholder="검색어를 입력해주세요">
+			            <input type="search" name="searchValue" id="board_searchText" placeholder="검색어를 입력해주세요" minlength="3">
 			      	</span>
 			        
 				        <button type="submit" id="board_list_button" style="margin-right: 13px;" >검색하기</button>
 		    		  <span th:if="${principal != null}">
-		    			<button type="button" id="board_list_button" onclick="location.href='/board/insertView'" >작성하기</button>
+		    			<!-- 
+		    			<button type="button" id="board_list_button" onclick="location.href='/boar}sd/insertView'" >작성하기</button> 
+		    			 -->
+		    			<input type="hidden" name="mno" th:value="${principal.mno}">
+		    			<button type="button" class="insertBtn"id="board_list_button">작성하기</button> 
+				      </span>
+				       <span th:if="${principal == null}">
+		    			<button type="button" class="insertfailBtn"id="board_list_button">작성하기</button> 
 				      </span>
 					  
 		</form>    
@@ -287,7 +294,34 @@ font-weight: bold;
 	   
     </script>
     
-   
+   <script>
+  	$(".insertBtn").click(function(){
+  		var mno = $("[name=mno]").val();
+  		console.log(mno);
+  		
+  		
+  		$.ajax({
+  			url:"/board/insertView",
+  			type:"post",
+  			data:{mno:mno},
+  			success: function(data){
+  			   if(data == "success"){
+  				alert("후기를 남길 수 있습니다.");
+  				location.href="/board/insert";
+  			   }else{
+  				alert("후기를 쓸 강좌가 없습니다.")
+  			   }
+  			},
+  			error:function(e){
+  				console.log("가공실패");
+  			}
+  		})
+  	});
+  	
+  	$(".insertfailBtn").click(function(){
+  		alert("로그인 하셔야됩니다.");
+  	});
+   </script>
     
     
   

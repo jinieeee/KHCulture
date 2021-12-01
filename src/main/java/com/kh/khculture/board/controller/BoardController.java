@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.khculture.board.model.service.BoardService;
 import com.kh.khculture.board.model.vo.Board;
@@ -43,13 +44,17 @@ public class BoardController {
 	}
 	
 	@GetMapping("boardList")
-	public String boardList(Model model,@RequestParam(value="page", defaultValue="1") int page, Search search, Principal principal) {
+	public String boardList(Model model,@RequestParam(value="page", defaultValue="1") int page, Search search
+			, @AuthenticationPrincipal UserImpl userImpl  ) {
+		
+	//	log.info("ddd : {}",userImpl);
+		
 		Map<String,Object> returnMap = boardService.boardList(page,search);
 		model.addAttribute("search",search);
 		model.addAttribute("pi",returnMap.get("pi"));
 		model.addAttribute("boardList",returnMap.get("boardList"));
 		model.addAttribute("rankList",returnMap.get("rankList"));
-		model.addAttribute("principal",principal);
+		model.addAttribute("principal",userImpl);
 		return "board/boardList";
 	}
 	
@@ -80,18 +85,23 @@ public class BoardController {
 		return mv;
 		
 	}
-	
-	
+	/***************************************************************/
+	/***************************************************************/
+	/***************************************************************/
+	/***************************************************************/
+	/************************* 이거 지워지면 처음으로 돌아간**************************************/
+/*	
 	//로그인 user의 정보가 들어옴
 	// /board/insert?user_name=
 	@GetMapping("insertView")
 	public String boardInsertView(Model model,@AuthenticationPrincipal UserImpl userImpl){
 		//로그인한 user의 mNo를 가지고 강좌를 불러옴
 		//만약 mNo가 들은 강좌가 없으면 -> alert창으로 들은 강좌가 없다고 안내..
+		
 		List<LectureOpen> userLectureList = boardService.userLectureList(userImpl.getMno());
+		
 		if(userLectureList.isEmpty()) {
 			System.out.println("강좌없다유------------ 강좌신청 페이지로 이동");
-			
 			return "redirect:boardList";
 		}else {
 			
@@ -99,16 +109,58 @@ public class BoardController {
 			System.out.println("후기남길수있다유");
 			return "board/boardInsert";
 		}
+		
 	}
 	
 	@PostMapping("insert")
 	public String boardInsert(Board NewBoard,@AuthenticationPrincipal UserImpl userImpl) {
 		NewBoard.setM_no(userImpl.getMno());
-	//	log.info("NewBoard : {}",NewBoard);
 		boardService.boardInsert(NewBoard);
 		return "redirect:/board/boardList";
 		
 	}
+	
+*/	
+	//로그인 유저가 insertView로 가는지, 비로그인 유저가 insertView로 가는지 판단.
+	@PostMapping("insertView") 
+	@ResponseBody
+	public String boardInsertView (@RequestParam("mno") int mno){
+		List<LectureOpen> userLectureList = null;
+		userLectureList= boardService.userLectureList(mno);
+		log.info("mno : {} " , mno);
+		log.info("userLectureList:{}",userLectureList);
+		return userLectureList.isEmpty()?  "fail" :"success";
+	}
+	
+	//판단후, 로그인한 유저의 mno로 유저의 강좌를 가져옴
+	@GetMapping("insert")
+	public String boardInsert(Model model, @AuthenticationPrincipal UserImpl userImpl) {
+		List<LectureOpen> userLectureList = boardService.userLectureList(userImpl.getMno());
+		model.addAttribute("lecture",userLectureList);
+		return "board/boardInsert";
+		
+	}
+	
+	//작성한 내용을 DB에 insert해줌
+	@PostMapping("insert")
+	public String boardInsert2(Board NewBoard,@AuthenticationPrincipal UserImpl userImpl,RedirectAttributes rttr) {
+		log.info("NewBoard : {}" , NewBoard);
+		Integer result = boardService.myRiewSelect(NewBoard.getLr_no(),userImpl.getMno());
+		log.info("result : {}", result);
+		//강의 no와 유저 no를 조회했을때 결과가 있으면 리다이렉트
+		if(result != null) {
+			rttr.addFlashAttribute("message","이미 작성된 게시물 입니다.");
+			return "redirect:/board/insert";
+		}
+		
+		NewBoard.setM_no(userImpl.getMno());
+		boardService.boardInsert(NewBoard);
+		return "redirect:/board/boardList";
+		
+	}
+	
+	
+	
 	
 	
 	

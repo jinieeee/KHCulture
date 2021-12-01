@@ -39,6 +39,9 @@ public interface BoardService {
 	List<Reply> selectReplyList(int b_no);
 	// 댓글 삭제
 	int replyDelete(int rno);
+
+
+	Integer myRiewSelect(int lr_no, int mno);
 	
 	//*************************************************************
 	
