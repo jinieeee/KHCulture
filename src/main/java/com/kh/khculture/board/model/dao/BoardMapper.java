@@ -8,7 +8,6 @@ import org.apache.ibatis.annotations.Param;
 
 import com.kh.khculture.board.model.vo.Board;
 import com.kh.khculture.board.model.vo.Lovit;
-import com.kh.khculture.board.model.vo.PageInfo;
 import com.kh.khculture.board.model.vo.Reply;
 import com.kh.khculture.board.model.vo.Search;
 

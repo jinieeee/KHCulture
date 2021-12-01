@@ -1,7 +1,6 @@
 package com.kh.khculture.board.controller;
 
 import java.security.Principal;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,7 +10,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,11 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.google.gson.Gson;
 import com.kh.khculture.board.model.service.BoardService;
 import com.kh.khculture.board.model.vo.Board;
 import com.kh.khculture.board.model.vo.Lovit;
-import com.kh.khculture.board.model.vo.PageInfo;
 import com.kh.khculture.board.model.vo.Reply;
 import com.kh.khculture.board.model.vo.Search;
 import com.kh.khculture.lecture.model.vo.LectureOpen;
@@ -44,11 +40,10 @@ public class BoardController {
 	@Autowired
 	public BoardController(BoardService boardService) {
 		this.boardService = boardService;
-		
 	}
 	
 	@GetMapping("boardList")
-	public String boardList(Model model,@RequestParam(value="page", defaultValue="1") int page, Search search,Principal principal) {
+	public String boardList(Model model,@RequestParam(value="page", defaultValue="1") int page, Search search, Principal principal) {
 		Map<String,Object> returnMap = boardService.boardList(page,search);
 		model.addAttribute("search",search);
 		model.addAttribute("pi",returnMap.get("pi"));
@@ -58,57 +53,29 @@ public class BoardController {
 		return "board/boardList";
 	}
 	
-	
-/*
-	@GetMapping("boardList")
-	public String  boardList(Model model, @RequestParam(value="page", defaultValue="1") int page, Principal principal) {
 
-		int listCount = boardService.getListCount();
-	
-		
-		PageInfo pi = new PageInfo(page, listCount, 10,3);
-		List<Board> boardList = boardService.selectList(pi);
-		System.out.println("후기게시판리스트 = " + boardList);
-	
-		//랭킹 구현할 board image
-		List<Board> rankList = boardService.ranktList();
-		
-		
-		
-		model.addAttribute("rankList",rankList);
-		model.addAttribute("boardList",boardList);
-		model.addAttribute("pi",pi);
-		model.addAttribute("principal",principal);
-	
-		return "board/boardList";
-	}
-*/
-	/*
-	 * @GetMapping("search") public Map<String, Object> searchBoardList(Search
-	 * search){ log.info("search:{}",search); //
-	 * search:Search(searchCondition=lectureTitle, searchValue=주부) //
-	 * search:Search(searchCondition=title, searchValue=하하하) return null; //
-	 * searchCondition, searchValue }
-	 */
 /************************************************************** search + 페이징 처리 ********************************
 //*********************************************************************************************	*/
 
 	@GetMapping("detail.do")
-	public ModelAndView noticeDetail( ModelAndView mv, @RequestParam int b_no, @AuthenticationPrincipal UserImpl userImpl) {
-	
+	public ModelAndView boardDetail( ModelAndView mv, @RequestParam int b_no, @AuthenticationPrincipal UserImpl userImpl) {
 		
-		//System.out.println(n_no);
-		Board b = boardService.selectBoard(b_no);
-		List<Reply> replyList = b.getReplyList();
-		// Mno로만 조회하면 되는데 굳이 b_no를 매개변수에 넣은 이유 : 검색결과
-		int lovit =  boardService.selectLovit(b_no, userImpl.getMno()); // mno=01이 눌렀는지 select하고 detail에 뿌려준다.
+		int lovit=0;
+		Board b = boardService.selectBoard(b_no); //선택한 게시물 
 		
-
+		List<Reply> replyList = boardService.selectReplyList(b_no);
 		
+		if(userImpl != null) {
+		lovit =  boardService.selectLovit(b_no, userImpl.getMno()); // 선택한 게시물의 좋아요(로그인한 유저를 구분)
 		mv.addObject("Board",b);
 		mv.addObject("Lovit", lovit);
 		mv.addObject("Reply",replyList);
+		mv.addObject("mno", userImpl.getMno());
 		mv.setViewName("board/boardDetail");
+		}if(userImpl == null) {
+			mv.addObject("Board",b);
+			mv.setViewName("board/boardDetail");
+		}
 		
 		return mv;
 		
@@ -223,18 +190,17 @@ public class BoardController {
 		
 		UserImpl user = (UserImpl)((Authentication)principal).getPrincipal();
 		
-	//	Reply r = new Reply(reply.getN_no(),reply.getR_content(),reply.getR_enroll_date(),reply.getR_modify_date(),reply.getB_no(),reply.getR_status(),user.getMno(),user.getName());
 		Reply r = new Reply(reply.getN_no(),reply.getR_content(),reply.getB_no(),user.getMno(),user.getName());
-		log.info("reply:{}" , r);
+//		log.info("reply:{}" , r);
 		
 		int result = boardService.replyInsert(r);
-		log.info("result:{}" , r);
+//		log.info("result:{}" , r);
 		
 		List<Reply> replyList = null; 
 		
 		if(result > 0) {
 			replyList = boardService.selectReplyList(r.getB_no());
-			log.info("replyList : {}" , replyList);
+//			log.info("replyList : {}" , replyList);
 		}
 		
 		return replyList;
@@ -247,12 +213,11 @@ public class BoardController {
 		int result = boardService.replyDelete(reply.getR_no());
 		log.info("result: {}" , result);
 		
-		
 		List<Reply> replyDelete = null;
 		
 		if(result > 0) {
 			replyDelete = boardService.selectReplyList(reply.getB_no());
-			log.info("replyList : {}" , replyDelete);
+			log.info("replyDelete : {}" , replyDelete);
 		}
 		
 		return replyDelete;

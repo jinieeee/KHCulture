@@ -1,43 +1,174 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <meta charset="UTF-8">
 <title>mypageMain</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link href="/css/mypage/mypage.css" rel="stylesheet"> 
+<style>
+.history_list{
+height: 773px;
+}
+.myRiewPage{
+	cursor:pointer;
+}
+
+.my_category_boundery{
+    width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    background-color: antiquewhite;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+.my_category_boundery > #a{
+    /*background-color: violet;*/
+    padding: 10px 70px 10px 50px;
+}
+.my_detail_button{
+    width: 1200px;
+    margin: 0 auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.button{
+    background-color: #F0B95E;
+    border: 0;
+    border-radius: 0;
+    color: white;
+    width: 103px;
+    height: 34px;
+    
+}
+button#my_button:hover {
+    background-color: coral;
+    
+}
+.my_infoTable{
+    border-collapse: collapse;
+}
+#tr{
+    border: 0.5px solid black;
+}
+#tr > th+td{
+    border: 0.5px solid black;
+}
+
+.my_infoTable tr> th{
+    width: 200px;
+    background-color: #F0B95E;
+}
+.my_infoTable tr> td{
+    text-align: center;
+    width: 400px;
+    height: 50px;
+    background-color: white;
+}
+#list{
+	margin-top: 80px;
+    margin-bottom: 43px;
+}
+
+/**/
+.my_history{
+  grid-template-columns: 400px 400px 400px;
+/*   grid-auto-rows: 300px 300px 300px;*/
+    gap: 20px;
+    text-align: center;
+    margin-bottom: 25px;
+    justify-content: center;
+    overflow:hidden;
+    cursor:pointer;
+    display: grid;
+   
+ 
+}
+#imageArea img {
+    width: 338px;
+    height: auto;
+}
+#my_history1{
+ position:relative;
+     height: 400px;
+     
+}
+#imageArea{
+width:100%;
+    height: 100%;
+position: absolute;
+ z-index: 100;
+overflow:hidden;
+
+} 
+#my_history1:hover #imageArea {
+bottom:60px; 
+background-color: blanchedalmond;
+border-radius: 67px;
+}
+
+/*
+#imageArea:hover #my_history1 {
+background-color: blanchedalmond;
+border-radius: 67px;
+}
+#imageArea:hover {
+bottom:60px; 
+
+}
+*/ 
+
+#ltitle {
+color:#F0B95E;
+    width: 100%;
+    position: absolure;
+    z-index: 105;
+    overflow: hidden;
+    margin-top: -119px;
+    font-weight: bold;
+    font-size: 24px;
+ }
+
+/**/
+.my_paging{
+    text-align: center;
+    width: 800px;
+    margin: 0 auto;
+    margin-top: 10px;
+    background-color: antiquewhite;
+}
+</style>
 </head>
 <header th:include="fragments/header.html"></header>
 
 <body>
     <div class="titleArea">
-        <h1 align="center">양정하 님</h1>
+        <h1 align="center"><span sec:authentication="principal.name"></span> 님</h1>
     </div>
     
     <div class="my_category_boundery">
-        <div id="a" align="center">
-            <a href=""><img src="/images/mypage/Bag.png" ></a>
+        <div id="a" align="center" >
+            <a href="/mypage/cart"><img src="/images/mypage/Bag.png" ></a>
             <h3>장바구니</h3>
-            <h3 >수량</h3>
         </div>
-        <div id="a" align="center">
-            <a href=""><img src="/images/mypage/Paper.png" ></a>
+        <div id="a" align="center"  class="">
+            <a href="/mypage/paymentDetails"><img src="/images/mypage/Paper.png" ></a>
             <h3>구매내역</h3>
-            <h3>수량</h3>
         </div>
-        <div id="a" align="center">
-            <a href="../mypage/myRiew.html"><img src="/images/mypage/Chat2.png" ></a>
+       
+        <div id="a" align="center"  class="myRiewPage">
+        	<input type="hidden" name="mno" th:value="${#authentication.principal.mno}">
+            <img src="/images/mypage/Chat2.png" >
             <h3>수강후기</h3>
-            <h3>수량</h3>
         </div>
-        <div id="a" align="center">
-            <a href="../mypage/myhistory.html"><img src="/images/mypage/star3.png" ></a>
+        <div id="a" align="center"  class="">
+            <a href="/mypage/mypagemain"><img src="/images/mypage/star3.png" ></a>
             <h3>수강내역</h3>
-            <h3>수량</h3>
         </div>
     </div>
     <form method="get" action="/mypage/memberModify">
     <div align="right" class="my_detail_button">
-    	<input type="hidden" name="mno" value="${principal.Mno}">
+    	<input type="hidden" name="mno"  th:value="${#authentication.principal.mno}">
         <button type="submit"  id="my_button"  class="button" > 수정하기 </button> 
     </div>
     </form>
@@ -46,73 +177,52 @@
         <div style="width: 1200px; margin: 0 auto;">
             <h2 style="display: flex;">회원정보</h2>
         </div>
-        <form class="my_infoForm" action="" method="" >
+        <form class="my_infoForm" >
             <table class="my_infoTable">
                 <tr id="tr">
                     <th>성명</th>
-                    <td>양정하</td>
-                    <th>생년월일</th>
-                    <td>1995.02.02</td>
+                    <td sec:authentication="principal.name"></td>
+                    <th>아이디</th>
+                    <td sec:authentication="principal.id"></td>
                 </tr>
                 <tr id="tr">
                     <th>휴대전화</th>
-                    <td>010-1234-4567</td>
+                    <td sec:authentication="principal.phone"></td>
                     <th>E-mail</th>
-                    <td>KH789@kh.or.gr</td>
+                    <td sec:authentication="principal.email"></td>
                 </tr>
                 <tr id="tr">
                     <th>주소</th>
-                    <td colspan="3">ㅇㅇㅇㅇ</td>
+                    <td colspan="3" sec:authentication="principal.address"></td>
                 </tr>
             </table>
         </form>
     </div>
+    
+<!-- 
+<div  th:each="mylecture:${mylecture}">
+<span th:text=${mylecture.lrStartTime}></span><br>
+<span th:text=${mylecture.lecture.lTitle}></span><br>
+<span th:text=${mylecture.lecture.lThumbnail}></span>
+</div>
 
-    <h1 align="center">최근 수강내역</h1>
+ -->    
+</span>
+<div class="history_list">
+    <h1 align="center" id="list">최근 3달간의 수강내역</h1>
     <form action="" method="" >
         <div class="my_history">
-            <div id="my_history1">
-                <img src="/images/mypage/043.png">
-                <div>dd</div>
-                <div>dd</div>
-                <div>dd</div>
+            <div id="my_history1" th:each="mylecture:${mylecture}">
+                <div id="imageArea" class="a"><img th:src="@{/images/lecture/{img}(img=${mylecture.lecture.lThumbnail})}"></div>
+                <div id="ltitle"class="a"><span th:text=${mylecture.lecture.lTitle}></span></div>
+                <div id="time" class="a"><span th:text=${mylecture.lrStartTime}></span></div>
             </div>
             
-            <div id="my_history1">
-                <img src="/images/mypage/043.png">
-                <div>dd</div>
-                <div>dd</div>
-                <div>dd</div>
-                <div>dd</div>
-            </div>
+           
             
-            <div id="my_history1">
-                <img src="/images/mypage/043.png">
-                <div>dd</div>
-            </div>
-            
-            <div id="my_history1">
-                <img src="/images/mypage/043.png">
-                <div>dd</div>
-                <div>dd</div>
-            </div>
-            
-            <div id="my_history1">
-                <img src="/images/mypage/043.png">
-                <div>dd</div>
-            </div>
-            <div id="my_history1">
-                <img src="/images/mypage/043.png">
-                <div>dd</div>
-                <div>dd</div>
-                <div>dd</div>
-            </div>
-          
         </div>
     </form>
-
-    <div class="my_paging">페이징처리 구간</div>
-
+</div>
 <footer th:include="fragments/footer.html"></footer>
     <script>
         $(document).ready(function(){
@@ -124,6 +234,15 @@
         function modify(){
             location.href ="../mypage/memberModify.html";
         }
+    </script>
+    <script>
+   	$(".myRiewPage").click(function(){
+   		var mno = $("[name=mno]").val();
+   		console.log(mno);
+   		location.href="/mypage/myReviewlist";
+   		
+   	})
+    
     </script>
     
 </body>

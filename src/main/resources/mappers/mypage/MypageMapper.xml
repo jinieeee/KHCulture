@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kh.khculture.mypage.model.dao.MypageMapper">
+	<resultMap id="boardResultMap" type="com.kh.khculture.board.model.vo.Board">
+		<id property="b_no" column="B_NO"/>
+		<result property="b_title" column="B_TITLE"/>
+		<result property="b_content" column="B_CONTENT"/>
+		<result property="m_no" column="M_NO"/>
+		<result property="lr_no" column="LR_NO"/>
+		<result property="b_enroll_date" column="B_ENROLL_DATE"/>
+		<result property="b_modify_date" column="B_MODIFY_DATE"/>
+		<result property="b_status" column="B_STATUS"/>
+		<result property="b_count" column="B_COUNT"/>
+		<result property="b_star" column="B_STAR"/>
+		<result property="sum_b_star" column="SUM_B_STAR"/>
+		<association property="lectureOpen" resultMap="selectListResultMap"/>
+	</resultMap>
+	
+	
 	<resultMap type="com.kh.khculture.lecture.model.vo.LectureOpen" id="selectListResultMap">
 		<id property="lrNo" column="lr_no"></id>
 		<result property="lrCapacity" column="lr_capacity"></result>
@@ -128,4 +144,68 @@
 			 and #{endDate} >= to_char(payment_date, 'YYYY-MM-DD')
 			</if>
 	</select>
+	
+
+	
+	<!-- *************************** -->
+
+	
+	
+	<select id="mylectureList" parameterType="_int" resultMap="selectListResultMap" >
+		select
+		l_title
+		,l_thumbnail
+		,lr_start_time
+		from receipt
+		join lecture_buy using(r_no)
+		join lecture_registration using(lr_no)
+		join lecture using(l_no)
+		where m_no =#{mno}
+		and lr_enroll_date between sysdate-60 and sysdate
+	</select>
+
+	<select id="getListCount" parameterType="hashmap" resultType="_int">
+		select 
+			count(*) 
+		from BOARD 
+		join lecture_registration using (lr_no)
+		join lecture using (l_no)
+		where b_status='Y'
+		and m_no= #{ mno }
+		<if test="SearchCondition == 'title'">
+		and b_title like '%' || #{ SearchValue } || '%'
+		</if>
+		<if test="SearchCondition == 'lectureTitle'">
+		and l_title like '%' || #{ SearchValue } || '%'
+		</if>
+	</select>
+	
+	<select id="selectMyreview" resultMap="boardResultMap">
+	select 
+			b_no
+            ,b_title
+            ,b_enroll_date
+            ,l_title
+            ,l_thumbnail
+     from ( select 
+                    rownum rnum, nlist.* 
+                from ( select
+                               * 
+                            from board 
+                       join lecture_registration using (lr_no)	
+                       join lecture using (l_no)
+                       where b_status='Y' 
+                       and m_no= #{mno} 
+                       <if test="SearchCondition == 'title'">
+                             and  b_title like '%' || #{ SearchValue } || '%'
+                        </if>
+                       <if test="SearchCondition == 'lectureTitle'">
+                             and  l_title like '%' || #{ SearchValue } || '%'
+                        </if>
+                    order by b_no desc)nlist)
+     where rnum between #{startRow} and #{endRow}
+	
+	</select>
+	
+	
 </mapper>

@@ -63,59 +63,6 @@
 </resultMap>
 
 
-<!-- 총 게시물 수 
-<select id="getListCount" resultType="_int" >
-select count(*) from board where b_status='Y'
-</select>
---> 
-<!-- 페이징할 게시글 수
-<select id="selectList" resultMap="boardResultMap">
-
-SELECT
-    B_NO
-    , B_TITLE
-    , B_CONTENT
-    , B_ENROLL_DATE
-    , B_MODIFY_DATE
-    , B_STAR
-    , M_NO
-FROM ( SELECT 
-               ROWNUM RNUM, NLIST.*
-             FROM(  SELECT 
-                            *
-                         FROM BOARD 	
-                         JOIN MEMBER_ROLE USING(M_NO)
-                         WHERE B_STATUS='Y' 
-                            ORDER BY B_NO DESC) NLIST )
-WHERE RNUM BETWEEN #{ startRow } AND #{ endRow }  
-
-SELECT
-    B_NO
-    , B_TITLE
-    , B_CONTENT
-    , B_ENROLL_DATE
-    , B_MODIFY_DATE
-    , B_STAR
-    , M_NO
-    , lr_no 
-    , l_title
-    
-FROM ( SELECT 
-               ROWNUM RNUM, NLIST.*
-             FROM(  SELECT 
-                            *
-                         FROM BOARD 
-                         join lecture_registration using (lr_no)
-                         join lecture using (l_no)
-                         WHERE B_STATUS='Y' 
-                            ORDER BY B_NO DESC) NLIST )
-WHERE RNUM BETWEEN #{ startRow } AND #{ endRow }  
-
-
-</select>
- -->
- <!-- ***********************************************  다시 시작 ********************************************************************* -->
-
 <select id="getListCount" parameterType="_int" resultType="_int">
 select 
 	count(*) 
@@ -149,11 +96,11 @@ from ( SELECT
                          join lecture_registration using (lr_no)
                          join lecture using (l_no)
                          WHERE B_STATUS='Y'
-                        <if test="searchCondition == 'title'">
-                             and  b_title like '%' || #{ searchValue } || '%'
+                        <if test="search.searchCondition == 'title'">
+                             and  b_title like '%' || #{ search.searchValue } || '%'
                         </if>
-                        <if test="searchCondition == 'lectureTitle'">
-                             and  l_title like '%' || #{ searchValue } || '%'
+                       <if test="search.searchCondition == 'lectureTitle'">
+                             and  l_title like '%' || #{ search.searchValue } || '%'
                         </if>
                             ORDER BY B_NO DESC) NLIST )
 WHERE RNUM BETWEEN #{ startRow } AND #{ endRow }  
@@ -161,26 +108,7 @@ WHERE RNUM BETWEEN #{ startRow } AND #{ endRow }
 </select>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- <!-- ******************************************************************************************************************** -->
-
-<!-- 후기 상세보기 -->
-<select id="selectBoard" resultMap="boardResultMap">
+ <select id="selectBoard" resultMap="boardResultMap">
 	
    SELECT
 		B.B_NO
@@ -191,21 +119,11 @@ WHERE RNUM BETWEEN #{ startRow } AND #{ endRow }
 		, B.B_COUNT
 		, B.B_STAR
 		, B.B_STATUS
-        , A.R_NO
-        , A.R_ENROLL_DATE
-		, A.M_NO REF_M_NO
-		, concat(   SUBSTR (   (SELECT NAME FROM MEMBER WHERE M_NO = A.M_NO)  ,  1  ,  1  )  ,'*')  
-		                   || SUBSTR (   (SELECT NAME FROM MEMBER WHERE M_NO = A.M_NO)  ,  3 ,  2  )REF_M_NAME
-        , A.R_CONTENT
-        , A.R_STATUS
 	FROM BOARD B
-	LEFT JOIN REPLY A ON(A.B_NO = B.B_NO)
-   WHERE B.B_STATUS='Y'
+    WHERE B.B_STATUS='Y'
      AND B.B_NO = #{ b_no }
-   ORDER BY A.R_NO DESC
 
 </select>
- 
  <!-- 후기 작성  -->
 <insert id="boardInsert" parameterType="com.kh.khculture.board.model.vo.Board">
     INSERT
@@ -379,7 +297,6 @@ update
 Reply
 set r_status = 'N'
 where r_no = #{ rno }
-
 
 </update>
 </mapper>

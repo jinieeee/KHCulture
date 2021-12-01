@@ -75,8 +75,11 @@ padding-bottom: 20px;
     width: 100px;
     height: 50px;
     font-size: 20px;
-    border: 1px solid;
-    background-color: burlywood;
+    background-color: #F0B95E;
+    color: white;
+}
+.button:nth-child(2) {
+    background-color: coral;
 }
 #img_area img{
 display : none;
@@ -108,25 +111,16 @@ star-input>.input.focus{outline:1px dotted #ddd;}
 <body>
     <div class="titleArea">
     <h1 align="center">등록하기</h1>
-    <!--
-     <h1 th:text="${lecture}"></h1>
-    <h1 th:text="${lecture.get(0).lecture.lTitle}"></h1>
-    <h1 th:text="${lecture.get(0).lecture.lThumbnail}"></h1> -->
     </div>
     <div class="board_insert_boundary">
-       <!--  <form method="post" action="/board/insert"> -->
         <form method="post" action="/board/insert">
             <div id="Lname"> 
                 <span id="Lname2">강좌명 : </span>
 	                 <select name="lr_no" id="board_insert3" required>
 	                 	<option value="">후기를 남기실 강좌를 선택하세요.</option>
-	                 	<!-- 
-	                 	<option th:each="l : ${ lecture }" th:value="${l.lectureBuy.get(0).lectureOpen.get(0).lecture.lThumbnail}" th:text="${l.lectureBuy.get(0).lectureOpen.get(0).lecture.lTitle}"></option>
-	                 	 -->
 	                 	 <option th:each="l : ${ lecture }" th:value="${l.lrNo}" th:text="${l.lecture.lTitle}"></option>
 	                 </select> <!-- //userLectureList.get(0).getLectureBuy().get(0).getLectureOpen().get(0).getLrNo() -->
              
-             <!-- 이게 Like 테이블에 들어가야됨 - 랭킹에 반영되는 숫자  -->
                  <div class="form-group">
 						<label for="reply_star">별점</label>
 							<span class="star-input">
@@ -144,40 +138,23 @@ star-input>.input.focus{outline:1px dotted #ddd;}
 						  	</span><output for="star-input"><b>0</b>점</output></span>
 				</div>
             </div>
-            
             <div id="Ltitle">
                 <span id="Ltitle2">제목 : </span>
                 <input type="text" name="b_title" id="board_insert">
             </div>
-            
-            
-            
-            
-            
-            
-            
             <div id="Limage">
                 <span id="Limage2">강의사진 : </span>
                 <div id="img_area"> 
                 	<img class="lectureImage" th:each="l:${ lecture }" th:src="@{/images/lecture/{img}(img=${l.lecture.lThumbnail})}">
                 </div>
-               <!--  th:value="${l.lectureBuy.get(0).lectureOpen.get(0).lecture.lThumbnail} -->
             </div>
-            
-            
-            
-            
-            
-            
             <div id="Lcomment">
                 <div id="Lcomment2">내용 : </div>
                 <textarea id="summernote" name="b_content" style='background-color:orange;'></textarea>
             </div>
             <div class="btn_area">
-            <!-- 글쓴이 mno,  -->
-            	
                 <span><button type="submit" class="button" style="margin-right: 24px;">등록하기</button></span>
-                <button class="button" style="background-color: darkolivegreen;">취소하기</button>
+                <button class="button"  th:onclick="|location.href='@{/board/boardList}'|">취소하기</button>
             </div>
         </form>
     </div>

@@ -42,7 +42,7 @@
     margin-bottom: 10px;
    background-color: antiquewhite;
     text-align: center; /*이미지 가운데 정렬*/
-    font-size: 10px;
+    font-size: 25px;
 }
 
 .notice_detail_button{
@@ -56,6 +56,7 @@
     height: 30px;
     background-color: #F0B95E;
     border: none;
+    color:white;
 }
 
 .notice_detail_reply{
@@ -116,22 +117,16 @@
 	     </div>
 	     
 	     <!-- 관리자에게만 수정하기 버튼이 활성화됨 -->
-	
 	    <div align="right" class="notice_detail_button">
+		 <th:block sec:authorize="hasRole('ADMIN')"> 
 	        <button type="submit" id="notice_update" class="button">수정하기</button>
+	    </th:block>
+	        <button  type="button" id="notice_update" class="button" th:onclick="|location.href='@{/notice/noticeList}'|">LIST</button>
 	    </div>
+	    
    
    </form> 
-   
-    <div class="notice_detail_reply">
-        <div class="notice_reply_select">
-            <div id="reply_name">양*하</div> 
-            <div id="reply_comment2">언제나 좋은 강의 개설해주셔서 감사합니다. ^__^</div> 
-            <div id="reply_date">2021-11-15</div>
-            <!-- 본인이 쓴 댓글에만 활성화됨-->
-            <button type="button" class="button">수정</button>
-   		</div>
-   </div>  
+ 
    
 </body>
 

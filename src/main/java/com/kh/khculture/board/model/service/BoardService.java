@@ -5,18 +5,15 @@ import java.util.Map;
 
 import com.kh.khculture.board.model.vo.Board;
 import com.kh.khculture.board.model.vo.Lovit;
-import com.kh.khculture.board.model.vo.PageInfo;
 import com.kh.khculture.board.model.vo.Reply;
 import com.kh.khculture.board.model.vo.Search;
 import com.kh.khculture.lecture.model.vo.LectureOpen;
 
 public interface BoardService {
-/*
-	//총 게시물 수
-	int getListCount();
-	//페이징할 게시글 수
-	List<Board> selectList(PageInfo pi);
-*/
+	
+	Map<String, Object> boardList(int page, Search search);
+
+	
 	//후기 작성할때 user가 듣고 있는 lecture의 List
 	List<LectureOpen> userLectureList(int mno);
 	// 후기 작성
@@ -27,12 +24,9 @@ public interface BoardService {
 	int selectLovit(int b_no, int mno); //// 좋아요 눌렸는가?
 	// 후기 Lovit테이블에 추가
 	int likeInsert(Lovit lovit);
-	// --
-//	int likeInsert(int mno, int bno);
 	// 후기 Lovit테이블에 삭제
 	int likedelete(Lovit lovit);
 	// 랭킹 정보 가지고 오기
-//	List<Board> rankList();
 	//후기 수정페이지에 기본적으로 넣어주는 값 select
 	Board updateBoardView(int b_no);
 	//후기 수정
@@ -49,7 +43,6 @@ public interface BoardService {
 	//*************************************************************
 	
 
-	Map<String, Object> boardList(int page, Search search);
 
 
 

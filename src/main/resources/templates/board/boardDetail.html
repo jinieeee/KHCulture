@@ -1,10 +1,137 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <meta charset="UTF-8">
 <title>boardDetail</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link href="/css/mypage/board.css" rel="stylesheet">
+<style>
+.board_detail_title{
+    width: 1200px; /* 이 폭을 줄이면 세부폭은 알아서 따라옴 */
+    margin: 0 auto;
+    margin-top: 100px;
+    margin-bottom: 10px;
+    padding: 20px 10px;
+    background-color: #F0B95E;
+    display: flex;
+}
+#board_category2{
+    width: 100px;
+    padding: 8px 10px;
+    border-right: 3px solid black;
+   /* background-color: aquamarine;*/
+    
+}
+#board_comment2{
+    width: 1000px;
+    padding: 8px 10px;
+    border-right: 3px solid black;
+   /* background-color: aquamarine;*/
+    
+}
+#board_date2{
+    width: 150px;
+    padding: 8px 10px;
+   /* background-color: aquamarine;*/
+}
+.board_detail_boundary{
+    width: 1200px;
+    height: 1000px;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    padding: 20px 10px;
+    display: flex;
+    justify-content: center;
+    background-color: antiquewhite;
+}
+.board_detail_boundary > div{
+   /* margin-right: 60px;
+    background-color: rgb(181, 185, 173);*/
+    text-align: center;
+}
+#board_heart , #board_star , #board_heart2{
+   height: auto;
+    width: 30px;
+}
+.heartArea {
+    width: 156px;
+  
+}
+#board_heart:hover {
+    width: 60px;
+}
+#board_detail_comment{
+    width: 800px;
+    font-size:25px;
+}
+.board_detail_button{
+    width: 1200px; /* 이 폭을 줄이면 세부폭은 알아서 따라옴 */
+    margin: 0 auto;
+    margin-bottom: 10px;
+    
+    /*background-color: cadetblue;*/
+}
+.button{
+    width: 100px;
+    height: 50px;
+    font-size: 17px;
+    background-color: #F0B95E;
+    background-color: #F0B95E;
+    color: white;
+    border: none;
+    cursor: pointer;
+    
+}
+button.button:hover {
+    font-weight: bold;
+    width: 103px;
+    height: 55px;
+}
+.button:nth-child(2) {
+    background-color: coral;
+}
+
+.board_detail_reply{
+    width: 1320px; /* 이 폭을 줄이면 세부폭은 알아서 따라옴 */
+    margin: 0 auto;
+    margin-bottom: 10px;
+    /*background-color: cadetblue;*/
+}
+.board_reply_select{
+    display: flex;
+    padding: 8px 10px;
+    border-bottom: 1px solid #F0B95E;
+    justify-content: center;
+}
+#reply_name{ 
+    border-right: 2px solid black;
+    padding: 8px 20px;
+}
+#reply_comment2{
+    width: 900px;
+    border-right: 2px solid black;
+    padding: 8px 10px;
+    background-color: antiquewhite;
+}
+#reply_date{
+    padding: 8px 10px;
+    margin-right: 15px;
+}
+
+.board_detail_reply_insert{
+    display: flex;
+    padding: 8px 10px;
+    justify-content: center;
+
+}
+#board_reply_insert{
+    width: 770px;
+    border: 1px solid orangered;
+    margin-right: 15px;
+} 
+
+
+</style>
 </head>
 <header th:include="fragments/header.html"></header>
 <body>
@@ -14,6 +141,7 @@
         <div id="board_comment2" th:text="${Board.b_title}"></div>
         <div id="board_date2" th:text="${#dates.format(Board.b_enroll_date,'yyyy-MM-dd')}"></div>
     </div>
+    
     <div class="board_detail_boundary">
         <div>
      		<th:block th:if="${Board.b_star} == 1">
@@ -40,21 +168,25 @@
         <span th:utext="${Board.b_content}" ></span><br>
         
         </div>
-        <div>
-            <div>좋아요</div>
+        <div class="heartArea">
             
+          <!--   
             <span th:text="${Lovit}"></span>
-            
+           -->  
             <!-- #{Lovit.b_no} == Board.b_no -->
             <th:block th:if="${Lovit} == 0 ">
+            <div>좋아요</div>
              <!-- Lovit.b_no와 Board.b_no 가 같으면  Lovit테이블에 담겼다는 의미 -> 빨간 -> 흰색으로 바꿔주는 ajax  -->
             <div><img src="/images/mypage/heart2.png" id="board_heart"  th:attr="onclick=|like('${Board.b_no}')|" ></div>
             </th:block>
            
             <th:block th:if="${Lovit} == 1">
+            <div>좋아요</div>
           	 <!-- Lovit.b_no와 Board.b_no 가 다르면  Lovit테이블에 없다는 의미 -> 흰 -> 빨으로 바꿔주는 ajax -->
           	<div><img src="/images/mypage/heart.png" id="board_heart2"  th:attr="onclick=|like('${Board.b_no}')|" ></div>  	
           	</th:block>
+          	
+          	
           	 
         </div>
     </div>
@@ -62,12 +194,16 @@
 	
 	 <div align="right" class="board_detail_button">
 	 	<form method="get" action="/board/updateView">
+	 	<th:block sec:authorize="!isAnonymous()">
 		 	<span th:if="${#authentication.principal.mno} == ${Board.m_no}">
 		     	  <input type="hidden" name="bno" th:value ="${Board.b_no}"/>
 			    <button type="submit" id="board_update" class="button">수정하기</button>
-		    </span>
+ 			<button type="button" id="board_update" class="button" th:onclick="|location.href='@{/board/boardList}'|"> LIST </button>
+			</span>
+		</th:block>    
 		 </form>
- 			<button id="board_update" class="button" th:onclick="|location.href='@{/board/boardList}'|"> 목록으로 이동 </button>
+		 <span>
+ 		 </span>
 	 </div>
 	 
  
@@ -78,20 +214,24 @@
                     <button class="button" name="replyInsertBtn" th:attr="onclick=|reply('${Board.b_no}')|">등록</button>
                </span>
     </div>
-    
- 
- 
- <div class="board_detail_reply">
+ <!--
+    <span th:text="${#authentication.principal.mno}"></span>
+    <span th:text="${#authentication.principal.name}"></span>
+   -->     
+     <div class="board_detail_reply">
         <div class="board_reply_select" th:each="Reply : ${ Reply }"> 
 	 		<th:block th:if="${Reply.r_no != 0}">
 	       		<input type="hidden" name="rno" th:value="${Reply.r_no}">
 	       		<input type="hidden" name="mno" th:value="${Reply.m_no}">
+	       		<input type="hidden" name="loginUser" th:value="${mno}">
 	            <div id="reply_name"><span th:text="${Reply.name}"></span></div> 
 	            <div id="reply_comment2"><span th:text="${Reply.r_content}"></span></div> 
 	          	<div id="reply_date"><span th:text="${#dates.format(Reply.r_enroll_date,'yyyy-MM-dd')}"></span></div>
+	          <th:block sec:authorize="!isAnonymous()">
 	           <span th:if="${#authentication.principal.mno} == ${Reply.m_no}">
 		             <button type="submit" class="button cmt_btn" th:attr="onclick=|replyDelete('${Reply.r_no}')|">삭제</button>
 	       	   </span>	
+	       	   </th:block>
 	     	</th:block>
 	     	<th:block th:if="${Reply.r_no == 0 }">
 	     		<div> 댓글이 없습니다. </div>
@@ -99,16 +239,23 @@
         </div>
      
 </div>
+    
+    
+    
 
 <script>
 function reply(bno){
 	var bno = $("[name=b_no]").val();
 	var content=$("[name=content]").val();
-	
+//	var loginUser=$("[name=loginUser]").val();
+	var loginUser = '[[${mno}]]';
+
 //	console.log(bno);
 //	console.log(content);
-	
-//	var obj ={bno:bno , rcontent:content};  (X)
+	console.log("등록");
+	console.log(loginUser);
+
+
 	var obj ={b_no:bno , r_content:content}; 
 	$.ajax({
 		url:'/board/replyInsert',
@@ -116,25 +263,27 @@ function reply(bno){
 		data:JSON.stringify(obj),
 		contentType : "application/json; charset=utf-8",
 		success : function(list){
-		//	console.log(list);
+				console.log(list)
 			
 			var html='';
 			for(var key in list){
 				html +='<div class="board_reply_select">'
-					
-	       	+'<input type="hidden" name="rno" th:value="${Reply.n_no}">'
-	       	+'<input type="hidden" name="mno" th:value="${Reply.m_no}">'
-	        +'<div id="reply_name"><span>'+ list[key].name +'</span></div> '
-	        +'<div id="reply_comment2"><span>'+ list[key].r_content + '</span></div> '
-	        +'<div id="reply_date"><span>'+ list[key].r_enroll_date+ '</span></div>'
-	        +'<button type="submit" class="button cmt_btn" th:attr="onclick=|replyDelete('+list[key].r_no+')|">삭제</button>'
-       		+' </div>'
-	          	
-       		
-	       
+				       	+'<input type="hidden" name="rno" value='+list[key].r_no+'>'
+				       	+'<input type="hidden" name="mno" value='+list[key].m_no+'>'
+				       	+'<input type="hidden" name="loginUser" value="'+list[key].m_no+'">'
+				        +'<div id="reply_name"><span>'+ list[key].name +'</span></div> '
+				        +'<div id="reply_comment2"><span>'+ list[key].r_content + '</span></div> '
+				        +'<div id="reply_date"><span>'+ list[key].r_enroll_date+ '</span></div>'
+				        if ( loginUser ==  list[key].m_no){
+					        html += '<span><button type="submit" class="button cmt_btn" onclick="replyDelete('+list[key].r_no+')">삭제</button></sapn>'
+					        	  +'</div>'
+			            }else{
+			            	
+				        	html +='</div>'
+			            }
 			}
 	          	$(".board_detail_reply").html(html);
-				$(".reply_content").val("");
+				$("#reply_comment2").val("");
 			},
 		error : function(e){
 			console.log(e)
@@ -168,8 +317,10 @@ function reply(bno){
 		function replyDelete(rno){
 			var bno = $("[name=b_no]").val();
 			var obj ={b_no:bno , r_no:rno}; 
-			console.log(bno);
-			console.log(rno);
+			var loginUser=$("[name=loginUser]").val();
+			console.log("삭제");
+			console.log(loginUser);
+			
 			$.ajax({
 				url : '/board/replydelete',
 				type : 'post',
@@ -178,8 +329,6 @@ function reply(bno){
 				success : function(list){
 					if(list != null){
 						alert('댓글 삭제 완료');
-						console.log('----')
-						console.log(list);
 						replyLoad(list);
 					}else{
 						alert('댓글 삭제 실패');
@@ -194,19 +343,30 @@ function reply(bno){
 		
 		function replyLoad(list){
 			var html='';
+			var loginUser=$("[name=loginUser]").val();
+			console.log("리로드")
+			console.log(loginUser)
+			
 			for(var key in list){
 				html +='<div class="board_reply_select">'
 					
-		       	+'<input type="hidden" name="rno" th:value="${Reply.n_no}">'
-		       	+'<input type="hidden" name="mno" th:value="${Reply.m_no}">'
+		       	+'<input type="hidden" name="rno" value='+list[key].r_no+'>'
+		       	+'<input type="hidden" name="mno" value='+list[key].m_no+'>'
+		       	+'<input type="hidden" name="loginUser" value="'+list[key].m_no+'">'
 		        +'<div id="reply_name"><span>'+ list[key].name +'</span></div> '
 		        +'<div id="reply_comment2"><span>'+ list[key].r_content + '</span></div> '
 		        +'<div id="reply_date"><span>'+ list[key].r_enroll_date+ '</span></div>'
-		        +'<button type="submit" class="button cmt_btn" onclick=replyDelete('+list[key].r_no+')>삭제</button>'
-	       		+' </div>'
+		        if ( loginUser ==  list[key].m_no){
+			        html += '<span><button type="submit" class="button cmt_btn" onclick="replyDelete('+list[key].r_no+')">삭제</button></sapn> '
+			        	  +'</div>'
+			        	  
+	            }else{
+	            	
+		        	html +='</div>'
+	            }
 			}
       	$(".board_detail_reply").html(html);
-		$(".reply_content").val("");
+		$("#reply_comment2").val("");
 		}
 
 

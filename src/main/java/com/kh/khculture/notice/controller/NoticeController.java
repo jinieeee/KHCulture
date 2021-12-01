@@ -1,6 +1,7 @@
 package com.kh.khculture.notice.controller;
 
-import java.util.List;
+import java.security.Principal;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,7 +14,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.khculture.notice.model.service.NoticeService;
 import com.kh.khculture.notice.model.vo.Notice;
-import com.kh.khculture.notice.model.vo.PageInfo;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -32,19 +32,16 @@ public class NoticeController {
 	//전체 List + paging처리
 	@GetMapping("noticeList")
 	public String noticeList(  Model model, @RequestParam(value="page" , defaultValue="1") int page
-								,@RequestParam(value="searchValue", required = false) String searchValue) {
+								,@RequestParam(value="searchValue", required=false) String searchValue , Principal principal) {
+		Map<String,Object> returnMap = noticeService.noticeList(page,searchValue);
+		log.info("controller : {} ",searchValue);
+		model.addAttribute("searchValue", searchValue);
+		model.addAttribute("pi",returnMap.get("pi"));
+		model.addAttribute("noticeList",returnMap.get("noticeList"));
+		model.addAttribute("principal",principal);
+		return  "notice/noticeList";
 		
 		
-		int	listCount = noticeService.getListCount(searchValue);
-		System.out.println(listCount);
-		
-		PageInfo pi = new PageInfo( page , listCount, 10,10);
-		List<Notice> noticeList = noticeService.selectList(pi,searchValue); 
-		
-		model.addAttribute("noticeList", noticeList);
-		model.addAttribute("pi", pi);
-		
-		return "notice/noticeList";
 	}
 	
 	@GetMapping("detail.do")
@@ -68,7 +65,7 @@ public class NoticeController {
 	}
 	@PostMapping("insert")
 	public String noticeInsert(Notice Newnotice) {
-		System.out.println("Newnotice = " + Newnotice);
+	//	System.out.println("Newnotice = " + Newnotice);
 		noticeService.noticeInsert(Newnotice);
 		return "redirect:/notice/noticeList";
 	}

@@ -12,32 +12,19 @@
 	<result property="n_modify_date" column="N_MODIFY_DATE"/>
 	<result property="n_status" column="N_STATUS"/>
 	<result property="m_no" column="M_NO"/>
-	<!-- 
-	<association property="member_roletest" javaType ="com.kh.khculture.notice.model.vo.Member_RoleTEST">
-		<id property="m_no" column="M_NO"/>
-		<result property="authority_code" column="AUTHORITY_CODE"/>
-	</association>
-	 -->
+	
 </resultMap>
-
-
-<!-- 페이지개수 -->
-<select id="getListCount" resultType="_int">
+<select id="getListCount" parameterType="com.kh.khculture.notice.model.vo.Search" resultType="_int">
 	SELECT
 		COUNT(*)
 	FROM NOTICE
 	WHERE N_STATUS ='Y'
+	<if test="searchValue != 'null'">
+	AND N_TITLE LIKE '%' || #{searchValue, jdbcType=VARCHAR} || '%'
+	</if>
 </select>
-<select id="getcountentListCount" resultType="_int">
-	SELECT
-		COUNT(*)
-	FROM NOTICE
-	WHERE N_STATUS ='Y'
-		AND N_TITLE LIKE '%' || #{ searchValue } || '%'
 
-</select>
-<!-- 페이징처리된 게시글  -->
-<select id="selectList" parameterType="com.kh.khculture.notice.model.vo.PageInfo" resultMap="noticeResultMap">
+<select id="selectList"   resultMap="noticeResultMap" >
 SELECT
     N_NO
     , N_TITLE
@@ -50,33 +37,15 @@ FROM ( SELECT
                             *
                          FROM NOTICE
                          JOIN MEMBER_ROLE USING(M_NO)
-                         WHERE AUTHORITY_CODE=1 
-                            AND N_STATUS='Y' 
-                            ORDER BY N_NO DESC) NLIST )
-WHERE RNUM BETWEEN #{ startRow } AND #{ endRow }
-</select>
-
-<select id="selectContentList" parameterType="com.kh.khculture.notice.model.vo.PageInfo"  resultMap="noticeResultMap" >
-SELECT
-    N_NO
-    , N_TITLE
-    , N_CONTENT
-    , TO_CHAR(N_ENROLL_DATE,'YYYY-MM-DD') N_ENROLL_DATE
-    , M_NO
-FROM ( SELECT 
-               ROWNUM RNUM, NLIST.*
-             FROM(  SELECT 
-                            *
-                         FROM NOTICE
-                         JOIN MEMBER_ROLE USING(M_NO)
-                         WHERE AUTHORITY_CODE=1 
-                            AND N_STATUS='Y' 
-                            AND N_TITLE LIKE '%' || #{ searchValue } || '%'
+                         WHERE N_STATUS='Y' 
+                            <if test="searchValue != 'null'">
+                            AND N_TITLE LIKE '%' || #{ searchValue, jdbcType=VARCHAR } || '%'
+                            </if>
                             ORDER BY N_NO DESC) NLIST )
 WHERE RNUM BETWEEN #{ startRow } AND #{ endRow }
 
 </select>
- 
+
 <!-- 선택한 게시글 정보들 -->
 <select id="selectNotice" resultMap="noticeResultMap">
 	SELECT

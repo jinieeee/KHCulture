@@ -2,28 +2,20 @@ package com.kh.khculture.notice.model.dao;
 
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-
 import com.kh.khculture.notice.model.vo.Notice;
-import com.kh.khculture.notice.model.vo.Search;
 
 
 @Mapper
 public interface NoticeMapper {
 
-	/* No.1
-	//총 게시글 조회
-	List<Notice> findAllNotice();
-	*/
-	
+
 	//1. 게시글 총 개수
-	int getListCount();
-	int getcountentListCount(String searchValue);
+	int getListCount(String searchValue);
 	//2. 페이징된 게시글 수
-	List<Notice> selectList(@Param("startRow") int startRow, @Param("endRow") int endRow);
-	List<Notice> selectContentList(@Param("searchValue") String searchValue,@Param("startRow") int startRow, @Param("endRow") int endRow);
+	List<Notice> selectList(Map<String, Object> map);
 	//3. 선택한 게시글
 	Notice selectNotice(int n_no);
 	//4. 게시글 작성

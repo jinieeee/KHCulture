@@ -4,7 +4,120 @@
 <meta charset="UTF-8">
 <title>mypageMain</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link href="/css/mypage/memberModify.css" rel="stylesheet"> 
+<style>
+.a{
+    height: 963px;
+}
+form.modifyForm {
+    margin-top: 30px;
+    font-size: larger;
+    height: 817px;
+}
+
+.modifyForm,
+.confirmPwd {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+.ModifyTable,
+.confirmPwdTbl {
+    width: 732px;
+    background: #fff;
+    border: solid 1px #AEAEAE;
+    border-collapse: collapse;
+}
+.ModifyTable tr,
+.ModifyTable td,
+.confirmPwdTbl tr,
+.confirmPwdTbl td {
+    border: 1px solid #AEAEAE;
+    padding : 10px 0 10px 10px;
+}
+.ModifyTable th{
+    background-color: lightgray;
+    width: 183px;
+}
+input[type=text],
+input[type=password] {
+    width: 350px;
+    line-height: 30px;
+    border: none;
+    font-size: 20px;
+}
+.ModifyTable span,
+.confirmPwdTbl span {
+    display: flex;
+    align-items: center;
+    padding: 5px 0;
+}
+.ModifyTable button,
+.ModifyTable input[type=button] {
+	height: 35px;
+    width: 120px;
+    border-style: none;
+    margin-right: 15px;
+    color: #fff;
+    background-color: var(--inactive-btn-color);
+    cursor: pointer;
+}
+.confirmPwdTbl input[type=submit] {
+	height: 35px;
+    width: 120px;
+    border-style: none;
+    margin-right: 15px;
+    color: #fff;
+    background-color: var(--main-color);
+    cursor: pointer;
+}
+.Modify_button {
+    width: 648px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    border-style: none;
+}
+#postcodify_search_button ,
+#sendAuth {
+    width: 120px;
+    height: 35px;
+}
+select#hintNo {
+	width: 300px;
+	height: 30px;
+}
+
+.Modify_button [type=button] {
+    border-style: none;
+    width: 200px;
+    height: 50px;
+    margin-bottom: 56px;
+    cursor: pointer;
+}
+
+.Modify_button .cancel{
+    font-size: 20px;
+    color: white;
+    background-color: #6A6A6A;
+}
+.Modify_button .accUpdate{
+    font-size: 20px;
+    color: #fff;
+    background-color: #F0B95E;
+}
+.Modify_button .accSecession{
+    font-size: 20px;
+    color: white;
+    background-color:crimson;
+}
+
+#pwdVerify {
+	font-size: 12px;
+	display: block;
+	height: 15px;
+	padding: 0;
+}
+</style>
 
 </head>
 <header th:include="fragments/header.html"></header>
@@ -12,6 +125,7 @@
    	<div class="titleArea">
 		<h1>회원정보변경</h1>
     </div>
+    <div class="a">
     <form class="modifyForm" th:action="@{/member/modify}" method="post">
         <table class="ModifyTable">
             <tr>
@@ -80,7 +194,8 @@
     		</tr>
     	</table>
     </form>
-<footer th:include="fragments/footer.html"></footer>
+    </div>
+</body>
 <script type="text/javascript" src="/js/mypage/memberModify.js"></script>
 <script src="//d1p7wdleee1q2z.cloudfront.net/post/search.min.js"></script>
 <script>
@@ -104,5 +219,6 @@
 	
 	var confirmPwdUrl = '[[@{/member/confirmPwd}]]';
 </script>
-</body>
+
+ <footer th:include="fragments/footer.html"></footer>
 </html>
