@@ -9,16 +9,17 @@ public interface QuestionnaireService {
 	
 	List<Questionnaire> getList();
 	
-	Questionnaire questionnaireDetail(int questionnaire_no, String enroll_answer);
+	Questionnaire questionnaireDetail(int questionnaire_no);
 	
 	int questionnaireInsert(Questionnaire questionnaire);
 	
 	int deleteQuestion(Questionnaire deleteQuestion);
 	
 	/* ========== 관리자 기능 ========== */
+	QuestionnaireAnswer answerDetail(int answer_no);
 	
-	int answerInsert(QuestionnaireAnswer answer);
+	int answerInsert(Questionnaire answer);
 	
-	int answerDelete(QuestionnaireAnswer deleteAnswer);
+	int answerDelete(Questionnaire deleteAnswer);
 
 }

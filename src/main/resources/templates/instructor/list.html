@@ -94,7 +94,9 @@ ul, li {
 					<li th:each=" i : ${ instructorList }">
 					<div class="box">
 					    <a href="/instructor/detail.do?instructor_no=" th:attrappend="href=${i.instructor_no}">
-					    <img src="/images/instructor/pikachu2.png"></a>
+					    <!-- <img src="/images/instructor/pikachu2.png"> -->
+					    <img th:src="@{/images/instructor/} + ${i.profile_photo }">
+	                    </a>
 					    <p class="title" th:text="${ i.instructor_name }"></p>
 					    <p class="lecture">강사님</p>
 					</div>
@@ -108,10 +110,11 @@ ul, li {
 				</div>
 			</div>
 		</div>
-	</div>
+	</div>	
 <footer th:include="fragments/footer.html"></footer>
 </body>	
 <script>
+/*
 function readURL(input) {
 	 if (input.files && input.files[0]) {
 	  var reader = new FileReader();
@@ -124,9 +127,10 @@ function readURL(input) {
 	  }
 	}
 	 
-	// 이벤트를 바인딩해서 input에 파일이 올라올때 위의 함수를 this context로 실행합니다.
+	// 이벤트를 바인딩해서 input에 파일이 올라올때 위의 함수를 this context로 실행
 	$("#imgInput").change(function(){
 	   readURL(this);
 	});
+	*/
 </script>
 </html>

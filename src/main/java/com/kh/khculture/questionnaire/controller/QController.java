@@ -13,7 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.khculture.questionnaire.model.service.QuestionnaireService;
 import com.kh.khculture.questionnaire.model.vo.Questionnaire;
-import com.kh.khculture.questionnaire.model.vo.QuestionnaireAnswer;
 
 @Controller
 @RequestMapping("/questionnaire")
@@ -37,10 +36,10 @@ public class QController {
 	}
 	
 	@GetMapping("detail.do")
-	public ModelAndView questionnaireDetail(ModelAndView mav, @RequestParam int questionnaire_no, String enroll_answer) {
+	public ModelAndView questionnaireDetail(ModelAndView mav, @RequestParam int questionnaire_no) {
 		
-		Questionnaire q = questionnaireService.questionnaireDetail(questionnaire_no, enroll_answer);
-		
+		Questionnaire q = questionnaireService.questionnaireDetail(questionnaire_no);
+		System.out.println("q : " + q);
 		mav.addObject("questionnaire", q);
 		mav.setViewName("questionnaire/detail");
 		
@@ -67,26 +66,24 @@ public class QController {
 	}
 	
 	/* ========== 관리자 기능 ========== */
-	@GetMapping("answer")
-	public String answerPage(Model model, @RequestParam("questionnaire_no") int questionnaire_no, String enroll_answer) {
+	@GetMapping("answerPage")
+	public String answerPage(Model model, @RequestParam("questionnaire_no") int questionnaire_no) {
 		System.out.println("questionnaire_no : " + questionnaire_no);
-		Questionnaire question = questionnaireService.questionnaireDetail(questionnaire_no, enroll_answer);
-		model.addAttribute("questionnaire", question);
+		Questionnaire q = questionnaireService.questionnaireDetail(questionnaire_no);
+		model.addAttribute("questionnaire", q);
 		return "questionnaire/answer";
-		
 	}
-	
 	@PostMapping("answer")
-	public String answerInsert(QuestionnaireAnswer answer) {
+	public String answer(Questionnaire answer) {
 		questionnaireService.answerInsert(answer);
 		System.out.println("answer : " + answer);
-		return "redirect:/questionnaire/detail.do?questionnaire_no="+ answer.getAnswer_no();
+		return "redirect:/questionnaire/detail.do?questionnaire_no="+ answer.getQuestionnaire_no();
 	}
 	
 	@PostMapping("answerDelete")
-	public String answerDelete(QuestionnaireAnswer deleteAnswer, @RequestParam("answer_no") int answer_no) {
+	public String answerDelete(Questionnaire deleteAnswer, @RequestParam("questionnaire_no") int questionnaire_no) {
 		questionnaireService.answerDelete(deleteAnswer);
-		return "redirect:/questionnaire/list";
+		return "redirect:/questionnaire/detail.do?questionnaire_no="+ deleteAnswer.getQuestionnaire_no();
 	}
 	
 	

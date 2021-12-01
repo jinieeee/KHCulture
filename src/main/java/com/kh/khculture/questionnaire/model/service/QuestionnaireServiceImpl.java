@@ -24,13 +24,13 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 		// TODO Auto-generated method stub
 		return questionnaireMapper.getList();
 	}
-
 	@Override
-	public Questionnaire questionnaireDetail(int questionnaire_no, String enroll_answer) {
+	public Questionnaire questionnaireDetail(int questionnaire_no) {
 		// TODO Auto-generated method stub
-		return questionnaireMapper.questionnaireDetail(questionnaire_no, enroll_answer);
+		return questionnaireMapper.questionnaireDetail(questionnaire_no);
 	}
 
+	
 	@Override
 	public int questionnaireInsert(Questionnaire questionnaire) {
 		// TODO Auto-generated method stub
@@ -45,16 +45,25 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 	
 	
 	/* ========== 관리자 기능 ========== */
+	@Override
+	public QuestionnaireAnswer answerDetail(int answer_no) {
+		// TODO Auto-generated method stub
+		return questionnaireMapper.answerDetail(answer_no);
+	}
 
 	@Override
-	public int answerInsert(QuestionnaireAnswer answer) {
+	public int answerInsert(Questionnaire answer) {
 		// TODO Auto-generated method stub
 		return questionnaireMapper.answerInsert(answer);
 	}
 
 	@Override
-	public int answerDelete(QuestionnaireAnswer deleteAnswer) {
+	public int answerDelete(Questionnaire deleteAnswer) {
 		// TODO Auto-generated method stub
 		return questionnaireMapper.answerDelete(deleteAnswer);
 	}
+	
+	
+
+	
 }
