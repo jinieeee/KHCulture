@@ -121,7 +121,7 @@ h2 {
 							
 							<h2><span class="title_span">&nbsp;</span> 프로필 사진 </h2>
 							<div class="image_area"></div>
-							<input type="file" name="profile_photo" accept="image/gif,image/jpeg,image/png">
+							<input type="file" id="file" name="profile_photo" accept="image/gif,image/jpeg,image/png">
 
 							<h2><span class="title_span">&nbsp;</span> 생년월일 </h2>
 							<span class="input_area"><input type="text" name="birth_date" placeholder="생년/월/일 형식으로 작성해주세요. (ex. 2000/12/21)" required>
@@ -143,6 +143,36 @@ h2 {
 			</div>
 		</div>
 	</div>
+    <script>
+        $("#file").change(preview);
+        function preview(){
+
+            let reader = new FileReader();
+            reader.readAsDataURL(this.files[0]);
+            reader.onload = function(){
+                $("#img_area").css('visibility', "visible");
+                $("#img_area").html('<img src="' + reader.result + '">');
+            }
+        }
+    </script>	
+    <script>
+    function readURL(input) {
+    	 if (input.files && input.files[0]) {
+    	  var reader = new FileReader();
+    	  
+    	  reader.onload = function (e) {
+    	   $('#file').attr('src', e.target.result);  
+    	  }
+    	  
+    	  reader.readAsDataURL(input.files[0]);
+    	  }
+    	}
+    	 
+    	// 이벤트를 바인딩해서 input에 파일이 올라올때 위의 함수를 this context로 실행합니다.
+    	$("#file").change(function(){
+    	   readURL(this);
+    	});    
+    </script>
 </body>
 <footer th:include="fragments/footer.html"></footer>
 </html>

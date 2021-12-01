@@ -132,29 +132,41 @@ h2 {
 					<h1 align="center">1:1 문의</h1>
 				</div>
 				<div class="questionnaire_content">
-					<form name="deleteQ"  method="post">
+				<!-- 회원 페이지 -->
+					<form method="post" name="deleteQ">
 					    <input type="hidden" name="questionnaire_no" th:value="${questionnaire.questionnaire_no}">
 						<div class="content">
 							<h2><span class="title_span">&nbsp;</span> 문의사항 </h2>
 							<span class="input_area" th:text="${questionnaire.questionnaire_content}"></span>
 
 							<h2><span class="title_span">&nbsp;</span> 답변 </h2>
-							<span class="input_area2">미답변 (문의 사항을 확인 중입니다.) </span>
+						    <span class="input_area2" th:if="${questionnaire.enroll_answer != null}" th:text="${ questionnaire.enroll_answer }"></span>
+							<span class="input_area2" th:unless="${questionnaire.enroll_answer != null}">미응답 (문의사항을 확인 중입니다.)</span>
 						</div>
 						
 						<div class="btn_area">
-						<!-- 공통으로 보이는 버튼 -->
 						<button type="button" id="delete" onclick="deleteQuestionnaire()">삭제하기</button>
 						<button type="button" id="goList" onclick="location.href='/questionnaire/list'">목록으로</button>
 						</div>
 					</form>
-					<!--  관리자에게만 보이는 버튼 -->
-					<form method="get" action="/questionnaire/answer">
+					
+					<!-- 관리자 페이지 -->
+					<form method="get" action="/questionnaire/answerPage">
 					    <input type="hidden" name="questionnaire_no" th:value="${questionnaire.questionnaire_no}">
-						<div class="btn_area2">
+						<div class="content">
+							<h2><span class="title_span">&nbsp;</span> 문의사항 </h2>
+							<span class="input_area" th:text="${questionnaire.questionnaire_content}"></span>
+
+							<h2><span class="title_span">&nbsp;</span> 답변 </h2>
+						    <span class="input_area2" th:if="${questionnaire.enroll_answer != null}" th:text="${ questionnaire.enroll_answer }"></span>
+							<span class="input_area2" th:unless="${questionnaire.enroll_answer != null}">미응답 (문의사항을 확인 중입니다.)</span>
+						</div>
+						
+						<div class="btn_area">
 						<button type="submit" id="answer" class="button">답변하기</button>
-						</div>	
-					</form>				
+						<button type="button" id="goList" onclick="location.href='/questionnaire/list'">목록으로</button>
+						</div>
+					  </form>		
 				</div>
 			</div>
 		</div>

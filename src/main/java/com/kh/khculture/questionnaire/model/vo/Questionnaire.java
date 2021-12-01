@@ -17,7 +17,7 @@ public class Questionnaire {
 	private String questionnaire_title;
 	private String questionnaire_content;
 	private String q_enroll_date;
+	private String enroll_answer;
 	private String q_status;
 	private int m_no;
-
 }
