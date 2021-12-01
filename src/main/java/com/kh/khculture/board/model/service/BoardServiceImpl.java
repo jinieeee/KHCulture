@@ -139,6 +139,13 @@ public class BoardServiceImpl implements BoardService {
 		System.out.println("serviceImplt = " + rno );
 		return boardMapper.replyDelete(rno);
 	}
+
+
+	@Override
+	public Integer myRiewSelect(int lr_no, int mno) {
+		
+		return boardMapper.myRiewSelect(lr_no,mno);
+	}
 	
 
 	

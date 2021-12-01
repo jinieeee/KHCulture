@@ -299,4 +299,13 @@ set r_status = 'N'
 where r_no = #{ rno }
 
 </update>
+<select id="myRiewSelect" resultType="Integer">
+select
+*
+from board
+where m_no = #{mno} and lr_no= #{lr_no}
+
+
+
+</select>
 </mapper>

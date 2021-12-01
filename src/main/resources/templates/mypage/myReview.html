@@ -111,6 +111,13 @@ table.myRiew_select:hover {
     display: block;
     /* text-align: center; */
 }
+td.a {
+    text-align: left;
+    border-left: 2px solid;
+    border-right: 2px solid;
+    padding-left: 14px;
+    padding-right: 14px;
+}
 </style>
 </head>
 <header th:include="fragments/header.html"></header>
@@ -128,7 +135,7 @@ table.myRiew_select:hover {
             </select>
             </span>
             <span>
-                <input type="text" name="searchValue" id="myRiew_searchText"  placeholder="검색어를 입력해주세요">
+                <input type="text" name="searchValue" id="myRiew_searchText"  placeholder="검색어를 입력해주세요" minlength="3">
             </span>
             <button type="submit" id="myRiew_button" class="button" style="margin-right: 32px;" >검색하기</button>
            
@@ -141,7 +148,7 @@ table.myRiew_select:hover {
 	         <input type="hidden" name="bno" th:value="${myreviewlist.b_no}">
 	        	<tr>
 	            <td style="width:200px;" th:text="${myreviewlist.lectureOpen.lecture.lTitle}" ></td>
-	            <td style="width:500px;" th:text="${myreviewlist.b_title}"></td>
+	            <td class="a" style="width:500px;" th:text="${myreviewlist.b_title}"></td>
 	            <td style="width:200px;" th:text="${#dates.format(myreviewlist.b_enroll_date,'yyyy-MM-dd')}"></td>
 	        	</tr>
 	        </table>
