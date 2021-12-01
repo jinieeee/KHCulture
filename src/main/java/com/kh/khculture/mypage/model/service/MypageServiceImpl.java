@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.kh.khculture.board.model.vo.Board;
+import com.kh.khculture.board.model.vo.Search;
 import com.kh.khculture.common.PageInfo;
 import com.kh.khculture.lecture.model.vo.LectureOpen;
 import com.kh.khculture.mypage.model.dao.MypageMapper;
@@ -103,10 +105,52 @@ public class MypageServiceImpl implements MypageService{
 		return returnMap;
 	}
 
-	
-	
 	/* 김현주 */
+	
+	/* 정하 */
+	
+	/* 정하 */
+	@Override
+	public List<LectureOpen> mylectureList(int mno) {
+		return mypageMapper.mylectureList(mno);
+	}
+
+
+	@Override
+	public Map<String, Object> myReviewList(int page, Search search, int mno) {
+		
+		Map<String,Object> returnMap = new HashMap<>();
+		
+			Map<String,Object> map2 = new HashMap<>();
+			map2.put("SearchCondition",search.getSearchCondition());
+			map2.put("SearchValue", search.getSearchValue());
+			map2.put("mno",mno);
+			
+			int listCount = mypageMapper.getListCount(map2);
+	log.info("listCount : {}" , listCount);		
+			PageInfo pi = new PageInfo(page, listCount, 10, 10);
+			int startRow = (pi.getPage()-1)*pi.getBoardLimit()+1;
+			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			Map<String, Object> map = new HashMap<>();
+			map.put("startRow", startRow);
+			map.put("endRow", endRow);
+			map.put("SearchCondition",search.getSearchCondition());
+			map.put("SearchValue", search.getSearchValue());
+			map.put("mno" , mno);
+		
+		List<Board> myReviewList = mypageMapper.selectMyreview(map);
+		
+		log.info("myReviewList : {}",myReviewList);
+		
+		returnMap.put("pi",pi);
+		returnMap.put("myReviewList", myReviewList);
+		return returnMap;
+	}
+
 	
 	
 
+	
+	
 }

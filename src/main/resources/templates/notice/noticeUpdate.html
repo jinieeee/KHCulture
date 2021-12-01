@@ -23,7 +23,38 @@
 <link rel="stylesheet" href="/css/summernote/summernote-lite.css">
 
 <!-- notice CSS 폴더 -->
-<link href="/css/mypage/notice.css" rel="stylesheet">
+<style>
+.notice_update_boundary{
+    width: 1000px; /* 이 폭을 줄이면 세부폭은 알아서 따라옴 */
+    margin: 0 auto;
+    margin-bottom: 10px;
+    background-color: antiquewhite;
+}
+#Lname , #Ltitle ,#Limage ,#Lcomment{
+    padding: 8px 10px;
+    border-bottom: 1px solid black;
+}
+#Lname2 , #Ltitle2 ,#Limage2 ,#Lcomment2{
+    padding: 10px;
+}
+#notice_update{
+    width: 800px;
+}
+#notice_update2{
+    width: 99%;
+}
+.button {
+    width: 100px;
+    height: 50px;
+    font-size: 20px;
+    background-color: #F0B95E;
+    color: white;
+}
+.button:nth-child(2) {
+    background-color: coral;
+}
+
+</style>
 
 </head>
 <header th:include="fragments/header.html"></header>
@@ -54,6 +85,7 @@
             <div align="center" style="margin-top: 20px;margin-bottom: 20px;padding-bottom: 20px;">
                 <span><button type="button" class="button" onclick="updateNotice()">수정하기</button></span>
                 <button type="button"  class="button" onclick="deleteNotice()">삭제하기</button>
+                <button  type="button"  class="button" th:onclick="|location.href='@{/notice/noticeList}'|">취소</button>
             </div>
         </form>
     </div>

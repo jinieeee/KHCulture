@@ -36,25 +36,39 @@
 #Lname2 , #Ltitle2 ,#Limage2 ,#Lcomment2{
     padding: 10px;
 }
-div#Limage {
-    margin-top: 13px;
+#update_Update:hover {
+    height: px;
+    font-weight: bold;
+    cursor: pointer;
+}
+#update_Update {
+    font-size: x-large;
+}
+div#Lname {
+    display: flex;
+}
+#img_area{
+	display: grid;
+    justify-content: space-around;
 }
 div#Limage {
+    margin-top: 13px;
     display: grid;
     justify-content: space-evenly;
 }
+
 #board_star{
     height: 23px;
 }
-#board_Update3{
-    width: 710px;
-    margin-right: 10px;
+.button {
+    width: 100px;
+    height: 50px;
+    font-size: 20px;
+    background-color: #F0B95E;
+    color: white;
 }
-#board_Update{
-    width: 800px;
-}
-#board_Update2{
-    width: 99%;
+.button:nth-child(2) {
+    background-color: coral;
 }
 
 
@@ -77,7 +91,9 @@ div#Limage {
                 <input type="text" name="b_title" id="update_Update" th:value="${Board.b_title}">
             </div>
             <div id="Limage">
-                <img id="board_Update"  name="Limage" th:src="@{/images/lecture/{img}(img=${Board.LectureOpen.Lecture.lThumbnail})}">
+            	<div id="img_area"> 
+                	<img  name="Limage" th:src="@{/images/lecture/{img}(img=${Board.LectureOpen.Lecture.lThumbnail})}">
+            	</div>    
             </div>
             <div id="Lcomment">
                 <div id="Lcomment2">내용 : </div>
@@ -92,6 +108,7 @@ div#Limage {
             <div align="center" style="margin-top: 20px;margin-bottom: 20px;padding-bottom: 20px;">
                 <span><button type="button" class="button" onclick="updateBoard()">수정하기</button></span>
                 <button type="button"  class="button" onclick="deleteBoard()">삭제하기</button>
+                <button  type="button"  class="button" th:onclick="|location.href='@{/board/boardList}'|">취소</button>
             </div>
             
         </form>

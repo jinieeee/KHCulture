@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kh.khculture.board.model.vo.Board;
+import com.kh.khculture.board.model.vo.Search;
 import com.kh.khculture.lecture.model.vo.LectureOpen;
 import com.kh.khculture.member.model.service.MemberService;
 import com.kh.khculture.member.model.vo.PwdHint;
@@ -113,12 +115,6 @@ public class MypageController {
 	}
 	
 	/* 김현주 */
-	
-	@GetMapping("/mypagemain")
-	public String mypageMainView(Model model) {
-		
-		return "mypage/mypagemain";
-	}
 	@GetMapping("/memberModify")
 	public String memberModiy(Model model, @AuthenticationPrincipal UserImpl user) {
 		UserImpl member = (UserImpl) memberService.loadUserByUsername(user.getId());
@@ -128,5 +124,33 @@ public class MypageController {
 		return "mypage/memberModify";
 	}
 	
+	/* ********************* */
+	
+	//수강내역
+	@GetMapping("/mypagemain")
+	public String mypageMainView(Model model, @AuthenticationPrincipal UserImpl user) {
+		
+		List<LectureOpen> myLectureList = mypageService.mylectureList(user.getMno());
+		
+	//	log.info("myLectureList: {}", myLectureList);
+		model.addAttribute("mylecture",myLectureList);
+		return "mypage/mypagemain";
+	}
+	
+	//내가 쓴 수강후기
+	@GetMapping("/myReviewlist")
+	public String myRiew(Model model,@RequestParam(value="page", defaultValue="1") int page
+			                                                  ,Search search,@AuthenticationPrincipal UserImpl user) {
+		Map<String,Object> returnMap = mypageService.myReviewList(page,search,user.getMno());
+		
+		log.info("returnMap: {} " , returnMap);
+		
+		
+		
+		model.addAttribute("myReviewList",returnMap.get("myReviewList"));
+		model.addAttribute("pi",returnMap.get("pi"));
+		model.addAttribute("search",search);
+		return "mypage/myReview";
+	}
 	
 }
