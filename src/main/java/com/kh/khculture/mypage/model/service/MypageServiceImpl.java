@@ -127,10 +127,13 @@ public class MypageServiceImpl implements MypageService{
 			map2.put("mno",mno);
 			
 			int listCount = mypageMapper.getListCount(map2);
-	log.info("listCount : {}" , listCount);		
+	        log.info("listCount : {}" , listCount);		
 			PageInfo pi = new PageInfo(page, listCount, 10, 10);
 			int startRow = (pi.getPage()-1)*pi.getBoardLimit()+1;
 			int endRow = startRow + pi.getBoardLimit() - 1;
+			
+			
+			log.info("pi : {}",startRow);
 			
 			Map<String, Object> map = new HashMap<>();
 			map.put("startRow", startRow);

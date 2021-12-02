@@ -52,8 +52,11 @@ public class PaymentController {
 	@GetMapping("/lecture/detail/{lrNo}")
 	public String lectureDetail(Model model, @PathVariable int lrNo, Principal principal) {
 		
+		log.info("lrNo : {}", lrNo);
 		
 		LectureDetail lectureDetail = paymentService.selectOneLectureOpen(lrNo);
+		
+		log.info("lectureDetail : {}", lectureDetail);
 		
 		if(principal != null) {
 			UserImpl user = (UserImpl)((Authentication)principal).getPrincipal();

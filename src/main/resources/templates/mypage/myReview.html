@@ -38,14 +38,12 @@ form#myRiew_form {
     
 }
 .myRiew_list > .myRiew_select{
-    width: 890px;
-    heigh:60px;
+    width: 1320px;
     text-align: center;
     margin: 0 auto;
-    /*background-color: antiquewhite;*/
     display: flex;
     padding-bottom: 15px;
-    border-bottom: 1px solid #F0B95E;
+    
     
 }
 .myRiew_select > span{
@@ -54,12 +52,26 @@ form#myRiew_form {
     margin-left: 20px;
 }
 table.myRiew_select {
+    border:0px;
     cursor: pointer;
 }
-table.myRiew_select:hover {
-    background-color: #f09b5e;
+table.myRiew_select td{
+border-bottom: 1px solid #F0B95E;
+}
+table.myRiew_select tr{
+height:60px;
+}
+/*
+table.myRiew_select:hover  {
     cursor: pointer;
     font-weight: bold;
+}
+*/
+.myRiew_list .myRiew_select {
+    margin: auto;
+    display: flex;
+    justify-content: space-around;
+    font-size: 20px;
 }
 #myRiew_comment{
     text-align: left;
@@ -105,7 +117,7 @@ table.myRiew_select:hover {
     text-align: center;
 	
 }
-#a{
+a{
     text-decoration: none;
     color: #282A35;
     display: block;
@@ -113,11 +125,21 @@ table.myRiew_select:hover {
 }
 td.a {
     text-align: left;
-    border-left: 2px solid;
-    border-right: 2px solid;
+    
     padding-left: 14px;
     padding-right: 14px;
+    width: 983px;
 }
+
+#c{
+width: 890px;
+}
+
+tr:hover td:nth-child(1) {
+    font-weight: bold;
+}
+
+
 </style>
 </head>
 <header th:include="fragments/header.html"></header>
@@ -144,12 +166,21 @@ td.a {
     </div>
 	
 		<div class="myRiew_list">
-	        <table class="myRiew_select" th:each="myreviewlist: ${myReviewList}">
-	         <input type="hidden" name="bno" th:value="${myreviewlist.b_no}">
-	        	<tr>
-	            <td style="width:200px;" th:text="${myreviewlist.lectureOpen.lecture.lTitle}" ></td>
-	            <td class="a" style="width:500px;" th:text="${myreviewlist.b_title}"></td>
-	            <td style="width:200px;" th:text="${#dates.format(myreviewlist.b_enroll_date,'yyyy-MM-dd')}"></td>
+	        <table class="myRiew_select">
+		         <!-- 
+		        	<colgroup>
+		        		<col style="width: 20%">
+		        		<col style="width: 65%">
+		        		<col style="width: 15%">
+		        	</colgroup>
+		         -->
+	        	<tr><th style="font-size : 30px;">강의명</th><th id="c"></th><th style="font-size : 30px;">날짜</th></tr>
+	        	<tr th:each="myreviewlist: ${myReviewList}">
+	            <td>
+	            <a th:href="@{/board/detail.do?b_no={bno}(bno=${myreviewlist.b_no})}">[[${myreviewlist.lectureOpen.lecture.lTitle}]]</a></td>
+	            <td class="selectbno" th:text="${myreviewlist.b_title}"></td>
+	            <td th:text="${#dates.format(myreviewlist.b_enroll_date,'yyyy-MM-dd')}"></td>
+	            <!-- <input type="hidden" name="bno" th:value="${myreviewlist.b_no}"> -->
 	        	</tr>
 	        </table>
 	    </div>   
@@ -169,7 +200,7 @@ td.a {
 	
 	        	<th:block th:with="start=${pi.startPage}, end=${pi.endPage}">
 	        		<li th:with="start=${pi.startPage}, end=${pi.endPage}" th:each="pageNum : ${#numbers.sequence(start,end)}">
-	        			<a class="current_page pagingNum" th:href="@{/mypage/myReviewlist?page={page}(page = ${ pageNum})}" th:text=${pageNum}></a>
+	        			<a th:href="@{/mypage/myReviewlist?page={page}(page = ${ pageNum})}" th:text=${pageNum}></a>
 	        		</li>
 	        	</th:block>
 	        		
@@ -186,14 +217,14 @@ td.a {
 
 	</div>
 <footer th:include="fragments/footer.html"></footer>
-  <script>
+ <!--  <script>
   $(".myRiew_select").click(function(){
 	  console.log(this);
 	  var bno = this.querySelector("[name=bno]").value;
 	  console.log(bno);
-	  location.href="/board/detail.do?b_no="+bno;
+	//  location.href="/board/detail.do?b_no="+bno;
   });
   
-  </script>  
+  </script>   -->
 </body>
 </html>

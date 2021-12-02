@@ -52,10 +52,11 @@ public class MypageController {
 //		if(request.getParameter("page") != null) {
 //			page = Integer.parseInt(request.getParameter("page"));
 //		};
+		
 		UserImpl user = (UserImpl)((Authentication)principal).getPrincipal();
 		int mNo = user.getMno();
 		List<LectureOpen> lecturelist = mypageService.getCartList(mNo);
-		
+		log.info("mNo : {}", mNo);
 		log.info("lecturelist : {}", lecturelist);
 		
 		model.addAttribute("lecturelist", lecturelist);
