@@ -148,22 +148,12 @@
 	list-style: none;
 	
 	line-height: 50px;
-	font-size: 22px;
+	font-size: 16px;
 	width: 480px;
-	justify-content: space-between;
+	justify-content: center;
 	
 }
-.listContainer > .content > .pagingArea > .list_paging{
-	display: flex;
-	list-style: none;
-	
-	line-height: 50px;
-	font-size: 22px;
-	width: 480px;
-	justify-content: space-between;
-	
 
-}
 
 .listContainer > .content > .pagingArea > .list_paging > li> a{
 	
@@ -177,3 +167,7 @@
 
 }
 
+.underPage{
+	border-bottom: 2px solid #282A35;
+	font-weight: bold;
+}
