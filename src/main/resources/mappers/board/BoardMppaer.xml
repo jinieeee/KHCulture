@@ -303,7 +303,7 @@ where r_no = #{ rno }
 select
 *
 from board
-where m_no = #{mno} and lr_no= #{lr_no}
+where m_no = #{mno} and lr_no= #{lr_no}  and ( b_status='N' or b_status='Y')
 
 
 
