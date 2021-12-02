@@ -145,7 +145,7 @@ star-input>.input.focus{outline:1px dotted #ddd;}
             <div id="Limage">
                 <span id="Limage2">강의사진 : </span>
                 <div id="img_area"> 
-                	<img class="lectureImage" th:each="l:${ lecture }" th:src="@{/images/lecture/{img}(img=${l.lecture.lThumbnail})}">
+                	<img class="lectureImage" th:each="l:${ lecture }" th:src="@{/images/upload/{img}(img=${l.lecture.lThumbnail})}">
                 </div>
             </div>
             <div id="Lcomment">

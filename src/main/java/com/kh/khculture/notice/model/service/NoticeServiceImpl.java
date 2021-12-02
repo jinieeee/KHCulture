@@ -34,6 +34,8 @@ public class NoticeServiceImpl implements NoticeService {
 		int startRow = (pi.getPage() - 1)*pi.getBoardLimit() + 1;
 		int endRow = startRow + pi.getBoardLimit() - 1;
 		
+		
+		
 		Map<String, Object> map = new HashMap<>();
 		map.put("startRow", startRow);
 		map.put("endRow", endRow);

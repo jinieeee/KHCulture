@@ -83,7 +83,7 @@ button#my_button:hover {
     overflow:hidden;
     cursor:pointer;
     display: grid;
-    height: 400px;
+    min-height: 648px;
    
  
 }
@@ -205,7 +205,7 @@ color: #e3930f;
         <div class="my_history">
             <div class="my_history1" th:each="mylecture:${mylecture}">
 	     		 <th:block th:if="${mylecture}">
-	                <div id="imageArea" class="a"><img th:src="@{/images/lecture/{img}(img=${mylecture.lecture.lThumbnail})}"></div>
+	                <div id="imageArea" class="a"><img th:src="@{/images/upload/{img}(img=${mylecture.lecture.lThumbnail})}"></div>
 	                <div id="ltitle"class="a"><span th:text=${mylecture.lecture.lTitle}></span></div>
 	                <div id="time" class="a"><span th:text=${mylecture.lrStartTime}></span></div>
 	         	</th:block> 
