@@ -94,6 +94,30 @@ if(msg){
 <script type="text/javascript" th:inline="javascript">
 
 
+	let pagecheck = '[[${pi.page}]]';
+	
+	let pagingA = $('.list_paging > li > a');
+	
+	
+	
+	
+	for(var i=0; i<pagingA.length; i++){
+		
+		
+		if(pagingA[i].innerText == pagecheck){
+			
+			let nthIndext = i+1;
+			
+			$('.list_paging > li:nth-of-type('+ nthIndext + ') > a').addClass('underPage');
+			
+			break;
+		}
+		
+	}
+
+
+
+
    	function editOpen(lrNo){
    		
    		location.href="openupdate/" + lrNo;	
