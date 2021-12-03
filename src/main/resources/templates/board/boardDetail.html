@@ -82,6 +82,13 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
     cursor: pointer;
     
 }
+.DMbtnArea{
+display:flex;
+}
+.DMbtnArea button{
+width:80px;
+margin-right:8px;
+}
 button.button:hover {
     font-weight: bold;
     width: 103px;
@@ -117,7 +124,6 @@ button.button:hover {
     padding: 8px 10px;
     margin-right: 15px;
 }
-
 .board_detail_reply_insert{
     display: flex;
     padding: 8px 10px;
@@ -173,10 +179,6 @@ input#textLengthCheck {
         
         </div>
         <div class="heartArea">
-            
-          <!--   
-            <span th:text="${Lovit}"></span>
-           -->  
             <!-- #{Lovit.b_no} == Board.b_no -->
             <th:block th:if="${Lovit} == 0 ">
             <div>좋아요</div>
@@ -189,9 +191,6 @@ input#textLengthCheck {
           	 <!-- Lovit.b_no와 Board.b_no 가 다르면  Lovit테이블에 없다는 의미 -> 흰 -> 빨으로 바꿔주는 ajax -->
           	<div><img src="/images/mypage/heart.png" id="board_heart2"  th:attr="onclick=|like('${Board.b_no}')|" ></div>  	
           	</th:block>
-          	
-          	
-          	 
         </div>
     </div>
 
@@ -234,8 +233,14 @@ input#textLengthCheck {
 	            <div id="reply_comment2"><span th:text="${Reply.r_content}"></span></div> 
 	          	<div id="reply_date"><span th:text="${#dates.format(Reply.r_enroll_date,'yyyy-MM-dd')}"></span></div>
 	          <th:block sec:authorize="!isAnonymous()">
-	           <span th:if="${#authentication.principal.mno} == ${Reply.m_no}">
+	           <span class="DMbtnArea" th:if="${#authentication.principal.mno} == ${Reply.m_no}">
 		             <button type="submit" class="button cmt_btn" th:attr="onclick=|replyDelete('${Reply.r_no}')|">삭제</button>
+		             <!--  ****************************** 이거 삭제되면 처음으로 돌아감 ************************************ -->
+		             <!--  ****************************** 이거 삭제되면 처음으로 돌아감 ************************************ -->
+		             <!--  ****************************** 이거 삭제되면 처음으로 돌아감 ************************************ -->
+		             <!--  ****************************** 이거 삭제되면 처음으로 돌아감 ************************************ -->
+		             <button type="button"  class="button cmt_btn">수정</button>
+		             
 	       	   </span>	
 	       	   </th:block>
 	     	</th:block>
@@ -261,61 +266,49 @@ input#textLengthCheck {
 
 <script>
 
-
-
-
-function reply(bno){
-	var bno = $("[name=b_no]").val();
-	var content=$("[name=content]").val();
-//	var loginUser=$("[name=loginUser]").val();
-	var loginUser = '[[${mno}]]';
-
-//	console.log(bno);
-//	console.log(content);
-	console.log("등록");
-	console.log(loginUser);
-
-
-	var obj ={b_no:bno , r_content:content}; 
-	$.ajax({
-		url:'/board/replyInsert',
-		type:'post',
-		data:JSON.stringify(obj),
-		contentType : "application/json; charset=utf-8",
-		success : function(list){
-				console.log(list)
-			
-			var html='';
-			for(var key in list){
-				html +='<div class="board_reply_select">'
-				       	+'<input type="hidden" name="rno" value='+list[key].r_no+'>'
-				       	+'<input type="hidden" name="mno" value='+list[key].m_no+'>'
-				       	+'<input type="hidden" name="loginUser" value="'+list[key].m_no+'">'
-				        +'<div id="reply_name"><span>'+ list[key].name +'</span></div> '
-				        +'<div id="reply_comment2"><span>'+ list[key].r_content + '</span></div> '
-				        +'<div id="reply_date"><span>'+ list[key].r_enroll_date+ '</span></div>'
-				        if ( loginUser ==  list[key].m_no){
-					        html += '<span><button type="submit" class="button cmt_btn" onclick="replyDelete('+list[key].r_no+')">삭제</button></sapn>'
-					        	  +'</div>'
-			            }else{
-			            	
-				        	html +='</div>'
-			            }
-			}
-	          	$(".board_detail_reply").html(html);
-				$("#board_reply_insert").val("");
-			},
-		error : function(e){
-			console.log(e)
+	/* 작성 */
+	function reply(bno){
+		var bno = $("[name=b_no]").val();
+		var content=$("[name=content]").val();
+		var loginUser = '[[${mno}]]';
+	
+		console.log("등록");
+		console.log(loginUser);
+	
+	
+		var obj ={b_no:bno , r_content:content}; 
+		$.ajax({
+			url:'/board/replyInsert',
+			type:'post',
+			data:JSON.stringify(obj),
+			contentType : "application/json; charset=utf-8",
+			success : function(list){
+					console.log(list)
+				
+				var html='';
+				for(var key in list){
+					html +='<div class="board_reply_select">'
+					       	+'<input type="hidden" name="rno" value='+list[key].r_no+'>'
+					       	+'<input type="hidden" name="mno" value='+list[key].m_no+'>'
+					       	+'<input type="hidden" name="loginUser" value="'+list[key].m_no+'">'
+					        +'<div id="reply_name"><span>'+ list[key].name +'</span></div> '
+					        +'<div id="reply_comment2"><span>'+ list[key].r_content + '</span></div> '
+					        +'<div id="reply_date"><span>'+ list[key].r_enroll_date+ '</span></div>'
+					        if ( loginUser ==  list[key].m_no){
+						        html += '<span><button type="submit" class="button cmt_btn" onclick="replyDelete('+list[key].r_no+')">삭제</button></sapn>'
+						        	  +'</div>'
+				            }else{
+					        	html +='</div>'
+						    }
+						}
+				          	$(".board_detail_reply").html(html);
+							$("#board_reply_insert").val("");
+						},
+					error : function(e){
+						console.log(e)
+					}
+				});
 		}
-			
-			
-		
-		
-	});
-	
-	
-}
 		
 		var editOuter = document.createElement('div');
 		var editCmt = document.createElement('textarea');
@@ -334,6 +327,7 @@ function reply(bno){
 		editOuter.append(editBtn);
 		var originBtn;
 		
+		/* 삭제 */
 		function replyDelete(rno){
 			var bno = $("[name=b_no]").val();
 			var obj ={b_no:bno , r_no:rno}; 
@@ -360,6 +354,7 @@ function reply(bno){
 				});
 		}	
 		
+	   
 		
 		function replyLoad(list){
 			var html='';

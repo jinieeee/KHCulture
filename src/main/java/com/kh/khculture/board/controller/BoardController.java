@@ -85,42 +85,7 @@ public class BoardController {
 		return mv;
 		
 	}
-	/***************************************************************/
-	/***************************************************************/
-	/***************************************************************/
-	/***************************************************************/
-	/************************* 이거 지워지면 처음으로 돌아간**************************************/
-/*	
-	//로그인 user의 정보가 들어옴
-	// /board/insert?user_name=
-	@GetMapping("insertView")
-	public String boardInsertView(Model model,@AuthenticationPrincipal UserImpl userImpl){
-		//로그인한 user의 mNo를 가지고 강좌를 불러옴
-		//만약 mNo가 들은 강좌가 없으면 -> alert창으로 들은 강좌가 없다고 안내..
-		
-		List<LectureOpen> userLectureList = boardService.userLectureList(userImpl.getMno());
-		
-		if(userLectureList.isEmpty()) {
-			System.out.println("강좌없다유------------ 강좌신청 페이지로 이동");
-			return "redirect:boardList";
-		}else {
-			
-			model.addAttribute("lecture",userLectureList);
-			System.out.println("후기남길수있다유");
-			return "board/boardInsert";
-		}
-		
-	}
-	
-	@PostMapping("insert")
-	public String boardInsert(Board NewBoard,@AuthenticationPrincipal UserImpl userImpl) {
-		NewBoard.setM_no(userImpl.getMno());
-		boardService.boardInsert(NewBoard);
-		return "redirect:/board/boardList";
-		
-	}
-	
-*/	
+
 	//로그인 유저가 insertView로 가는지, 비로그인 유저가 insertView로 가는지 판단.
 	@PostMapping("insertView") 
 	@ResponseBody
@@ -161,10 +126,6 @@ public class BoardController {
 	}
 	
 	
-	
-	
-	
-	
 	//게시글 수정하기
 	@GetMapping("updateView")
 	public String boardUpdatePage(Model model,@RequestParam("bno") int b_no) {
@@ -186,7 +147,6 @@ public class BoardController {
 		return "redirect:/board/detail.do?b_no="+ uptBoard.getB_no();
 	}
 	
-
 	
 	@PostMapping("delete")
 	public String boardDelete(Board deleteBoard, @RequestParam("b_no") int b_no) {
@@ -204,7 +164,6 @@ public class BoardController {
 	
 		System.out.println("등록: "+result);
 		
-		
 		String message = "";
 		
 		if(result>0) {
@@ -212,9 +171,7 @@ public class BoardController {
 		}else {
 			message = "fail";
 		}
-		
 		return message;
-		
 	}
 	
 	//like
@@ -234,9 +191,10 @@ public class BoardController {
 		}else {
 			message = "fail";
 		}
-		
 		return message;
 	}
+	
+	
 	@PostMapping("replyInsert")
 	@ResponseBody 
 	public List<Reply> replyInsert(@RequestBody Reply reply,Principal principal){
@@ -244,20 +202,15 @@ public class BoardController {
 		UserImpl user = (UserImpl)((Authentication)principal).getPrincipal();
 		
 		Reply r = new Reply(reply.getN_no(),reply.getR_content(),reply.getB_no(),user.getMno(),user.getName());
-//		log.info("reply:{}" , r);
 		
 		int result = boardService.replyInsert(r);
-//		log.info("result:{}" , r);
 		
 		List<Reply> replyList = null; 
 		
 		if(result > 0) {
 			replyList = boardService.selectReplyList(r.getB_no());
-//			log.info("replyList : {}" , replyList);
 		}
-		
 		return replyList;
-		
 	}
 	
 	@PostMapping("replydelete")
@@ -275,6 +228,7 @@ public class BoardController {
 		
 		return replyDelete;
 	}
+	
 
 }	
 

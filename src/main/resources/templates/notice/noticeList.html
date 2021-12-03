@@ -128,6 +128,7 @@ font-weight:bold;
             <!-- 관리자에게만 활성화 -->
             <th:block sec:authorize="hasRole('ADMIN')"> 
             <span><button type="button" id="notice_button" class="button" onclick="location.href='/notice/insert'">작성하기</button></span>
+            
           	</th:block>
         </form>
          
