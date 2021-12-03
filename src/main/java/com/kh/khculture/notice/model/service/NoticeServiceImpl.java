@@ -25,7 +25,7 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
-	public Map<String, Object> noticeList(int page, String searchValue) {
+	public Map<String, Object> noticeList(int page, String searchValue) { 
 		Map<String,Object> returnMap = new HashMap<>();
 		int listCount = noticeMapper.getListCount(searchValue);
 		log.info("impl : {} ",listCount+"");

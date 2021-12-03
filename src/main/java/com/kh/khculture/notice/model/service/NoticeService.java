@@ -5,7 +5,7 @@ import java.util.Map;
 import com.kh.khculture.notice.model.vo.Notice;
 
 public interface NoticeService {
-	 
+	  
 	
 	//1. 게시글LIst
 	Map<String, Object> noticeList(int page, String searchValue);

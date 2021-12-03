@@ -236,10 +236,12 @@ SELECT
 
 </update>
 <delete id="boardDelete" parameterType="com.kh.khculture.board.model.vo.Board">
-UPDATE
+<!-- UPDATE
 BOARD
 SET B_STATUS ='N'
-WHERE B_NO = #{ b_no }
+WHERE B_NO = #{ b_no } -->
+delete
+from board where b_no=#{ b_no }
 
 </delete>
 
