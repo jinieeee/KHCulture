@@ -70,7 +70,7 @@ public class InstructorController {
 		String msg = "";
 		
 		String projectPath = new File("").getAbsolutePath();
-		String filePath = projectPath + "\\src\\main\\resources\\static\\images\\instructor";
+		String filePath = projectPath + "\\src\\main\\resources\\uploadFiles\\upload";
 		
 		File mkdir = new File(filePath);
 		

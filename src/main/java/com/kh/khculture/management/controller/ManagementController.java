@@ -101,6 +101,7 @@ public class ManagementController {
 
 		String projectPath = new File("").getAbsolutePath();
 //		String filePath = projectPath + "\\src\\main\\resources\\static\\images\\upload";
+//      https://blog.jiniworld.me/28 자세한 내용 
 		String filePath = projectPath + "\\src\\main\\resources\\uploadFiles\\upload";
 		
 		File mkdir = new File(filePath);
