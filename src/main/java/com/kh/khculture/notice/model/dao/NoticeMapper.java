@@ -7,7 +7,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 import com.kh.khculture.notice.model.vo.Notice;
 
- 
+  
 @Mapper
 public interface NoticeMapper {
 

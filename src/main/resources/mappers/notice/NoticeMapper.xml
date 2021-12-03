@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kh.khculture.notice.model.dao.NoticeMapper">
- 
+  
 
 <resultMap id="noticeResultMap" type="com.kh.khculture.notice.model.vo.Notice">
 	<id property="n_no" column="N_NO"/>
@@ -23,7 +23,7 @@
 	AND N_TITLE LIKE '%' || #{searchValue, jdbcType=VARCHAR} || '%'
 	</if>
 </select>
-
+  
 <select id="selectList"   resultMap="noticeResultMap" >
 SELECT
     N_NO
@@ -36,7 +36,6 @@ FROM ( SELECT
              FROM(  SELECT 
                             *
                          FROM NOTICE
-                         JOIN MEMBER_ROLE USING(M_NO)
                          WHERE N_STATUS='Y' 
                             <if test="searchValue != 'null'">
                             AND N_TITLE LIKE '%' || #{ searchValue, jdbcType=VARCHAR } || '%'

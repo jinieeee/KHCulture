@@ -101,7 +101,7 @@ button.button:hover {
     display: flex;
     padding: 8px 10px;
     border-bottom: 1px solid #F0B95E;
-    justify-content: center;
+    padding-left: 76px;
 }
 #reply_name{ 
     border-right: 2px solid black;
@@ -202,15 +202,15 @@ input#textLengthCheck {
 		 	<span th:if="${#authentication.principal.mno} == ${Board.m_no}">
 		     	  <input type="hidden" name="bno" th:value ="${Board.b_no}"/>
 			    <button type="submit" id="board_update" class="button">수정하기</button>
- 			<button type="button" id="board_update" class="button" th:onclick="|location.href='@{/board/boardList}'|"> LIST </button>
 			</span>
 		</th:block>    
+ 			<button type="button" id="board_update" class="button" th:onclick="|location.href='@{/board/boardList}'|"> LIST </button>
 		 </form>
 		 <span>
  		 </span>
 	 </div>
 	 
- 
+    <th:block  sec:authorize="!isAnonymous()">
     <div class="board_detail_reply_insert">
          	<input type="hidden" name="b_no" th:value="${Board.b_no}">
          	<input type="text" id="textLengthCheck">
@@ -219,6 +219,7 @@ input#textLengthCheck {
                     <button class="button" name="replyInsertBtn" th:attr="onclick=|reply('${Board.b_no}')|">등록</button>
                </span>
     </div>
+    </th:block>
  <!--
     <span th:text="${#authentication.principal.mno}"></span>
     <span th:text="${#authentication.principal.name}"></span>
@@ -245,7 +246,7 @@ input#textLengthCheck {
      
 </div>
     
-    <script>
+<script>
 	  $("#board_reply_insert").keyup(function(e){
 		  console.log("키업!");
 		  var content = $(this).val();
@@ -256,8 +257,7 @@ input#textLengthCheck {
 			  $("#textLengthCheck").html("(20 / 최대 20자)");
 		  }
 	  });
-    </script>
-    
+</script>
 
 <script>
 
@@ -303,7 +303,7 @@ function reply(bno){
 			            }
 			}
 	          	$(".board_detail_reply").html(html);
-				$("#reply_comment2").val("");
+				$("#board_reply_insert").val("");
 			},
 		error : function(e){
 			console.log(e)

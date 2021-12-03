@@ -42,7 +42,7 @@ public class NoticeController {
 		log.info("noticeService :{}",returnMap);
 		return  "notice/noticeList";
 		
-		 
+		  
 	}
 	
 	@GetMapping("detail.do")
