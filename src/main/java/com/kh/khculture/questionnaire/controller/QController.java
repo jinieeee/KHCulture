@@ -1,6 +1,7 @@
 package com.kh.khculture.questionnaire.controller;
 
-import java.util.List;
+import java.security.Principal;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kh.khculture.questionnaire.model.service.QuestionnaireService;
 import com.kh.khculture.questionnaire.model.vo.Questionnaire;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 @RequestMapping("/questionnaire")
 public class QController {
@@ -26,11 +30,16 @@ public class QController {
 	}
 	
 	@GetMapping("list")
-	public String getList(Model model) {
+	public String getList(Model model, @RequestParam(value="page", defaultValue="1") int page,
+			              @RequestParam(value="searchValue", required=false) String searchValue, Principal principal) {
 		
-		List<Questionnaire> questionnaireList = questionnaireService.getList();
-		System.out.println("questionnaireList : " + questionnaireList);
-		model.addAttribute("questionnaireList", questionnaireList);
+		Map<String, Object> returnMap = questionnaireService.getList(page, searchValue);
+		log.info("controller : {}", searchValue);
+		model.addAttribute("searchValue", searchValue);
+		model.addAttribute("pi", returnMap.get("pi"));
+		model.addAttribute("getList", returnMap.get("getList"));
+		model.addAttribute("principal", principal);
+		
 		
 		return "questionnaire/list";
 	}

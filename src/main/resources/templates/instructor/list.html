@@ -79,6 +79,33 @@ ul, li {
 	cursor : pointer;
 	font-size: 20px;
 }
+.questionnaire_paging_area{
+	width: 1260px;
+    margin: 0 auto;
+    margin-top: 70px;
+    justify-content:space-around;
+    display: flex;
+}
+.questionnaire_paging {
+	list-style: none;
+	display:flex;
+	line-height: 50px;
+	width: 320px;
+	text-align: center;
+}
+.questionnaire_paging li{
+	 margin-right:51px;
+}
+.questionnaire_paging a {
+	text-decoration: none;
+	color: #282A35;
+	width: 40px;
+	text-align: center;
+}
+.questionnaire_paging a.current_page {
+	border-bottom: 2px solid #282A35;
+	font-weight: bold;
+}
 </style>
 </head>
 <header th:include="fragments/header.html"></header>
@@ -92,10 +119,10 @@ ul, li {
 				<div class="list_div">
 					<ul class="instructor_list">
 					<li th:each=" i : ${ instructorList }">
-					<div class="box">
+					<div class="img_area">
 					    <a href="/instructor/detail.do?instructor_no=" th:attrappend="href=${i.instructor_no}">
 					    <!-- <img src="/images/instructor/pikachu2.png"> -->
-					    <img th:src="@{/images/instructor/} + ${i.profile_photo }">
+					    <img th:src="@{/images/instructor/{profilePhoto}(profilePhoto=${i.profile_photo})}">
 	                    </a>
 					    <p class="title" th:text="${ i.instructor_name }"></p>
 					    <p class="lecture">강사님</p>
@@ -103,6 +130,27 @@ ul, li {
 					</li>
 					</ul>
 				</div>
+					<div class="questionnaire_paging_area">
+        	            <ul class="questionnaire_paging"> 
+	        	            <li><a th:href="@{?page=1}">&lt;&lt;</a></li>
+		       	            <li th:if="${ pi.page > 1 }"><a th:href="@{?page={page}(page =  ${pi.page-1})}">&lt;</a></li>
+		       	            <li th:unless="${ pi.page > 1 }"><a th:href="@{?page={page}(page =  ${pi.page})}">&lt;</a></li>
+		       	            
+	        	            <th:block th:with="start=${pi.startPage}, end=${pi.endPage}">
+	        		        <li th:with="start=${pi.startPage}, end=${pi.endPage}" th:each="pageNum : ${#numbers.sequence(start,end)}">
+	        			    <a th:href="@{/instructor/list/?page={page}(page = ${ pageNum})}" th:text=${pageNum}></a>
+	        		        </li>
+	        	            </th:block>
+	        	            
+		                    <li th:if="${ pi.page < maxPage }">
+		       		        <a th:href="@{?page={page}(page =  ${pi.page+1})}">&gt;</a>
+		                	</li>
+		                	<li th:unless="${ pi.page == maxPage }">
+		            		<a th:href="@{?page={page}(page =  ${pi.page})}">&gt;</a>
+		                	</li>
+	                    	<li><a th:href="@{?page={page} (page = ${pi.maxPage})}">&gt;&gt;</a></li>
+	                    </ul>
+	                </div>				
 				<!-- 관리자만 보이는 버튼 -->
                 <th:block sec:authorize="hasRole('ADMIN')"></th:block>
 				<div class="btn_area">
@@ -113,24 +161,4 @@ ul, li {
 	</div>	
 <footer th:include="fragments/footer.html"></footer>
 </body>	
-<script>
-/*
-function readURL(input) {
-	 if (input.files && input.files[0]) {
-	  var reader = new FileReader();
-	  
-	  reader.onload = function (e) {
-	   $('#image_section').attr('src', e.target.result);  
-	  }
-	  
-	  reader.readAsDataURL(input.files[0]);
-	  }
-	}
-	 
-	// 이벤트를 바인딩해서 input에 파일이 올라올때 위의 함수를 this context로 실행
-	$("#imgInput").change(function(){
-	   readURL(this);
-	});
-	*/
-</script>
 </html>

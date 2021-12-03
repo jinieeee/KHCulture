@@ -175,6 +175,33 @@ ul, li {
 	font-size: 20px;
 	margin-top: 100px;
 }
+.questionnaire_paging_area{
+	width: 1260px;
+    margin: 0 auto;
+    margin-top: 70px;
+    justify-content:space-around;
+    display: flex;
+}
+.questionnaire_paging {
+	list-style: none;
+	display:flex;
+	line-height: 50px;
+	width: 200px;
+	text-align: center;
+}
+.questionnaire_paging li{
+	 margin-right:51px;
+}
+.questionnaire_paging a {
+	text-decoration: none;
+	color: #282A35;
+	width: 40px;
+	text-align: center;
+}
+.questionnaire_paging a.current_page {
+	border-bottom: 2px solid #282A35;
+	font-weight: bold;
+}
 </style>
 </head>
 <header th:include="fragments/header.html"></header>
@@ -207,7 +234,7 @@ ul, li {
 						<li class="date"> 작성일</li>
 					</ul>
 					<th:block> 
-					<ul class="questionnaire_ul" th:each=" q : ${ questionnaireList }">
+					<ul class="questionnaire_ul" th:each=" q : ${ getList }">
 					    <li class="id" th:text="${ q.questionnaire_no }"></li>
 					    <li class="title">1:1 문의</li>
 					    <li class="content">
@@ -215,9 +242,30 @@ ul, li {
 					    <li class="date" th:text="${ q.q_enroll_date }"></li>
 					</ul>
 					</th:block>
+					<div class="questionnaire_paging_area">
+        	            <ul class="questionnaire_paging"> 
+	        	            <li><a th:href="@{?page=1}">&lt;&lt;</a></li>
+		       	            <li th:if="${ pi.page > 1 }"><a th:href="@{?page={page}(page =  ${pi.page-1})}">&lt;</a></li>
+		       	            <li th:unless="${ pi.page > 1 }"><a th:href="@{?page={page}(page =  ${pi.page})}">&lt;</a></li>
+		       	            
+	        	            <th:block th:with="start=${pi.startPage}, end=${pi.endPage}">
+	        		        <li th:with="start=${pi.startPage}, end=${pi.endPage}" th:each="pageNum : ${#numbers.sequence(start,end)}">
+	        			    <a th:href="@{/questionnaire/getList/?page={page}(page = ${ pageNum})}" th:text=${pageNum}></a>
+	        		        </li>
+	        	            </th:block>
+	        	            
+		                    <li th:if="${ pi.page < maxPage }">
+		       		        <a th:href="@{?page={page}(page =  ${pi.page+1})}">&gt;</a>
+		                	</li>
+		                	<li th:unless="${ pi.page == maxPage }">
+		            		<a th:href="@{?page={page}(page =  ${pi.page})}">&gt;</a>
+		                	</li>
+	                    	<li><a th:href="@{?page={page} (page = ${pi.maxPage})}">&gt;&gt;</a></li>
+	                    </ul>
+	                </div>
 					<div class="btn_area">
 				    <button id="regist" onclick="location.href='/questionnaire/insert'">작성하기</button>
-				  </div>
+				    </div>
 				</div>
 			</div>
 		</div>
