@@ -87,7 +87,7 @@
 	)
 	VALUES
 	(
-		SEQ_L_NO
+		SEQ_L_NO.NEXTVAL
 	  , #{lTitle}
 	  , #{lThumbnail}
 	  , SYSDATE
