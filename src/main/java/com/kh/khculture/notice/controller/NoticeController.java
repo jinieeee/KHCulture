@@ -39,9 +39,10 @@ public class NoticeController {
 		model.addAttribute("pi",returnMap.get("pi"));
 		model.addAttribute("noticeList",returnMap.get("noticeList"));
 		model.addAttribute("principal",principal);
+		log.info("noticeService :{}",returnMap);
 		return  "notice/noticeList";
 		
-		
+		 
 	}
 	
 	@GetMapping("detail.do")
