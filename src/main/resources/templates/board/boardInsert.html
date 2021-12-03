@@ -113,7 +113,7 @@ star-input>.input.focus{outline:1px dotted #ddd;}
     <h1 align="center">등록하기</h1>
     </div>
     <div class="board_insert_boundary">
-        <form method="post" action="/board/insert">
+        <form method="post" action="/board/insert" class="insertForm">
             <div id="Lname"> 
                 <span id="Lname2">강좌명 : </span>
 	                 <select name="lr_no" id="board_insert3" required>
@@ -153,19 +153,13 @@ star-input>.input.focus{outline:1px dotted #ddd;}
                 <textarea id="summernote" name="b_content" style='background-color:orange;'></textarea>
             </div>
             <div class="btn_area">
-                <span><button type="submit" class="button" style="margin-right: 24px;">등록하기</button></span>
+                <span><button type="button" id="insertBtn" class="button" style="margin-right: 24px;">등록하기</button></span>
                 <button class="button"  th:onclick="|location.href='@{/board/boardList}'|">취소하기</button>
             </div>
         </form>
     </div>
 </body>
  <footer th:include="fragments/footer.html"></footer>
-    <script>
-        $(document).ready(function(){
-            $("#inputHeader").load("../common/header.html");
-            $("#inputFooter").load("../common/footer.html");
-        });
-    </script>
      <script>
     	$('#summernote').summernote({
     		height: 300,
@@ -174,88 +168,63 @@ star-input>.input.focus{outline:1px dotted #ddd;}
     		focus: true
     	})
     </script>
-
-  
+	<script>
+		$("#insertBtn").on('click', function(){
+			if(!$('input:radio[name=b_star]:checked').val()){
+				alert("별점을 체크해주세요");
+				return;
+			}else{
+				$(".insertForm").submit();
+			}
+		});
+	</script>
     <script>
-/*
-    $("#board_insert3").change(function(){
-    	let value = $(this).val();
-    	let text = $(this).children("option:selected").text();    	
-    	//console.log(value); //lrNo : 5
-    	//console.log(text); //lThumnail : 주부요가실
-    });
-    
-    $("#board_insert3").change(function(){
-  		  var index = $("#board_insert3 option").index($("#board_insert3 option:selected"));
-  		console.log("-----");
-   		 console.log(index);
-   		 var lectureImage = document.querySelector('.lectureImage');
-   		 console.log(lectureImage);
-    }); 
-
-
-*/
-
-$("#board_insert3").change(function(){
-//	let value = $(this).val(); //lrNo : 5
-//	let text = $(this).children("option:selected").text();    //lThumnail : 주부요가실
-	var index = $("#board_insert3 option").index($("#board_insert3 option:selected")); //1
-	
-	
-	var image= document.querySelectorAll('.lectureImage'); 
-	
-	
-	image.forEach(img => {
-		img.style.display="none";
-		
-	})
-	
-	image[index-1].style.display="block";
-	
-});
-
-</script>
-    	
+		$("#board_insert3").change(function(){
+		//	let value = $(this).val(); //lrNo : 5
+		//	let text = $(this).children("option:selected").text();    //lThumnail : 주부요가실
+			var index = $("#board_insert3 option").index($("#board_insert3 option:selected")); //1
+			var image= document.querySelectorAll('.lectureImage'); 
+			image.forEach(img => {
+				img.style.display="none";
+			})
+			image[index-1].style.display="block";
+		});
+	</script>
     <script>
-    var starRating = function(){
-		var $star = $(".star-input"),
-    	$result = $star.find("output>b");
-		
-  		$(document).on("focusin", ".star-input>.input", function(){
-   		 $(this).addClass("focus");
- 		}) .on("focusout", ".star-input>.input", function(){
-    		var $this = $(this);
-    		setTimeout(function(){
-      			if($this.find(":focus").length === 0){
-       				$this.removeClass("focus");
-     	 		}
-   			}, 100);
- 		 }).on("change", ".star-input :radio", function(){
-    					$result.text($(this).next().text());
-  			}).on("mouseover", ".star-input label", function(){
-    				$result.text($(this).text());
-   			}).on("mouseleave", ".star-input>.input", function(){
-   				
-    			var $checked = $star.find(":checked");
-    			if($checked.length === 0){
-     	 			$result.text("0");
-     	 			
-   		 		} else {
-     	 			$result.text($checked.next().text());
-    			}
-  			});
-	};
-
-starRating();
-
-</script>
-
-<script>
-var message = '[[${message}]]';
-if(message){
-	alert(message);
-}
-
-
-</script>
+	    var starRating = function(){
+			var $star = $(".star-input"),
+	    	$result = $star.find("output>b");
+			
+	  		$(document).on("focusin", ".star-input>.input", function(){
+	   		 $(this).addClass("focus");
+	 		}) .on("focusout", ".star-input>.input", function(){
+	    		var $this = $(this);
+	    		setTimeout(function(){
+	      			if($this.find(":focus").length === 0){
+	       				$this.removeClass("focus");
+	     	 		}
+	   			}, 100);
+	 		 }).on("change", ".star-input :radio", function(){
+	    					$result.text($(this).next().text());
+	  			}).on("mouseover", ".star-input label", function(){
+	    				$result.text($(this).text());
+	   			}).on("mouseleave", ".star-input>.input", function(){
+	   				
+	    			var $checked = $star.find(":checked");
+	    			if($checked.length === 0){
+	     	 			$result.text("0");
+	     	 			
+	   		 		} else {
+	     	 			$result.text($checked.next().text());
+	    			}
+	  			});
+		};
+		starRating();
+	</script>
+	<script>
+		var message = '[[${message}]]';
+		if(message){
+			alert(message);
+		}
+	</script>
 </html>
