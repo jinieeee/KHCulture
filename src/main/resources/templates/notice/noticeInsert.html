@@ -89,9 +89,11 @@ padding-bottom: 20px;
             	<textarea id="summernote" name="n_content" style='background-color:orange;'></textarea>
             </div>
             <div>
-            <!-- 관리자로 로그인하면 그 로그인의 M_no loginUser.m_no --> 
-            
-            	<input type="hidden" name="m_no" value=1>
+            <!-- 
+            <span th:text="${user}"></span>
+           관리자로 로그인하면 그 로그인의 M_no loginUser.m_no--> 
+            <input type="hidden"  name="m_no" th:value="${user}"> 
+            <!-- 	<input type="hidden" name="m_no" value=1> -->
             </div>
             <div class="btn_area" >
                 <span><button type="submit" class="button" style="margin-right: 32px;">등록하기</button></span>

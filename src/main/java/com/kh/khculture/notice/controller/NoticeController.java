@@ -4,6 +4,7 @@ import java.security.Principal;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.khculture.member.model.vo.UserImpl;
 import com.kh.khculture.notice.model.service.NoticeService;
 import com.kh.khculture.notice.model.vo.Notice;
 
@@ -61,7 +63,10 @@ public class NoticeController {
 	
 	//게시글 insert
 	@GetMapping("insert") 
-	public String noticeInsertPage(Model model) {
+	public String noticeInsertPage(Model model, @AuthenticationPrincipal UserImpl userImpl) {
+		
+		log.info("userMno : {} ", userImpl.getMno());
+		model.addAttribute("user",userImpl.getMno());
 		return "notice/noticeInsert";	//HTMl 경로	
 	}
 	@PostMapping("insert")
@@ -70,10 +75,6 @@ public class NoticeController {
 		noticeService.noticeInsert(Newnotice);
 		return "redirect:/notice/noticeList";
 	}
-	
-	
-	
-	
 	
 	//게시글 수정하기
 	@GetMapping("updateView")
