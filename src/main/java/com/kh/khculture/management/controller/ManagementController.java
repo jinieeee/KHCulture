@@ -100,7 +100,8 @@ public class ManagementController {
 		String msg = "";
 
 		String projectPath = new File("").getAbsolutePath();
-		String filePath = projectPath + "\\src\\main\\resources\\static\\images\\upload";
+//		String filePath = projectPath + "\\src\\main\\resources\\static\\images\\upload";
+		String filePath = projectPath + "\\src\\main\\resources\\uploadFiles\\upload";
 		
 		File mkdir = new File(filePath);
 		
