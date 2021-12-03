@@ -19,11 +19,25 @@
     <result property="questionnaire_no" column="QUESTIONNAIRE_NO"/>
     <result property="m_no" column="M_NO"/>
 </resultMap>
-
+<select id="getListCount" parameterType="com.kh.khculture.notice.model.vo.Search" resultType="_int">
+	select count(*)
+	  from questionnaire
+	 where q_status = 'Y'
+	<if test="searchValue != 'null'">
+	and questionnaire_content like '%' || #{searchValue, jdbcType=VARCHAR} || '%'
+	</if>
+</select>
     <select id="getList" resultType="com.kh.khculture.questionnaire.model.vo.Questionnaire">
          select questionnaire_no, questionnaire_title, questionnaire_content, to_char(q_enroll_date, 'YYYY-MM-DD') q_enroll_date, q_status, m_no 
-           from questionnaire
-           order by questionnaire_no DESC
+           from ( select ROWNUM RNUM, NLIST.*
+                    from ( select *
+                             from questionnaire
+                            where q_status='Y'
+                            <if test="searchValue != 'null'">
+                              and questionnaire_content like '%' || #{searchValue, jdbcType=VARCHAR} || '%'
+                            </if>
+                            order by questionnaire_no DESC) NLIST)
+          where RNUM between #{ startRow } and #{endRow}                  
     </select>
     <select id="questionnaireDetail" resultMap="qResultMap">
          select questionnaire_no, questionnaire_title, questionnaire_content, 

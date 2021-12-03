@@ -1,6 +1,7 @@
 package com.kh.khculture.questionnaire.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -10,7 +11,9 @@ import com.kh.khculture.questionnaire.model.vo.QuestionnaireAnswer;
 @Mapper
 public interface QuestionnaireMapper {
 	
-	List<Questionnaire> getList();  // 1:1문의 리스트
+	int getListCount(String searchValue);
+	
+	List<Questionnaire> getList(Map<String, Object> map);  // 1:1문의 리스트
 	
 	Questionnaire questionnaireDetail(int questionnaire_no);  // 1:1 문의 세부내용
 	

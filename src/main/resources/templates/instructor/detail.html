@@ -112,7 +112,7 @@ h2 {
 					<h1 align="center">강사 정보</h1>
 				</div>
 				<div class="instructor_content">
-					<form method="get" action="/instructor/updatePage">
+					<form method="get" action="/instructor/updatePage" encType="multipart/form-data">
 						<input type="hidden" name="instructor_no" th:value="${instructor.instructor_no}">
 						<div class="content">
 							

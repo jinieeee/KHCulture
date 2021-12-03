@@ -1,13 +1,13 @@
 package com.kh.khculture.questionnaire.model.service;
 
-import java.util.List;
+import java.util.Map;
 
 import com.kh.khculture.questionnaire.model.vo.Questionnaire;
 import com.kh.khculture.questionnaire.model.vo.QuestionnaireAnswer;
 
 public interface QuestionnaireService {
 	
-	List<Questionnaire> getList();
+	Map<String, Object> getList(int page, String searchValue);
 	
 	Questionnaire questionnaireDetail(int questionnaire_no);
 	

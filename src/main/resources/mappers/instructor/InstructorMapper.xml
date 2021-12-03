@@ -10,11 +10,17 @@
      <result property="instructor_phone" column="INSTRUCTOR_PHONE"/>
      <result property="career" column="CAREER"/>
 </resultMap>
-
+     <select id="instructorCount" resultType="_int">
+         select COUNT(*)
+           from instructor
+     </select>
      <select id="getList" resultType="com.kh.khculture.instructor.model.vo.Instructor">
          select *
-           from instructor
-          order by instructor_no DESC
+           from ( select ROWNUM RNUM, NLIST.*
+                    from (  select *
+                              from instructor
+                             order by instructor_no DESC) NLIST)
+          where RNUM between #{ startRow } and #{ endRow }                   
      </select>
      <select id="selectInstructor" parameterType="int" resultType="com.kh.khculture.instructor.model.vo.Instructor">
          select *

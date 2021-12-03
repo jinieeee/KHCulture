@@ -1,13 +1,19 @@
 package com.kh.khculture.instructor.model.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.khculture.common.PageInfo;
 import com.kh.khculture.instructor.model.dao.InstructorMapper;
 import com.kh.khculture.instructor.model.vo.Instructor;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service("instructorService")
 public class InstructorServiceImpl implements InstructorService{
 	
@@ -19,15 +25,25 @@ public class InstructorServiceImpl implements InstructorService{
 	}
 
 	@Override
-	public int getListCount() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public List<Instructor> getList() {
-		// TODO Auto-generated method stub
-		return instructorMapper.getList();
+	public Map<String, Object> getList(int page) {
+		Map<String, Object> returnMap = new HashMap<>();
+		int listCount = instructorMapper.instructorCount();
+		log.info("impl : {} ", listCount + "");
+		
+		PageInfo pi = new PageInfo(page, listCount, 10, 6);
+		int startRow = (pi.getPage() - 1)*pi.getBoardLimit() + 1;
+		int endRow = startRow + pi.getBoardLimit() - 1;
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("startRow", startRow);
+		map.put("endRow", endRow);
+		log.info("instructor : {} ", map);
+		List<Instructor> instructorList = instructorMapper.getList(map);
+		
+		
+		returnMap.put("pi", pi);
+		returnMap.put("instructorList", instructorList);
+		return returnMap;
 	}
 
 	@Override
