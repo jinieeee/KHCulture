@@ -28,7 +28,7 @@
 		<!-- 이미지 리스트 출력 -->
 		<ul class="slider">
 			<li th:each="mainImage : ${mainImages}"><a th:href="@{/notice/detail.do?n_no={refNo}(refNo=${mainImage.refNo})}">
-				<img th:src="@{/images/main/slide/{filename}(filename=${mainImage.miRename})}"></a></li>
+				<img th:src="@{/images/slide/{filename}(filename=${mainImage.miRename})}"></a></li>
 		</ul>
 	</div>
 	
