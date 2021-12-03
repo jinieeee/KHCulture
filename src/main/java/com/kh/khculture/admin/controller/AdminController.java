@@ -169,7 +169,8 @@ public class AdminController {
 		mi.setRefNo(nno);
 		
 		String projectPath = new File("").getAbsolutePath();
-		String filePath = projectPath + "\\src\\main\\resources\\static\\images\\main\\slide";
+//		String filePath = projectPath + "\\src\\main\\resources\\static\\images\\main\\slide";
+		String filePath = projectPath + "\\src\\main\\resources\\uploadFiles\\slide";
 		
 		File mkdir = new File(filePath);
 		

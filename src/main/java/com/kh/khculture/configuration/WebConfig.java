@@ -23,7 +23,7 @@ public class WebConfig implements WebMvcConfigurer {
 //    registry.addResourceHandler("swagger-ui.html")
 //      .addResourceLocations("classpath:/META-INF/resources/");
 
-    List<String> imageFolders = Arrays.asList("upload", "instructor");
+    List<String> imageFolders = Arrays.asList("upload", "instructor", "slide");
     for(String imageFolder : imageFolders) {
       registry.addResourceHandler("/images/" +imageFolder +"/**")
         .addResourceLocations("file:///" + uploadImagesPath + imageFolder +"/")
