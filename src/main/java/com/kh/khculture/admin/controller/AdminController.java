@@ -150,7 +150,7 @@ public class AdminController {
 		search.setSearchKeyword(searchKeyword);
 		search.setMno(mno);
 		search.setPage(page);
-		// log.info("{}", search);
+		log.info("{}", search);
 		Map<String, Object> result = adminService.getNoticeList(search);
 		model.addAttribute("noticeList", result.get("noticeList"));
 		model.addAttribute("pi", result.get("pi"));

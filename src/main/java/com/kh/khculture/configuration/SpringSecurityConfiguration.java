@@ -81,6 +81,13 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/opendelete/**").hasRole("ADMIN")
 				.antMatchers("/payment/**").hasRole("MEMBER")
 				.antMatchers("/verification/**").hasRole("MEMBER")
+				// 공지사항 & 게시판 접근권한 (양정하)
+				.antMatchers("/notice/updateView/**").hasRole("ADMIN")
+				.antMatchers("/notice/insert").hasRole("ADMIN")
+				.antMatchers("/notice/delete").hasRole("ADMIN")
+				.antMatchers("/board/insert").hasRole("MEMBER")
+				.antMatchers("/board/delete").hasRole("MEMBER")
+				.antMatchers("/board/updateView").hasRole("MEMBER")
 				.anyRequest().permitAll()
 		.and()
 			.formLogin()	// 로그인 설정
