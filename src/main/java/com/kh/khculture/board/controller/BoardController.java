@@ -153,6 +153,7 @@ public class BoardController {
 			return "redirect:/board/insert";
 		}
 		
+		
 		NewBoard.setM_no(userImpl.getMno());
 		boardService.boardInsert(NewBoard);
 		return "redirect:/board/boardList";
