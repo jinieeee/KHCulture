@@ -6,7 +6,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
 .a{
-    height: 1060px;
+    min-height: 1060px;
 }
 form.modifyForm {
     margin-top: 30px;
@@ -182,7 +182,8 @@ select#hintNo {
         <span><input type="button" value="수정" class="accUpdate" onclick="accUpdate();"></span>
         <span><input type="button" value="탈퇴" class="accSecession"></span>
     </div>
-    <form class="confirmPwd" th:action="@{/member/accSecession}" method="post"  style="display: none;">
+    <form class="confirmPwd" th:action="@{/member/accSecession}" method="post" style="display: none;">
+    	<input type="hidden" name="_method" value="delete">
     	<table class="confirmPwdTbl">
     		<tr>
     			<td colspan="2" style="color: red;">* 비밀번호 확인 후 탈퇴를 진행합니다</td>
