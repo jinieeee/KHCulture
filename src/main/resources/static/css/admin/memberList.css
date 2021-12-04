@@ -58,11 +58,13 @@
 	width: 100%;
 }
 .memberListTbl #id,
-.memberListTbl #name,
 .memberListTbl #accLockYN,
 .memberListTbl #accSecessionYN,
 .memberListTbl #authority {
 	width: 7%;
+}
+.memberListTbl #name {
+	width: 9%;
 }
 .memberListTbl #email {
 	width: 16%;
