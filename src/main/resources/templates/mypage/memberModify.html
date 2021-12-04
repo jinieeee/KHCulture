@@ -127,6 +127,7 @@ select#hintNo {
     </div>
     <div class="a">
     <form class="modifyForm" th:action="@{/member/modify}" method="post">
+    	<input type="hidden" name="_method" value="put">
         <table class="ModifyTable">
             <tr>
                 <th>아이디</th>
