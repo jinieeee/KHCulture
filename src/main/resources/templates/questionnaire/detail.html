@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html  xmlns="http://www.w3.org/1999/xhtml"
+xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8">
 <title>1:1문의 상세페이지</title>
@@ -24,7 +26,7 @@
 }
 
 .questionnaire_content .content {
-	margin-bottom: 30px;
+	margin-bottom: 300px;
 }
 
 .input_area {
@@ -109,14 +111,8 @@
 	text-align: center;
 	border-top: 1px solid #FFFFFF;
 	padding: 30px;
-	margin-top: 300px;
 }
-.btn_area2 {
-	text-align: center;
-	border-top: 1px solid #FFFFFF;
-	padding: 0px;
-	margin-top: 0px;
-}
+
 
 h2 {
     margin-top: 50px;
@@ -132,6 +128,7 @@ h2 {
 					<h1 align="center">1:1 문의</h1>
 				</div>
 				<div class="questionnaire_content">
+				
 				<!-- 회원 페이지 -->
 					<form method="post" name="deleteQ">
 					    <input type="hidden" name="questionnaire_no" th:value="${questionnaire.questionnaire_no}">
@@ -144,13 +141,17 @@ h2 {
 							<span class="input_area2" th:unless="${questionnaire.enroll_answer != null}">미응답 (문의사항을 확인 중입니다.)</span>
 						</div>
 						
+						
+						<th:block sec:authorize="hasRole('MEMBER')">
 						<div class="btn_area">
 						<button type="button" id="delete" onclick="deleteQuestionnaire()">삭제하기</button>
 						<button type="button" id="goList" onclick="location.href='/questionnaire/list'">목록으로</button>
 						</div>
+						</th:block>
 					</form>
 					
 					<!-- 관리자 페이지 -->
+					<th:block sec:authorize="hasRole('ADMIN')">
 					<form method="get" action="/questionnaire/answerPage">
 					    <input type="hidden" name="questionnaire_no" th:value="${questionnaire.questionnaire_no}">
 						<div class="content">
@@ -166,7 +167,8 @@ h2 {
 						<button type="submit" id="answer" class="button">답변하기</button>
 						<button type="button" id="goList" onclick="location.href='/questionnaire/list'">목록으로</button>
 						</div>
-					  </form>		
+					 </form>
+					 </th:block>		
 				</div>
 			</div>
 		</div>
