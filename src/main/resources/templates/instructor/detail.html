@@ -135,12 +135,16 @@ h2 {
 							<span class="input_area" th:text="${instructor.career}"></span>
 						</div>
 						<div class="btn_area">
-						<!-- 관리자만 보이는 버튼 -->
-						<th:block sec:authorize="hasRole('ADMIN')"></th:block>
-						<button type="submit" id="update" class="button">수정하기</button>
-						<!--  -->
 						<button type="button" id="goList" onclick="location.href='/instructor/list'">목록으로</button>
 						</div>
+						
+						<!-- 관리자만 보이는 버튼 -->
+						<th:block sec:authorize="hasRole('ADMIN')">
+						<div class="btn_area">
+						<button type="submit" id="update" class="button">수정하기</button>
+						<button type="button" id="goList" onclick="location.href='/instructor/list'">목록으로</button>
+						</div>
+						</th:block>
 					</form>
 				</div>
 			</div>
