@@ -19,6 +19,7 @@ img.rankImage {
     padding: 10px;
     width: 1320px;
     margin: 0 auto;
+    min-height: 346px;
 }
 
 /**********************/
@@ -38,22 +39,36 @@ position:absolute;
 z-index:1;
 overflow:hidden;
 }
- #board_ranking_1:hover #imgBox{
-bottom:60px;
+ 
+#imgBox:hover  {
+    opacity: 10%;
+}
+.infobox {
+    position: absolute;
+    font-weight: 900;
+    width: 100%;
 }
 
-/* #board_ranking_1:hover #ltitle{
-z-index:8;
-} */
-
-
+div#imgBox:hover .infobox {
+    background: white;
+    opacity: 80%;
+    font-weight: bold;
+}
 #ltitle {
     width: 100%;
     height: 114px;
     position: absolue;
     font-size: 20px;
-    font-weight: bold;
-    margin-top: 238px;
+    margin-top: 71px;
+}
+.rankImage:nth-child(2){
+    margin-right: 30px;
+    margin-left: 30px;
+}
+img.trophy {
+    width: 70px;
+    background-color: #ffffff;
+    border-radius: 17px;
 }
 /**********************/
 .board_btn_area{
@@ -185,10 +200,7 @@ span#board_no {
     display: block;
     /* text-align: center; */
 }
-.rankImage:nth-child(2){
-    margin-right: 30px;
-    margin-left: 30px;
-}
+
 
 </style>
 </head>
@@ -201,8 +213,16 @@ span#board_no {
     
     <div class="board_ranking">
         <div id="board_ranking_1"  th:each="rankList:${ rankList }" >
+             <img class="trophy" src="/images/mypage/trophy.png"> 
              <div id="imgBox"><img class="rankImage" th:src="@{/images/upload/{img}(img=${rankList.LectureOpen.Lecture.lThumbnail})}"></div>
-         	 <div id="ltitle"> <span th:text="${rankList.LectureOpen.Lecture.lTitle}"></span></div>
+             <div class="infobox">
+         	 	<div id="ltitle">
+         	 		 <span th:text="${rankList.LectureOpen.Lecture.lTitle}"></span> <br>
+         	 		 <span th:text="${rankList.LectureOpen.Instructor.instructorName}"></span> <br>
+         	 		 별점 : <span th:text="${rankList.sum_b_star}"></span>점 <br>
+         	 		 
+         	    </div>
+             </div>
         </div>
     </div>
    <div class="board_search_area">
@@ -352,6 +372,12 @@ span#board_no {
   		alert("로그인 하셔야됩니다.");
   	});
    </script>
+   <script>
+		var message = '[[${boardDelete}]]';
+		if(message){
+			alert(message);
+		}
+	</script>
     
     
   

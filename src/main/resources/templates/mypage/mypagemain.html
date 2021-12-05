@@ -110,25 +110,17 @@ bottom:60px;
 background-color: blanchedalmond;
 border-radius: 67px;
 }
-
-.my_history1:hover #ltitle {
-z-index: 105;
-top: 300px;
-}
-
-
-
-#ltitle {
-color: #e3930f;
-    width: 100%;
+.my_history1:hover .b {
     position: absolute;
-    top: 200px;
-    z-index: 99;
-    overflow: hidden;
-    font-weight: bold;
-    font-size: 24px;
- }
-
+    z-index: 105;
+    top: 204px;
+    left: 11%;
+    width: 318px;
+}
+.b span{
+font-size: 17px;
+font-weight: 700;
+}
 /**/
 .my_paging{
     text-align: center;
@@ -206,8 +198,11 @@ color: #e3930f;
             <div class="my_history1" th:each="mylecture:${mylecture}">
 	     		 <th:block th:if="${mylecture}">
 	                <div id="imageArea" class="a"><img th:src="@{/images/upload/{img}(img=${mylecture.lecture.lThumbnail})}"></div>
-	                <div id="ltitle"class="a"><span th:text=${mylecture.lecture.lTitle}></span></div>
-	                <div id="time" class="a"><span th:text=${mylecture.lrStartTime}></span></div>
+	                <div class="b">
+		                <div id="ltitle">강의명 : <span th:text=${mylecture.lecture.lTitle}></span></div>
+		                <div id="instructor">강사님 : <span th:text=${mylecture.instructor.instructorName}></span></div>
+		                <div id="time">시간: <span th:text=${mylecture.lrStartTime}></span></div>
+	                </div>
 	         	</th:block> 
             </div>
           

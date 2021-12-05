@@ -33,6 +33,7 @@
 		<result property="lrStartTime" column="LR_START_TIME"></result>
 		<result property="lrEndTime" column="LR_END_TIME"></result>
 		<association property="lecture" resultMap="lectureResultMap"/>
+		<association property="instructor" resultMap="instructorResultMap"/>
 </resultMap>
 <resultMap type="com.kh.khculture.lecture.model.vo.Lecture" id="lectureResultMap">
 		<id property="lNo" column="l_no"></id>
@@ -42,6 +43,14 @@
 		<result property="lcNo" column="LC_NO"></result>
 		<result property="ltNo" column="lT_NO"></result>
 </resultMap>
+<resultMap type="com.kh.khculture.lecture.model.vo.Instructor" id="instructorResultMap">
+		<id property="instructorNo" column="INSTRUCTOR_NO"></id>
+		<result property="instructorName" column="INSTRUCTOR_NAME"></result>
+		<result property="profilePhoto" column="PROFILE_PHOTO"></result>
+		<result property="birthDate" column="BIRTH_DATE"></result>
+		<result property="instructorPhone" column="INSTRUCTOR_PHONE"></result>
+		<result property="career" column="CAREER"></result>
+	</resultMap>
 
 <!-- Reply -->
 <resultMap  type="com.kh.khculture.board.model.vo.Reply" id="ReplyListResultMap" >
@@ -58,8 +67,8 @@
 
 <!-- 좋아요  -->
 <resultMap id="lovitResultMap" type="com.kh.khculture.board.model.vo.Lovit">
-	<id property="b_no" column="B_NO"/>
 	<id property="m_no" column="M_NO"/>
+	<id property="b_no" column="B_NO"/>
 </resultMap>
 
 
@@ -200,6 +209,7 @@ SELECT
  ,L_THUMBNAIL
  ,LR_END_DATE
  , SUM_B_STAR
+ ,instructor_Name
 FROM  (
 	SELECT                                 
 		LR_NO
@@ -207,10 +217,12 @@ FROM  (
 		FROM BOARD 
 		JOIN LECTURE_REGISTRATION USING(LR_NO)
 		JOIN LECTURE USING (L_NO)
-		<![CDATA[ where B_ENROLL_DATE  between sysdate-7 and sysdate ]]>
+		<![CDATA[ where B_ENROLL_DATE  between sysdate-30 and sysdate]]>
+		AND B_STATUS= 'Y'
 	GROUP BY LR_NO  )
 JOIN LECTURE_REGISTRATION USING(LR_NO)
 JOIN LECTURE USING(L_NO)
+join instructor using(instructor_no)
 <![CDATA[ where (LR_END_DATE  between sysdate and sysdate+30) 
 AND  ROWNUM  <=3 ]]>
 ORDER BY 5 DESC
@@ -241,13 +253,14 @@ SELECT
 
 </update>
 <delete id="boardDelete" parameterType="com.kh.khculture.board.model.vo.Board">
-<!-- UPDATE
+UPDATE
 BOARD
 SET B_STATUS ='N'
-WHERE B_NO = #{ b_no } -->
+WHERE B_NO = #{ b_no } 
+<!-- 
 delete
-from board where b_no=#{ b_no }
-
+from board where b_no=#{ b_no } 
+-->
 </delete>
 
 <insert id="replyInsert" parameterType="com.kh.khculture.board.model.vo.Reply">
@@ -321,7 +334,7 @@ where r_no = #{rno}
 select
 *
 from board
-where m_no = #{mno} and lr_no= #{lr_no}  and ( b_status='N' or b_status='Y')
+where m_no = #{mno} and lr_no= #{lr_no}  and b_status='Y'
 </select>
 
 <update id="increaseCount" parameterType="com.kh.khculture.board.model.vo.Board">

@@ -60,6 +60,7 @@ public class BoardController {
 		model.addAttribute("boardList",returnMap.get("boardList"));
 		model.addAttribute("rankList",returnMap.get("rankList"));
 		model.addAttribute("principal",userImpl);
+		log.info("rankList : {}" , returnMap.get("rankList"));
 		return "board/boardList";
 	}
 	
@@ -102,41 +103,28 @@ public class BoardController {
 		
 		int lovit=0;
 		//요청으로부터 쿠키 정보 읽어옴
-				Cookie[] cookies = request.getCookies();	
-				//bcount라는 쿠키 값 담을 변수
-				String bcount = "";
-				//쿠키가 잘 넘어왔다면
-				if(cookies != null && cookies.length > 0) {
-					//쿠기 값 배열을 반복하며 탐색
-					for(Cookie c: cookies) {
-						// 읽은 게시물 정보를 저장해두는 쿠키의 이름 bcount가 있는지 확인
-						if(c.getName().equals("bcount")) {
-							// bcount에 |101|100|80|를 담음
-							bcount = c.getValue();
-						}
-					}
+		Cookie[] cookies = request.getCookies();	
+		String bcount = "";
+		if(cookies != null && cookies.length > 0) {
+			for(Cookie c: cookies) {
+				if(c.getName().equals("bcount")) {
+					bcount = c.getValue();
 				}
-				
-				if(bcount.indexOf("|"+b_no +"|") == -1) {
-					// 해당 게시글번호를 붙여서                   
-					Cookie newBcount  = new Cookie("bcount",bcount + "|" +b_no+ "|" );
-					//유효기간(setMaxAge -> 초단위)
-					newBcount.setMaxAge(60*60*24);
-					//응답에 쿠키를 담음
-					response.addCookie(newBcount);
-					//조회수 증가 로직 실행
-					int result = boardService.increaseCount(b_no);
-					
-					if(result > 0) {
-						System.out.println("조회수 증가 성공");
-					}else {
-						System.out.println("조회수 증가 실패");
-					}
-				}/*else {
-					System.out.println("다시 조회시 조회수 증가히자 않음");
-				}*/
-				
-				//게시글 조회
+			}
+		}
+		
+		if(bcount.indexOf("|"+b_no +"|") == -1) {
+			Cookie newBcount  = new Cookie("bcount",bcount + "|" +b_no+ "|" );
+			newBcount.setMaxAge(60*60*24);
+			response.addCookie(newBcount);
+			int result = boardService.increaseCount(b_no);
+			
+			if(result > 0) {
+				System.out.println("조회수 증가 성공");
+			}else {
+				System.out.println("조회수 증가 실패");
+			}
+		}
 		
 		Board b = boardService.selectBoard(b_no); //선택한 게시물 
 		
@@ -158,10 +146,6 @@ public class BoardController {
 		return mv;
 		
 	}
-	
-	
-	
-	
 	/* ********************************************* */
 
 	//로그인 유저가 insertView로 가는지, 비로그인 유저가 insertView로 가는지 판단.
@@ -185,6 +169,7 @@ public class BoardController {
 	//작성한 내용을 DB에 insert해줌
 	@PostMapping("insert")
 	public String boardInsert2(Board NewBoard,@AuthenticationPrincipal UserImpl userImpl,RedirectAttributes rttr) {
+		
 		Integer result = boardService.myRiewSelect(NewBoard.getLr_no(),userImpl.getMno());
 		if(result != null) {
 			rttr.addFlashAttribute("message","이미 작성된 게시물 입니다.");
@@ -215,8 +200,10 @@ public class BoardController {
 	
 	
 	@PostMapping("delete")
-	public String boardDelete(Board deleteBoard, @RequestParam("b_no") int b_no) {
+	public String boardDelete(Board deleteBoard, @RequestParam("b_no") int b_no,RedirectAttributes rttr) {
 		boardService.boardDelete(deleteBoard);
+		log.info("deleteBoard:{}",deleteBoard);
+		rttr.addFlashAttribute("boardDelete","제목이 ["+deleteBoard.getB_title() + "]인 게시물이 삭제 되었습니다.");
 		return "redirect:/board/boardList";
 	}
 	
