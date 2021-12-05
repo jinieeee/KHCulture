@@ -83,6 +83,7 @@ select
     b_no
     , b_title
     , b_content
+    , b_count
     , b_enroll_date
     , b_modify_date
     , b_star
@@ -114,6 +115,7 @@ WHERE RNUM BETWEEN #{ startRow } AND #{ endRow }
 		B.B_NO
 		, B.B_TITLE
 		, B.B_CONTENT
+		, B.B_COUNT
 		, B.M_NO
 		, B.B_ENROLL_DATE
 		, B.B_COUNT
@@ -320,8 +322,13 @@ select
 *
 from board
 where m_no = #{mno} and lr_no= #{lr_no}  and ( b_status='N' or b_status='Y')
-
-
-
 </select>
+
+<update id="increaseCount" parameterType="com.kh.khculture.board.model.vo.Board">
+update
+board
+set b_count = b_count+1
+where b_no= #{b_no}
+
+</update>
 </mapper>

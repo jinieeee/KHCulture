@@ -61,8 +61,7 @@ public interface BoardMapper {
 	int replyDelete(int rno);
 	
 	//댓글수정
-//	Map<String, Object> replyModify(Reply reply);
-//	Map<String, Object> replyModify(Map<String, Object> replymap);
+	int replyModify(Map<String, Object> replymap);
 
 
 	//****************************
@@ -72,7 +71,8 @@ public interface BoardMapper {
 	// 후기 작성할때 이미 작성한 후기 
 	Integer myRiewSelect(@Param("lr_no")int lr_no, @Param("mno")int mno);
 
-	int replyModify(Map<String, Object> replymap);
+	//조회수
+	int increaseCount(int b_no);
 
 
 

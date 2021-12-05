@@ -125,12 +125,14 @@ div#detailMove {
 }
 #lecturetitle{
 font-size:20px;
+color: darkgoldenrod;
 }
 #title{
 font-size:20px;
 }
 span#board_no {
     width: 100px;
+    padding-top: 26px;
 }
 .board_select:hover #title , .board_select:hover #lecturetitle{
   /*  background-color: #f09b5e;*/
@@ -143,9 +145,10 @@ span#board_no {
 }
 #board_comment{
     text-align: left;
-    width: 983px;
+    width: 926px;
     font-size: 15px;
     margin-bottom: 10px;
+    padding-left: 50px;
     /*background-color: aquamarine;*/
 }
 #board_star{
@@ -238,6 +241,10 @@ span#board_no {
                 <span id="date" th:text="${#dates.format(b.b_enroll_date,'yyyy-MM-dd')}"></span> <br>
                 <span id="lecturetitle" th:text="${b.lectureOpen.lecture.lTitle}"> </span><br>
                 <span id="title" th:text="${b.b_title}"> 비누방울 놀이 교실 </span><br>
+            </span>
+            <span>
+            	조회수
+            	<h3 th:text="${b.b_count}"/>
             </span>
             <span>
             	 <div>

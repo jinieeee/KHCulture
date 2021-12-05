@@ -48,6 +48,9 @@ public interface BoardService {
 
 	int replyModify(Reply reply);
 
+//조회수 증가
+	int increaseCount(int b_no);
+
 
 	
 	//*************************************************************
