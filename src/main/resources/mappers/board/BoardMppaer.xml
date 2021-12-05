@@ -119,7 +119,10 @@ WHERE RNUM BETWEEN #{ startRow } AND #{ endRow }
 		, B.B_COUNT
 		, B.B_STAR
 		, B.B_STATUS
+		,L_TITLE
 	FROM BOARD B
+	JOIN LECTURE_REGISTRATION USING(LR_NO)
+    JOIN LECTURE USING(L_NO) 
     WHERE B.B_STATUS='Y'
      AND B.B_NO = #{ b_no }
 
@@ -301,6 +304,17 @@ set r_status = 'N'
 where r_no = #{ rno }
 
 </update>
+
+<update id="replyModify" parameterType="hashmap" >
+update
+Reply
+set r_content = #{content}  , r_enroll_date = sysdate
+where r_no = #{rno}
+
+
+</update>
+
+
 <select id="myRiewSelect" resultType="Integer">
 select
 *

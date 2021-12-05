@@ -39,9 +39,16 @@ public interface BoardService {
 	List<Reply> selectReplyList(int b_no);
 	// 댓글 삭제
 	int replyDelete(int rno);
+	// 댓글 수정
+//	Map<String, Object> replyModify(Reply reply);
 
-
+    // 후기 작성할때 이미 작성한 후기
 	Integer myRiewSelect(int lr_no, int mno);
+
+
+	int replyModify(Reply reply);
+
+
 	
 	//*************************************************************
 	

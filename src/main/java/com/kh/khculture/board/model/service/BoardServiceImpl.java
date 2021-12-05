@@ -139,16 +139,36 @@ public class BoardServiceImpl implements BoardService {
 		System.out.println("serviceImplt = " + rno );
 		return boardMapper.replyDelete(rno);
 	}
-
-
+/*	
+	//댓글 수정
+	@Override
+	public Map<String, Object> replyModify(Reply reply) {
+		Map<String,Object> replymap = new HashMap<>();
+		replymap.put("rno", reply.getR_no());
+		replymap.put("content", reply.getR_content());
+		int result = boardMapper.replyModify(replymap);
+		log.info("replyModifyImpl : {} ",replymap);
+		return result;
+	}
+*/
+	// 후기 작성할때 이미 작성한 후기 
 	@Override
 	public Integer myRiewSelect(int lr_no, int mno) {
 		
 		return boardMapper.myRiewSelect(lr_no,mno);
 	}
-	
 
-	
+
+	@Override
+	public int replyModify(Reply reply) {
+		Map<String,Object> replymap = new HashMap<>();
+		replymap.put("rno", reply.getR_no());
+		replymap.put("content", reply.getR_content());
+		int result = boardMapper.replyModify(replymap);
+		log.info("replymap : {} ",result); //DB수정 잘됨
+		return result;
+	}
+
 
 
 }
