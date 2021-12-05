@@ -53,7 +53,7 @@ public class BoardServiceImpl implements BoardService {
 		
 		
 		List<Board> rankList = boardMapper.rankList(); // 랭킹
-	//	log.info("rankList : {} ",rankList);
+		log.info("rankList : {} ",rankList);
 		
 		returnMap.put("pi", pi);
 		returnMap.put("boardList", boardList);

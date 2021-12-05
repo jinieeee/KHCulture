@@ -209,7 +209,7 @@ FROM  (
 	GROUP BY LR_NO  )
 JOIN LECTURE_REGISTRATION USING(LR_NO)
 JOIN LECTURE USING(L_NO)
-<![CDATA[ where (LR_END_DATE  between sysdate-30 and sysdate) 
+<![CDATA[ where (LR_END_DATE  between sysdate and sysdate+30) 
 AND  ROWNUM  <=3 ]]>
 ORDER BY 5 DESC
 

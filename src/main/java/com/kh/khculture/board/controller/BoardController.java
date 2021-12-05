@@ -82,7 +82,7 @@ public class BoardController {
 			mv.addObject("Board",b);
 			mv.setViewName("board/boardDetail");
 		}
-		
+		log.info(replyList+"");
 		return mv;
 		
 	}

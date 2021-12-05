@@ -198,7 +198,7 @@ span#board_no {
     
     <div class="board_ranking">
         <div id="board_ranking_1"  th:each="rankList:${ rankList }" >
-             <div id="imgBox"><img class="rankImage" th:src="@{resources/uploadFiles/upload{img}(img=${rankList.LectureOpen.Lecture.lThumbnail})}"></div>
+             <div id="imgBox"><img class="rankImage" th:src="@{/images/upload/{img}(img=${rankList.LectureOpen.Lecture.lThumbnail})}"></div>
          	 <div id="ltitle"> <span th:text="${rankList.LectureOpen.Lecture.lTitle}"></span></div>
         </div>
     </div>
