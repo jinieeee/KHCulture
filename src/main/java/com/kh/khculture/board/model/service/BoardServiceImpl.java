@@ -53,7 +53,7 @@ public class BoardServiceImpl implements BoardService {
 		
 		
 		List<Board> rankList = boardMapper.rankList(); // 랭킹
-		log.info("rankList : {} ",rankList);
+//		log.info("rankList : {} ",rankList);
 		
 		returnMap.put("pi", pi);
 		returnMap.put("boardList", boardList);
@@ -139,18 +139,7 @@ public class BoardServiceImpl implements BoardService {
 		System.out.println("serviceImplt = " + rno );
 		return boardMapper.replyDelete(rno);
 	}
-/*	
-	//댓글 수정
-	@Override
-	public Map<String, Object> replyModify(Reply reply) {
-		Map<String,Object> replymap = new HashMap<>();
-		replymap.put("rno", reply.getR_no());
-		replymap.put("content", reply.getR_content());
-		int result = boardMapper.replyModify(replymap);
-		log.info("replyModifyImpl : {} ",replymap);
-		return result;
-	}
-*/
+
 	// 후기 작성할때 이미 작성한 후기 
 	@Override
 	public Integer myRiewSelect(int lr_no, int mno) {
@@ -165,7 +154,15 @@ public class BoardServiceImpl implements BoardService {
 		replymap.put("rno", reply.getR_no());
 		replymap.put("content", reply.getR_content());
 		int result = boardMapper.replyModify(replymap);
-		log.info("replymap : {} ",result); //DB수정 잘됨
+	//	log.info("replymap : {} ",result); //DB수정 잘됨
+		return result;
+	}
+
+	//조회수 증가
+	@Override
+	public int increaseCount(int b_no) {
+		int result=boardMapper.increaseCount(b_no);
+		log.info("result:{}",result);
 		return result;
 	}
 

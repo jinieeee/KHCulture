@@ -205,6 +205,10 @@ div#noReply {
           	<div><img src="/images/mypage/heart.png" id="board_heart2"  th:attr="onclick=|like('${Board.b_no}')|" ></div>  	
           	</th:block>
         </div>
+        <div>
+        <div>조회수</div>
+        <h2 style="margin-top:0px;" th:text="${Board.b_count}"></h2>
+        </div>
     </div>
 
 	
