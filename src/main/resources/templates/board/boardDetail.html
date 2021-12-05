@@ -15,24 +15,28 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
     background-color: #F0B95E;
     display: flex;
 }
-#board_category2{
+#board_no2{
     width: 100px;
     padding: 8px 10px;
     border-right: 3px solid black;
-   /* background-color: aquamarine;*/
+    padding-top: 25px;
+    text-align: center;
     
 }
 #board_comment2{
-    width: 1000px;
+    width: 948px;
     padding: 8px 10px;
     border-right: 3px solid black;
    /* background-color: aquamarine;*/
     
 }
-#board_date2{
+#board_date2 {
     width: 150px;
     padding: 8px 10px;
-   /* background-color: aquamarine;*/
+    width: 133px;
+    padding: 8px 10px;
+    padding-top: 25px;
+    text-align: center;
 }
 .board_detail_boundary{
     width: 1200px;
@@ -83,25 +87,26 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
     
 }
 .DMbtnArea{
-display:flex;
+	display:flex;
 }
 .DMbtnArea button{
-width:80px;
-margin-right:8px;
+	width: 54px;
+    margin-right: 8px;
+    height: 38px;
 }
 button.button:hover {
-    font-weight: bold;
-    width: 103px;
-    height: 55px;
+    font-weight: 1000;
+    color:black;
 }
 .button:nth-child(2) {
     background-color: coral;
 }
 
 .board_detail_reply{
-    width: 1320px; /* 이 폭을 줄이면 세부폭은 알아서 따라옴 */
+    width: 1378px; /* 이 폭을 줄이면 세부폭은 알아서 따라옴 */
     margin: 0 auto;
     margin-bottom: 10px;
+    padding-left:66px;
     /*background-color: cadetblue;*/
 }
 .board_reply_select{
@@ -147,8 +152,12 @@ input#textLengthCheck {
 <body>
     
     <div class="board_detail_title">
-        <div id="board_category2">비누공방</div>
-        <div id="board_comment2" th:text="${Board.b_title}"></div>
+        <div id="board_no2" th:text="${Board.b_no}"></div>
+        <div>
+	        <div id="board_comment2" th:text="${Board.lectureOpen.lecture.lTitle}" style="font-size: 20px; font-weight:bold;"></div>
+	        <div id="board_comment2" th:text="${Board.b_title}"></div>
+        </div>
+        
         <div id="board_date2" th:text="${#dates.format(Board.b_enroll_date,'yyyy-MM-dd')}"></div>
     </div>
     
@@ -229,9 +238,9 @@ input#textLengthCheck {
 	       		<input type="hidden" name="rno" th:value="${Reply.r_no}">
 	       		<input type="hidden" name="mno" th:value="${Reply.m_no}">
 	       		<input type="hidden" name="loginUser" th:value="${mno}">
-	            <div id="reply_name"><span th:text="${Reply.name}"></span></div> 
-	            <div id="reply_comment2"><span th:text="${Reply.r_content}"></span></div> 
-	          	<div id="reply_date"><span th:text="${#dates.format(Reply.r_enroll_date,'yyyy-MM-dd')}"></span></div>
+	            <div id="reply_name"><span id="name" th:text="${Reply.name}"></span></div> 
+	            <div id="reply_comment2"><span id="content" th:text="${Reply.r_content}"></span></div> 
+	          	<div id="reply_date"><span id="date" th:text="${#dates.format(Reply.r_enroll_date,'yyyy-MM-dd')}"></span></div>
 	          <th:block sec:authorize="!isAnonymous()">
 	           <span class="DMbtnArea" th:if="${#authentication.principal.mno} == ${Reply.m_no}">
 		             <button type="submit" class="button cmt_btn" th:attr="onclick=|replyDelete('${Reply.r_no}')|">삭제</button>
@@ -239,7 +248,7 @@ input#textLengthCheck {
 		             <!--  ****************************** 이거 삭제되면 처음으로 돌아감 ************************************ -->
 		             <!--  ****************************** 이거 삭제되면 처음으로 돌아감 ************************************ -->
 		             <!--  ****************************** 이거 삭제되면 처음으로 돌아감 ************************************ -->
-		             <button type="button"  class="button cmt_btn">수정</button>
+		             <button type="button"  th:attr="onclick=|replyModify('${Reply.r_no}')|" class="button cmt_btn">수정</button>
 		             
 	       	   </span>	
 	       	   </th:block>
@@ -292,10 +301,11 @@ input#textLengthCheck {
 					       	+'<input type="hidden" name="mno" value='+list[key].m_no+'>'
 					       	+'<input type="hidden" name="loginUser" value="'+list[key].m_no+'">'
 					        +'<div id="reply_name"><span>'+ list[key].name +'</span></div> '
-					        +'<div id="reply_comment2"><span>'+ list[key].r_content + '</span></div> '
+					        +'<div id="reply_comment2"><span id="content" >'+ list[key].r_content + '</span></div> '
 					        +'<div id="reply_date"><span>'+ list[key].r_enroll_date+ '</span></div>'
 					        if ( loginUser ==  list[key].m_no){
-						        html += '<span><button type="submit" class="button cmt_btn" onclick="replyDelete('+list[key].r_no+')">삭제</button></sapn>'
+						        html += '<span class="DMbtnArea"><button type="submit" class="button cmt_btn" onclick="replyDelete('+list[key].r_no+')">삭제</button>'
+						              + '<button type="button" class="button cmt_btn"  onclick="replyModify('+list[key].r_no+')">수정</button></sapn> '
 						        	  +'</div>'
 				            }else{
 					        	html +='</div>'
@@ -354,29 +364,105 @@ input#textLengthCheck {
 				});
 		}	
 		
+	   /* 수정버튼 -> 적용버튼 */
+	   function replyModify(rno){
+		   var bno = $("[name=b_no]").val();
+		   var loginUser = '[[${mno}]]';
+		   var mno = '[[${mno}]]';
+		   var name = $("#name").text();
+		   var date = $("#date").text();
+		   var content = $("#content").text();
+		   
+		   console.log(rno); // 26
+		   console.log(bno); // 20
+		   console.log(content); // ''
+		   console.log(mno); //4
+		   console.log(name);
+		   console.log(date);
+		   
+		   
+		   
+		   var html='';
+		   
+		   html +='<div class="board_reply_select">'
+		       	+'<input type="hidden" name="rno" value='+rno+'>'
+		       	+'<input type="hidden" name="mno" value='+mno+'>'
+		       	+'<input type="hidden" name="loginUser" value="'+mno+'">'
+		       	+'<div id="reply_name"><span>'+ name +'</span></div> '
+		        +'<div id="reply_comment2" style="display:flex;">'
+		        +'<textarea style="width: 885px; margin: 0px 15px 0px 0px; height: 38px;" type="text" id="board_reply_insert" name="content2" >'+content+'</textarea>'
+		        +'</div>'
+		        +'<div id="reply_date"><span>'+ date+ '</span></div>'
+		        if ( loginUser ==  mno){
+			        html += '<span class="DMbtnArea style="padding-left: 20px;padding-top: 8px;"">'+'<button type="submit" class="button cmt_btn" onclick="replyDelete('+rno+')">삭제</button>'
+			              + '<button type="button" class="button cmt_btn"  onclick="replyModify2('+rno+')">적용</button></sapn> '
+			        	  +'</div>'
+			        	  +'</div>'
+	            }else{
+		        	html +='</div>'
+			    }
+		        $(".board_detail_reply").html(html);
+				$("#board_reply_insert").val("");
+				
+			}
 	   
-		
+	   // 수정 정보 넘기기
+	   function replyModify2(rno){
+		   var content2 = $("[name=content2]").val();
+		   var content = $("#content").text();
+		   
+		   console.log(content2);
+		   console.log(content);
+		   console.log('replyModify2');
+		   console.log(rno);
+		   
+		   if(content2.length > 20){
+				 alert('글자수가 너무 많아요');
+				 return;
+			}else{
+				
+		   var obj= {r_content : content2, r_no: rno};
+		   console.log('obj');
+		   console.log(obj);
+		   $.ajax({
+			   url:'/board/replymodify',
+			   type:'post',
+			   data:JSON.stringify(obj),
+			   contentType : "application/json; charset=utf-8",
+			   success : function(data){
+				   console.log('수정성공!');
+				   window.location.reload(true);
+			   },
+			   error: function(e){
+				   console.log('가공실패')
+			   }
+		   });
+			}
+		   
+		   
+	   }
+		   
+	   		
 		function replyLoad(list){
 			var html='';
 			var loginUser=$("[name=loginUser]").val();
 			console.log("리로드")
 			console.log(loginUser)
+				console.log(list);
 			
 			for(var key in list){
 				html +='<div class="board_reply_select">'
-					
 		       	+'<input type="hidden" name="rno" value='+list[key].r_no+'>'
 		       	+'<input type="hidden" name="mno" value='+list[key].m_no+'>'
 		       	+'<input type="hidden" name="loginUser" value="'+list[key].m_no+'">'
 		        +'<div id="reply_name"><span>'+ list[key].name +'</span></div> '
-		        +'<div id="reply_comment2"><span>'+ list[key].r_content + '</span></div> '
+		        +'<div id="reply_comment2" ><span  id="content">'+ list[key].r_content + '</span></div> '
 		        +'<div id="reply_date"><span>'+ list[key].r_enroll_date+ '</span></div>'
 		        if ( loginUser ==  list[key].m_no){
-			        html += '<span><button type="submit" class="button cmt_btn" onclick="replyDelete('+list[key].r_no+')">삭제</button></sapn> '
+			        html += '<span class="DMbtnArea"><button type="submit" class="button cmt_btn" onclick="replyDelete('+list[key].r_no+')">삭제</button>'
+			              + '<button type="button" class="button cmt_btn"  onclick="replyModify('+list[key].r_no+')">수정</button></sapn> '
 			        	  +'</div>'
-			        	  
 	            }else{
-	            	
 		        	html +='</div>'
 	            }
 			}

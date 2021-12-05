@@ -43,8 +43,6 @@ form#myRiew_form {
     margin: 0 auto;
     display: flex;
     padding-bottom: 15px;
-    
-    
 }
 .myRiew_select > span{
     padding: 8px 10px;
@@ -61,22 +59,25 @@ border-bottom: 1px solid #F0B95E;
 table.myRiew_select tr{
 height:60px;
 }
-/*
-table.myRiew_select:hover  {
-    cursor: pointer;
-    font-weight: bold;
-}
-*/
+
 .myRiew_list .myRiew_select {
     margin: auto;
     display: flex;
     justify-content: space-around;
     font-size: 20px;
 }
+tbody {
+    width: 100%;
+}
+th#c {
+    width: 57%;
+}
+th#d {
+    width: 20%;
+}
 #myRiew_comment{
     text-align: left;
     width: 600px;
-    /*background-color: aquamarine;*/
 }
 .my_paging_area{
 	width: 890px;
@@ -90,11 +91,7 @@ table.myRiew_select:hover  {
 	line-height: 50px;
 	width: 480px;
 	justify-content: center;
-    /*text-align: center;
-    width: 800px;
-    margin: 0 auto;
-    margin-top: 10px;
-    background-color: antiquewhite;*/
+ 
 }
 .myRiew_paging li{
 	margin-right:51px;
@@ -121,19 +118,14 @@ a{
     text-decoration: none;
     color: #282A35;
     display: block;
-    /* text-align: center; */
 }
 td.a {
     text-align: left;
-    
     padding-left: 14px;
     padding-right: 14px;
     width: 983px;
 }
 
-#c{
-width: 890px;
-}
 
 tr:hover td:nth-child(1) {
     font-weight: bold;
@@ -169,19 +161,22 @@ tr:hover td:nth-child(1) {
 	        <table class="myRiew_select">
 		         <!-- 
 		        	<colgroup>
-		        		<col style="width: 20%">
-		        		<col style="width: 65%">
-		        		<col style="width: 15%">
+		        		<col width="50px" style="background: red" />
+					    <col width="200px" style="background: blue" />
+					    <col width="100px" style="background: green" />
 		        	</colgroup>
 		         -->
-	        	<tr><th style="font-size : 30px;">강의명</th><th id="c"></th><th style="font-size : 30px;">날짜</th></tr>
-	        	<tr th:each="myreviewlist: ${myReviewList}">
-	            <td>
-	            <a th:href="@{/board/detail.do?b_no={bno}(bno=${myreviewlist.b_no})}">[[${myreviewlist.lectureOpen.lecture.lTitle}]]</a></td>
-	            <td class="selectbno" th:text="${myreviewlist.b_title}"></td>
-	            <td th:text="${#dates.format(myreviewlist.b_enroll_date,'yyyy-MM-dd')}"></td>
-	            <!-- <input type="hidden" name="bno" th:value="${myreviewlist.b_no}"> -->
-	        	</tr>
+	        		<tr><th style="font-size : 30px;">강의명</th><th id="c"></th><th style="font-size : 30px;">날짜</th></tr>
+	        	
+	        	
+		        	<tr th:each="myreviewlist: ${myReviewList}">
+		            <td>
+		            <a th:href="@{/board/detail.do?b_no={bno}(bno=${myreviewlist.b_no})}">[[${myreviewlist.lectureOpen.lecture.lTitle}]]</a></td>
+		            <td class="selectbno" th:text="${myreviewlist.b_title}"></td>
+		            <td th:text="${#dates.format(myreviewlist.b_enroll_date,'yyyy-MM-dd')}"></td>
+		            <!-- <input type="hidden" name="bno" th:value="${myreviewlist.b_no}"> -->
+	        		</tr>
+	        	
 	        </table>
 	    </div>   
 

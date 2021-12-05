@@ -49,11 +49,7 @@ public class NoticeController {
 	
 	@GetMapping("detail.do")
 	public ModelAndView noticeDetail( ModelAndView mv, @RequestParam int n_no) {
-	
-		//System.out.println(n_no);
 		Notice n = noticeService.selectNotice(n_no);
-		//System.out.println("selectNotice 의 n  = "+n);
-		//System.out.println("selectNotice 의 n  = "+n.getN_enroll_date());
 		mv.addObject("notice",n);
 		mv.setViewName("notice/noticeDetail");
 		
@@ -64,14 +60,11 @@ public class NoticeController {
 	//게시글 insert
 	@GetMapping("insert") 
 	public String noticeInsertPage(Model model, @AuthenticationPrincipal UserImpl userImpl) {
-		
-		log.info("userMno : {} ", userImpl.getMno());
 		model.addAttribute("user",userImpl.getMno());
 		return "notice/noticeInsert";	//HTMl 경로	
 	}
 	@PostMapping("insert")
 	public String noticeInsert(Notice Newnotice) {
-	//	System.out.println("Newnotice = " + Newnotice);
 		noticeService.noticeInsert(Newnotice);
 		return "redirect:/notice/noticeList";
 	}
@@ -79,9 +72,7 @@ public class NoticeController {
 	//게시글 수정하기
 	@GetMapping("updateView")
 	public String noticeUpdatePage(Model model,@RequestParam("n_no") int n_no) {
-	//	System.out.println(n_no);
 		Notice n = noticeService.selectNotice(n_no);
-	//	System.out.println(n);
 		model.addAttribute("notice", n);
 		return "notice/noticeUpdate";
 	}
@@ -90,20 +81,13 @@ public class NoticeController {
 	@PostMapping("update")
 	public String noticeUpdate(Notice uptNotice) {
 		noticeService.noticeUpdate(uptNotice);
-	//	System.out.println("uptNotice = "+uptNotice);
 		return "redirect:/notice/detail.do?n_no="+ uptNotice.getN_no();
 	}
-	
-	
-	
-	
-	
 	@PostMapping("delete")
 	public String noticeDelete(Notice deleteNotice, @RequestParam("n_no") int n_no) {
 		noticeService.deleteNotice(deleteNotice);
 		return "redirect:/notice/noticeList";
 	}
 	
-
 }
 

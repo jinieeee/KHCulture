@@ -1,6 +1,7 @@
 package com.kh.khculture.board.controller;
 
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -208,6 +209,7 @@ public class BoardController {
 		List<Reply> replyList = null; 
 		
 		if(result > 0) {
+			//리스트 가져오기
 			replyList = boardService.selectReplyList(r.getB_no());
 		}
 		return replyList;
@@ -228,7 +230,22 @@ public class BoardController {
 		
 		return replyDelete;
 	}
-	
+	/*
+	@PostMapping("replymodify")
+	@ResponseBody
+	public Map<String,Object> replyModify(@RequestBody Reply reply) {
+		log.info("reply : {}",reply);
+		Map<String,Object> map = boardService.replyModify(reply);
+		return map;
+	}
+	*/
+	@PostMapping("replymodify")
+	@ResponseBody
+	public int replyModify(@RequestBody Reply reply) {
+		log.info("reply : {}",reply); // 수정 내용
+		int result = boardService.replyModify(reply);
+		return result;
+	}
 
 }	
 

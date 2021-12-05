@@ -36,6 +36,10 @@
 #Lname2 , #Ltitle2 ,#Limage2 ,#Lcomment2{
     padding: 10px;
 }
+input#board_Update3 {
+    width: 600px;
+}
+/* 업로드 제목 */
 #update_Update:hover {
     height: px;
     font-weight: bold;
@@ -70,14 +74,18 @@ div#Limage {
 .button:nth-child(2) {
     background-color: coral;
 }
-
+.button:hover {
+color:black;
+font-weight: 1000;
+cursor:pointer;
+}
 
 </style>
 </head>
 <header th:include="fragments/header.html"></header>
 <body>
    <div class="titleArea">
-    <h1 align="center">등록하기</h1>
+    <h1 align="center">수정하기</h1>
     </div>
     <div class="board_Update_boundary">
         <form name="boardUpdateForm"  method="post">

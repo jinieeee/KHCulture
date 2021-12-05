@@ -13,13 +13,13 @@ import com.kh.khculture.board.model.vo.Search;
 
 @Mapper
 public interface BoardMapper {
-	/*
+	
 	//총 게시물 수
-	int getListCount();
+	int getListCount(Search search);
 	
 	//페이징할 게시글 수
-	List<Board> selectList(@Param("startRow") int startRow, @Param("endRow") int endRow);
-	*/	
+	List<Board> selectList(Map<String, Object> map);
+		
 
 	// 후기 작성
 	int boardInsert(Board newBoard);
@@ -40,7 +40,7 @@ public interface BoardMapper {
 	int likedelete(Lovit lovit);
 	
 	// 랭킹 정보 가지고 오기
-//	List<Board> rankList();
+	List<Board> rankList();
 
 	//후기 수정페이지에 기본적으로 넣어주는 값 select
 	Board updateBoardView(int b_no);
@@ -59,27 +59,23 @@ public interface BoardMapper {
 	
 	//댓글 삭제
 	int replyDelete(int rno);
+	
+	//댓글수정
+//	Map<String, Object> replyModify(Reply reply);
+//	Map<String, Object> replyModify(Map<String, Object> replymap);
 
 
 	//****************************
 
-/*
-	List<Board> selectBoardList(Search search);
-
-	Map<String, Object> getListCount2(String searchValue);
-
 	
-*/
 
-
-	int getListCount(Search search);
-
-	List<Board> selectList(Map<String, Object> map);
-
-	List<Board> rankList();
-
-
+	// 후기 작성할때 이미 작성한 후기 
 	Integer myRiewSelect(@Param("lr_no")int lr_no, @Param("mno")int mno);
+
+	int replyModify(Map<String, Object> replymap);
+
+
+
 
 
 	
