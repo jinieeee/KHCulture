@@ -80,7 +80,6 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
     height: 50px;
     font-size: 17px;
     background-color: #F0B95E;
-    background-color: #F0B95E;
     color: white;
     border: none;
     cursor: pointer;
@@ -107,6 +106,7 @@ button.button:hover {
     margin: 0 auto;
     margin-bottom: 10px;
     padding-left:66px;
+    min-height: 322px;
     /*background-color: cadetblue;*/
 }
 .board_reply_select{
@@ -114,6 +114,7 @@ button.button:hover {
     padding: 8px 10px;
     border-bottom: 1px solid #F0B95E;
     padding-left: 76px;
+    
 }
 #reply_name{ 
     border-right: 2px solid black;
@@ -144,6 +145,9 @@ input#textLengthCheck {
     border: 0px;
     width: 55px;
     margin-right: 30px;
+}
+div#noReply {
+    text-align: center;
 }
 
 </style>
@@ -212,27 +216,32 @@ input#textLengthCheck {
 			    <button type="submit" id="board_update" class="button">수정하기</button>
 			</span>
 		</th:block>    
- 			<button type="button" id="board_update" class="button" th:onclick="|location.href='@{/board/boardList}'|"> LIST </button>
-		 </form>
-		 <span>
- 		 </span>
+ 		<button type="button" id="board_update" class="button" th:onclick="|location.href='@{/board/boardList}'|"> LIST </button>
+		</form>
 	 </div>
 	 
-    <th:block  sec:authorize="!isAnonymous()">
-    <div class="board_detail_reply_insert">
+	 <th:block  sec:authorize="!isAnonymous()">
+	 	<div class="board_detail_reply_insert">
          	<input type="hidden" name="b_no" th:value="${Board.b_no}">
          	<input type="text" id="textLengthCheck">
          	 <textarea type="text" id="board_reply_insert" name="content" ></textarea>
          		<span class="input-group-btn">
-                    <button class="button" name="replyInsertBtn" th:attr="onclick=|reply('${Board.b_no}')|">등록</button>
+                    <button class="button btn"  name="replyInsertBtn" th:attr="onclick=|reply('${Board.b_no}')|">등록</button>
                </span>
-    </div>
-    </th:block>
- <!--
-    <span th:text="${#authentication.principal.mno}"></span>
-    <span th:text="${#authentication.principal.name}"></span>
-   -->     
-     <div class="board_detail_reply">
+	 	</div>
+	 </th:block>
+	 <div class="board_detail_reply">
+          <th:block sec:authorize="isAnonymous()">
+	    	 <div id="noReply"> 
+	    	   <img style="width: 90px;" src="/images/common/error.svg">
+	    	   <h1><a style="text-decoration: none; color:red;" href="/member/login">로그인을 해주세요</a></h1>
+	    	 </div>
+          </th:block>
+	      <th:block sec:authorize="!isAnonymous()">
+	     	<th:block th:if="${Reply.toString().equals('[]')}">  
+	    	 <div id="noReply"> <h1>댓글을 입력해주세요.</h1></div>
+	     	</th:block>
+	      </th:block>
         <div class="board_reply_select" th:each="Reply : ${ Reply }"> 
 	 		<th:block th:if="${Reply.r_no != 0}">
 	       		<input type="hidden" name="rno" th:value="${Reply.r_no}">
@@ -241,24 +250,15 @@ input#textLengthCheck {
 	            <div id="reply_name"><span id="name" th:text="${Reply.name}"></span></div> 
 	            <div id="reply_comment2"><span id="content" th:text="${Reply.r_content}"></span></div> 
 	          	<div id="reply_date"><span id="date" th:text="${#dates.format(Reply.r_enroll_date,'yyyy-MM-dd')}"></span></div>
-	          <th:block sec:authorize="!isAnonymous()">
-	           <span class="DMbtnArea" th:if="${#authentication.principal.mno} == ${Reply.m_no}">
-		             <button type="submit" class="button cmt_btn" th:attr="onclick=|replyDelete('${Reply.r_no}')|">삭제</button>
-		             <!--  ****************************** 이거 삭제되면 처음으로 돌아감 ************************************ -->
-		             <!--  ****************************** 이거 삭제되면 처음으로 돌아감 ************************************ -->
-		             <!--  ****************************** 이거 삭제되면 처음으로 돌아감 ************************************ -->
-		             <!--  ****************************** 이거 삭제되면 처음으로 돌아감 ************************************ -->
-		             <button type="button"  th:attr="onclick=|replyModify('${Reply.r_no}')|" class="button cmt_btn">수정</button>
-		             
-	       	   </span>	
-	       	   </th:block>
+		          <th:block sec:authorize="!isAnonymous()">
+		           <span class="DMbtnArea" th:if="${#authentication.principal.mno} == ${Reply.m_no}">
+			             <button type="submit" class="button cmt_btn" th:attr="onclick=|replyDelete('${Reply.r_no}')|">삭제</button>
+			             <button type="button"  th:attr="onclick=|replyModify('${Reply.r_no}')|" class="button cmt_btn">수정</button>
+		       	   </span>	
+		       	  </th:block>
 	     	</th:block>
-	     	<th:block th:if="${Reply.r_no == 0 }">
-	     		<div> 댓글이 없습니다. </div>
-	     	</th:block>
-        </div>
-     
-</div>
+         </div>
+	 </div>
     
 <script>
 	  $("#board_reply_insert").keyup(function(e){
@@ -271,6 +271,16 @@ input#textLengthCheck {
 			  $("#textLengthCheck").html("(20 / 최대 20자)");
 		  }
 	  });
+</script>
+<script>
+	$(".btn").on('click', function(){
+		
+		var content=$("[name=content]").val();
+		if(content.length <= 0){
+			alert('글자수가 너무 작습니다.');
+			return;
+		}
+	});
 </script>
 
 <script>
@@ -473,13 +483,6 @@ input#textLengthCheck {
 
 
 </script>
-
-    
-    
-    
- <!-- ********************** 좋아요 ******************************* -->   
-
- 
 <script>
 
     function like(bno){
@@ -531,11 +534,6 @@ input#textLengthCheck {
    		 }
     }
 </script>
-    
- 
 </body>
-
-
    <footer th:include="fragments/footer.html"></footer>
-
 </html>
