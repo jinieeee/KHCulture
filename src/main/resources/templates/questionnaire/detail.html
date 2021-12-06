@@ -131,7 +131,8 @@ h2 {
 				
 				<!-- 회원 페이지 -->
 					<form method="post" name="deleteQ">
-					<th:block th:if="${#authentication == null}">
+					<!-- <th:block th:if="${#authentication == null}"> -->
+					<th:block sec:authorize="hasRole('MEMBER') && !hasRole('ADMIN')">
 					    <input type="hidden" name="questionnaire_no" th:value="${questionnaire.questionnaire_no}">
 						<div class="content">
 							<h2><span class="title_span">&nbsp;</span> 문의사항 </h2>
