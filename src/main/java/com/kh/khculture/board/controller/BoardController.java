@@ -115,7 +115,8 @@ public class BoardController {
 		
 		if(bcount.indexOf("|"+b_no +"|") == -1) {
 			Cookie newBcount  = new Cookie("bcount",bcount + "|" +b_no+ "|" );
-			newBcount.setMaxAge(60*60*24);
+			/* newBcount.setMaxAge(60*60*24); */
+			newBcount.setMaxAge(60*60);
 			response.addCookie(newBcount);
 			int result = boardService.increaseCount(b_no);
 			
