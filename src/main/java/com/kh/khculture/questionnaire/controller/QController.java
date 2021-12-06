@@ -4,6 +4,7 @@ import java.security.Principal;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.khculture.member.model.vo.UserImpl;
 import com.kh.khculture.questionnaire.model.service.QuestionnaireService;
 import com.kh.khculture.questionnaire.model.vo.Questionnaire;
 
@@ -60,7 +62,15 @@ public class QController {
 		return "questionnaire/insert";
 	}
 	@PostMapping("insert")
-	public String questionnaireInsert(Questionnaire question) {
+	public String questionnaireInsert(Questionnaire question, Principal principal) {
+		
+		if(principal != null) {
+			UserImpl user = (UserImpl)((Authentication)principal).getPrincipal();
+			
+			question.setM_no(user.getMno());
+		}
+		
+		
 		System.out.println("question : " +  question);
 		questionnaireService.questionnaireInsert(question);
 		return "redirect:/questionnaire/list";
