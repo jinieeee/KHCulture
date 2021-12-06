@@ -55,7 +55,7 @@ article .leftDiv p {
 
 .recommendClassArea li {
 	position: relative;
-	width: calc(990px/4 - 20px);
+	min-width: calc(990px/4 - 20px);
 	height: 97%;
 	box-shadow: 2px 2px 12px -5px gray;
 	margin: 3px 10px 0 10px;
