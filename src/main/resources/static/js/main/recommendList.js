@@ -31,7 +31,7 @@ $(function(){
 				html += `</div><div class="txtBox"><a href="/lecture/detail/` + lecture.lrNo + `" class="subject">[ ` + lecture.lrStartDate.substr(5,2) + `/` + lecture.lrStartDate.substr(8, 2) + ` ] ` + lecture.lecture.ltitle + `</a>`
 					  + `<div class="info"><div class="subTxt"><span class="name">` + lecture.instructor.instructorName + `</span>`
 					  + `<span class="time">(` + lecture.lrDay.substr(0,1) + `) ` + lecture.lrStartTime + ` ~ ` + lecture.lrEndTime + `</span></div>`
-					  + `<div class="price"><span class="blind">판매가</span><b>` + lecture.lrFee + `</b>원<span> ( 정원 ` + lecture.lrCount + `명 )</span></div></div></div></div></div></li>`
+					  + `<div class="price"><span class="blind">판매가</span><b>` + lecture.lrFee + `</b>원<span> ( 정원 ` + lecture.lrCapacity + `명 )</span></div></div></div></div></div></li>`
 				recommendClassArea.html(html);
 				dataSize++;
 			}
