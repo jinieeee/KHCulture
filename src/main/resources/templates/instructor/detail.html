@@ -122,7 +122,7 @@ h2 {
 							<h2> <span class="title_span">&nbsp;</span>  프로필 사진</h2>
 							<div class="image_area">
 							<!--  <img src="/images/instructor/pikachu2.png"> -->
-							<img th:src="@{/images/instructor/} + ${instructor.profile_photo }">
+							<img th:src="@{/uploadFiles/instructor/} + ${instructor.profile_photo }">
 							</div>
 
 							<h2> <span class="title_span">&nbsp;</span>  생년월일 </h2>
@@ -134,9 +134,12 @@ h2 {
 							<h2> <span class="title_span">&nbsp;</span>  경력 사항 </h2>
 							<span class="input_area" th:text="${instructor.career}"></span>
 						</div>
+						
+						<th:block sec:authorize="isAnonymous() || (hasRole('MEMBER') && !hasRole('ADMIN'))">
 						<div class="btn_area">
 						<button type="button" id="goList" onclick="location.href='/instructor/list'">목록으로</button>
 						</div>
+						</th:block>
 						
 						<!-- 관리자만 보이는 버튼 -->
 						<th:block sec:authorize="hasRole('ADMIN')">

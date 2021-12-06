@@ -265,7 +265,7 @@ ul, li {
 	                </div>
 	                
 	                <!-- 회원만 보이는 버튼 -->
-	                <th:block sec:authorize="hasRole('MEMBER')">
+	                <th:block sec:authorize="isAnonymous() || (hasRole('MEMBER') && !hasRole('ADMIN'))">
 					<div class="btn_area">
 				    <button id="regist" onclick="location.href='/questionnaire/insert'">작성하기</button>
 				    </div>
