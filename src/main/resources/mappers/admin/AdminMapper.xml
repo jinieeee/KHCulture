@@ -89,7 +89,7 @@
 						AND B.ACC_SECESSION_YN = #{accSecessionYN}
 					</if>
 					<if test='searchDate != null and accSecessionYN != null and accSecessionYN == "Y"'>
-						AND B.ACC_SECESSION_DATE &lt; #{searchDate}
+						AND B.ACC_SECESSION_DATE &lt;= #{searchDate}
 					</if>
 					<if test="searchKeyword != null">
 						AND B.ID LIKE '%' || #{searchKeyword} || '%'
@@ -143,7 +143,7 @@
 						AND B.ACC_SECESSION_YN = #{accSecessionYN}
 					</if>
 					<if test='searchDate != null and accSecessionYN != null and accSecessionYN == "Y"'>
-						AND B.ACC_SECESSION_DATE &lt; #{searchDate}
+						AND B.ACC_SECESSION_DATE &lt;= #{searchDate}
 					</if>
 					<if test="searchKeyword != null">
 						AND B.ID LIKE '%' || #{searchKeyword} || '%'
@@ -180,7 +180,7 @@
 				AND ACC_SECESSION_YN = #{accSecessionYN}
 			</if>
 			<if test="searchDate != null">
-				AND ACC_SECESSION_DATE &lt; #{searchDate}
+				AND ACC_SECESSION_DATE &lt;= #{searchDate}
 			</if>
 			<if test="searchKeyword != null">
 				AND ID LIKE '%' || #{searchKeyword} || '%'

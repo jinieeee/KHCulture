@@ -90,6 +90,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/board/updateView").hasRole("MEMBER")
 				// 1:1문의 & 강사등록 (황재윤)
 				.antMatchers("/questionnaire/insert").hasRole("MEMBER")
+				.antMatchers("/questionnaire/detail.do?").hasRole("MEMBER")
 				.anyRequest().permitAll()
 		.and()
 			.formLogin()	// 로그인 설정
