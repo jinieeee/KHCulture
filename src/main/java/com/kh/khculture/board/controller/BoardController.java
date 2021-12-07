@@ -143,7 +143,7 @@ public class BoardController {
 			mv.setViewName("board/boardDetail");
 		}
 		
-		log.info("mv : {}" , mv);
+		log.info("Board : {}" , b);
 		return mv;
 		
 	}

@@ -6,6 +6,9 @@
 <title>myReview</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
+.min_height {
+    min-height: 796px;
+}
 .myRiew_search {
     display: flex;
     width: 1320px;
@@ -33,10 +36,7 @@ form#myRiew_form {
     background:#FEF0A7;
     border:0px;
 }
-.myRiew_list {
-    height: 777px;
-    
-}
+
 .myRiew_list > .myRiew_select{
     width: 1320px;
     text-align: center;
@@ -80,7 +80,7 @@ th#d {
     width: 600px;
 }
 .my_paging_area{
-	width: 890px;
+	width: 600px;
     margin: 0 auto;
     justify-content:space-around;
     display: flex;
@@ -94,7 +94,7 @@ th#d {
  
 }
 .myRiew_paging li{
-	margin-right:51px;
+	margin-right:0px;
 }
 .myRiew_paging a {
 	text-decoration: none;
@@ -137,6 +137,7 @@ tr:hover td:nth-child(1) {
     <div class="titleArea" onclick="/mypage/myReviewlist">
         <h1 align="center" >내가 쓴 수강후기</h1>
     </div>
+<div class="min_height">
     <div  class="myRiew_search">
 
         <form  method="get" action="/mypage/myReviewlist" id="myRiew_form">
@@ -209,6 +210,7 @@ tr:hover td:nth-child(1) {
 	        </ul>
 
 	</div>
+</div>
 <footer th:include="fragments/footer.html"></footer>
  <!--  <script>
   $(".myRiew_select").click(function(){

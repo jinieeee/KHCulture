@@ -30,7 +30,7 @@ public class NoticeServiceImpl implements NoticeService {
 		int listCount = noticeMapper.getListCount(searchValue);
 		log.info("impl : {} ",listCount+"");
 		
-		PageInfo pi = new PageInfo(page, listCount, 10, 10);
+		PageInfo pi = new PageInfo(page, listCount, 5, 5);
 		int startRow = (pi.getPage() - 1)*pi.getBoardLimit() + 1;
 		int endRow = startRow + pi.getBoardLimit() - 1;
 		
