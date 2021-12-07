@@ -122,7 +122,7 @@ h2 {
 					<h1 align="center">강사 관리</h1>
 				</div>
 				<div class="instructor_content">
-					<form method="post" name="instructorInformation">
+					<form method="post" name="instructorInformation" encType="multipart/form-data">
 						<input type="hidden" name="instructor_no" th:value="${instructor.instructor_no}">
 						<div class="content">
 							
@@ -132,10 +132,10 @@ h2 {
 							</span>
 							
 							<h2><span class="title_span">&nbsp;</span> 프로필 사진 </h2>
-							<div class="image_area">
+							<div class="image_area"></div>
 							<!--  <img src="/images/instructor/pikachu2.png">-->
-							<!--  <img th:src="@{/images/instructor/} + ${instructor.profile_photo }">-->
-							</div><input type="file" id="file" name="profile_photo" accept="image/gif,image/jpeg,image/png">
+							<img th:src="@{/images/instructor/} + ${instructor.profile_photo }">
+							<input type="file" id="file" name="profile_photo" accept="image/gif,image/jpeg,image/png">
 
 							<h2><span class="title_span">&nbsp;</span> 생년월일 </h2>
 							<span class="input_area">

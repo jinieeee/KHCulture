@@ -141,10 +141,8 @@ h2 {
 							<h2><span class="title_span">&nbsp;</span> 답변 </h2>
 						    <span class="input_area2" th:if="${questionnaire.enroll_answer != null}" th:text="${ questionnaire.enroll_answer }"></span>
 							<span class="input_area2" th:unless="${questionnaire.enroll_answer != null}">미응답 (문의사항을 확인 중입니다.)</span>
-						</div>
-					</th:block>	
-						
-						<th:block sec:authorize="isAnonymous() || (hasRole('MEMBER') && !hasRole('ADMIN'))">
+						</div>	
+						<!--  <th:block sec:authorize="isAnonymous() || (hasRole('MEMBER') && !hasRole('ADMIN'))">-->
 						<div class="btn_area">
 						<button type="button" id="delete" onclick="deleteQuestionnaire()">삭제하기</button>
 						<button type="button" id="goList" onclick="location.href='/questionnaire/list'">목록으로</button>
