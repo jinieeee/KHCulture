@@ -92,7 +92,7 @@ li ul.submenu {
 }
 ul.nav-menu::after {
     content:"";
-    min-width: 1920px;
+    min-width: 100%;
     height: 245px;
     position: absolute;
     top: 86px;
