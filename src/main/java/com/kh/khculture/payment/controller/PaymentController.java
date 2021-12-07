@@ -111,10 +111,7 @@ public class PaymentController {
 	@ResponseBody
 	@RequestMapping(value="/verification/{imp_uid}")
 	public IamportResponse<Payment> paymentByImpUid(
-			Model model
-			, Locale locale
-			, HttpSession session
-			, BigDecimal paidAmount
+			BigDecimal paidAmount
 			, int mno
 			, @RequestParam(value="lrNo[]") String[] lrNo
 			, @PathVariable(value= "imp_uid") String imp_uid) throws IamportResponseException, IOException{
