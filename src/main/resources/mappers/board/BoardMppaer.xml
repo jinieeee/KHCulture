@@ -16,8 +16,10 @@
 	<result property="b_count" column="B_COUNT"/>
 	<result property="b_star" column="B_STAR"/>
 	<result property="sum_b_star" column="SUM_B_STAR"/>
+	<association property="member" resultMap="loginMemberResultMap"/>
 	<association property="lectureOpen" resultMap="selectListResultMap"/>
 	<collection property="replyList" resultMap="ReplyListResultMap"/>
+	
 </resultMap>
 
 <!-- lectureOpen -->
@@ -34,6 +36,7 @@
 		<result property="lrEndTime" column="LR_END_TIME"></result>
 		<association property="lecture" resultMap="lectureResultMap"/>
 		<association property="instructor" resultMap="instructorResultMap"/>
+		
 </resultMap>
 <resultMap type="com.kh.khculture.lecture.model.vo.Lecture" id="lectureResultMap">
 		<id property="lNo" column="l_no"></id>
@@ -71,7 +74,25 @@
 	<id property="b_no" column="B_NO"/>
 </resultMap>
 
-
+<resultMap type="com.kh.khculture.member.model.vo.Member" id="loginMemberResultMap">
+		<id property="mno" column="M_NO"/>
+		<result property="id" column="ID"/>
+		<result property="pwd" column="PWD"/>
+		<result property="name" column="NAME"/>
+		<result property="phone" column="PHONE"/>
+		<result property="email" column="EMAIL"/>
+		<result property="address" column="ADDRESS"/>
+		<result property="hintNo" column="HINT_NO"/>
+		<result property="hintA" column="HINT_A"/>
+		<result property="enrollDate" column="M_ENROLL_DATE"/>
+		<result property="modifyDate" column="M_MODIFY_DATE"/>
+		<result property="pwdChangedDate" column="PWD_CHANGED_DATE"/>
+		<result property="pwdExpDate" column="PWD_EXP_DATE"/>
+		<result property="loginFailedCnt" column="LOGIN_FAILED_COUNT"/>	
+		<result property="accLockYN" column="ACC_LOCK_YN"/>	
+		<result property="accSecessionYN" column="ACC_SECESSION_YN"/>	
+		<result property="accSecessionDate" column="ACC_SECESSION_DATE"/>
+	</resultMap>
 <select id="getListCount" parameterType="_int" resultType="_int">
 select 
 	count(*) 
@@ -119,7 +140,7 @@ WHERE RNUM BETWEEN #{ startRow } AND #{ endRow }
 
 
  <select id="selectBoard" resultMap="boardResultMap">
-	
+<!-- 
    SELECT
 		B.B_NO
 		, B.B_TITLE
@@ -136,7 +157,25 @@ WHERE RNUM BETWEEN #{ startRow } AND #{ endRow }
     JOIN LECTURE USING(L_NO) 
     WHERE B.B_STATUS='Y'
      AND B.B_NO = #{ b_no }
-
+ -->	
+ SELECT
+		B.B_NO
+		, B.B_TITLE
+		, B.B_CONTENT
+		, B.B_COUNT
+		, B.M_NO
+        , M.NAME
+		, B.B_ENROLL_DATE
+		, B.B_COUNT
+		, B.B_STAR
+		, B.B_STATUS
+		,L_TITLE
+	FROM BOARD B
+	JOIN LECTURE_REGISTRATION USING(LR_NO)
+    JOIN LECTURE USING(L_NO) 
+    JOIN MEMBER M ON(B.M_NO = M.M_NO)
+    WHERE B.B_STATUS='Y'
+     AND B.B_NO = #{ b_no }
 </select>
  <!-- 후기 작성  -->
 <insert id="boardInsert" parameterType="com.kh.khculture.board.model.vo.Board">
@@ -202,7 +241,7 @@ WHERE M_NO = #{ mno } and B_NO = #{ b_no }   <!-- 리턴타입을 맞춰야됨..
 </select>
  
 <select id="rankList" resultMap="boardResultMap">
-<!-- 30일 사이에 끝난 강좌중, 최근 2일동안 후기로 작성된 강좌의 랭킹  -->
+<!-- 30일 사이에 끝난 강좌중, 최근 2일동안 후기로 작성된 강좌의 랭킹
 SELECT
  LR_NO
  ,L_TITLE
@@ -223,9 +262,38 @@ FROM  (
 JOIN LECTURE_REGISTRATION USING(LR_NO)
 JOIN LECTURE USING(L_NO)
 join instructor using(instructor_no)
-<![CDATA[ where (LR_END_DATE  between sysdate and sysdate+30) 
+<![CDATA[ where (LR_END_DATE  between sysdate-30 and sysdate+30) 
 AND  ROWNUM  <=3 ]]>
 ORDER BY 5 DESC
+  -->
+
+
+SELECT
+ LR_NO
+ ,L_TITLE
+ ,L_THUMBNAIL
+ ,LR_END_DATE
+ , SUM_B_STAR
+ ,instructor_Name
+FROM  (
+	SELECT                                 
+		LR_NO
+		,SUM(B_STAR) SUM_B_STAR
+		FROM BOARD 
+		JOIN LECTURE_REGISTRATION USING(LR_NO)
+		JOIN LECTURE USING (L_NO)
+		<![CDATA[ where B_ENROLL_DATE  between sysdate-10 and sysdate+100]]>
+		AND B_STATUS= 'Y'
+	GROUP BY LR_NO  )
+JOIN LECTURE_REGISTRATION USING(LR_NO)
+JOIN LECTURE USING(L_NO)
+join instructor using(instructor_no)
+<![CDATA[ where (LR_END_DATE  between LR_END_DATE and sysdate+100) 
+AND  ROWNUM  <=3 ]]>
+ORDER BY 5 DESC
+
+
+
 
 </select>
 <select id="updateBoardView" resultMap="boardResultMap">

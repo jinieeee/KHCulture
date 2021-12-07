@@ -90,7 +90,9 @@ img.trophy {
     border: 0px;
     
 }
-
+.min-heignt {
+    min-height: 730px;
+}
 .board_search_area{
     width: 1320px; 
     margin: 0 auto;
@@ -179,10 +181,9 @@ span#board_no {
 	list-style: none;
 	display:flex;
 	line-height: 50px;
-	width: 480px;
 }
 .board_paging li{
-	margin-right:51px;
+	margin-right:25px;
 }
 .board_paging a {
 	text-decoration: none;
@@ -225,6 +226,7 @@ span#board_no {
              </div>
         </div>
     </div>
+    <div class="min-heignt">
    <div class="board_search_area">
 	   	<form method="get" action="/board/boardList"> <!-- 검색을 위한 form -->
 			    	<span>
@@ -234,7 +236,7 @@ span#board_no {
 			            </select>
 			        </span>
 			        <span>
-			            <input type="search" name="searchValue" id="board_searchText" placeholder="검색어를 입력해주세요" minlength="3">
+			            <input type="search" name="searchValue" id="board_searchText" placeholder="검색어를 입력해주세요" minlength="2">
 			      	</span>
 			        
 				        <button type="submit" id="board_list_button" style="margin-right: 13px;" >검색하기</button>
@@ -326,7 +328,7 @@ span#board_no {
 	        
 	        
 	   </div>
-    
+    </div>
      <footer th:include="fragments/footer.html"></footer>
     <script>
         $(document).ready(function(){

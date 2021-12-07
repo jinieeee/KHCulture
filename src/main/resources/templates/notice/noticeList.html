@@ -9,9 +9,10 @@
 <link href="/css/mypage/notice.css" rel="stylesheet">
  -->
 <style>
-.notice_list {
-        height: 773px;
+.min-height {
+    min-height: 795px;
 }
+
 
 .notice_search {
     display: flex;
@@ -86,10 +87,9 @@ span#notice_comment {
 	list-style: none;
 	display:flex;
 	line-height: 50px;
-	width: 480px;
 }
 .notice_paging li{
-	 margin-right:51px;
+	 margin-right:25px;
 }
 .notice_paging a {
 	text-decoration: none;
@@ -114,7 +114,7 @@ font-weight:bold;
         <h1 align="center">공지사항</h1>
       
     </div>
-
+<div class="min-height">
     <div class="notice_search">
 
         <form id="notice_form" method="get" action="/notice/noticeList">
@@ -150,6 +150,7 @@ font-weight:bold;
             <span id="notice_create" th:text="${n.n_enroll_date}"></span>
         </div>
     </div>
+
     <!-- 충돌시 mypage 기준으로....  -->
     <div class="notice_paging_area">
         	<ul class="notice_paging">  
@@ -183,7 +184,7 @@ font-weight:bold;
 	        
 	        
 	   </div>
-
+</div>
 </body>
  <footer th:include="fragments/footer.html"></footer>
  <script>

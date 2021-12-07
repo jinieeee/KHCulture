@@ -160,6 +160,8 @@ div#noReply {
         <div>
 	        <div id="board_comment2" th:text="${Board.lectureOpen.lecture.lTitle}" style="font-size: 20px; font-weight:bold;"></div>
 	        <div id="board_comment2" th:text="${Board.b_title}"></div>
+	       <div> &nbsp; 작성자 :  <span id="board_comment" th:text="${Board.member.name}"></span>
+	       </div>
         </div>
         
         <div id="board_date2" th:text="${#dates.format(Board.b_enroll_date,'yyyy-MM-dd')}"></div>
@@ -251,13 +253,14 @@ div#noReply {
 	       		<input type="hidden" name="rno" th:value="${Reply.r_no}">
 	       		<input type="hidden" name="mno" th:value="${Reply.m_no}">
 	       		<input type="hidden" name="loginUser" th:value="${mno}">
-	            <div id="reply_name"><span id="name" th:text="${Reply.name}"></span></div> 
-	            <div id="reply_comment2"><span id="content" th:text="${Reply.r_content}"></span></div> 
-	          	<div id="reply_date"><span id="date" th:text="${#dates.format(Reply.r_enroll_date,'yyyy-MM-dd')}"></span></div>
+	       		
+	            <div id="reply_name"><span class="name" th:text="${Reply.name}"></span></div> 
+	            <div id="reply_comment2"><span class="content" th:text="${Reply.r_content}"></span></div> 
+	          	<div id="reply_date"><span class="date" th:text="${#dates.format(Reply.r_enroll_date,'yyyy-MM-dd')}"></span></div>
 		          <th:block sec:authorize="!isAnonymous()">
 		           <span class="DMbtnArea" th:if="${#authentication.principal.mno} == ${Reply.m_no}">
 			             <button type="submit" class="button cmt_btn" th:attr="onclick=|replyDelete('${Reply.r_no}')|">삭제</button>
-			             <button type="button"  th:attr="onclick=|replyModify('${Reply.r_no}')|" class="button cmt_btn">수정</button>
+			             <button type="button"  th:attr="onclick=|replyModify('${Reply.r_no}')|" class="button cmt_btn btn2">수정</button>
 		       	   </span>	
 		       	  </th:block>
 	     	</th:block>
@@ -268,11 +271,11 @@ div#noReply {
 	  $("#board_reply_insert").keyup(function(e){
 		  console.log("키업!");
 		  var content = $(this).val();
-		  $("#textLengthCheck").val("(" + content.length + "/ 200)"); //실시간 글자수 카운팅
-		  if(content.length > 20){
-			  alert("최대 20자까지만 가능");
+		  $("#textLengthCheck").val("(" + content.length + "/ 50)"); //실시간 글자수 카운팅
+		  if(content.length > 50){
+			  alert("최대 50자까지만 가능");
 			  $(this).val(content.substring(0,200));
-			  $("#textLengthCheck").html("(20 / 최대 20자)");
+			  $("#textLengthCheck").html("(50 / 최대 50자)");
 		  }
 	  });
 </script>
@@ -314,9 +317,9 @@ div#noReply {
 					       	+'<input type="hidden" name="rno" value='+list[key].r_no+'>'
 					       	+'<input type="hidden" name="mno" value='+list[key].m_no+'>'
 					       	+'<input type="hidden" name="loginUser" value="'+list[key].m_no+'">'
-					        +'<div id="reply_name"><span>'+ list[key].name +'</span></div> '
-					        +'<div id="reply_comment2"><span id="content" >'+ list[key].r_content + '</span></div> '
-					        +'<div id="reply_date"><span>'+ list[key].r_enroll_date+ '</span></div>'
+					        +'<div id="reply_name"><span class="name">'+ list[key].name +'</span></div> '
+					        +'<div id="reply_comment2"><span class="content" >'+ list[key].r_content + '</span></div> '
+					        +'<div id="reply_date"><span class="date"> '+ list[key].r_enroll_date+ '</span></div>'
 					        if ( loginUser ==  list[key].m_no){
 						        html += '<span class="DMbtnArea"><button type="submit" class="button cmt_btn" onclick="replyDelete('+list[key].r_no+')">삭제</button>'
 						              + '<button type="button" class="button cmt_btn"  onclick="replyModify('+list[key].r_no+')">수정</button></sapn> '
@@ -378,22 +381,25 @@ div#noReply {
 				});
 		}	
 		
-	   /* 수정버튼 -> 적용버튼 */
+	
+	   // 수정버튼 -> 적용버튼 
 	   function replyModify(rno){
 		   var bno = $("[name=b_no]").val();
 		   var loginUser = '[[${mno}]]';
 		   var mno = '[[${mno}]]';
-		   var name = $("#name").text();
-		   var date = $("#date").text();
-		   var content = $("#content").text();
 		   
-		   console.log(rno); // 26
-		   console.log(bno); // 20
-		   console.log(content); // ''
-		   console.log(mno); //4
-		   console.log(name);
-		   console.log(date);
-		   
+
+			$(".board_reply_select").on("click",function(event){
+				var name=$(this).find(".name").text();
+				var content=$(this).find(".content").text();
+				var date=$(this).find(".date").text();
+
+				console.log(rno); 
+			    console.log(bno); 
+			    console.log(mno);
+			    console.log(name);
+				console.log(content);
+				console.log(date);
 		   
 		   
 		   var html='';
@@ -402,11 +408,11 @@ div#noReply {
 		       	+'<input type="hidden" name="rno" value='+rno+'>'
 		       	+'<input type="hidden" name="mno" value='+mno+'>'
 		       	+'<input type="hidden" name="loginUser" value="'+mno+'">'
-		       	+'<div id="reply_name"><span>'+ name +'</span></div> '
+		       	+'<div id="reply_name"><span class="name">'+ name +'</span></div> '
 		        +'<div id="reply_comment2" style="display:flex;">'
 		        +'<textarea style="width: 885px; margin: 0px 15px 0px 0px; height: 38px;" type="text" id="board_reply_insert" name="content2" >'+content+'</textarea>'
 		        +'</div>'
-		        +'<div id="reply_date"><span>'+ date+ '</span></div>'
+		        +'<div id="reply_date"><span class="date">'+ date+ '</span></div>'
 		        if ( loginUser ==  mno){
 			        html += '<span class="DMbtnArea style="padding-left: 20px;padding-top: 8px;"">'+'<button type="submit" class="button cmt_btn" onclick="replyDelete('+rno+')">삭제</button>'
 			              + '<button type="button" class="button cmt_btn"  onclick="replyModify2('+rno+')">적용</button></sapn> '
@@ -418,19 +424,22 @@ div#noReply {
 		        $(".board_detail_reply").html(html);
 				$("#board_reply_insert").val("");
 				
+	   });
 			}
-	   
+	    
+	  
+	    
 	   // 수정 정보 넘기기
 	   function replyModify2(rno){
 		   var content2 = $("[name=content2]").val();
-		   var content = $("#content").text();
+		   var content = $(".content").text();
 		   
 		   console.log(content2);
 		   console.log(content);
 		   console.log('replyModify2');
 		   console.log(rno);
 		   
-		   if(content2.length > 20){
+		   if(content2.length > 50){
 				 alert('글자수가 너무 많아요');
 				 return;
 			}else{
@@ -469,9 +478,9 @@ div#noReply {
 		       	+'<input type="hidden" name="rno" value='+list[key].r_no+'>'
 		       	+'<input type="hidden" name="mno" value='+list[key].m_no+'>'
 		       	+'<input type="hidden" name="loginUser" value="'+list[key].m_no+'">'
-		        +'<div id="reply_name"><span>'+ list[key].name +'</span></div> '
-		        +'<div id="reply_comment2" ><span  id="content">'+ list[key].r_content + '</span></div> '
-		        +'<div id="reply_date"><span>'+ list[key].r_enroll_date+ '</span></div>'
+		        +'<div id="reply_name"><span class="name">'+ list[key].name +'</span></div> '
+		        +'<div id="reply_comment2" ><span  class="content">'+ list[key].r_content + '</span></div> '
+		        +'<div id="reply_date"><span class="date">'+ list[key].r_enroll_date+ '</span></div>'
 		        if ( loginUser ==  list[key].m_no){
 			        html += '<span class="DMbtnArea"><button type="submit" class="button cmt_btn" onclick="replyDelete('+list[key].r_no+')">삭제</button>'
 			              + '<button type="button" class="button cmt_btn"  onclick="replyModify('+list[key].r_no+')">수정</button></sapn> '
