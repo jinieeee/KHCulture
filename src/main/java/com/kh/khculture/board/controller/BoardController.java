@@ -60,43 +60,11 @@ public class BoardController {
 		model.addAttribute("boardList",returnMap.get("boardList"));
 		model.addAttribute("rankList",returnMap.get("rankList"));
 		model.addAttribute("principal",userImpl);
-		log.info("rankList : {}" , returnMap.get("rankList"));
+		//log.info("rankList : {}" , returnMap.get("rankList"));
 		return "board/boardList";
 	}
 	
-/*
 
-	@GetMapping("detail.do")
-	public ModelAndView boardDetail( ModelAndView mv, @RequestParam int b_no, @AuthenticationPrincipal UserImpl userImpl) {
-		
-		int lovit=0;
-		
-		
-		Board b = boardService.selectBoard(b_no); //선택한 게시물 
-		
-		List<Reply> replyList = boardService.selectReplyList(b_no);
-		
-		if(userImpl != null) {
-		lovit =  boardService.selectLovit(b_no, userImpl.getMno()); // 선택한 게시물의 좋아요(로그인한 유저를 구분)
-		mv.addObject("Board",b);
-		mv.addObject("Lovit", lovit);
-		mv.addObject("Reply",replyList);
-		mv.addObject("mno", userImpl.getMno());
-		mv.setViewName("board/boardDetail");
-		}if(userImpl == null) {
-			mv.addObject("Board",b);
-			mv.setViewName("board/boardDetail");
-		}
-		log.info(replyList+"");
-		return mv;
-		
-	}
-*/	
-	/* ******************* 조회수 ************************** */
-	/* ******************* 조회수 ************************** */
-	/* ******************* 조회수 ************************** */
-	/* ******************* 조회수 ************************** */
-	
 	@GetMapping("detail.do")
 	public ModelAndView boardDetail( ModelAndView mv, @RequestParam int b_no, @AuthenticationPrincipal UserImpl userImpl
 			                             ,HttpServletRequest request, HttpServletResponse response) {
