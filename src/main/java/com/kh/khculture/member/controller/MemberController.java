@@ -85,7 +85,7 @@ public class MemberController {
 	public String sendAuth(@RequestParam("phone") String phone) {
 		int authCode = randomNum.getRandomNum();
 		// 문자 전송
-		// memberService.sendAuthCode(phone, authCode);
+		memberService.sendAuthCode(phone, authCode);
 		return Integer.toString(authCode);
 	}
 
