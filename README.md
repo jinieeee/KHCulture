@@ -67,8 +67,7 @@ bx-slider를 사용하여 간단하게 이미지슬라이드를 구현한 화면
 회원가입 & 아이디 / 비밀번호 찾기 (이메일 인증)
 회원정보수정
 
-### Notions
-[KH문화센터 노션](https://ballistic-ozraraptor-6a0.notion.site/KH-KHCulture-21fc3c5b3a46403dae3b0e8bad3af302)  
+### Notions 
 [개발자 포트폴리오](https://ballistic-ozraraptor-6a0.notion.site/Ji-eun-Lee-263f726a952a415ca850fa7fd613c369)
 
 ### 개발환경 : Spring Boot, Oracle Cloud
