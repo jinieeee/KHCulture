@@ -15,7 +15,7 @@
 	<result property="b_status" column="B_STATUS"/>
 	<result property="b_count" column="B_COUNT"/>
 	<result property="b_star" column="B_STAR"/>
-	<result property="sum_b_star" column="SUM_B_STAR"/>
+	<result property="sum_b_star" column="avg_B_STAR"/>
 	<association property="member" resultMap="loginMemberResultMap"/>
 	<association property="lectureOpen" resultMap="selectListResultMap"/>
 	<collection property="replyList" resultMap="ReplyListResultMap"/>
@@ -274,12 +274,12 @@ SELECT
  ,L_THUMBNAIL
  ,LR_END_DATE
  ,LR_START_DATE
- , SUM_B_STAR
+ ,AVG_B_STAR
  ,instructor_Name
 FROM  (
 	SELECT                                 
 		LR_NO
-		,SUM(B_STAR) SUM_B_STAR
+		,AVG(B_STAR) AVG_B_STAR
 		FROM BOARD 
 		JOIN LECTURE_REGISTRATION USING(LR_NO)
 		JOIN LECTURE USING (L_NO)
