@@ -218,9 +218,9 @@ span#board_no {
              <div id="imgBox"><img class="rankImage" th:src="@{/images/upload/{img}(img=${rankList.LectureOpen.Lecture.lThumbnail})}"></div>
              <div class="infobox">
          	 	<div id="ltitle">
-         	 		 <span th:text="${rankList.LectureOpen.Lecture.lTitle}"></span> <br>
-         	 		 <span th:text="${rankList.LectureOpen.Instructor.instructorName}"></span> <br>
-         	 		 별점 : <span th:text="${rankList.sum_b_star}"></span>점 <br> <br>
+         	 		 <span th:text="${rankList.LectureOpen.Lecture.lTitle}"></span> <br><br>
+         	 		 <span  th:text="${rankList.LectureOpen.Instructor.instructorName}"></span> <br>
+         	 		 별점 : <span th:text="${rankList.sum_b_star}"></span>점 <br> <br> 
          	 		 <span id="date" th:text="${#dates.format(rankList.LectureOpen.lrStartDate,'yyyy-MM-dd')}"></span> 
          	 		 ~ 
          	 		 <span id="date" th:text="${#dates.format(rankList.LectureOpen.lrEndDate,'yyyy-MM-dd')}"></span> <br>
