@@ -63,13 +63,13 @@ public class MemberServiceImpl implements MemberService{
 	// 문자 전송
 	@Override
 	public void sendAuthCode(String phone, int randomNumber) {
-		String api_key = "NCSPIKZRNTHOCRMG"; // API key
-		String api_secret = "RCDJ9MZ98P0W4WNWGTKNLD68FIBPROKB"; // API secret
+		String api_key = ""; // API key
+		String api_secret = ""; // API secret
 		Message coolsms = new Message(api_key, api_secret);
 		
 		HashMap<String, String> params = new HashMap<>();
 		params.put("to", phone);			// 수신인
-		params.put("from", "01040660340");	// 발신인
+		params.put("from", "01000000000");	// 발신인
 		params.put("type", "SMS");
 		params.put("text", "[KH문화센터] 인증번호는 " + randomNumber + " 입니다");	// 문자 내용
 		
