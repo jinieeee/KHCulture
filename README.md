@@ -1,6 +1,6 @@
 # KH문화센터(KHCulture)
 
-개발기간: 2021.11.11 ~ 진행중 (2021.12.10 종료 예정)   
+개발기간: 2021.10.11 ~ 2021.12.10
 개발환경: CSS, HTML5, JAVA, JavaScript, MyBatis, Oracle Cloud, Spring boot, jQuery   
 팀원: 김현주, 양정하, 이지은, 장영재, 황재윤   
    
