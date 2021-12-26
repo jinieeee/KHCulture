@@ -17,6 +17,7 @@ import com.kh.khculture.handler.AuthEntryPoint;
 import com.kh.khculture.handler.AuthFailureHandler;
 import com.kh.khculture.handler.AuthSuccessHandler;
 import com.kh.khculture.member.model.service.MemberService;
+import com.kh.khculture.oauth.model.vo.CustomOAuth2UserService;
 
 /* 스프링 시큐리티 설정 활성화 + bean 등록 가능 */
 @EnableWebSecurity
@@ -26,16 +27,19 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	private AuthFailureHandler authFailureHandler;
 	private AuthSuccessHandler authSuccessHandler;
 	private AuthEntryPoint authEntryPoint;
+	private final CustomOAuth2UserService customOAuth2UserService;
 	
 	@Autowired
 	public SpringSecurityConfiguration(MemberService memberService 
 									 , AuthFailureHandler authFailureHandler
 									 , AuthSuccessHandler authSuccessHandler
-									 , AuthEntryPoint authEntryPoint) {
+									 , AuthEntryPoint authEntryPoint
+									 , CustomOAuth2UserService customOAuth2UserService) {
 		this.memberService = memberService;
 		this.authFailureHandler = authFailureHandler;
 		this.authSuccessHandler = authSuccessHandler;
 		this.authEntryPoint = authEntryPoint;
+		this.customOAuth2UserService = customOAuth2UserService;
 	}
 	
 	@Bean
@@ -115,7 +119,9 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		.and()
 			.exceptionHandling()
 			.accessDeniedPage("/common/denied")
-			.authenticationEntryPoint(authEntryPoint);
+			.authenticationEntryPoint(authEntryPoint)
+		.and()
+			.oauth2Login().userInfoEndpoint().userService(customOAuth2UserService);
 
 	}
 
