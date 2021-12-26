@@ -26,6 +26,7 @@ import com.kh.khculture.member.model.vo.Member;
 import com.kh.khculture.member.model.vo.MemberRole;
 import com.kh.khculture.member.model.vo.PwdHint;
 import com.kh.khculture.member.model.vo.UserImpl;
+import com.kh.khculture.oauth.model.vo.User;
 
 import lombok.extern.slf4j.Slf4j;
 import net.nurigo.java_sdk.api.Message;
@@ -126,7 +127,7 @@ public class MemberServiceImpl implements MemberService{
 		user.setDetails(member);
 		return user;
 	}
-
+	
 	// 중복아이디 조회
 	@Override
 	public int checkId(String userId) {
