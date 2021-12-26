@@ -87,6 +87,8 @@ table.joinInfo p {
 	background-color: #ffd800;
 }
 .openid {
+	text-decoration: none;
+	color: black;
 	display: block;
 	height: 50px;
 	border: 1px solid #ffd800;
