@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class User{
 	// OAuth 로그인 시 사용할 사용자 객체
-	
+	// 이것 때문에 기존 로그인도 오류 발생하는지...?
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

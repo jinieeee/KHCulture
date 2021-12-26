@@ -26,7 +26,6 @@ import com.kh.khculture.member.model.vo.Member;
 import com.kh.khculture.member.model.vo.MemberRole;
 import com.kh.khculture.member.model.vo.PwdHint;
 import com.kh.khculture.member.model.vo.UserImpl;
-import com.kh.khculture.oauth.model.vo.User;
 
 import lombok.extern.slf4j.Slf4j;
 import net.nurigo.java_sdk.api.Message;
@@ -117,8 +116,8 @@ public class MemberServiceImpl implements MemberService{
 		// log.info("로그인 계정 : {}", member);
 		// log.info("사용 가능 계정 여부 : {}", enabled);
 		// log.info("계정 만료 여부 : {}", accountNonExpired);
-		// log.info("비밀번호 만료 여부 : {}", credentialsNonExpired);
-		// log.info("비밀번호 만료일 : {}", sdf.format(member.getPwdExpDate()));
+		log.info("비밀번호 만료 여부 : {}", credentialsNonExpired);
+		log.info("비밀번호 만료일 : {}", sdf.format(member.getPwdExpDate()));
 		// log.info("현재일 : {}", sdf.format(new Date()));
 		// log.info("비밀번호 만료 여부 : {}", sdf.format(member.getPwdExpDate()).compareTo(sdf.format(new Date())));
 		// log.info("계정 잠금 여부 : {}", accountNonLocked);
