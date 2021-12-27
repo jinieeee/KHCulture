@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-public class User{
+public class tempUser {
 	// OAuth 로그인 시 사용할 사용자 객체
 	// 이것 때문에 기존 로그인도 오류 발생하는지...?
 	@Id
@@ -33,13 +33,13 @@ public class User{
 	private Role role;
 	
 	@Builder
-	public User(String name, String email, Role role) {
+	public tempUser(String name, String email, Role role) {
 		this.name = name;
 		this.email = email;
 		this.role = role;
 	}
 	
-	public User update(String name) {
+	public tempUser update(String name) {
 		this.name = name;
 		return this;
 	}

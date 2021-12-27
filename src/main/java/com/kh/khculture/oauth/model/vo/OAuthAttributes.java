@@ -27,8 +27,8 @@ public class OAuthAttributes {
         return ofKakao("id", attributes);
     }
 
-    public User toEntity(){
-        return User.builder()
+    public tempUser toEntity(){
+        return tempUser.builder()
                 .name(name)
                 .email(email)
                 .role(Role.MEMBER) // 기본 권한 MEMBER
@@ -40,7 +40,7 @@ public class OAuthAttributes {
     	Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
     	// kakao_account안에 또 profile이라는 JSON객체가 있다. (nickname)
     	Map<String, Object> kakaoProfile = (Map<String,Object>) kakaoAccount.get("profile");
-    	
+    	System.out.println(kakaoProfile.get("nickname"));
     	return OAuthAttributes.builder()
     			.name((String) kakaoProfile.get("nickname"))
     			.email((String) kakaoAccount.get("email"))
