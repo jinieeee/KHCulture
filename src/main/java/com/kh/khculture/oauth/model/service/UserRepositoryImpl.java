@@ -9,32 +9,32 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.kh.khculture.oauth.model.vo.User;
 import com.kh.khculture.oauth.model.vo.UserRepository;
+import com.kh.khculture.oauth.model.vo.tempUser;
 
 @Service
 public class UserRepositoryImpl implements UserRepository{
 
 	@Override
-	public List<User> findAll() {
+	public List<tempUser> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<User> findAll(Sort sort) {
+	public List<tempUser> findAll(Sort sort) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<User> findAllById(Iterable<Long> ids) {
+	public List<tempUser> findAllById(Iterable<Long> ids) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public <S extends User> List<S> saveAll(Iterable<S> entities) {
+	public <S extends tempUser> List<S> saveAll(Iterable<S> entities) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -46,19 +46,19 @@ public class UserRepositoryImpl implements UserRepository{
 	}
 
 	@Override
-	public <S extends User> S saveAndFlush(S entity) {
+	public <S extends tempUser> S saveAndFlush(S entity) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public <S extends User> List<S> saveAllAndFlush(Iterable<S> entities) {
+	public <S extends tempUser> List<S> saveAllAndFlush(Iterable<S> entities) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void deleteAllInBatch(Iterable<User> entities) {
+	public void deleteAllInBatch(Iterable<tempUser> entities) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -76,43 +76,43 @@ public class UserRepositoryImpl implements UserRepository{
 	}
 
 	@Override
-	public User getOne(Long id) {
+	public tempUser getOne(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public User getById(Long id) {
+	public tempUser getById(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public <S extends User> List<S> findAll(Example<S> example) {
+	public <S extends tempUser> List<S> findAll(Example<S> example) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public <S extends User> List<S> findAll(Example<S> example, Sort sort) {
+	public <S extends tempUser> List<S> findAll(Example<S> example, Sort sort) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Page<User> findAll(Pageable pageable) {
+	public Page<tempUser> findAll(Pageable pageable) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public <S extends User> S save(S entity) {
+	public <S extends tempUser> S save(S entity) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Optional<User> findById(Long id) {
+	public Optional<tempUser> findById(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -136,7 +136,7 @@ public class UserRepositoryImpl implements UserRepository{
 	}
 
 	@Override
-	public void delete(User entity) {
+	public void delete(tempUser entity) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -148,7 +148,7 @@ public class UserRepositoryImpl implements UserRepository{
 	}
 
 	@Override
-	public void deleteAll(Iterable<? extends User> entities) {
+	public void deleteAll(Iterable<? extends tempUser> entities) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -160,32 +160,32 @@ public class UserRepositoryImpl implements UserRepository{
 	}
 
 	@Override
-	public <S extends User> Optional<S> findOne(Example<S> example) {
+	public <S extends tempUser> Optional<S> findOne(Example<S> example) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public <S extends User> Page<S> findAll(Example<S> example, Pageable pageable) {
+	public <S extends tempUser> Page<S> findAll(Example<S> example, Pageable pageable) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public <S extends User> long count(Example<S> example) {
+	public <S extends tempUser> long count(Example<S> example) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public <S extends User> boolean exists(Example<S> example) {
+	public <S extends tempUser> boolean exists(Example<S> example) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public Optional<User> findByEmail(String email) {
-		
+	public Optional<tempUser> findByEmail(String email) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
