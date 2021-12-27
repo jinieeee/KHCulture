@@ -63,13 +63,13 @@ public class MemberServiceImpl implements MemberService{
 	// 문자 전송
 	@Override
 	public void sendAuthCode(String phone, int randomNumber) {
-		String api_key = "NCSPIKZRNTHOCRMG"; // API key
-		String api_secret = "RCDJ9MZ98P0W4WNWGTKNLD68FIBPROKB"; // API secret
+		String api_key = ""; // API key
+		String api_secret = ""; // API secret
 		Message coolsms = new Message(api_key, api_secret);
 		
 		HashMap<String, String> params = new HashMap<>();
 		params.put("to", phone);			// 수신인
-		params.put("from", "01040660340");	// 발신인
+		params.put("from", "01000000000");	// 발신인
 		params.put("type", "SMS");
 		params.put("text", "[KH문화센터] 인증번호는 " + randomNumber + " 입니다");	// 문자 내용
 		
@@ -116,8 +116,8 @@ public class MemberServiceImpl implements MemberService{
 		// log.info("로그인 계정 : {}", member);
 		// log.info("사용 가능 계정 여부 : {}", enabled);
 		// log.info("계정 만료 여부 : {}", accountNonExpired);
-		// log.info("비밀번호 만료 여부 : {}", credentialsNonExpired);
-		// log.info("비밀번호 만료일 : {}", sdf.format(member.getPwdExpDate()));
+		log.info("비밀번호 만료 여부 : {}", credentialsNonExpired);
+		log.info("비밀번호 만료일 : {}", sdf.format(member.getPwdExpDate()));
 		// log.info("현재일 : {}", sdf.format(new Date()));
 		// log.info("비밀번호 만료 여부 : {}", sdf.format(member.getPwdExpDate()).compareTo(sdf.format(new Date())));
 		// log.info("계정 잠금 여부 : {}", accountNonLocked);
@@ -126,7 +126,7 @@ public class MemberServiceImpl implements MemberService{
 		user.setDetails(member);
 		return user;
 	}
-
+	
 	// 중복아이디 조회
 	@Override
 	public int checkId(String userId) {

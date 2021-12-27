@@ -15,7 +15,7 @@
 	<result property="b_status" column="B_STATUS"/>
 	<result property="b_count" column="B_COUNT"/>
 	<result property="b_star" column="B_STAR"/>
-	<result property="sum_b_star" column="SUM_B_STAR"/>
+	<result property="sum_b_star" column="avg_B_STAR"/>
 	<association property="member" resultMap="loginMemberResultMap"/>
 	<association property="lectureOpen" resultMap="selectListResultMap"/>
 	<collection property="replyList" resultMap="ReplyListResultMap"/>
@@ -241,33 +241,7 @@ WHERE M_NO = #{ mno } and B_NO = #{ b_no }   <!-- 리턴타입을 맞춰야됨..
 </select>
  
 <select id="rankList" resultMap="boardResultMap">
-<!-- 30일 사이에 끝난 강좌중, 최근 2일동안 후기로 작성된 강좌의 랭킹
-SELECT
- LR_NO
- ,L_TITLE
- ,L_THUMBNAIL
- ,LR_END_DATE
- , SUM_B_STAR
- ,instructor_Name
-FROM  (
-	SELECT                                 
-		LR_NO
-		,SUM(B_STAR) SUM_B_STAR
-		FROM BOARD 
-		JOIN LECTURE_REGISTRATION USING(LR_NO)
-		JOIN LECTURE USING (L_NO)
-		<![CDATA[ where B_ENROLL_DATE  between sysdate-30 and sysdate]]>
-		AND B_STATUS= 'Y'
-	GROUP BY LR_NO  )
-JOIN LECTURE_REGISTRATION USING(LR_NO)
-JOIN LECTURE USING(L_NO)
-join instructor using(instructor_no)
-<![CDATA[ where (LR_END_DATE  between sysdate-30 and sysdate+30) 
-AND  ROWNUM  <=3 ]]>
-ORDER BY 5 DESC
-  -->
-
-
+<!-- 
 SELECT
  LR_NO
  ,L_TITLE
@@ -291,7 +265,34 @@ join instructor using(instructor_no)
 <![CDATA[ where (LR_END_DATE  between LR_END_DATE and sysdate+100) 
 AND  ROWNUM  <=3 ]]>
 ORDER BY 5 DESC
+  -->
 
+
+SELECT
+ LR_NO
+ ,L_TITLE
+ ,L_THUMBNAIL
+ ,LR_END_DATE
+ ,LR_START_DATE
+ ,AVG_B_STAR
+ ,instructor_Name
+FROM  (
+	SELECT                                 
+		LR_NO
+		,AVG(B_STAR) AVG_B_STAR
+		FROM BOARD 
+		JOIN LECTURE_REGISTRATION USING(LR_NO)
+		JOIN LECTURE USING (L_NO)
+		<![CDATA[ where B_ENROLL_DATE  between SYSDATE-7  and SYSDATE]]>
+		AND B_STATUS= 'Y'
+	GROUP BY LR_NO  )
+JOIN LECTURE_REGISTRATION USING(LR_NO)
+JOIN LECTURE USING(L_NO)
+join instructor using(instructor_no)
+<![CDATA[ where LR_START_DATE  between LR_START_DATE  and  LR_END_DATE+7
+AND LECTURE_REGISTRATION.LR_STATUS='N'
+AND  ROWNUM  <=3 ]]>
+ORDER BY 6 DESC
 
 
 

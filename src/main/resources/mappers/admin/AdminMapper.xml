@@ -202,10 +202,13 @@
 		 WHERE M_NO = #{mno}
 	</update>
 	
-	<delete id="deleteAcc" parameterType="hashMap">
-		DELETE FROM MEMBER
-		 WHERE M_NO = #{mno}
-	</delete>
+	<update id="deleteAcc" parameterType="hashMap">
+		UPDATE MEMBER
+		   SET ACC_SECESSION_DATE = SYSDATE
+		     , ACC_SECESSION_YN = 'Y'
+		WHERE M_NO = #{mno}
+		  AND ACC_SECESSION_YN = 'N'
+	</update>
 	
 	<delete id="deleteRole" parameterType="hashMap">
 		DELETE FROM MEMBER_ROLE

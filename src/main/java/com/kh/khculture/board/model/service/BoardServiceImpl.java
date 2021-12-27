@@ -40,7 +40,7 @@ public class BoardServiceImpl implements BoardService {
 		int listCount = boardMapper.getListCount(search);
 		
 		
-		PageInfo pi = new PageInfo(page, listCount, 5, 5);
+		PageInfo pi = new PageInfo(page, listCount, 15, 15);
 		int startRow = (pi.getPage() - 1)*pi.getBoardLimit() + 1;
 		int endRow = startRow + pi.getBoardLimit() - 1;
 		

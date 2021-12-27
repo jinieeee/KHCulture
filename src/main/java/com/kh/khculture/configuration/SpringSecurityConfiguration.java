@@ -17,6 +17,7 @@ import com.kh.khculture.handler.AuthEntryPoint;
 import com.kh.khculture.handler.AuthFailureHandler;
 import com.kh.khculture.handler.AuthSuccessHandler;
 import com.kh.khculture.member.model.service.MemberService;
+import com.kh.khculture.oauth.model.vo.CustomOAuth2UserService;
 
 /* 스프링 시큐리티 설정 활성화 + bean 등록 가능 */
 @EnableWebSecurity
@@ -26,16 +27,19 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	private AuthFailureHandler authFailureHandler;
 	private AuthSuccessHandler authSuccessHandler;
 	private AuthEntryPoint authEntryPoint;
+	private final CustomOAuth2UserService customOAuth2UserService;
 	
 	@Autowired
 	public SpringSecurityConfiguration(MemberService memberService 
 									 , AuthFailureHandler authFailureHandler
 									 , AuthSuccessHandler authSuccessHandler
-									 , AuthEntryPoint authEntryPoint) {
+									 , AuthEntryPoint authEntryPoint
+									 , CustomOAuth2UserService customOAuth2UserService) {
 		this.memberService = memberService;
 		this.authFailureHandler = authFailureHandler;
 		this.authSuccessHandler = authSuccessHandler;
 		this.authEntryPoint = authEntryPoint;
+		this.customOAuth2UserService = customOAuth2UserService;
 	}
 	
 	@Bean
@@ -89,8 +93,15 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/board/delete").hasRole("MEMBER")
 				.antMatchers("/board/updateView").hasRole("MEMBER")
 				// 1:1문의 & 강사등록 (황재윤)
+				.antMatchers(HttpMethod.GET, "/instructor/regist").hasRole("ADMIN")
+				.antMatchers(HttpMethod.GET, "/instructor/updatePage").hasRole("ADMIN")
+				.antMatchers("/instructor/delete").hasRole("ADMIN")
 				.antMatchers("/questionnaire/insert").hasRole("MEMBER")
-				.antMatchers("/questionnaire/detail.do?").hasRole("MEMBER")
+				.antMatchers("/questionnaire/detail.do").hasRole("MEMBER")
+				.antMatchers(HttpMethod.POST, "/questionnaire/delete").hasRole("MEMBER")
+				.antMatchers("/questionnaire/answerPage").hasRole("ADMIN")
+				.antMatchers(HttpMethod.POST, "/questionnaire/answer").hasRole("ADMIN")
+				.antMatchers(HttpMethod.POST, "/questionnaire/answerDelete").hasRole("ADMIN")
 				.anyRequest().permitAll()
 		.and()
 			.formLogin()	// 로그인 설정
@@ -108,7 +119,9 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		.and()
 			.exceptionHandling()
 			.accessDeniedPage("/common/denied")
-			.authenticationEntryPoint(authEntryPoint);
+			.authenticationEntryPoint(authEntryPoint)
+		.and()
+			.oauth2Login().userInfoEndpoint().userService(customOAuth2UserService);
 
 	}
 

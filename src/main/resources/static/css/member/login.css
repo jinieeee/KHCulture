@@ -81,3 +81,31 @@ table.joinInfo p {
     margin: 5px;
     font-size: 17px;
 }
+.openid>#kakaoLogo {
+	height: 50px;
+	padding: 10px;
+	background-color: #ffd800;
+}
+.openid {
+	text-decoration: none;
+	color: black;
+	display: block;
+	height: 50px;
+	border: 1px solid #ffd800;
+	background: url("../../images/member/kakao.png") no-repeat 5px 5px;
+	background-size : 40px;
+	background-color : #ffd800;
+	box-sizing: border-box;
+	margin: 40px 0;
+}
+.openid>span {
+	display: block;
+	height: 48px;
+	line-height: 48px;
+	width: 575px;
+	margin-left: 50px;
+	text-align:center;
+	font-size: 16px;
+	
+	background-color: #fff;
+}

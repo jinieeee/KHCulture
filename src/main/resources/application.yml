@@ -1,17 +1,43 @@
 # server port config
 # first-project 에서는 server.port:8800으로 썼으나 여기에서는 이러한 방식으로 쓰는 이유는
 # server의 하위에 정의할 수 있는 내용이 많아 추가적으로 작성할때 더욱 간결하게 코드를 작성하기 위해
-server:  port: 8006
+server:
+  port: 8006
   
 # oracle driver config
 # DB연결정보
-spring:  datasource:    driver-class-name: oracle.jdbc.OracleDriver
-    url: jdbc:oracle:thin:@KHCulture_high?TNS_ADMIN=C:\\STS4\\KHculture_final\\Oracle_Wallet
+spring:
+  datasource:
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@KHCulture_high?TNS_ADMIN=C:\\Users\\lje_9\\git\\KHculture_final\\Oracle_Wallet
     username: admin
     password:  KHCulture2021
     hikari:
-      connection-test-query: select sysdate from dual
-
+     connection-test-query: select sysdate from dual
+    # driver-class-name: oracle.jdbc.OracleDriver
+    # url: jdbc:oracle:thin:@localhost:1521:xe
+    # username: kh_Final
+    # password: khfinal
+  servlet:
+    multipart:
+      max-file-size:
+        10MB
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: #이메일 계정
+    password: #이메일 비밀번호
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+    
 # mybatis config
 mybatis:
  mapper-locations: mappers/**/*.xml
@@ -23,3 +49,7 @@ logging:
 
 # logging level (package level - 지역 설정)
     '[com.kh.khculture.book]': trace
+
+custom:
+  path:
+    upload-images: 'C:\Users\lje_9\git\KHCulture\src\main\resources\uploadFiles/'
