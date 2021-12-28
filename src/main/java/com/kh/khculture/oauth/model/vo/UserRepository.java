@@ -3,8 +3,10 @@ package com.kh.khculture.oauth.model.vo;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Service;
 
-// 왜 Repository 어노테이션을 지워야 하는지...?
+// interface는 빈 등록 불가능
+// CustomOAuth2UserService required a bean of type 'com.kh.khculture.oauth.model.vo.UserRepository' that could not be found.
 public interface UserRepository extends JpaRepository<tempUser, Long>{
 	Optional<tempUser> findByEmail(String email);
 }

@@ -17,7 +17,7 @@ import com.kh.khculture.handler.AuthEntryPoint;
 import com.kh.khculture.handler.AuthFailureHandler;
 import com.kh.khculture.handler.AuthSuccessHandler;
 import com.kh.khculture.member.model.service.MemberService;
-import com.kh.khculture.oauth.model.vo.CustomOAuth2UserService;
+import com.kh.khculture.oauth.model.service.CustomOAuth2UserService;
 
 /* 스프링 시큐리티 설정 활성화 + bean 등록 가능 */
 @EnableWebSecurity

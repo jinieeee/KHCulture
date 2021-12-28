@@ -37,7 +37,28 @@ spring:
     hiddenmethod:
       filter:
         enabled: true
-    
+  # 2021.12.26 추가 - oauth 사용시 반드시 작성해야하는 부분이다
+  profiles:    include: oauth
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            client-id:  c62fd21fe68a0f32a4975d8a5b495742
+            redirect-uri: http://localhost:8006/login/oauth2/code/kakao
+            client-authentication-method: POST
+            authorization-grant-type: authorization_code
+            scope: profile_nickname, account_email
+            client-name: Kakao
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
+  jpa:    show-sql: true
+    hibernate:      ddl-auto: create
+   
 # mybatis config
 mybatis:
  mapper-locations: mappers/**/*.xml
