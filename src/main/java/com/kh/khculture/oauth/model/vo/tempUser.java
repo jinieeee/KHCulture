@@ -14,7 +14,6 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@NoArgsConstructor
 public class tempUser {
 	// OAuth 로그인 시 사용할 사용자 객체
 	// 이것 때문에 기존 로그인도 오류 발생하는지...?
@@ -28,7 +27,6 @@ public class tempUser {
 	@Column(nullable = false)
 	private String email;
 	
-	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
 	private Role role;
 	
